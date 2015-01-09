@@ -1,0 +1,114 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;/****************************************Copyright (c)*
+                       ***************************************************
+    2 00000000         ;**                            Guangzhou ZHIYUAN electro
+                       nics Co.,LTD.
+    3 00000000         ;**                                 http://www.embedtool
+                       s.com
+    4 00000000         ;**--------------File Info------------------------------
+                       ---------------------------------------------------
+    5 00000000         ;** File name:               rt_sys.h
+    6 00000000         ;** Latest modified Date:    2009-07-23
+    7 00000000         ;** Latest Version:          1.0
+    8 00000000         ;** Descriptions:            目标板部分实时库函数
+    9 00000000         ;**-----------------------------------------------------
+                       ---------------------------------------------------
+   10 00000000         ;** Created by:              Chenmingji
+   11 00000000         ;** Created date:            2009-07-23
+   12 00000000         ;** Version:                 1.0
+   13 00000000         ;** Descriptions:            The original version
+   14 00000000         ;**-----------------------------------------------------
+                       ---------------------------------------------------
+   15 00000000         ;** Modified by:
+   16 00000000         ;** Modified date:
+   17 00000000         ;** Version:
+   18 00000000         ;** Descriptions:
+   19 00000000         ;**
+   20 00000000         ;*******************************************************
+                       **************************************************/
+   21 00000000                 preserve8
+   22 00000000                 EXPORT           __user_initial_stackheap
+   23 00000000         
+   24 00000000                 AREA             rt_sys, CODE, READONLY
+   25 00000000                 ENTRY
+   26 00000000         
+   27 00000000         __user_initial_stackheap
+   28 00000000 4800            LDR              R0, =bottom_of_heap
+   29 00000002 4770            BX               LR
+   30 00000004         
+   31 00000004 00000000        AREA             Heap, DATA, NOINIT
+   32 00000000         bottom_of_heap
+   33 00000000         
+   34 00000000                 IMPORT           __use_no_semihosting_swi
+   35 00000000         
+   36 00000000                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\Hex\rt
+_sys_s.d -o.\Hex\rt_sys_s.o -IC:\Keil\ARM\INC -IC:\Keil\ARM\INC\NXP\LPC17xx --l
+ist=.\Lst\rt_sys_s.lst Startup\rt_sys_s.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+__user_initial_stackheap 00000000
+
+Symbol: __user_initial_stackheap
+   Definitions
+      At line 27 in file Startup\rt_sys_s.s
+   Uses
+      At line 22 in file Startup\rt_sys_s.s
+Comment: __user_initial_stackheap used once
+rt_sys 00000000
+
+Symbol: rt_sys
+   Definitions
+      At line 24 in file Startup\rt_sys_s.s
+   Uses
+      None
+Comment: rt_sys unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Heap 00000000
+
+Symbol: Heap
+   Definitions
+      At line 31 in file Startup\rt_sys_s.s
+   Uses
+      None
+Comment: Heap unused
+bottom_of_heap 00000000
+
+Symbol: bottom_of_heap
+   Definitions
+      At line 32 in file Startup\rt_sys_s.s
+   Uses
+      At line 28 in file Startup\rt_sys_s.s
+Comment: bottom_of_heap used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+__use_no_semihosting_swi 00000000
+
+Symbol: __use_no_semihosting_swi
+   Definitions
+      At line 34 in file Startup\rt_sys_s.s
+   Uses
+      None
+Comment: __use_no_semihosting_swi unused
+1 symbol
+331 symbols in table
