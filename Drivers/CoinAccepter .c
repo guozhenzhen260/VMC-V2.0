@@ -465,13 +465,21 @@ void CoinDevProcessExpanse(void)
     
 	
     ComStatus = MdbConversation(0x0F,VMCdata,1,&CoinRdBuff[0],&CoinRdLen);
+	TraceCoin("\r\nDrvcoinExp>>%#02x,%#02x",0x0F,VMCdata[0]);
 	if(ComStatus == 1)	
     {  	
 	    if(CoinRdLen <= 16) 
 		{				      
 			for(i = 0; i < CoinRdLen-1; i=i+2) 
 			{
-				TraceCoin("\r\nDrvCoin=%#02x,%#02x",CoinRdBuff[i],CoinRdBuff[i+1]);
+				//TraceCoin("\r\nDrvCoin=%#02x,%#02x",CoinRdBuff[i],CoinRdBuff[i+1]);
+				TraceCoin("\r\nDrvcoinRec<< [%02d]-",CoinRdLen);
+				for(i=0;i<CoinRdLen;i++)
+				{
+					TraceCoin(" %#02x ",CoinRdBuff[i]);
+				}
+				TraceCoin("\r\n");
+				
 				if(
 					(CoinRdBuff[i] <= 0x05)//Õý³£
 					||((CoinRdBuff[i] == 0x11)&&(CoinRdBuff[i+1] == 0x10))
