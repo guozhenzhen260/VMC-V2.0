@@ -974,7 +974,7 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 						sysVPMission.send.msg[0]  = VP_INFO_TOTALVALUE;
 						//Total_Value：表示当前交易投币后，或者出货后，屏幕上显示的金额数 
 						//by gzz 20110721						
-						tempMoney = MoneySend(sysVPMission.payAllMoney);
+						tempMoney = MoneySend(GetAmountMoney());
 						//tempMoney = sysVPMission.payAllMoney;
 		                sysVPMission.send.msg[1] = tempMoney/256;
 		                sysVPMission.send.msg[2] = tempMoney%256;

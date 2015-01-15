@@ -76,7 +76,6 @@ uint32_t 	PriceMaxin = 0;//当前最贵商品单价
 
 extern void ClearDealPar(void);
 extern void BillCoinCtr(uint8_t billCtr,uint8_t coinCtr,uint8_t readerCtr);
-extern uint32_t GetAmountMoney(void);
 extern uint8_t SaleTimeSet(uint8_t haveSale);
 
 volatile unsigned int GOCCHECKTIMEOUT;

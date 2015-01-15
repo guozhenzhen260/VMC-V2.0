@@ -25,5 +25,7 @@ extern void ResetInd(void);
 extern void TuiMoneyInd(void);
 extern void BillCoinCtr(uint8_t billCtr,uint8_t coinCtr,uint8_t readerCtr);
 extern void rstTime(void);
+extern uint32_t GetAmountMoney(void);
+
 #endif
 /**************************************End Of File*******************************************************/
