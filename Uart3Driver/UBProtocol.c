@@ -3884,7 +3884,7 @@ unsigned char VPMission_Poll( uint8_t *isInit )
 /*********************************************************************************************************
 ** Function name:     	VPMission_Payin_RPT
 ** Descriptions:	    上报投币信息
-** input parameters:    dev: 1投入硬币,2投入纸币,3暂存纸币进入,4暂存纸币出币
+** input parameters:    dev: 1投入硬币,2投入纸币,3暂存纸币进入,4暂存纸币出币,5读卡器
                         moneyIn投入的金额,以分为单位
                         moneyAll总的投入的金额,以分为单位 
 ** output parameters:   无
@@ -3916,6 +3916,9 @@ unsigned char VPMission_Payin_RPT(uint8_t dev,uint16_t payInMoney,uint32_t payAl
 			break;
 		case 4:
 			sysVPMission.payInDev = VP_DEV_ESCROWOUT;
+			break;	
+		case 5:
+			sysVPMission.payInDev = VP_DEV_READER;
 			break;	
 			
 	}    

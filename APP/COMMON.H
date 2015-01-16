@@ -823,40 +823,42 @@ extern MESSAGE_ZHIHUI zh_vmc_mbox;
 #define MBOX_VMCTOPC_PAYINESCROWIN 		    0x04
 //vmc下发给PC机暂存纸币出币
 #define MBOX_VMCTOPC_PAYINESCROWOUT		    0x05
+//vmc下发给PC机投入读卡器
+#define MBOX_VMCTOPC_PAYINREADER		    0x06
 //vmc下发给PC机找零
-#define MBOX_VMCTOPC_PAYOUT     		    0x06
+#define MBOX_VMCTOPC_PAYOUT     		    0x07
 //pc上发给vmc机找零指令
-#define MBOX_PCTOVMC_PAYOUTIND     		    0x07
+#define MBOX_PCTOVMC_PAYOUTIND     		    0x08
 //vmc下发给PC同意ACK
-#define MBOX_VMCTOPC_ACK     		        0x08
+#define MBOX_VMCTOPC_ACK     		        0x09
 //vmc下发给PC拒绝NAK
-#define MBOX_VMCTOPC_NAK    		        0x09
+#define MBOX_VMCTOPC_NAK    		        0x0A
 //pc上发给vmc机扣款指令
-#define MBOX_PCTOVMC_COSTIND     		    0x0A
+#define MBOX_PCTOVMC_COSTIND     		    0x0B
 //vmc下发给PC机扣款
-#define MBOX_VMCTOPC_COST       		    0x0B
+#define MBOX_VMCTOPC_COST       		    0x0C
 //vmc下发给PC机按键
-#define MBOX_VMCTOPC_BUTTON       		    0x0C
+#define MBOX_VMCTOPC_BUTTON       		    0x0D
 //vmc下发给PC机出货信息
-#define MBOX_VMCTOPC_VENDOUT       		    0x0D
+#define MBOX_VMCTOPC_VENDOUT       		    0x0E
 //pc上发给vmc机出货指令
-#define MBOX_PCTOVMC_VENDOUTIND     		0x0E
+#define MBOX_PCTOVMC_VENDOUTIND     		0x0F
 //pc上发给vmc机重新复位指令
-#define MBOX_PCTOVMC_RESETIND     		    0x0F
+#define MBOX_PCTOVMC_RESETIND     		    0x10
 //pc上发给vmc机得到设备状态指令
-#define MBOX_PCTOVMC_STATUSIND     		    0x10
+#define MBOX_PCTOVMC_STATUSIND     		    0x11
 //向PC机上传设备状态指令
-#define MBOX_VMCTOPC_STATUS     		    0x11
+#define MBOX_VMCTOPC_STATUS     		    0x12
 //向PC机上传Action信息
-#define MBOX_VMCTOPC_ACTION     		    0x12
+#define MBOX_VMCTOPC_ACTION     		    0x13
 //pc上发给vmc机CONTROL指令
-#define MBOX_PCTOVMC_CONTROLIND     	    0x13
+#define MBOX_PCTOVMC_CONTROLIND     	    0x14
 //向PC机上传Admin信息
-#define MBOX_VMCTOPC_ADMIN      		    0x14
+#define MBOX_VMCTOPC_ADMIN      		    0x15
 //pc上发给vmc机得到Info指令
-#define MBOX_PCTOVMC_INFOIND     		    0x15
+#define MBOX_PCTOVMC_INFOIND     		    0x16
 //向PC机上传相应的Info指令
-#define MBOX_VMCTOPC_INFORPT     		    0x16
+#define MBOX_VMCTOPC_INFORPT     		    0x17
 
 
 

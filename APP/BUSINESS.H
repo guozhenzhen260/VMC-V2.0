@@ -18,6 +18,7 @@
 void BusinessProcess(void *pvData);
 extern uint8_t StackMoneyInd(uint32_t PriceSale);
 extern void CostMoneyInd(uint32_t PriceSale);
+extern uint8_t CostReaderRPT(uint32_t PriceSale);
 extern uint32_t GetAmountMoney(void);
 extern void VendoutInd(uint16_t columnNo, uint32_t PriceSale,uint8_t Type);
 extern void VendoutIndFail(uint16_t columnNo, uint32_t PriceSale,uint8_t Type,uint8_t status);
@@ -25,7 +26,7 @@ extern void ResetInd(void);
 extern void TuiMoneyInd(void);
 extern void BillCoinCtr(uint8_t billCtr,uint8_t coinCtr,uint8_t readerCtr);
 extern void rstTime(void);
-extern uint32_t GetAmountMoney(void);
+extern uint32_t GetReaderAmount(void);
 
 #endif
 /**************************************End Of File*******************************************************/

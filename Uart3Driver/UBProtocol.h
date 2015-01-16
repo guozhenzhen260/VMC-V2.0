@@ -110,6 +110,7 @@
 #define VP_DEV_BILL         1
 #define VP_DEV_ESCROWIN        100
 #define VP_DEV_ESCROWOUT       101
+#define VP_DEV_READER         2
 #define VP_BUT_GAME           0
 #define VP_BUT_NUMBER         1
 #define VP_BUT_GOODS          2

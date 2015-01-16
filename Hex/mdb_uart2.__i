@@ -1,1 +1,0 @@
--c --cpu Cortex-M3 -g -O0 --apcs=interwork -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\NXP\LPC17xx" -o ".\Hex\mdb_uart2.o" --omf_browse ".\Hex\mdb_uart2.crf" --depend ".\Hex\mdb_uart2.d" "Drivers\MDB_UART2.C"

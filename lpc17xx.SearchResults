@@ -1,85 +1,12 @@
----- GetAmountMoney 匹配 (84 在 4 文件 ) ----
-Business.c (app):79:extern uint32_t GetAmountMoney(void);
-Business.c (app):352:			if(GetAmountMoney() > 0)
-Business.c (app):430:						if(GetAmountMoney() > 0)
-Business.c (app):470:						if(GetAmountMoney() > 0)
-Business.c (app):536:				if(GetAmountMoney() > 0)
-Business.c (app):567:				if(GetAmountMoney() > 0)
-Business.c (app):585:				if(GetAmountMoney() > 0)
-Business.c (app):604:				if(GetAmountMoney() > 0)
-Business.c (app):646:				if(GetAmountMoney() > 0)
-Business.c (app):705:		if(GetAmountMoney() > 0)
-Business.c (app):750:				if(GetAmountMoney() > 0)
-Business.c (app):785:				if(GetAmountMoney() > 0)
-Business.c (app):825:					if(GetAmountMoney() > 0)
-Business.c (app):849:				if(GetAmountMoney() > 0)
-Business.c (app):878:					if(GetAmountMoney() > 0)
-Business.c (app):920:				if(GetAmountMoney() > 0)
-Business.c (app):941:				if(GetAmountMoney() > 0)
-Business.c (app):963:				if(GetAmountMoney() > 0)
-Business.c (app):1004:				if(GetAmountMoney() > 0)
-Business.c (app):1048:	dispnum = GetAmountMoney();
-Business.c (app):1447:uint32_t GetAmountMoney()
-Business.c (app):1462:	if( (GetAmountMoney()==0)&&(vmcChangeLow==0)&&(DeviceStateBusiness.Billdisable==1) )
-Business.c (app):1464:		TraceBill("\r\n ErrBill=%d,%d,%d",GetAmountMoney(),vmcChangeLow,DeviceStateBusiness.Billdisable);
-Business.c (app):1639:			TraceCoin("\r\nAppcoin1.coin=%ld,%ld",InValue,GetAmountMoney());
-Business.c (app):1644:			PayinRPTAPI(1,InValue,GetAmountMoney());//上报PC端
-Business.c (app):1662:					PayinRPTAPI(2,InValue,GetAmountMoney());//上报PC端
-Business.c (app):1676:					if(GetAmountMoney())
-Business.c (app):1705:					PayinRPTAPI(3,InValue,GetAmountMoney());//上报PC端
-Business.c (app):1754:		paymoney=GetAmountMoney();
-Business.c (app):1799:			PayinRPTAPI(4,g_holdValue,GetAmountMoney()-g_holdValue);//上报PC端
-Business.c (app):1808:	if(GetAmountMoney())
-Business.c (app):1814:		ComStatus = ChangerDevPayoutAPI(GetAmountMoney(),&backmoney);		
-Business.c (app):1824:		LogChangeAPI(GetAmountMoney()-backmoney,backmoney);//记录日志
-Business.c (app):1825:		PayoutRPTAPI(0,0,GetAmountMoney()-backmoney,backmoney);
-Business.c (app):1836:		LogChangeAPI(GetAmountMoney(),0);//记录日志
-Business.c (app):1837:		PayoutRPTAPI(0,0,GetAmountMoney(),0);
-Business.c (app):1941:	if((PriceSale > GetAmountMoney())&&(g_readerAmount==0))
-Business.c (app):1996:				PayinRPTAPI(2,g_holdValue,GetAmountMoney()-g_holdValue);//上报PC端
-Business.c (app):2004:				PayinRPTAPI(4,g_holdValue,GetAmountMoney()-g_holdValue);//上报PC端
-Business.c (app):2049:				PayinRPTAPI(4,g_holdValue,GetAmountMoney()-g_holdValue);//上报PC端
-Business.c (app):2175:				PayinRPTAPI(2,g_holdValue,GetAmountMoney()-g_holdValue);//上报PC端
-Business.c (app):2182:				PayinRPTAPI(4,g_holdValue,GetAmountMoney()-g_holdValue);//上报PC端
-Business.c (app):2186:		TracePC("\r\n App Price=%ld,money=%ld",PriceSale,GetAmountMoney());
-Business.c (app):2187:		if(GetAmountMoney() >= PriceSale)
-Business.c (app):2193:	if(GetAmountMoney())
-Business.c (app):2213:			SaleSelectionKeyAPI(GetAmountMoney());
-Business.c (app):2269:					PayinRPTAPI(2,g_holdValue,GetAmountMoney()-g_holdValue);//上报PC端
-Business.c (app):2276:					PayinRPTAPI(4,g_holdValue,GetAmountMoney()-g_holdValue);//上报PC端
-Business.c (app):2301:	if(GetAmountMoney())
-Business.c (app):2321:			SaleSelectionKeyAPI(GetAmountMoney());
-Business.c (app):2362:			if(!GetAmountMoney())
-Business.c (app):2376:			VendoutRPTAPI(CHUHUO_OK, 1,columnNo%100, Type, PriceSale,GetAmountMoney(), ChannelGetParamValue(columnNo%100,2,columnNo/100) );		    					
-Business.c (app):2382:			VendoutRPTAPI(CHUHUO_ERR,1,columnNo%100, Type, PriceSale,GetAmountMoney(), ChannelGetParamValue(columnNo%100,2,columnNo/100) );		
-Business.c (app):2397:			VendoutRPTAPI( 0, columnNo/100,columnNo%100, Type, PriceSale,GetAmountMoney(), ChannelGetParamValue(columnNo%100,2,columnNo/100) );
-Business.c (app):2402:			VendoutRPTAPI( 2, columnNo/100,columnNo%100, Type, PriceSale,GetAmountMoney(), ChannelGetParamValue(columnNo%100,2,columnNo/100) );		
-Business.c (app):2405:		if(GetAmountMoney())
-Business.c (app):2425:				SaleSelectionKeyAPI(GetAmountMoney());
-Business.c (app):2458:		VendoutRPTAPI( status, columnNo/100,columnNo%100, Type, PriceSale,GetAmountMoney(), ChannelGetParamValue(columnNo%100,2,columnNo/100) );		
-Business.c (app):2473:	if(GetAmountMoney())
-Business.c (app):2505:	if(GetAmountMoney())
-Business.c (app):2647:					TraceBill("\r\n App2amount=%ld",GetAmountMoney());
-Business.c (app):2650:					SaleSelectionKeyAPI(GetAmountMoney());
-Business.c (app):2678:				PollAPI(GetAmountMoney());
-Business.c (app):2691:					if(GetAmountMoney() == 0)
-Business.c (app):2721:					if(GetAmountMoney() == 0)
-Business.c (app):2754:					SaleSelectionKeyAPI(GetAmountMoney());
-Business.c (app):2755:					TraceBill("\r\n App2amount=%ld",GetAmountMoney());	 				
-Business.c (app):2797:				PollAPI(GetAmountMoney());
-Business.c (app):2822:				if(GetAmountMoney())
-Business.c (app):2874:					VendoutRPTAPI( 0, vmcColumn/100,vmcColumn%100, 0, vmcPrice,GetAmountMoney(), ChannelGetParamValue(vmcColumn%100,2,vmcColumn/100) );
-Business.c (app):2887:						VendoutRPTAPI( CHUHUO_ERR, 1,vmcColumn%100, 0, vmcPrice,GetAmountMoney(), ChannelGetParamValue(vmcColumn%100,2,vmcColumn/100) );
-Business.c (app):2890:						VendoutRPTAPI( 2, vmcColumn/100,vmcColumn%100, 0, vmcPrice,GetAmountMoney(), ChannelGetParamValue(vmcColumn%100,2,vmcColumn/100) );
-Business.c (app):2907:				if( (UserPara.TransMultiMode == 1)&&(GetAmountMoney()) )
-Business.c (app):2928:						SaleSelectionKeyAPI(GetAmountMoney());
-Business.c (app):2932:				else if(GetAmountMoney())
-Business.c (app):2946:				if(GetAmountMoney())
-Business.c (app):3024:					PollAPI(GetAmountMoney());
-Business.c (app):3046:					TraceBill("\r\n App2amount=%ld",GetAmountMoney());
-Business.c (app):3060:					TraceBill("\r\n App2amount=%ld",GetAmountMoney());	 				
-Business.c (app):3078:				PollAPI(GetAmountMoney());
-Business.c (app):3125:					PollAPI(GetAmountMoney());
-Business.h (app):21:extern uint32_t GetAmountMoney(void);
-PCComAPI.c (api):698:							CostRPTAPI(AccepterUboxMsg->Type,0,GetAmountMoney());
-UBProtocol.c (uart3driver):977:						tempMoney = MoneySend(GetAmountMoney());
+---- CostReaderRPT 匹配 (4 在 3 文件 ) ----
+Business.c (app):2252:uint8_t CostReaderRPT(uint32_t PriceSale)
+Business.c (app):2390:	CostReaderRPT(PriceSale);
+Business.h (app):21:extern uint8_t CostReaderRPT(uint32_t PriceSale);
+PCComAPI.c (api):698:							CostReaderRPT(AccepterUboxMsg->costMoney);
+---- ReaderDevVendoutResultAPI 匹配 (6 在 3 文件 ) ----
+Business.c (app):2092:			ReaderDevVendoutResultAPI(1);
+Business.c (app):2290:			ReaderDevVendoutResultAPI(1);
+Business.c (app):2438:			ReaderDevVendoutResultAPI(2);
+Business.c (app):2924:						ReaderDevVendoutResultAPI(2);
+ReaderAPI.c (api):304:void ReaderDevVendoutResultAPI(uint8_t result)
+ReaderAPI.h (api):16:extern void ReaderDevVendoutResultAPI(uint8_t result);

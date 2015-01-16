@@ -1448,6 +1448,19 @@ uint32_t GetAmountMoney()
 	return g_coinAmount + g_billAmount + g_holdValue + g_readerAmount;
 }
 
+/*********************************************************************************************************
+** Function name:     	GetReaderAmount
+** Descriptions:	    刷卡总金额总金额
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+uint32_t GetReaderAmount()
+{	
+	return g_readerAmount;
+}
+
+
 
 /*********************************************************************************************************
 ** Function name:       UpdateErrBill
@@ -1723,11 +1736,13 @@ uint8_t GetMoney()
 			g_readerAmount = InValue;
 			LogGetMoneyAPI(InValue,3);//记录日志
 			BillCoinCtr(2,2,0);
+			PayinRPTAPI(5,InValue,GetAmountMoney());//上报PC端
 			return 1;		
 		}
 		else if(readerType == 2)
 		{		
 			TraceReader("\r\n AppReader OUTPUT card");
+			PayoutRPTAPI(2,0,GetAmountMoney(),0);
 			readerType = 0;
 			g_readerAmount = 0;
 			return 2;
@@ -2227,6 +2242,32 @@ uint8_t StackMoneyInd(uint32_t PriceSale)
 	}
 	return state;
 }
+/*********************************************************************************************************
+** Function name:     	CostMoneyInd
+** Descriptions:	    通过PC机请求读卡器扣除金额
+** input parameters:    PriceSale出货单价
+** output parameters:   1允许扣款,0不允许扣款
+** Returned value:      无
+*********************************************************************************************************/
+uint8_t CostReaderRPT(uint32_t PriceSale)
+{
+	uint8_t result=1,ComStatus=0;
+	//扣除单价
+	if(PriceSale)
+	{
+		//向读卡器发送交易成功
+		if(g_readerAmount > 0)
+		{			
+			DispReaderDevVendoutRPT();
+			ComStatus = ReaderDevVendoutRPTAPI(PriceSale);			
+			if(ComStatus == 0)
+			{
+				result=0;
+			}
+		}	
+	}
+	return result;
+}
 
 /*********************************************************************************************************
 ** Function name:     	CostMoneyInd
@@ -2244,16 +2285,11 @@ void CostMoneyInd(uint32_t PriceSale)
 	{
 		//向读卡器发送交易成功
 		if(g_readerAmount > 0)
-		{			
-			DispReaderDevVendoutRPT();
-			ComStatus = ReaderDevVendoutRPTAPI(0);			
-			if(ComStatus == 1)
-			{
-				TraceReader("\r\n AppPCCostSucc");
-				ReaderDevVendoutResultAPI(1);
-				g_readerAmount -= PriceSale;
-				PriceSale = 0;
-			}
+		{		
+			TraceReader("\r\n AppPCCostSucc");
+			ReaderDevVendoutResultAPI(1);
+			g_readerAmount -= PriceSale;
+			PriceSale = 0;			
 		}	
 		else
 		{			
@@ -2351,6 +2387,7 @@ void VendoutInd(uint16_t columnNo, uint32_t PriceSale,uint8_t Type)
 	BillCoinCtr(2,2,0);	
 
 	TracePC("\r\n %dAppUboxVendout",OSTimeGet());	
+	CostReaderRPT(PriceSale);
 	//ActionRPTAPI(1,0,30,columnNo%100, Type,PriceSale,GetAmountMoney());
 	ChuhuoRst = ChannelAPIProcess(columnNo%100,CHANNEL_OUTGOODS,columnNo/100);		
 	//add by yoc 2013.12.16
@@ -2397,7 +2434,11 @@ void VendoutInd(uint16_t columnNo, uint32_t PriceSale,uint8_t Type)
 		}
 		else
 		{	
-			DispChhuoFailPage();		
+			DispChhuoFailPage();
+			if(g_readerAmount > 0)
+			{
+				ReaderDevVendoutResultAPI(2);
+			}
 			VendoutRPTAPI( 2, columnNo/100,columnNo%100, Type, PriceSale,GetAmountMoney(), ChannelGetParamValue(columnNo%100,2,columnNo/100) );		
 		}	
 		//2产生状态变化
@@ -2501,7 +2542,11 @@ void ResetInd()
 void TuiMoneyInd()
 {
 	uint32_t debtMoney;
-	if(GetAmountMoney())
+	//读卡器不允许找零
+	if((SystemPara.CashlessDeviceType != OFF_READERACCEPTER)&&(GetReaderAmount()))
+	{
+	}
+	else if(GetAmountMoney())
 	{
 		DispPayoutPage();
 		TracePC("\r\n AppTui%d",OSTimeGet());
@@ -2789,7 +2834,7 @@ void BusinessProcess(void *pvData)
 					DispSaleTime();
 				}
 				if(moneyGet == 2)
-				{
+				{					
 					vmcStatus = VMC_END;
 				}
 				//7.检查pc机轮询

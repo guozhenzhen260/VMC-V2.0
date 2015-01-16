@@ -59,7 +59,7 @@ void WaitForPCInit()
 /*********************************************************************************************************
 ** Function name:       PayinRPTAPI
 ** Descriptions:        投币后,发送消息给PC机
-** input parameters:    dev: 1投入硬币,2投入纸币,3暂存纸币进入,4暂存纸币出币
+** input parameters:    dev: 1投入硬币,2投入纸币,3暂存纸币进入,4暂存纸币出币,5读卡器
                         moneyIn投入的金额,以分为单位
                         moneyAll总的投入的金额,以分为单位 
 ** output parameters:   无
@@ -101,6 +101,8 @@ void PayinRPTAPI(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney)
 				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINESCROWIN;	
 			else if(dev==4)
 				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINESCROWOUT;	
+			else if(dev==5)
+				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINREADER;	
 			MsgUboxPack[g_Ubox_Index].payInMoney = payInMoney;
 			MsgUboxPack[g_Ubox_Index].payAllMoney = payAllMoney;
 			TraceCoin("\r\nMidcoin=%ld,%ld",MsgUboxPack[g_Ubox_Index].payInMoney,MsgUboxPack[g_Ubox_Index].payAllMoney);
@@ -115,7 +117,7 @@ void PayinRPTAPI(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney)
 /*********************************************************************************************************
 ** Function name:       PayoutRPTAPI
 ** Descriptions:        找零后,发送消息给PC机
-** input parameters:    payoutDev:找零设备,0硬币,1纸币
+** input parameters:    payoutDev:找零设备,0硬币,1纸币,2读卡器
 						payoutType: 1找币类型
                         payoutMoney找出的金额,以分为单位
                         payAllMoney还剩的金额,以分为单位 
@@ -662,8 +664,14 @@ void PollAPI(uint32_t payAllMoney)
 								ComReturn = 1;
 							}
 							*/
+							//读卡器有开启并且有插卡金额
+							if((SystemPara.CashlessDeviceType != OFF_READERACCEPTER)&&(GetReaderAmount()))
+							{
+								ComReturn = 1;
+								TracePC("\r\n OFF_CHANGER=1");
+							}	
 							//3无找零器
-							if(SystemPara.CoinChangerType == OFF_CHANGER)
+							else if(SystemPara.CoinChangerType == OFF_CHANGER)
 							{
 								ComReturn = 1;
 								TracePC("\r\n OFF_CHANGER=1");
@@ -687,6 +695,7 @@ void PollAPI(uint32_t payAllMoney)
                 	    if(ComReturn == 1)
                 	    {							
 							//4扣款
+							CostReaderRPT(AccepterUboxMsg->costMoney);
 							CostMoneyInd(AccepterUboxMsg->costMoney);	
 							LogCostAPI(AccepterUboxMsg->costMoney);	
 							//5上报cost_report
@@ -789,8 +798,14 @@ void PollAPI(uint32_t payAllMoney)
 								TracePC("\r\n MiddUbox vendE7");
 							}	
 							*/
+							//读卡器有开启并且有插卡金额
+							if((SystemPara.CashlessDeviceType != OFF_READERACCEPTER)&&(GetReaderAmount()))
+							{
+								ComReturn = 1;
+								TracePC("\r\n OFF_CHANGER=1");
+							}
 							//5无找零器
-							if(SystemPara.CoinChangerType == OFF_CHANGER)
+							else if(SystemPara.CoinChangerType == OFF_CHANGER)
 							{
 								ComReturn = 1;
 								TracePC("\r\n OFF_CHANGER=1");
