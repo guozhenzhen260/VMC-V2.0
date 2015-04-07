@@ -62,6 +62,6 @@
 .\Hex\taskuart0device.o: Uart0Driver\..\.\APP\common.h
 .\Hex\taskuart0device.o: Uart0Driver\..\.\APP\LANGUAGE.h
 .\Hex\taskuart0device.o: Uart0Driver\..\.\APP\MAINTAIN.H
+.\Hex\taskuart0device.o: Uart0Driver\..\.\APP\BUSINESS.H
 .\Hex\taskuart0device.o: Uart0Driver\..\APP\channel.h
 .\Hex\taskuart0device.o: Uart0Driver\..\APP\LIFTTABLE.h
-.\Hex\taskuart0device.o: Uart0Driver\..\APP\BUSINESS.H

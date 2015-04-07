@@ -1,12 +1,3 @@
----- CostReaderRPT 匹配 (4 在 3 文件 ) ----
-Business.c (app):2252:uint8_t CostReaderRPT(uint32_t PriceSale)
-Business.c (app):2390:	CostReaderRPT(PriceSale);
-Business.h (app):21:extern uint8_t CostReaderRPT(uint32_t PriceSale);
-PCComAPI.c (api):698:							CostReaderRPT(AccepterUboxMsg->costMoney);
----- ReaderDevVendoutResultAPI 匹配 (6 在 3 文件 ) ----
-Business.c (app):2092:			ReaderDevVendoutResultAPI(1);
-Business.c (app):2290:			ReaderDevVendoutResultAPI(1);
-Business.c (app):2438:			ReaderDevVendoutResultAPI(2);
-Business.c (app):2924:						ReaderDevVendoutResultAPI(2);
-ReaderAPI.c (api):304:void ReaderDevVendoutResultAPI(uint8_t result)
-ReaderAPI.h (api):16:extern void ReaderDevVendoutResultAPI(uint8_t result);
+---- MiddChange out= 匹配 (2 在 1 文件 ) ----
+ChangerAPI.c (api):793:						TraceChange("\r\nMiddChange out=%d,%d,%ld",AccepterMsg->PayoutBackNum[0],AccepterMsg->PayoutBackNum[1],backmoney);
+ChangerAPI.c (api):821:				TraceChange("\r\nMiddChange out=%d,%d",PayoutNum[0],PayoutNum[1]);

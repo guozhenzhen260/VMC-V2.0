@@ -62,4 +62,5 @@
 .\Hex\logapi.o: API\..\.\APP\common.h
 .\Hex\logapi.o: API\..\.\APP\LANGUAGE.h
 .\Hex\logapi.o: API\..\.\APP\MAINTAIN.H
+.\Hex\logapi.o: API\..\.\APP\BUSINESS.H
 .\Hex\logapi.o: API\..\Uart3Driver\ZHIHUIPC.h

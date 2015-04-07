@@ -62,4 +62,5 @@
 .\Hex\mdbchanger.o: Drivers\..\.\APP\common.h
 .\Hex\mdbchanger.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\mdbchanger.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\mdbchanger.o: Drivers\..\.\APP\BUSINESS.H
 .\Hex\mdbchanger.o: Drivers\MDBChanger.h

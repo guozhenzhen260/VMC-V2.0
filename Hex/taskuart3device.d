@@ -62,5 +62,6 @@
 .\Hex\taskuart3device.o: Uart3Driver\..\.\APP\common.h
 .\Hex\taskuart3device.o: Uart3Driver\..\.\APP\LANGUAGE.h
 .\Hex\taskuart3device.o: Uart3Driver\..\.\APP\MAINTAIN.H
+.\Hex\taskuart3device.o: Uart3Driver\..\.\APP\BUSINESS.H
 .\Hex\taskuart3device.o: Uart3Driver\ZHIHUIPC.H
 .\Hex\taskuart3device.o: Uart3Driver\VMC_GPRS_PC.h

@@ -121,6 +121,7 @@ extern "C" {
 #include ".\APP\common.h"
 #include ".\APP\LANGUAGE.h"
 #include ".\APP\MAINTAIN.H"
+#include ".\APP\BUSINESS.H"
 
 #ifdef __cplusplus
 	}

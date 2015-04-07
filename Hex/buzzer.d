@@ -62,3 +62,4 @@
 .\Hex\buzzer.o: Drivers\..\.\APP\common.h
 .\Hex\buzzer.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\buzzer.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\buzzer.o: Drivers\..\.\APP\BUSINESS.H

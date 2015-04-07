@@ -62,4 +62,5 @@
 .\Hex\ubprotocol.o: Uart3Driver\..\.\APP\common.h
 .\Hex\ubprotocol.o: Uart3Driver\..\.\APP\LANGUAGE.h
 .\Hex\ubprotocol.o: Uart3Driver\..\.\APP\MAINTAIN.H
+.\Hex\ubprotocol.o: Uart3Driver\..\.\APP\BUSINESS.H
 .\Hex\ubprotocol.o: Uart3Driver\..\APP\CHANNEL.h

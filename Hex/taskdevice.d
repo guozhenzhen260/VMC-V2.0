@@ -62,6 +62,7 @@
 .\Hex\taskdevice.o: Drivers\..\.\APP\common.h
 .\Hex\taskdevice.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\taskdevice.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\taskdevice.o: Drivers\..\.\APP\BUSINESS.H
 .\Hex\taskdevice.o: Drivers\BillAccepter.h
 .\Hex\taskdevice.o: Drivers\CoinAccepter.h
 .\Hex\taskdevice.o: Drivers\MDBChanger.h

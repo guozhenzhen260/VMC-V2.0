@@ -62,3 +62,4 @@
 .\Hex\mdb_uart2.o: Drivers\..\.\APP\common.h
 .\Hex\mdb_uart2.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\mdb_uart2.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\mdb_uart2.o: Drivers\..\.\APP\BUSINESS.H

@@ -62,3 +62,4 @@
 .\Hex\target.o: Firmware\..\.\APP\common.h
 .\Hex\target.o: Firmware\..\.\APP\LANGUAGE.h
 .\Hex\target.o: Firmware\..\.\APP\MAINTAIN.H
+.\Hex\target.o: Firmware\..\.\APP\BUSINESS.H

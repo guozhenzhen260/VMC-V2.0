@@ -64,3 +64,4 @@
 .\Hex\vmc_gprs_pc.o: Uart3Driver\..\.\APP\common.h
 .\Hex\vmc_gprs_pc.o: Uart3Driver\..\.\APP\LANGUAGE.h
 .\Hex\vmc_gprs_pc.o: Uart3Driver\..\.\APP\MAINTAIN.H
+.\Hex\vmc_gprs_pc.o: Uart3Driver\..\.\APP\BUSINESS.H

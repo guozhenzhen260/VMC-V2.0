@@ -62,4 +62,5 @@
 .\Hex\mdbreader.o: Drivers\..\.\APP\common.h
 .\Hex\mdbreader.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\mdbreader.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\mdbreader.o: Drivers\..\.\APP\BUSINESS.H
 .\Hex\mdbreader.o: Drivers\MDBReader.h

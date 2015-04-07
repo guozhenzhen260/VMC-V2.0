@@ -62,3 +62,4 @@
 .\Hex\tuibiapi.o: API\..\.\APP\common.h
 .\Hex\tuibiapi.o: API\..\.\APP\LANGUAGE.h
 .\Hex\tuibiapi.o: API\..\.\APP\MAINTAIN.H
+.\Hex\tuibiapi.o: API\..\.\APP\BUSINESS.H

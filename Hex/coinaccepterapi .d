@@ -62,3 +62,4 @@
 .\Hex\coinaccepterapi .o: API\..\.\APP\common.h
 .\Hex\coinaccepterapi .o: API\..\.\APP\LANGUAGE.h
 .\Hex\coinaccepterapi .o: API\..\.\APP\MAINTAIN.H
+.\Hex\coinaccepterapi .o: API\..\.\APP\BUSINESS.H

@@ -62,3 +62,4 @@
 .\Hex\pcoin.o: Drivers\..\.\APP\common.h
 .\Hex\pcoin.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\pcoin.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\pcoin.o: Drivers\..\.\APP\BUSINESS.H

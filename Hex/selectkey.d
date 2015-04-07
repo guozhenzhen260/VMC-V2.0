@@ -62,4 +62,5 @@
 .\Hex\selectkey.o: Uart1Driver\..\.\APP\common.h
 .\Hex\selectkey.o: Uart1Driver\..\.\APP\LANGUAGE.h
 .\Hex\selectkey.o: Uart1Driver\..\.\APP\MAINTAIN.H
+.\Hex\selectkey.o: Uart1Driver\..\.\APP\BUSINESS.H
 .\Hex\selectkey.o: Uart1Driver\SelectKey.h

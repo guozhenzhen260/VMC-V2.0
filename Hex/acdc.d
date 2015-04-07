@@ -63,4 +63,5 @@
 .\Hex\acdc.o: APP\..\.\APP\common.h
 .\Hex\acdc.o: APP\..\.\APP\LANGUAGE.h
 .\Hex\acdc.o: APP\..\.\APP\MAINTAIN.H
+.\Hex\acdc.o: APP\..\.\APP\BUSINESS.H
 .\Hex\acdc.o: APP\CHANNEL.h

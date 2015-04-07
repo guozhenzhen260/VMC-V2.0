@@ -62,3 +62,4 @@
 .\Hex\lifttableapi.o: API\..\.\APP\common.h
 .\Hex\lifttableapi.o: API\..\.\APP\LANGUAGE.h
 .\Hex\lifttableapi.o: API\..\.\APP\MAINTAIN.H
+.\Hex\lifttableapi.o: API\..\.\APP\BUSINESS.H

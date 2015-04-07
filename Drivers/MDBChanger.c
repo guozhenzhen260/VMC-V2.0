@@ -121,7 +121,11 @@ unsigned char ChangePayoutProcessLevel3(uint32_t PayMoney,unsigned char PayoutNu
 				}
 				OSTimeDly(OS_TICKS_PER_SEC / 100);
 			}
-		}			
+		}	
+		else
+		{
+			TraceChange("\r\nDrvChangesendFail");
+		}
 	}		
 	return 0;
 }

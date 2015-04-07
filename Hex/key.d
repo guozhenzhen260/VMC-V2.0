@@ -62,3 +62,4 @@
 .\Hex\key.o: Drivers\..\.\APP\common.h
 .\Hex\key.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\key.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\key.o: Drivers\..\.\APP\BUSINESS.H

@@ -62,3 +62,4 @@
 .\Hex\channeldriver.o: Drivers\..\.\APP\common.h
 .\Hex\channeldriver.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\channeldriver.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\channeldriver.o: Drivers\..\.\APP\BUSINESS.H

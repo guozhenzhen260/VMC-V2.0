@@ -62,3 +62,4 @@
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\APP\common.h
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\APP\LANGUAGE.h
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\APP\MAINTAIN.H
+.\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\APP\BUSINESS.H

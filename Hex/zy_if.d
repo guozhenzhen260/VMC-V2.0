@@ -62,4 +62,5 @@
 .\Hex\zy_if.o: Firmware\..\.\APP\common.h
 .\Hex\zy_if.o: Firmware\..\.\APP\LANGUAGE.h
 .\Hex\zy_if.o: Firmware\..\.\APP\MAINTAIN.H
+.\Hex\zy_if.o: Firmware\..\.\APP\BUSINESS.H
 .\Hex\zy_if.o: Firmware\zy_if_cfg.h

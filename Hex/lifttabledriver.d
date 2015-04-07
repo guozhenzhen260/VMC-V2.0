@@ -62,3 +62,4 @@
 .\Hex\lifttabledriver.o: Drivers\..\.\APP\common.h
 .\Hex\lifttabledriver.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\lifttabledriver.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\lifttabledriver.o: Drivers\..\.\APP\BUSINESS.H

@@ -62,3 +62,4 @@
 .\Hex\checkdevicestate.o: API\..\.\APP\common.h
 .\Hex\checkdevicestate.o: API\..\.\APP\LANGUAGE.h
 .\Hex\checkdevicestate.o: API\..\.\APP\MAINTAIN.H
+.\Hex\checkdevicestate.o: API\..\.\APP\BUSINESS.H

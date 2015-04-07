@@ -62,3 +62,4 @@
 .\Hex\readerapi.o: API\..\.\APP\common.h
 .\Hex\readerapi.o: API\..\.\APP\LANGUAGE.h
 .\Hex\readerapi.o: API\..\.\APP\MAINTAIN.H
+.\Hex\readerapi.o: API\..\.\APP\BUSINESS.H

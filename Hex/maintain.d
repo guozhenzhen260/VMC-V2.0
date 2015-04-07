@@ -62,6 +62,7 @@
 .\Hex\maintain.o: APP\..\.\APP\common.h
 .\Hex\maintain.o: APP\..\.\APP\LANGUAGE.h
 .\Hex\maintain.o: APP\..\.\APP\MAINTAIN.H
+.\Hex\maintain.o: APP\..\.\APP\BUSINESS.H
 .\Hex\maintain.o: APP\USERMAINTAIN_MENU.C
 .\Hex\maintain.o: APP\MAINTAIN_MENU.C
 .\Hex\maintain.o: APP\SELFCHECK_MENU.C

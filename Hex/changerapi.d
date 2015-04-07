@@ -62,3 +62,4 @@
 .\Hex\changerapi.o: API\..\.\APP\common.h
 .\Hex\changerapi.o: API\..\.\APP\LANGUAGE.h
 .\Hex\changerapi.o: API\..\.\APP\MAINTAIN.H
+.\Hex\changerapi.o: API\..\.\APP\BUSINESS.H

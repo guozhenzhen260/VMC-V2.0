@@ -62,4 +62,5 @@
 .\Hex\billaccepter.o: Drivers\..\.\APP\common.h
 .\Hex\billaccepter.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\billaccepter.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\billaccepter.o: Drivers\..\.\APP\BUSINESS.H
 .\Hex\billaccepter.o: Drivers\BillAccepter.h

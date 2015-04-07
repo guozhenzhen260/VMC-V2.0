@@ -62,3 +62,4 @@
 .\Hex\gprsapi.o: API\..\.\APP\common.h
 .\Hex\gprsapi.o: API\..\.\APP\LANGUAGE.h
 .\Hex\gprsapi.o: API\..\.\APP\MAINTAIN.H
+.\Hex\gprsapi.o: API\..\.\APP\BUSINESS.H

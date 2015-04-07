@@ -62,3 +62,4 @@
 .\Hex\xmt.o: Uart1Driver\..\.\APP\common.h
 .\Hex\xmt.o: Uart1Driver\..\.\APP\LANGUAGE.h
 .\Hex\xmt.o: Uart1Driver\..\.\APP\MAINTAIN.H
+.\Hex\xmt.o: Uart1Driver\..\.\APP\BUSINESS.H

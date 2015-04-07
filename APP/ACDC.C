@@ -1441,7 +1441,17 @@ void acdc_hotTimerHandle(unsigned char cabinet)
 
 
 void ACDCTimingHandle(unsigned char Binnum)
-{	
+{
+	static unsigned char acdc_init = 0;
+	//上电同步一次
+	if(acdc_init == 0){
+		acdc_handle_API(1,UserPara.LEDCtr.flag & 0x01,UserPara.CompressorCtr.flag & 0x01);							
+		if(SystemPara.SubBinOpen)
+			acdc_handle_API(2,UserPara.LEDCtr2Bin.flag & 0x01,UserPara.CompressorCtr2Bin.flag & 0x01);
+		acdc_init = 1;
+	}
+
+
 	acdc_timerHandle(1);
 	if(SystemPara.SubBinOpen)
 		acdc_timerHandle(2);

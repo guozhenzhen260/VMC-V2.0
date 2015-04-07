@@ -62,3 +62,4 @@
 .\Hex\timer.o: Drivers\..\.\APP\common.h
 .\Hex\timer.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\timer.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\timer.o: Drivers\..\.\APP\BUSINESS.H

@@ -62,7 +62,7 @@
 .\Hex\business.o: APP\..\.\APP\common.h
 .\Hex\business.o: APP\..\.\APP\LANGUAGE.h
 .\Hex\business.o: APP\..\.\APP\MAINTAIN.H
-.\Hex\business.o: APP\BUSINESS.H
+.\Hex\business.o: APP\..\.\APP\BUSINESS.H
 .\Hex\business.o: APP\CHANNEL.h
 .\Hex\business.o: APP\LIFTTABLE.h
 .\Hex\business.o: APP\ACDC.h

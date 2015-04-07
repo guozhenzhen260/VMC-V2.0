@@ -63,5 +63,5 @@
 .\Hex\zhihuipc.o: Uart3Driver\..\.\APP\common.h
 .\Hex\zhihuipc.o: Uart3Driver\..\.\APP\LANGUAGE.h
 .\Hex\zhihuipc.o: Uart3Driver\..\.\APP\MAINTAIN.H
+.\Hex\zhihuipc.o: Uart3Driver\..\.\APP\BUSINESS.H
 .\Hex\zhihuipc.o: Uart3Driver\..\APP\CHANNEL.h
-.\Hex\zhihuipc.o: Uart3Driver\..\App\Business.h

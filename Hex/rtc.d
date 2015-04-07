@@ -62,3 +62,4 @@
 .\Hex\rtc.o: Drivers\..\.\APP\common.h
 .\Hex\rtc.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\rtc.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\rtc.o: Drivers\..\.\APP\BUSINESS.H

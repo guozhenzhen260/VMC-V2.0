@@ -1068,8 +1068,10 @@ unsigned char ChannelOneTestPage(unsigned char cabinetNo,unsigned char logicNo,u
 			break;
 	}
 	if(rst == 0 || rst == 4)
+	{
 		if(hd_get_by_logic(cabinetNo,logicNo,HUODAO_TYPE_STATE) != HUODAO_STATE_EMPTY)
 			ChannelSetParam(logicNo,cabinetNo,CHANNELSTATE,1,0);
+	}	
 	else
 	{
 		ChannelSetParam(logicNo,cabinetNo,CHANNELSTATE,2,0);

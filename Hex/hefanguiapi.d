@@ -62,3 +62,4 @@
 .\Hex\hefanguiapi.o: API\..\.\APP\common.h
 .\Hex\hefanguiapi.o: API\..\.\APP\LANGUAGE.h
 .\Hex\hefanguiapi.o: API\..\.\APP\MAINTAIN.H
+.\Hex\hefanguiapi.o: API\..\.\APP\BUSINESS.H

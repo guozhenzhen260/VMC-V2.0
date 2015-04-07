@@ -62,3 +62,4 @@
 .\Hex\hefangui.o: Uart1Driver\..\.\APP\common.h
 .\Hex\hefangui.o: Uart1Driver\..\.\APP\LANGUAGE.h
 .\Hex\hefangui.o: Uart1Driver\..\.\APP\MAINTAIN.H
+.\Hex\hefangui.o: Uart1Driver\..\.\APP\BUSINESS.H

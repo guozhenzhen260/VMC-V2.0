@@ -62,5 +62,5 @@
 .\Hex\zhihuiapi.o: API\..\.\APP\common.h
 .\Hex\zhihuiapi.o: API\..\.\APP\LANGUAGE.h
 .\Hex\zhihuiapi.o: API\..\.\APP\MAINTAIN.H
-.\Hex\zhihuiapi.o: API\..\App\Business.h
+.\Hex\zhihuiapi.o: API\..\.\APP\BUSINESS.H
 .\Hex\zhihuiapi.o: API\..\APP\CHANNEL.h

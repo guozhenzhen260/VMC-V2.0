@@ -62,3 +62,4 @@
 .\Hex\hopperdriver.o: Drivers\..\.\APP\common.h
 .\Hex\hopperdriver.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\hopperdriver.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\hopperdriver.o: Drivers\..\.\APP\BUSINESS.H

@@ -62,3 +62,4 @@
 .\Hex\evb_uart2.o: Drivers\..\.\APP\common.h
 .\Hex\evb_uart2.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\evb_uart2.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\evb_uart2.o: Drivers\..\.\APP\BUSINESS.H

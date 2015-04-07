@@ -62,3 +62,4 @@
 .\Hex\i2c.o: Drivers\..\.\APP\common.h
 .\Hex\i2c.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\i2c.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\i2c.o: Drivers\..\.\APP\BUSINESS.H

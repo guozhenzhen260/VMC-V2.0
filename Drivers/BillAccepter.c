@@ -581,14 +581,22 @@ uint8_t BillDevEscrow()
 		ComStatus =MdbConversation(0x35,BillWrBuff,0x01,&BillRdBuff[0],&BillRdLen);
 	}
 	TraceBill("\r\n DrvEscrowsend=%d",ComStatus);
+	TraceBill("\r\nDrvEscrowsend>>%#02x,%#02x\r\n",0x35,BillWrBuff[0]);
 	OSTimeDly(OS_TICKS_PER_SEC / 100);
 	Timer.EscrowTimer = 40;
 	while(Timer.EscrowTimer)
 	{
 		//ÂÖÑ¯¼ì²âÊÇ·ñÑ¹²Ö³É¹¦
 		ComStatus = MdbConversation(0x33,NULL,0x00,&BillRdBuff[0],&BillRdLen);
+		TraceBill("\r\nDrvEscrowsend>>%#02x\r\n",0x33);
 		if(ComStatus == 1)
 		{
+			TraceBill("\r\nDrvBill= %02d-",BillRdLen);
+			for(i=0;i<16;i++)
+			{
+				TraceBill(" %02x ",BillRdBuff[i]);
+			}
+			TraceBill("\r\n");
 			for(i = 0; i < BillRdLen; i++) 
 			{
 				//0x80µ½³®Ïä,0xb0µ½Ñ­»·¶·
@@ -602,7 +610,7 @@ uint8_t BillDevEscrow()
 					}
 					return 1;	
 				}
-			}
+			}			
 			TraceBill("\r\n Drvescrow2");
 			OSTimeDly(OS_TICKS_PER_SEC / 100);
 		}

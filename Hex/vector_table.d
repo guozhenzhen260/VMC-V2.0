@@ -62,4 +62,5 @@
 .\Hex\vector_table.o: Firmware\..\.\APP\common.h
 .\Hex\vector_table.o: Firmware\..\.\APP\LANGUAGE.h
 .\Hex\vector_table.o: Firmware\..\.\APP\MAINTAIN.H
+.\Hex\vector_table.o: Firmware\..\.\APP\BUSINESS.H
 .\Hex\vector_table.o: Firmware\vector_cfg.h

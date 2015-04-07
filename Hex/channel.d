@@ -62,5 +62,6 @@
 .\Hex\channel.o: APP\..\.\APP\common.h
 .\Hex\channel.o: APP\..\.\APP\LANGUAGE.h
 .\Hex\channel.o: APP\..\.\APP\MAINTAIN.H
+.\Hex\channel.o: APP\..\.\APP\BUSINESS.H
 .\Hex\channel.o: APP\CHANNEL.h
 .\Hex\channel.o: APP\LIFTTABLE.h

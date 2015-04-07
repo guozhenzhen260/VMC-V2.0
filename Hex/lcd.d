@@ -62,6 +62,7 @@
 .\Hex\lcd.o: Drivers\..\.\APP\common.h
 .\Hex\lcd.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\lcd.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\lcd.o: Drivers\..\.\APP\BUSINESS.H
 .\Hex\lcd.o: Drivers\DOT_ASCII16.C
 .\Hex\lcd.o: Drivers\DOT_CHINESE16.C
 .\Hex\lcd.o: Drivers\DOT_LOGO.C

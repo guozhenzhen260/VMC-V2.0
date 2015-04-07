@@ -62,5 +62,6 @@
 .\Hex\rt_sys_c.o: Startup\..\.\APP\common.h
 .\Hex\rt_sys_c.o: Startup\..\.\APP\LANGUAGE.h
 .\Hex\rt_sys_c.o: Startup\..\.\APP\MAINTAIN.H
+.\Hex\rt_sys_c.o: Startup\..\.\APP\BUSINESS.H
 .\Hex\rt_sys_c.o: C:\Keil\ARM\RV31\INC\rt_sys.h
 .\Hex\rt_sys_c.o: C:\Keil\ARM\RV31\INC\time.h

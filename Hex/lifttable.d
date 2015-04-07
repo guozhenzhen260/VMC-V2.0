@@ -62,4 +62,5 @@
 .\Hex\lifttable.o: APP\..\.\APP\common.h
 .\Hex\lifttable.o: APP\..\.\APP\LANGUAGE.h
 .\Hex\lifttable.o: APP\..\.\APP\MAINTAIN.H
+.\Hex\lifttable.o: APP\..\.\APP\BUSINESS.H
 .\Hex\lifttable.o: APP\LIFTTABLE.h

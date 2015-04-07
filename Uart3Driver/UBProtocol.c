@@ -564,10 +564,11 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 				sysVPMission.send.msg[2] = SystemPara.SaleTime;
 				//面值比率
                 sysVPMission.send.msg[3] = SendCoinDem(); 	
+				//feature
 				sysVPMission.send.msg[4] = 0;
 				sysVPMission.send.msg[5] = 0;
 				sysVPMission.send.msg[6] = 0;
-				//feature
+				
 				//多次购买
 				if(UserPara.TransMultiMode==1)
 					sysVPMission.send.msg[7] |= 0x01;
@@ -2768,7 +2769,7 @@ TAB_VPM_STATUS_COM_OK:
 unsigned char VP_CMD_GetStatus( void )
 {
 	MessageUboxPCPack *AccepterUboxMsg;
-	unsigned char ComStatus;
+	//unsigned char ComStatus;
 
 	//1.Check the data
     if( sysVPMission.receive.datLen != 0  )
@@ -3644,7 +3645,7 @@ unsigned char VP_Reset_Ind( void )
 unsigned char VP_Control_Ind( void )
 {
 	MessageUboxPCPack *AccepterUboxMsg;
-	unsigned char ComStatus;
+	//unsigned char ComStatus;
 	
 	//1.Check the data
     //2.ACK	

@@ -62,3 +62,4 @@
 .\Hex\language.o: APP\..\.\APP\common.h
 .\Hex\language.o: APP\..\.\APP\LANGUAGE.h
 .\Hex\language.o: APP\..\.\APP\MAINTAIN.H
+.\Hex\language.o: APP\..\.\APP\BUSINESS.H

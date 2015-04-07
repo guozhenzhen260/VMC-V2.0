@@ -690,7 +690,7 @@ struct EvbHopper
 	//返回的信息：0x00:正常;0x20:缺币;0x11:出币时卡币了；0x39:光侧无币时出不了币；0x41:光侧有币时出币出不了币
 	unsigned char State;
 	//面值
-	unsigned short Price;
+	uint32_t Price;
 	//物理固定地址
 	unsigned char	Add; 
 	//上次操作出币数量

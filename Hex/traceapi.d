@@ -62,3 +62,4 @@
 .\Hex\traceapi.o: API\..\.\APP\common.h
 .\Hex\traceapi.o: API\..\.\APP\LANGUAGE.h
 .\Hex\traceapi.o: API\..\.\APP\MAINTAIN.H
+.\Hex\traceapi.o: API\..\.\APP\BUSINESS.H

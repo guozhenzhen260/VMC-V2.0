@@ -62,3 +62,4 @@
 .\Hex\billaccepterapi.o: API\..\.\APP\common.h
 .\Hex\billaccepterapi.o: API\..\.\APP\LANGUAGE.h
 .\Hex\billaccepterapi.o: API\..\.\APP\MAINTAIN.H
+.\Hex\billaccepterapi.o: API\..\.\APP\BUSINESS.H

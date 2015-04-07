@@ -62,3 +62,4 @@
 .\Hex\channelapi.o: API\..\.\APP\common.h
 .\Hex\channelapi.o: API\..\.\APP\LANGUAGE.h
 .\Hex\channelapi.o: API\..\.\APP\MAINTAIN.H
+.\Hex\channelapi.o: API\..\.\APP\BUSINESS.H

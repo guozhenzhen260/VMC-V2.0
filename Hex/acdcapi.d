@@ -62,3 +62,4 @@
 .\Hex\acdcapi.o: API\..\.\APP\common.h
 .\Hex\acdcapi.o: API\..\.\APP\LANGUAGE.h
 .\Hex\acdcapi.o: API\..\.\APP\MAINTAIN.H
+.\Hex\acdcapi.o: API\..\.\APP\BUSINESS.H

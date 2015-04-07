@@ -62,3 +62,4 @@
 .\Hex\lpc1700pincfg.o: Firmware\..\.\APP\common.h
 .\Hex\lpc1700pincfg.o: Firmware\..\.\APP\LANGUAGE.h
 .\Hex\lpc1700pincfg.o: Firmware\..\.\APP\MAINTAIN.H
+.\Hex\lpc1700pincfg.o: Firmware\..\.\APP\BUSINESS.H

@@ -30,7 +30,7 @@ unsigned char acdc_handle_API(unsigned char binnum,unsigned char ledFlag,unsigne
 	unsigned short cmd ;// 高两字节控制 展示灯 低两位控制压缩机
 
 	TraceCompress("acdc_handle:bin= %d,led=%d,cpr=%d\r\n",binnum,ledFlag,cprFlag);
-	cmd = INTEG16(ledFlag,cprFlag);
+	
 	if(binnum == 1 && SystemPara.Channel >= 3)
 	{
 		return liftTableLight(binnum,ledFlag);
@@ -41,6 +41,7 @@ unsigned char acdc_handle_API(unsigned char binnum,unsigned char ledFlag,unsigne
 	}
 	else
 	{
+		cmd = INTEG16(cprFlag,ledFlag);
 		ACDCHandle(binnum,cmd);
 	}
 	

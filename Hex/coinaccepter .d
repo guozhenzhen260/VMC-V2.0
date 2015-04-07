@@ -62,4 +62,5 @@
 .\Hex\coinaccepter .o: Drivers\..\.\APP\common.h
 .\Hex\coinaccepter .o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\coinaccepter .o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\coinaccepter .o: Drivers\..\.\APP\BUSINESS.H
 .\Hex\coinaccepter .o: Drivers\CoinAccepter.h

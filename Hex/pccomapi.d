@@ -62,5 +62,5 @@
 .\Hex\pccomapi.o: API\..\.\APP\common.h
 .\Hex\pccomapi.o: API\..\.\APP\LANGUAGE.h
 .\Hex\pccomapi.o: API\..\.\APP\MAINTAIN.H
-.\Hex\pccomapi.o: API\..\App\Business.h
+.\Hex\pccomapi.o: API\..\.\APP\BUSINESS.H
 .\Hex\pccomapi.o: API\..\App\Channel.h

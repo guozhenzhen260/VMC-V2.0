@@ -62,3 +62,4 @@
 .\Hex\at45db161d.o: Drivers\..\.\APP\common.h
 .\Hex\at45db161d.o: Drivers\..\.\APP\LANGUAGE.h
 .\Hex\at45db161d.o: Drivers\..\.\APP\MAINTAIN.H
+.\Hex\at45db161d.o: Drivers\..\.\APP\BUSINESS.H
