@@ -1,3 +1,6 @@
----- MiddChange out= 匹配 (2 在 1 文件 ) ----
-ChangerAPI.c (api):793:						TraceChange("\r\nMiddChange out=%d,%d,%ld",AccepterMsg->PayoutBackNum[0],AccepterMsg->PayoutBackNum[1],backmoney);
-ChangerAPI.c (api):821:				TraceChange("\r\nMiddChange out=%d,%d",PayoutNum[0],PayoutNum[1]);
+---- g_HeFanGuiMail 匹配 (5 在 4 文件 ) ----
+Common.c (app):59:OS_EVENT *g_HeFanGuiMail;
+Common.c (app):169:	g_HeFanGuiMail = OSMboxCreate(NULL);//压缩机展示灯邮箱
+Common.h (app):580:extern OS_EVENT *g_HeFanGuiMail;
+HeFanGuiAPI.c (api):596:	OSMboxPost(g_HeFanGuiMail,&MsgAccepterPack);
+Taskuart1device.c (uart1driver):172:			GeziMsg = OSMboxPend(g_HeFanGuiMail,OS_TICKS_PER_SEC/100,&ComStatus);

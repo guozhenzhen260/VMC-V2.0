@@ -28,7 +28,7 @@
 #define SERIALCOIN_IN		(1ul<<23)				//串行硬币器通道P1.23
 #define GETSERIALCON_CHL()	((FIO1PIN >>23) & 0x01)	//串行通道
 
-#define PARALLELCOIN_CHANNEL_QUEUE_SIZE 8
+#define PARALLELCOIN_CHANNEL_QUEUE_SIZE 20
 #define SERIALCOIN_CHANNEL_QUEUE_SIZE 	8
 
 void *PCoinChannel[PARALLELCOIN_CHANNEL_QUEUE_SIZE];
@@ -37,8 +37,14 @@ void *SCoinChannel[SERIALCOIN_CHANNEL_QUEUE_SIZE];
 OS_EVENT *QPChannel;
 OS_EVENT *QSChannel;
 
-volatile unsigned char PostParallelCoinChannel;
-volatile unsigned char PostSerialCoinChannel;
+volatile unsigned char pcoinIndex = 0; 
+
+volatile unsigned char PostParallelCoinCh[PARALLELCOIN_CHANNEL_QUEUE_SIZE];
+
+
+//volatile unsigned char PostParallelCoinChannel;
+
+volatile unsigned char PostSerialCoinChannel[SERIALCOIN_CHANNEL_QUEUE_SIZE];
 
 volatile unsigned char PARALLELPULSECOINACCEPTORDEVICESTATUS = 0x00;//默认关闭并行脉冲硬币器
 volatile unsigned char SERIALPULSECOINACCEPTORDEVICESTATUS   = 0x00;//默认关闭串行行脉冲硬币器
@@ -110,6 +116,7 @@ unsigned char ReadParallelCoinAcceptor(void)
 	Pchannel = (unsigned char *)OSQPend(QPChannel,5,&err);
 	if(err == OS_NO_ERR)
 	{
+		TraceCoin("\r\n1Drvcoinpend=%d\r\n",*Pchannel);
 		return *Pchannel;	
 	}
 	else
@@ -141,8 +148,10 @@ void ScanPPCoinChannel(void)
 		case 0x00 : if(PreStatus == 0x01)		
 					{
 						PreStatus = 0x00;
-						PostParallelCoinChannel = PreChannel;
-						OSQPost(QPChannel,(void *)&PostParallelCoinChannel);
+						PostParallelCoinCh[pcoinIndex] = PreChannel;	
+						OSQPost(QPChannel,(void *)&PostParallelCoinCh[pcoinIndex]);
+						TraceCoin("\r\n1Drvcoinpost=%d\r\n",PostParallelCoinCh[pcoinIndex]);
+						pcoinIndex = (++pcoinIndex) % PARALLELCOIN_CHANNEL_QUEUE_SIZE;
 					}
 					PreChannel = 0x00;
 					CurChannel = 0x00;
@@ -259,8 +268,10 @@ void ScanSPCoinChannel(void)
 	{					
 		case 0x00 :	if(PreStatus == 0x01)
 					{
-						PostSerialCoinChannel = 0x01;
-						OSQPost(QSChannel,(void *)&PostSerialCoinChannel);
+						PostSerialCoinChannel[pcoinIndex] = 0x01;
+						OSQPost(QSChannel,(void *)&PostSerialCoinChannel[pcoinIndex]);
+						TraceCoin("\r\n1Drvcoinpost=%d\r\n",PostSerialCoinChannel[pcoinIndex]);
+						pcoinIndex = (++pcoinIndex) % SERIALCOIN_CHANNEL_QUEUE_SIZE;
 					}
 					PreStatus = CurStatus;
 					break;

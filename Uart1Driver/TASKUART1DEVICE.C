@@ -97,7 +97,7 @@ void Uart1TaskDevice(void *pvData)
 		OSTimeDly(2);
 	}
 	//检查格子柜控制
-	if(SystemPara.hefangGui==1)
+	if(SystemPara.hefangGui==SERIAL_GEZI)
 	{
 		GeziCtr = GEZIGUI;
 		OSTimeDly(2);

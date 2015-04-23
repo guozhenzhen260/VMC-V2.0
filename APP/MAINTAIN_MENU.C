@@ -120,6 +120,7 @@ typedef struct
 	char *DecimalNumExt[MAXLANGUAGETYPE];
 	char *GeziDeviceType[MAXLANGUAGETYPE];
 	char *BillEnableValue[MAXLANGUAGETYPE];
+	char *ColumnTime[MAXLANGUAGETYPE];
 } SYSMAINMENULIST;
 
 const SYSMAINMENULIST SysMenuList = 
@@ -508,6 +509,13 @@ const SYSMAINMENULIST SysMenuList =
 		"4.BillEnableValue:",
 		"4.BillEnableValue:",
 		"4.BillEnableValue:"
+	},
+	{
+		"⑤ 出货时间:",
+		"5.ColumnTime:",
+		"5.ColumnTime:",
+		"5.ColumnTime:",
+		"5.ColumnTime:"
 	}
 };
 

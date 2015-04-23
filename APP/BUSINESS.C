@@ -341,6 +341,7 @@ void DispChaxunPage(uint8_t *keyValue,uint8_t *keyMode)
 	uint8_t columnState=0,isColumn=0;
 	uint16_t columnNo=0;
 	uint32_t debtMoney=0;
+	uint8_t channel_id=0;
 
 	if(*keyMode == 2)
 	{
@@ -438,6 +439,28 @@ void DispChaxunPage(uint8_t *keyValue,uint8_t *keyMode)
 						}
 						return;
 					}
+					//新友宝pc通讯
+					else if(SystemPara.PcEnable==SIMPUBOX_PC)//上报货道所对应的商品id信息给工控机
+					{
+						channel_id=hd_id_by_logic(columnNo/100,columnNo%100);
+						if(channel_id)
+						{
+							ButtonSIMPLERPTAPI(channel_id);//上报pc按键信息
+						}
+						channelInput = 0;
+						memset(ChannelNum,0,sizeof(ChannelNum));
+						if(GetAmountMoney() > 0)
+						{				
+							vmcStatus = VMC_SALE;
+						}
+						else
+						{
+							ClearDealPar(); 	
+							CLrBusinessText();
+							vmcStatus = VMC_FREE;
+						}
+						return;
+					}
 					else
 					{
 						isColumn=1;
@@ -461,9 +484,33 @@ void DispChaxunPage(uint8_t *keyValue,uint8_t *keyMode)
 				{
 					columnNo = GetColumnNum(ChannelNum,SystemPara.SubBinOpen);
 					columnState = ChannelCheckIsOk(columnNo%100,columnNo/100);
+					TracePC("\r\n APPUboxBtncloumn=%d",columnNo);
 					if(SystemPara.PcEnable==UBOX_PC)//上报货道信息给工控机
 					{
 						ButtonRPTAPI(1,columnNo%100,columnNo/100);//上报pc按键信息
+						channelInput = 0;
+						memset(ChannelNum,0,sizeof(ChannelNum));
+						if(GetAmountMoney() > 0)
+						{				
+							vmcStatus = VMC_SALE;
+						}
+						else
+						{
+							ClearDealPar(); 	
+							CLrBusinessText();
+							vmcStatus = VMC_FREE;
+						}
+						return;
+					}
+					//新友宝pc通讯
+					else if(SystemPara.PcEnable==SIMPUBOX_PC)//上报货道所对应的商品id信息给工控机
+					{
+						channel_id=hd_id_by_logic(columnNo/100,columnNo%100);
+						//TracePC("\r\n 2APPUboxButton=%d",channel_id);
+						if(channel_id)
+						{
+							ButtonSIMPLERPTAPI(channel_id);//上报pc按键信息
+						}
 						channelInput = 0;
 						memset(ChannelNum,0,sizeof(ChannelNum));
 						if(GetAmountMoney() > 0)
@@ -530,6 +577,28 @@ void DispChaxunPage(uint8_t *keyValue,uint8_t *keyMode)
 			if(SystemPara.PcEnable==UBOX_PC)
 			{
 				ButtonRPTAPI(1,columnNo%100,columnNo/100);//上报pc按键信息
+				channelInput = 0;
+				memset(ChannelNum,0,sizeof(ChannelNum));
+				if(GetAmountMoney() > 0)
+				{				
+					vmcStatus = VMC_SALE;
+				}
+				else
+				{
+					ClearDealPar(); 	
+					CLrBusinessText();
+					vmcStatus = VMC_FREE;
+				}
+				return;
+			}
+			//新友宝pc通讯
+			else if(SystemPara.PcEnable==SIMPUBOX_PC)//上报货道所对应的商品id信息给工控机
+			{
+				channel_id=hd_id_by_logic(columnNo/100,columnNo%100);
+				if(channel_id)
+				{
+					ButtonSIMPLERPTAPI(channel_id);//上报pc按键信息
+				}
 				channelInput = 0;
 				memset(ChannelNum,0,sizeof(ChannelNum));
 				if(GetAmountMoney() > 0)
@@ -2278,7 +2347,7 @@ uint8_t CostReaderRPT(uint32_t PriceSale)
 *********************************************************************************************************/
 void CostMoneyInd(uint32_t PriceSale)
 {
-	unsigned char ComStatus = 0;
+	//unsigned char ComStatus = 0;
 	
 	//扣除单价
 	if(PriceSale)
@@ -2574,6 +2643,183 @@ void TuiMoneyInd()
 		vmcStatus = VMC_END;
 	}
 }
+
+
+/*********************************************************************************************************
+** Function name:     	VendoutSIMPLEInd
+** Descriptions:	    PC机发送出货,并产生状态变化
+** input parameters:    
+** output parameters:   无
+** Returned value:      1成功,0失败
+*********************************************************************************************************/
+uint8_t VendoutSIMPLEInd(uint16_t columnNo)
+{
+	uint8_t ChuhuoRst = 0;
+
+	DispChuhuoPagePC();
+	
+	TracePC("\r\n %dAppUboxVendout",OSTimeGet());	
+	//ActionRPTAPI(1,0,30,columnNo%100, Type,PriceSale,GetAmountMoney());
+	ChuhuoRst = ChannelAPIProcess(columnNo%100,CHANNEL_OUTGOODS,columnNo/100);	
+	//2产生状态变化
+	if(GetAmountMoney())
+	{					
+		vmcStatus = VMC_SALE;
+		Timer.SaleTimer = SaleTimeSet(0);
+		if(vmcStatus == VMC_SALE)
+		{
+			//Trace("\r\n 1money=%ld",GetAmountMoney());
+			if(g_billAmount< MoneyMaxin)							
+				BillCoinCtr(1,1,0);
+			//Trace("\r\n 2money=%ld",GetAmountMoney());
+			channelInput = 0;
+			channelMode = 0;
+			memset(BinNum,0,sizeof(BinNum));
+			memset(ChannelNum,0,sizeof(ChannelNum));
+			//Trace("\r\n 3money=%ld",GetAmountMoney());
+			OSMboxAccept(g_CoinMoneyBackMail);
+			LCDClrScreen();
+			//Trace("\r\n 4money=%ld",GetAmountMoney());
+			DispSalePage(0,hefangMode);
+			//Trace("\r\n 4money=%ld",GetAmountMoney());
+			SaleSelectionKeyAPI(GetAmountMoney());
+		}
+	}							
+	else
+	{
+		BillCoinCtr(1,1,0);
+		channelInput = 0;
+		channelMode = 0;
+		memset(BinNum,0,sizeof(BinNum));
+		memset(ChannelNum,0,sizeof(ChannelNum));
+		//Trace("\r\n 3money=%ld",GetAmountMoney());
+		OSMboxAccept(g_CoinMoneyBackMail);
+		LCDClrScreen();
+		vmcStatus = VMC_END;
+	}
+	return ChuhuoRst;
+	
+}
+
+/*********************************************************************************************************
+** Function name:     	GetmoneySIMPLEInd
+** Descriptions:	    PC机发送金额,并产生状态变化
+** input parameters:    
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+void GetmoneySIMPLEInd(uint16_t payInMoney)
+{
+	//uint8_t ChuhuoRst = 0;
+
+	g_readerAmount=payInMoney;
+	//2产生状态变化
+	if(GetAmountMoney())
+	{					
+		vmcStatus = VMC_SALE;
+		Timer.SaleTimer = SaleTimeSet(0);
+		if(vmcStatus == VMC_SALE)
+		{
+			//Trace("\r\n 1money=%ld",GetAmountMoney());
+			if(g_billAmount< MoneyMaxin)							
+				BillCoinCtr(1,1,0);
+			//Trace("\r\n 2money=%ld",GetAmountMoney());
+			channelInput = 0;
+			channelMode = 0;
+			memset(BinNum,0,sizeof(BinNum));
+			memset(ChannelNum,0,sizeof(ChannelNum));
+			//Trace("\r\n 3money=%ld",GetAmountMoney());
+			OSMboxAccept(g_CoinMoneyBackMail);
+			LCDClrScreen();
+			//Trace("\r\n 4money=%ld",GetAmountMoney());
+			DispSalePage(0,hefangMode);
+			//Trace("\r\n 4money=%ld",GetAmountMoney());
+			SaleSelectionKeyAPI(GetAmountMoney());
+		}
+	}							
+	else
+	{
+		BillCoinCtr(1,1,0);
+		channelInput = 0;
+		channelMode = 0;
+		memset(BinNum,0,sizeof(BinNum));
+		memset(ChannelNum,0,sizeof(ChannelNum));
+		//Trace("\r\n 3money=%ld",GetAmountMoney());
+		OSMboxAccept(g_CoinMoneyBackMail);
+		LCDClrScreen();
+		vmcStatus = VMC_END;
+	}
+	
+}
+
+/*********************************************************************************************************
+** Function name:     	GetmoneySIMPLEInd
+** Descriptions:	    PC机发送商品单价金额,并产生状态变化
+** input parameters:    
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+void PriceSIMPLEInd(uint16_t payInMoney)
+{
+	uint16_t debtMoney=0;
+	char strlanguage[30] = {0},streng[30] = {0};
+	
+	//1.显示单价	
+	Timer.ChaxunTimer = 5;
+	if(GetAmountMoney() == 0)
+	{
+		DispChaxunFreePage();
+	}
+	debtMoney = payInMoney;
+	switch(SystemPara.DecimalNum) 
+	{
+	  case 2://以分为单位
+		  sprintf(strlanguage,"%s %s,%s%02d.%02d",BUSINESS[SystemPara.Language][7],ChannelNum,BUSINESS[SystemPara.Language][3],debtMoney/100,debtMoney%100);
+		  sprintf(streng,"%s %s,%s%02d.%02d",BUSINESS[1][7],ChannelNum,BUSINESS[1][3],debtMoney/100,debtMoney%100); 
+		  break;
+
+	  case 1://以角为单位
+		  debtMoney /= 10;
+		  sprintf(strlanguage,"%s %s,%s%d.%d",BUSINESS[SystemPara.Language][7],ChannelNum,BUSINESS[SystemPara.Language][3],debtMoney/10,debtMoney%10);
+		  sprintf(streng,"%s %s,%s%d.%d",BUSINESS[1][7],ChannelNum,BUSINESS[1][3],debtMoney/10,debtMoney%10);
+		  break;
+	  
+	  case 0://以元为单位
+		  sprintf(strlanguage,"%s %s,%s%d",BUSINESS[SystemPara.Language][7],ChannelNum,BUSINESS[SystemPara.Language][3],debtMoney/100);
+		  sprintf(streng,"%s %s,%s%d",BUSINESS[1][7],ChannelNum,BUSINESS[1][3],debtMoney/100);
+		  break;
+	}	
+	//strcpy(streng,BUSINESS[1][3]);
+	DispBusinessText(strlanguage,streng,"","");
+	OSTimeDly(OS_TICKS_PER_SEC*3);
+	
+	
+	//2超时退出查询页面
+	if(Timer.ChaxunTimer == 0)
+	{
+		if(GetAmountMoney() > 0)
+		{				
+			vmcStatus = VMC_SALE;
+		}
+		else
+		{
+			ClearDealPar(); 	
+			CLrBusinessText();
+			vmcStatus = VMC_FREE;
+		}
+		rstTime();
+	}
+	if(vmcStatus == VMC_SALE)
+	{	
+		DispSalePage(0,hefangMode);					
+	}
+	else if(vmcStatus == VMC_FREE)
+	{
+		LCDClrScreen();
+		rstTime();
+	}
+}
+
 
 
 /*********************************************************************************************************

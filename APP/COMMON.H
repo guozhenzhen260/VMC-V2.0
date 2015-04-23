@@ -42,12 +42,17 @@
 #define ZHIHUI_PC			     1//一鸣智慧pc通讯
 #define UBOX_PC			         2//友宝pc通讯
 #define GPRS_PC					 3 //GPRS
+#define SIMPUBOX_PC			     4//新友宝pc通讯
+
 
 #define OFF_KEY			         0//普通键盘按键
 #define SELECT_KEY			     1//选货按键
 
 #define TEMPERATURE			     1//开启加热模块
 
+#define OFF_GEZI         		 0//关格子柜
+#define SERIAL_GEZI    			 1//串口格子柜
+#define MDB_GEZI         		 2//MDB格子柜
 
 
 extern RTC_DATE RTCData;
@@ -143,6 +148,7 @@ typedef struct
 	uint32_t  RecyclerMoney; //纸币器找币面值
 	uint8_t   XMTTemp;//是否使用温控器,1是使用
 	uint32_t  BillEnableValue;				   //选择的开纸币器交易上限,0代表永远不关纸币器
+	uint8_t   ColumnTime; //上报友宝最大出货时间	
 	//CRCCheck
 	uint8_t		CrcCheck[2];					//CRC校验
 
@@ -924,6 +930,49 @@ extern OS_EVENT *g_Ubox_VMCTOPCBackCMail;
 extern OS_EVENT *g_Ubox_PCTOVMCQ;
 extern OS_EVENT *g_Ubox_PCTOVMCBackQ;
 
+
+/******************************************UboxSIMPLEPC通讯结构体*****************************************************/
+//pc下发给vmc机出货指令
+#define MBOX_SIMPLEPCTOVMC_VENDIND     	 0x01
+//vmc上传给PC机出货信息
+#define MBOX_SIMPLEVMCTOPC_VENDOUT       0x02
+//pc下发给vmc机显示指令
+#define MBOX_SIMPLEPCTOVMC_DISPLAYIND    0x03
+//vmc上传给PC机按键对应商品id信息
+#define MBOX_SIMPLEVMCTOPC_BUTTONRPT     0x04
+//vmc上传给PC机Admin指令
+#define MBOX_SIMPLEVMCTOPC_ADMINRPT      0x05
+//pc下发给vmc机Admin的结果
+#define MBOX_SIMPLEVMCTOPC_RESULTIND	 0x06
+//vmc上传给PC机GetAdmin指令
+#define MBOX_SIMPLEVMCTOPC_GETADMIN      0x07
+
+typedef struct
+{
+	//纸币器
+    uint8_t	PCTOVMCCmd;						//pc下发给vmc控制命令类型
+	uint8_t	VMCTOPCCmd;					    //vmc上报给PC命令类型	
+	//出货
+	uint8_t channel_id;					    //pc下发给vmc出货货道
+	uint8_t channel_result;				    //vmc上报给PC出货结果（0=成功；1=失败）
+	//display显示
+	uint8_t distype;   //显示类型，0用户余额，1时间，2文本，3商品单价                  
+	uint16_t payInMoney;//投入金额
+	//上报按键对应商品id
+	uint8_t btnchannel_id;                  //vmc上报给PC按键对应商品id
+	//admin
+	uint8_t admintype;                      //vmc上报给PC他的admin的类型1加满全部货道，2加满层架货道，3单货道补货，4最长出货时间，5自动退币时间
+	uint8_t admincolumn;                    //vmc上报给PC他的补货的层号或者货道号
+	uint8_t admincolumnsum;                 //vmc上报给PC他的补货的数量
+	uint8_t adminresult;                    //pc下发给vmc他的admin的结果,0成功,其他值故障	
+} MessageSIMPLEUboxPCPack;	
+#define SIMPLEUBOX_SIZE 7
+extern MessageSIMPLEUboxPCPack MsgSIMPLEUboxPack[SIMPLEUBOX_SIZE];
+
+extern uint8_t  g_SIMPLEUbox_Index;
+
+extern OS_EVENT *g_SIMPLEUbox_VMCTOPCQ;
+extern OS_EVENT *g_SIMPLEUbox_PCTOVMCQ;	
 
 /******************************************展示位通讯结构体*****************************************************/
 //启动选货按键板命令

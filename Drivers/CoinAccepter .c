@@ -45,7 +45,14 @@ MDBCOINERROR MdbCoinErr;
 uint8_t CoinDevInit()
 {
 	unsigned char CoinRdBuff[36],CoinRdLen,ComStatus,i;	
-	unsigned char j;		
+	unsigned char j;
+	uint8_t VMCdata[5]={0x01,0xff,0xff,0xff,0xff};
+	memset(CoinRdBuff,0,sizeof(CoinRdBuff));
+	for(j = 0; j < 16; j++) 
+	{
+		 stDevValue.CoinValue[j]=0;
+		 //TraceCoin("\r\nqqDrvChangebuf[%d] = %d,%d", j,ChangerRdBuff[j+2],stDevValue.CoinNum[j]);
+	}
 	//Reset
 	for(ComStatus = 0, j = 0; j < 10 && ComStatus != 1; j++)
 	{
@@ -76,7 +83,7 @@ uint8_t CoinDevInit()
 		TraceBill("\r\nDrvCOINDec2=%ld,%ld,%ld", CoinRdBuff[3],stDevValue.CoinDecimal,stDevValue.CoinScale);
 		
 				
-		for(i=0;i<16;i++)
+		for(i=0;i<CoinRdLen-7;i++)
 		{
 			if(CoinRdBuff[7+i] == 0xFF)
 			{
@@ -86,7 +93,11 @@ uint8_t CoinDevInit()
 			nCoinvalue[i] = ((uint32_t)CoinRdBuff[7+i] * stDevValue.CoinScale);	
 			stDevValue.CoinValue[i] = nCoinvalue[i];
 			TraceCoin("\r\nDrv[%ld,%ld]",(uint32_t)CoinRdBuff[7+i],stDevValue.CoinValue[i]);
-		}					
+		}
+		for(i = 0; i < 16; i++) 
+		{
+			 TraceCoin("\r\n%dDrvcoin[%d] = %d", CoinRdLen,i,stDevValue.CoinValue[i]);
+		}
 		//OSTimeDly(OS_TICKS_PER_SEC*5);
 	}
 	//ÂÖÑ¯
@@ -104,6 +115,24 @@ uint8_t CoinDevInit()
 	{
 		stDevValue.coinIDENTITYBuf[i] = CoinRdBuff[i];
 	}
+	TraceCoin("\r\nDrvCoinIdRec<< [%02d]-",CoinRdLen);
+	for(i=0;i<CoinRdLen;i++)
+	{
+		TraceReader(" %#02x ",CoinRdBuff[i]);
+	}
+	TraceReader("\r\n");	
+	OSTimeDly(OS_TICKS_PER_SEC / 100);
+	ComStatus = MdbConversation(0x0f,VMCdata,5,&CoinRdBuff[0],&CoinRdLen);
+	//for(i=0;i<CoinRdLen;i++)
+	//{
+	//	stDevValue.coinIDENTITYBuf[i] = CoinRdBuff[i];
+	//}
+	TraceCoin("\r\nDrvCoinFEARec<< [%02d]-",CoinRdLen);
+	for(i=0;i<CoinRdLen;i++)
+	{
+		TraceReader(" %#02x ",CoinRdBuff[i]);
+	}
+	TraceReader("\r\n");
 	OSTimeDly(OS_TICKS_PER_SEC / 100);
 	ComStatus = MdbConversation(0x0A,NULL,0x00,&CoinRdBuff[0],&CoinRdLen);
 	OSTimeDly(OS_TICKS_PER_SEC / 100);

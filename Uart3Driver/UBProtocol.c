@@ -2768,7 +2768,7 @@ TAB_VPM_STATUS_COM_OK:
 *********************************************************************************************************/
 unsigned char VP_CMD_GetStatus( void )
 {
-	MessageUboxPCPack *AccepterUboxMsg;
+	//MessageUboxPCPack *AccepterUboxMsg;
 	//unsigned char ComStatus;
 
 	//1.Check the data
@@ -3644,7 +3644,7 @@ unsigned char VP_Reset_Ind( void )
 *********************************************************************************************************/
 unsigned char VP_Control_Ind( void )
 {
-	MessageUboxPCPack *AccepterUboxMsg;
+	//MessageUboxPCPack *AccepterUboxMsg;
 	//unsigned char ComStatus;
 	
 	//1.Check the data

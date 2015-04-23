@@ -360,7 +360,7 @@ void GetReaderDevStateAPI()
 *********************************************************************************************************/
 void ReaderDevCashSaleAPI(uint16_t money)
 {		
-	MessagePack *AccepterMsg;
+	//MessagePack *AccepterMsg;
 	//uint8_t err,i,returnvalue;
 	//uint32_t backmoney;
 	//unsigned char ComStatus;

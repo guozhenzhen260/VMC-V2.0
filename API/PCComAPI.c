@@ -32,9 +32,19 @@ void UpdateIndex()
 	else
 		g_Ubox_Index=0;
 }
+//更新SIMPLEUbox邮箱缓冲区数组索引
+void UpdateSIMPLEIndex()
+{
+	if(g_SIMPLEUbox_Index<(SIMPLEUBOX_SIZE-1))
+		g_SIMPLEUbox_Index++;
+	else
+		g_SIMPLEUbox_Index=0;
+}
+
 //等待pc初始化成功
 void WaitForPCInit()
 {
+	static uint8_t simple=0;
 	if(SystemPara.PcEnable==UBOX_PC)
 	{
 		if(globalSys.pcInitFlag == 0)
@@ -50,6 +60,16 @@ void WaitForPCInit()
 			}
 			BillCoinCtr(1,1,1);
 			//LCDClrScreen();
+			LCDClearLineDraw(0,LINE15,2);
+			rstTime();
+		}
+	}
+	else if(SystemPara.PcEnable==SIMPUBOX_PC)
+	{
+		if(simple==0)
+		{
+			simple=1;
+			OSTimeDly(OS_TICKS_PER_SEC);
 			LCDClearLineDraw(0,LINE15,2);
 			rstTime();
 		}
@@ -561,6 +581,143 @@ uint8_t AdminRPTAPI(uint8_t adminType,uint8_t Column,uint8_t ColumnSum)
 }
 
 /*********************************************************************************************************
+** Function name:     	AdminRPTSIMPLEAPI
+** Descriptions:	    进入AdminRPT配置
+** input parameters:    adminType:1加满全部货道,2按层加满,3按货道加满，4最长出货时间，5自动退币时间
+** output parameters:   无
+** Returned value:      1ACK,0NAK
+*********************************************************************************************************/
+uint8_t AdminRPTSIMPLEAPI(uint8_t adminType,uint8_t Column,uint8_t ColumnSum)
+{
+	MessageSIMPLEUboxPCPack *AccepterSIMPLEUboxMsg;
+	unsigned char ComStatus,result=0;
+	
+	switch(SystemPara.PcEnable)
+	{		
+		case SIMPUBOX_PC:
+			TracePC("\r\n MiddUbox Admin=%d,%d,%d",adminType,Column,ColumnSum);
+
+			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].VMCTOPCCmd = MBOX_SIMPLEVMCTOPC_ADMINRPT;
+			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].admintype=adminType;
+			//1加满全部货道，2加满层架货道，3单货道补货，4最长出货时间，5自动退币时间
+			switch(adminType)
+			{
+				case 1:
+					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].admincolumn=0;
+					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].admincolumnsum=0;
+					break;
+				case 2:
+					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].admincolumn=Column;
+					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].admincolumnsum=0;
+					break;	
+				case 3:
+					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].admincolumn=Column;
+					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].admincolumnsum=ColumnSum;
+					break;
+				case 4:
+					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].admincolumnsum=ColumnSum;
+					break;
+				case 5:
+					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].admincolumnsum=ColumnSum;
+					break;	
+			}
+			OSQPost(g_SIMPLEUbox_VMCTOPCQ,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
+			UpdateSIMPLEIndex();
+			//取得返回值
+			AccepterSIMPLEUboxMsg = OSQPend(g_SIMPLEUbox_PCTOVMCQ,OS_TICKS_PER_SEC*200,&ComStatus);
+			if(ComStatus == OS_NO_ERR)
+			{				
+				switch(AccepterSIMPLEUboxMsg->PCTOVMCCmd)
+				{
+					//出货
+					case MBOX_SIMPLEVMCTOPC_RESULTIND:
+						TracePC("\r\n MiddUbox AdminResult=%d",AccepterSIMPLEUboxMsg->adminresult);
+						if(AccepterSIMPLEUboxMsg->adminresult==0)
+							result=1;
+						break;
+				}		
+			}
+			
+			break;		
+	}
+	return result;
+}
+
+/*********************************************************************************************************
+** Function name:     	GetAdminSIMPLEAPI
+** Descriptions:	    得到AdminRPT参数
+** input parameters:    adminType:3按货道加满，4最长出货时间，5自动退币时间
+** output parameters:   无
+** Returned value:      1ACK,0NAK
+*********************************************************************************************************/
+uint8_t GetAdminSIMPLEAPI(uint8_t adminType,uint8_t Column)
+{
+	MessageSIMPLEUboxPCPack *AccepterSIMPLEUboxMsg;
+	unsigned char ComStatus,result=0;
+	
+	switch(SystemPara.PcEnable)
+	{		
+		case SIMPUBOX_PC:
+			TracePC("\r\n MiddUbox GetAdmin=%d,%d",adminType,Column);
+
+			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].VMCTOPCCmd = MBOX_SIMPLEVMCTOPC_GETADMIN;
+			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].admintype=adminType;
+			//3单货道补货，4最长出货时间，5自动退币时间
+			switch(adminType)
+			{
+				case 3:
+					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].admincolumn=Column;					
+					break;					
+			}
+			OSQPost(g_SIMPLEUbox_VMCTOPCQ,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
+			UpdateSIMPLEIndex();
+			//取得返回值
+			AccepterSIMPLEUboxMsg = OSQPend(g_SIMPLEUbox_PCTOVMCQ,OS_TICKS_PER_SEC*200,&ComStatus);
+			if(ComStatus == OS_NO_ERR)
+			{				
+				switch(AccepterSIMPLEUboxMsg->PCTOVMCCmd)
+				{
+					//出货
+					case MBOX_SIMPLEVMCTOPC_RESULTIND:
+						TracePC("\r\n MiddUbox GetAdminResult=%d",AccepterSIMPLEUboxMsg->adminresult);
+						if(AccepterSIMPLEUboxMsg->adminresult==0)
+							result=1;
+						break;
+				}		
+			}
+			
+			break;		
+	}
+	return result;
+}
+
+
+
+/*********************************************************************************************************
+** Function name:       ButtonSIMPLERPTAPI
+** Descriptions:        向PC上报按键信息，针对新的友宝通讯协议
+** input parameters:    type=1小键盘选择货道,4退币,0游戏按键
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void ButtonSIMPLERPTAPI(uint8_t channel_id)
+{	
+	switch(SystemPara.PcEnable)
+	{		
+		case SIMPUBOX_PC:
+			TracePC("\r\n MiddUboxButton=%d",channel_id);	
+			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].VMCTOPCCmd = MBOX_SIMPLEVMCTOPC_BUTTONRPT;
+			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].btnchannel_id=channel_id;
+			OSQPost(g_SIMPLEUbox_VMCTOPCQ,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
+			UpdateSIMPLEIndex();
+			//OSTimeDly(OS_TICKS_PER_SEC/100);
+			break;		
+	}
+
+}
+
+
+/*********************************************************************************************************
 ** Function name:       PollAPI
 ** Descriptions:        轮询PC机上发的操作命令
 ** input parameters:    dev: 1投入硬币,2投入纸币,3暂存纸币进入,4暂存纸币出币
@@ -578,6 +735,7 @@ void PollAPI(uint32_t payAllMoney)
 	unsigned char ComReturn = 0;
 	uint16_t columnNo=0;
 	uint8_t vendrpt=0;
+	MessageSIMPLEUboxPCPack *AccepterSIMPLEUboxMsg;
 	
 	
 	switch(SystemPara.PcEnable)
@@ -1065,7 +1223,96 @@ void PollAPI(uint32_t payAllMoney)
 						break;		
 				}
 			}	
-			break;		
+			break;	
+		case SIMPUBOX_PC:
+			AccepterSIMPLEUboxMsg = OSQPend(g_SIMPLEUbox_PCTOVMCQ,10,&ComStatus);
+			if(ComStatus == OS_NO_ERR)
+			{				
+				switch(AccepterSIMPLEUboxMsg->PCTOVMCCmd)
+				{
+					//出货
+					case MBOX_SIMPLEPCTOVMC_VENDIND:
+						TracePC("\r\n MiddSIMPLEUbox VENDIND=%d",AccepterSIMPLEUboxMsg->channel_id);
+						vendrpt=ColumnCheckError(1,1,AccepterSIMPLEUboxMsg->channel_id,&columnNo);
+						//1.下发的货道或者商品id对应的货道无法出货时，返回NAK_RPT  
+						if(vendrpt)
+						{
+							TracePC("\r\n MiddSIMPLEUbox vendE4=%ld",columnNo);
+							//0：正常；1：单价为0,3：货道故障;4:缺货；5：无此货道； 6商品ID为0 ；7PC置位不可用
+							switch(vendrpt)
+							{
+								case 1:
+									ComReturn = 16;	
+									break;
+								case 3:
+									ComReturn = 17;	
+									break;
+								case 4:
+									ComReturn = 18;	
+									break;
+								case 5:
+									ComReturn = 19;	
+									break;
+								case 6:
+									ComReturn = 20;	
+									break;	
+								case 7:
+									ComReturn = 21;	
+									break;	
+									
+							}								
+						}						
+						//3.系统进入故障状态时，返回NAK_RPT  
+						else if(IsErrorState())
+						{
+							TracePC("\r\n MiddUbox vendE3");
+							ComReturn = 24;		
+						}
+						else
+						{							
+							ComReturn = 1;									
+						}
+						//3如果可以出货
+                	    if(ComReturn == 1)
+                	    {
+                	    	TracePC("\r\n %dMiddUbox vend=%ld",OSTimeGet(),columnNo);
+							//4出货
+							vendrpt=VendoutSIMPLEInd(columnNo);
+							//出货成功
+							if(vendrpt==1)
+								MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].channel_result=0;
+							//出货失败
+							else
+								MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].channel_result=1;
+                	    }
+						else
+						{
+							//4出货失败
+							MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].channel_result=1;
+                	    }	
+						TracePC("\r\n %dMiddUbox vendout=%d",OSTimeGet(),MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].channel_result);
+						//返回出货结果
+						MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].VMCTOPCCmd = MBOX_SIMPLEVMCTOPC_VENDOUT;
+						OSQPost(g_SIMPLEUbox_VMCTOPCQ,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
+						UpdateSIMPLEIndex();
+						break;
+					case MBOX_SIMPLEPCTOVMC_DISPLAYIND:
+						//0用户余额，1时间，2文本，3商品单价 
+						switch(AccepterSIMPLEUboxMsg->distype)
+						{
+							case 0:
+								TracePC("\r\n MiddUbox money=%ld",AccepterSIMPLEUboxMsg->payInMoney);
+								GetmoneySIMPLEInd(AccepterSIMPLEUboxMsg->payInMoney);
+								break;
+							case 3:
+								TracePC("\r\n MiddUbox price=%ld",AccepterSIMPLEUboxMsg->payInMoney);
+								PriceSIMPLEInd(AccepterSIMPLEUboxMsg->payInMoney);
+								break;	
+						}
+						break;
+				}
+			}	
+			break;
 	}
 }
 

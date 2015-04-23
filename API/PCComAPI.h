@@ -28,9 +28,14 @@ extern void ButtonRPTAPI(uint8_t type,unsigned char Logicnum,unsigned char binnu
 extern void VendoutRPTAPI( unsigned char status, unsigned char Binnum,unsigned char column, unsigned char type, uint32_t cost,uint32_t payAllMoney, unsigned char columnLeft );
 extern void ActionRPTAPI(uint8_t action,uint8_t value,uint8_t second,uint8_t column,uint8_t type,uint32_t  cost,uint32_t payAllMoney);
 extern uint8_t AdminRPTAPI(uint8_t adminType,uint8_t Column,uint8_t ColumnSum);
+extern uint8_t AdminRPTSIMPLEAPI(uint8_t adminType,uint8_t Column,uint8_t ColumnSum);
+extern uint8_t GetAdminSIMPLEAPI(uint8_t adminType,uint8_t Column);
+extern uint8_t GetAdminSIMPLEAPI(uint8_t adminType,uint8_t Column);
 extern void StatusRPTAPI(void);
+extern void ButtonSIMPLERPTAPI(uint8_t channel_id);
 extern void PollAPI(uint32_t payAllMoney);
 extern void PCHuamanCloseAPI(void);
 extern void UpdateIndex(void);
+extern void UpdateSIMPLEIndex(void);
 extern void WaitForPCInit(void);
 #endif

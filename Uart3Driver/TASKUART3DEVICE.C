@@ -21,6 +21,7 @@
 #include "TASKUART3DEVICE.H"
 #include "ZHIHUIPC.H"
 #include "UBProtocol.H"
+#include "UBProtocol_SIMPLE.h"
 #include "VMC_GPRS_PC.h"
 
 
@@ -28,6 +29,8 @@
 #define PC_ZHIHUI			1				//当前系统识别到的PC通讯类型为一鸣智慧
 #define PC_UBOX  		    2			    //当前系统识别到的PC通讯类型为友宝
 #define PC_GPRS				3     			//当前系统识别到的PC通讯类型为GPRS
+#define PC_SIMPUBOX			4               //新友宝pc通讯
+
 //extern uint8_t GetWeihuStatus();
 
 
@@ -45,12 +48,14 @@ void Uart3TaskDevice(void *pvData)
 {
 	MESSAGE_ZHIHUI *accepter_msg;
 	MessageUboxPCPack *AccepterUboxMsg;
+	MessageSIMPLEUboxPCPack *AccepterSIMPLEUboxMsg;
 	unsigned char ComStatus;
 	//当前PC设备的类型
 	uint8_t NowPCDev = 0;
 	uint8_t WeihuMode = 0;//1在维护模式下,0退出维护模式
 	uint8_t retRpt=0;
 	uint8_t isInit=0;//1系统已经开始响应,0系统还没响应
+	
 	
 	//检查PC控制
 	if((SystemPara.PcEnable == ZHIHUI_PC)||(SystemPara.PcEnable == GPRS_PC) )
@@ -150,6 +155,13 @@ void Uart3TaskDevice(void *pvData)
 		}
 		OSTimeDly(4);
 	}	
+	else if( SystemPara.PcEnable == SIMPUBOX_PC )
+	{
+		TracePC("\r\n Taskpend SIMPLEUboxinit"); 
+		LCDNumberFontPrintf(40,LINE15,2,"SIMPLEAccepter-1");
+		SIMPLESIMPLEVPSerialInit();
+		NowPCDev = PC_SIMPUBOX;
+	}
 	else
 	{
 		NowPCDev = 0;
@@ -436,7 +448,36 @@ void Uart3TaskDevice(void *pvData)
 				OSTimeDly(250/2);
 			 }
 		}
-		
+		else if(NowPCDev == PC_SIMPUBOX)
+		{
+			VPMissionSIMPLESIMPLE_Poll();
+			//OSTimeDly(OS_TICKS_PER_SEC/4);
+			OSTimeDly(OS_TICKS_PER_SEC/2);
+			//取得返回值
+			AccepterSIMPLEUboxMsg = OSQPend(g_SIMPLEUbox_VMCTOPCQ,20,&ComStatus);
+			if(ComStatus == OS_NO_ERR)
+			{
+				switch(AccepterSIMPLEUboxMsg->VMCTOPCCmd)
+				{
+					case MBOX_SIMPLEVMCTOPC_VENDOUT:
+						TracePC("\r\n Taskpend vendout=%d,%d,%d",sysVPMissionSIMPLE.channel_id,sysVPMissionSIMPLE.SN,AccepterSIMPLEUboxMsg->channel_result); 						
+						VPMissionSIMPLE_Vendout_RPT(AccepterSIMPLEUboxMsg->channel_result);
+						break;
+					case MBOX_SIMPLEVMCTOPC_BUTTONRPT:
+						TracePC("\r\n Taskpend btnchannel_id=%d",AccepterSIMPLEUboxMsg->btnchannel_id); 						
+						VPMissionSIMPLE_Button_RPT(AccepterSIMPLEUboxMsg->btnchannel_id);
+						break;
+					case MBOX_SIMPLEVMCTOPC_ADMINRPT:
+						TracePC("\r\n Taskpend Admin=%d,%d,%d",AccepterSIMPLEUboxMsg->admintype,AccepterSIMPLEUboxMsg->admincolumn,AccepterSIMPLEUboxMsg->admincolumnsum);					
+						VPMissionSIMPLE_Admin_RPT(AccepterSIMPLEUboxMsg->admintype,AccepterSIMPLEUboxMsg->admincolumn,AccepterSIMPLEUboxMsg->admincolumnsum);
+						break;
+					case MBOX_SIMPLEVMCTOPC_GETADMIN:						
+						TracePC("\r\n Taskpend GetAdmin=%d,%d",AccepterSIMPLEUboxMsg->admintype,AccepterSIMPLEUboxMsg->admincolumn);					
+						VPMissionSIMPLE_Get_Admin(AccepterSIMPLEUboxMsg->admintype,AccepterSIMPLEUboxMsg->admincolumn);
+						break;	
+				}
+			}
+		}
 		else if(NowPCDev == 0)
 		{
 			OSTimeDly(OS_TICKS_PER_SEC/2);

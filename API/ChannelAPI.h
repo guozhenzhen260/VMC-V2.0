@@ -141,8 +141,11 @@ unsigned char hd_save_param_bak(unsigned char cabinetNo);
 unsigned char hd_read_param_bak(unsigned char cabinetNo);
 unsigned char hd_save_param(unsigned char cabinetNo);
 unsigned char hd_read_param(unsigned char cabinetNo);
-
-
+unsigned char hd_id_by_logic(unsigned char cabinetNo,unsigned char logic);
+unsigned char hd_nums_by_id(unsigned char cabinetNo);
+unsigned char hd_state_by_id(unsigned char cabinetNo,unsigned char id);
+unsigned char hd_setNums_by_id(unsigned char cabinetNo,unsigned char id,unsigned char value);
+unsigned char hd_ids_by_level(unsigned char cabinetNo,unsigned char level,unsigned char *startId,unsigned char *stopId);
 
 
 

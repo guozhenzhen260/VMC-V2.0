@@ -44,16 +44,25 @@ uint8_t NowChangerDevState = 0;
 void ChangeGetTubes(void)
 {
 	uint8_t ChangerRdBuff[36],ChangerRdLen,ComStatus,j;
-	
+	memset(ChangerRdBuff,0,sizeof(ChangerRdBuff));	
+	for(j = 0; j < 16; j++) 
+	{
+		 stDevValue.CoinNum[j]=0;
+		 //TraceChange("\r\nqqDrvChangebuf[%d] = %d,%d", j,ChangerRdBuff[j+2],stDevValue.CoinNum[j]);
+    }
 	//if(NowChangerDev==2)
 	{		
 	   	ComStatus = MdbConversation(0x0A,NULL,0x00,&ChangerRdBuff[0],&ChangerRdLen);
 		if(ComStatus == 1)
 		{
-			 for(j = 0; j < 16; j++) 
+			 for(j = 0; j < ChangerRdLen-2; j++) 
 			 {
 				 stDevValue.CoinNum[j] =  ChangerRdBuff[2+j];				 
-				 TraceChange("\r\nDrvChangebuf[%d] = %d", j,stDevValue.CoinNum[j]);
+				 //TraceChange("\r\n**DrvChangebuf[%d] = %d,%d", j, ChangerRdBuff[j+2],stDevValue.CoinNum[j]);
+	         }
+			 for(j = 0; j < 16; j++) 
+			 {
+				 TraceChange("\r\n%dDrvChangebuf[%d] = %d", ChangerRdLen,j,stDevValue.CoinNum[j]);
 	         }
 		}
 	}
@@ -73,7 +82,7 @@ unsigned char ChangePayoutProcessLevel3(uint32_t PayMoney,unsigned char PayoutNu
 	uint32_t coinscale,dispenseValue;
 	uint8_t  i;
 	
-
+	memset(CoinRdBuff,0,sizeof(CoinRdBuff));
 	//NowChangerDev = SystemPara.CoinChangerType;
 	//Trace("6\r\n");	
 	
@@ -104,6 +113,7 @@ unsigned char ChangePayoutProcessLevel3(uint32_t PayMoney,unsigned char PayoutNu
 				//找零进行时，CoinRdLen=1 找零完成后，CoinRdLen = 0
 				if( CoinRdLen == 0 )
 				{
+					memset(CoinRdBuff,0,sizeof(CoinRdBuff));
 					//CoinRdLen = 0;
 					//3发送扩展指令，检测本次找币各通道找多少枚
 					VMCPoll[0] = 0x03;
@@ -112,10 +122,16 @@ unsigned char ChangePayoutProcessLevel3(uint32_t PayMoney,unsigned char PayoutNu
 					if( CoinRdLen > 0 )
 					{
 						TraceChange("\r\nDrvChangeOut=%d,%d,%d,%d",CoinRdBuff[0],CoinRdBuff[1],CoinRdBuff[2],CoinRdBuff[3]);
-						for(i = 0;i < 16;i++)
+						for(i = 0;i < CoinRdLen;i++)
 						{
 							PayoutNum[i] = CoinRdBuff[i];
 						}
+						for(i = 0; i < 16; i++) 
+						{
+							 TraceChange("\r\n%dDrvPayoutNum[%d] = %d", CoinRdLen,i,PayoutNum[i]);
+						}
+						
+						
 						break;
 					}
 				}

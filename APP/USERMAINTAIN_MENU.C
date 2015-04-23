@@ -919,15 +919,17 @@ typedef struct
 	char *Refund[MAXLANGUAGETYPE];
 	char *BillValidatorTest[MAXLANGUAGETYPE];		
 	char *CoinAcceptorTest[MAXLANGUAGETYPE];
-	char *CoinChangerTest[MAXLANGUAGETYPE];
+	char *CoinChangerTest[MAXLANGUAGETYPE];	
 	char *PCSet[MAXLANGUAGETYPE];
 	char *MaxValue[MAXLANGUAGETYPE];
 	char *BillValidatorType[MAXLANGUAGETYPE];
 	char *CoinAcceptorType[MAXLANGUAGETYPE];
 	char *CashlessDeviceType[MAXLANGUAGETYPE];
+	char *SaleTime[MAXLANGUAGETYPE];
+	char *ColumnTime[MAXLANGUAGETYPE];
 	char *box_hot[MAXLANGUAGETYPE];
 	char *box_chuchou[MAXLANGUAGETYPE];
-	char *BillEnableValue[MAXLANGUAGETYPE];
+	char *BillEnableValue[MAXLANGUAGETYPE];	
 	
 } USERTRADEMAINMENULIST;
 
@@ -1044,6 +1046,20 @@ const USERTRADEMAINMENULIST UserTradeMenuList =
 		"3.CashlessDeviceType:",
 		"3.KART OKUYUCU AYARI:",
 		"3.CashlessDeviceType:"
+	},
+	{
+		"④ 交易时间:",
+		"4.SaleTime:",	
+		"4.SaleTime:",
+		"4.SaleTime:",
+		"4.SaleTime:"
+	},
+	{
+		"⑤ 出货时间:",
+		"5.ColumnTime:",	
+		"5.ColumnTime:",
+		"5.ColumnTime:",
+		"5.ColumnTime:"
 	},
 	{
 		"① 柜内加热",

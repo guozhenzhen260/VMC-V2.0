@@ -92,6 +92,15 @@ uint8_t  g_Ubox_Index = 0;
 MessageUboxPCPack MsgUboxPack[UBOX_SIZE];
 
 
+//UboxSIMPLEPC通讯队列
+void *SIMPLEUUboxSizeQ[SIMPLEUBOX_SIZE];
+OS_EVENT *g_SIMPLEUbox_PCTOVMCQ;//pc下发给vmc的消息队列
+OS_EVENT *g_SIMPLEUbox_VMCTOPCQ;//vmc上报给PC的消息队列
+uint8_t  g_SIMPLEUbox_Index = 0;
+MessageSIMPLEUboxPCPack MsgSIMPLEUboxPack[SIMPLEUBOX_SIZE];
+
+
+
 //展示位按键
 OS_EVENT *g_KEYMail;//展示位控制邮箱
 MessageKEYPack MsgKEYPack;
@@ -168,6 +177,9 @@ void CreateMBox(void)
 	g_Ubox_VMCTOPCBackCMail = OSMboxCreate(NULL);
 	g_Ubox_PCTOVMCQ = OSQCreate(&PCTOVMCSizeQ[0],UBOX_SIZE);
 	g_Ubox_PCTOVMCBackQ = OSQCreate(&PCTOVMCBackSizeQ[0],UBOX_SIZE);
+	//UboxSIMPLEPC通讯队列
+	g_SIMPLEUbox_PCTOVMCQ = OSQCreate(&SIMPLEUUboxSizeQ[0],SIMPLEUBOX_SIZE);
+	g_SIMPLEUbox_VMCTOPCQ = OSQCreate(&SIMPLEUUboxSizeQ[0],SIMPLEUBOX_SIZE);
 	//创建升降台邮箱
 	g_LiftTableMail = OSMboxCreate(NULL);
 	g_LiftTableBackMail = OSMboxCreate(NULL);
@@ -417,6 +429,7 @@ uint8_t LoadDefaultSystemPara(uint8_t backup)
 	SystemPara.RecyclerMoney = (RdBuf[num++]<<24)|(RdBuf[num++]<<16)|(RdBuf[num++]<<8)|(RdBuf[num++]);
     SystemPara.XMTTemp = RdBuf[num++];
 	SystemPara.BillEnableValue   = (RdBuf[num++]<<24)|(RdBuf[num++]<<16)|(RdBuf[num++]<<8)|(RdBuf[num++]);
+	SystemPara.ColumnTime  = RdBuf[num++];
 	
 	crc = CrcCheck(RdBuf,num);
 	//Trace("\r\n defaultsys=%d,%x,%x",num,crc/256,crc%256);
@@ -645,6 +658,7 @@ void WriteDefaultSystemPara(SYSTEMPARAMETER SysPara,uint8_t backup)
 	Wrbuf[num++] = (SysPara.BillEnableValue>>16)&0xff;
 	Wrbuf[num++] = (SysPara.BillEnableValue>>8)&0xff;
 	Wrbuf[num++] = (SysPara.BillEnableValue)&0xff;
+	Wrbuf[num++] = SysPara.ColumnTime;
 	
 	crc = CrcCheck(Wrbuf,num);	
 	//Trace("\r\n defaultsys=%d,%x,%x",num,crc/256,crc%256);

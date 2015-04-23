@@ -78,7 +78,7 @@ void Uart2TaskDevice(void *pvData)
 	//切换串口为mdb模式
 	MdbBusHardwareReset();
 	OSTimeDly(2);	
-
+	memset(PayoutNum,0,sizeof(PayoutNum));
 	
 	//检查纸币器控制
 	AccepterMsg = OSMboxPend(g_BillMoneyMail,OS_TICKS_PER_SEC,&ComStatus);
@@ -424,7 +424,7 @@ void Uart2TaskDevice(void *pvData)
 					{
 						MsgAccepterPack.PayoutBackNum[i] = PayoutNum[i];
 						PayoutNum[i] = 0;
-						TraceChange("\r\n %d",MsgAccepterPack.PayoutBackNum[i]);
+						//TraceChange("\r\n PayoutNum[%d]=%d",i,MsgAccepterPack.PayoutBackNum[i]);
 					}
 					OSMboxPost(g_ChangeBackMoneyMail,&MsgAccepterPack);
 					break;
@@ -564,31 +564,34 @@ void Uart2TaskDevice(void *pvData)
 				OSMboxPost(g_ACDCBackMail,&MsgAccepterPack);
 			}
 		}
-		/*
+		
 		//接收盒饭柜控制邮箱  Add by liya 2014-01-20
-		AccepterMsg = OSMboxPend(g_HeFanGuiMail,2,&ComStatus);
-		if(ComStatus == OS_NO_ERR)
+		if(SystemPara.hefangGui==MDB_GEZI)
 		{
-			switch(AccepterMsg->HeFanGuiHandle)	
+			AccepterMsg = OSMboxPend(g_HeFanGuiMail,2,&ComStatus);
+			if(ComStatus == OS_NO_ERR)
 			{
-				case HEFANGUI_KAIMEN:
-				case HEFANGUI_CHAXUN:
-				case HEFANGUI_JIAREKAI:
-				case HEFANGUI_JIAREGUAN:
-				case HEFANGUI_ZHILENGKAI:
-				case HEFANGUI_ZHILENGGUAN:
-				case HEFANGUI_ZHAOMINGKAI:
-				case HEFANGUI_ZHAOMINGGUAN:
-					TraceChannel("recv..CMD    lvel=%d\r\n",AccepterMsg->HeFanGuiHandle);
-					rst = HeFanGuiDriver(AccepterMsg->Binnum,AccepterMsg->HeFanGuiHandle,AccepterMsg->HeFanGuiNum,MsgAccepterPack.HeFanGuiBuf);
-					TraceChannel("Task_res==%d\r\n",rst);
-					MsgAccepterPack.HeFanGuiHandle = AccepterMsg->HeFanGuiHandle;
-					MsgAccepterPack.HeFanGuiRst = rst;
-					OSMboxPost(g_HeFanGuiBackMail,&MsgAccepterPack);
-					break;
+				switch(AccepterMsg->HeFanGuiHandle)	
+				{
+					case HEFANGUI_KAIMEN:
+					case HEFANGUI_CHAXUN:
+					case HEFANGUI_JIAREKAI:
+					case HEFANGUI_JIAREGUAN:
+					case HEFANGUI_ZHILENGKAI:
+					case HEFANGUI_ZHILENGGUAN:
+					case HEFANGUI_ZHAOMINGKAI:
+					case HEFANGUI_ZHAOMINGGUAN:
+						TraceChannel("recvMDBCMD    lvel=%d\r\n",AccepterMsg->HeFanGuiHandle);
+						//rst = HeFanGuiDriver(AccepterMsg->Binnum,AccepterMsg->HeFanGuiHandle,AccepterMsg->HeFanGuiNum,MsgAccepterPack.HeFanGuiBuf);
+						TraceChannel("Task_res==%d\r\n",rst);
+						MsgAccepterPack.HeFanGuiHandle = AccepterMsg->HeFanGuiHandle;
+						MsgAccepterPack.HeFanGuiRst = rst;
+						OSMboxPost(g_HeFanGuiBackMail,&MsgAccepterPack);
+						break;
+				}
 			}
 		}
-		*/
+		
 		//检查各个设备状态
 		OSMboxPend(g_DeviceStateMail,2,&ComStatus);
 		if(ComStatus == OS_NO_ERR)

@@ -2615,6 +2615,202 @@ unsigned char hd_huodao_rpt_vp(unsigned char cabinetNo,unsigned char *buf)
 
 }
 
+/*****************************************************************************
+** Function name:	hd_id_by_logic	
+** Descriptions:	通过逻辑货道获取该货道的ID号									 			
+** parameters:		cabinetNo:箱柜编号		logic 逻辑货道
+** Returned value:	返回ID号  失败返回0
+*******************************************************************************/
+unsigned char hd_id_by_logic(unsigned char cabinetNo,unsigned char logic)
+{
+	unsigned char i,j,id;
+	ST_LEVEL_HUODAO *stHuodaoPtr;
+	//Trace("hd_id_by_logic:bin=%d,logic=%d\r\n",cabinetNo,logic);
+	if(cabinetNo == 1)
+		stHuodaoPtr = stHuodao;
+	else if(cabinetNo == 2 && SystemPara.SubBinOpen)
+		stHuodaoPtr = stSubHuodao;
+	else{
+		print_err(cabinetNo);
+		return 0;
+	}
+
+	for(i = 0;i < HUODAO_MAX_ROW;i++){
+		for(j = 0;j < HUODAO_MAX_COLUMN;j++){
+			if(stHuodaoPtr[i].huodao[j].logicNo == logic){
+				id = stHuodaoPtr[i].huodao[j].id;
+				//Trace("stHuodaoPtr[%d][%d].id = %dr\n",i,j,id);
+				return id;
+			}		  	
+		}
+	}
+	
+	return 0 ;
+	
+}
+
+
+/*****************************************************************************
+** Function name:	hd_nums_by_id	
+** Descriptions:	通过柜号获得货道总数									 			
+** parameters:		cabinetNo:箱柜编号		
+** Returned value:	返回货道总数
+*******************************************************************************/
+unsigned char hd_nums_by_id(unsigned char cabinetNo)
+{
+	unsigned char i,j,nums = 0;
+	ST_LEVEL_HUODAO *stHuodaoPtr;
+	if(cabinetNo == 1)
+		stHuodaoPtr = stHuodao;
+	else if(cabinetNo == 2 && SystemPara.SubBinOpen)
+		stHuodaoPtr = stSubHuodao;
+	else{
+		print_err(cabinetNo);
+		return 0;
+	}
+
+	for(i = 0;i < HUODAO_MAX_ROW;i++){
+		for(j = 0;j < HUODAO_MAX_COLUMN;j++){
+			if((stHuodaoPtr[i].huodao[j].openFlag != 0) &&
+				(stHuodaoPtr[i].huodao[j].id != 0)){
+				nums++;
+			}			
+		}
+	}
+
+	return nums;
+	
+}
+
+/*****************************************************************************
+** Function name:	hd_state_by_id	
+** Descriptions:	      通过ID号获得货道状态											 			
+** parameters:		cabinetNo:箱柜编号		
+					id :id号
+** Returned value:	1:可用  0不可用
+*******************************************************************************/
+unsigned char hd_state_by_id(unsigned char cabinetNo,unsigned char id)
+{
+	unsigned char i,j;
+	ST_LEVEL_HUODAO *stHuodaoPtr;
+	if(cabinetNo == 1)
+		stHuodaoPtr = stHuodao;
+	else if(cabinetNo == 2 && SystemPara.SubBinOpen)
+		stHuodaoPtr = stSubHuodao;
+	else{
+		print_err(cabinetNo);
+		return 0;
+	}
+
+	for(i = 0;i < HUODAO_MAX_ROW;i++){
+		for(j = 0;j < HUODAO_MAX_COLUMN;j++){
+			if(stHuodaoPtr[i].huodao[j].id == id){
+				if((stHuodaoPtr[i].huodao[j].state == 1) && 
+					(stHuodaoPtr[i].huodao[j].count != 0)){
+					return 1;
+				}
+			}			
+		}
+	}
+
+	return 0;
+}
+
+/*****************************************************************************
+** Function name:	hd_setNums_by_id	
+** Descriptions:	      通过ID号设置货道余量											 			
+** parameters:		cabinetNo:箱柜编号		
+					id :ID号   value 余量值
+** Returned value:	0:无此货到;  非0  返回货道逻辑号  0xFF 表示缺货
+*******************************************************************************/
+unsigned char hd_setNums_by_id(unsigned char cabinetNo,unsigned char id,unsigned char value)
+{
+	unsigned char i,j;
+	ST_LEVEL_HUODAO *stHuodaoPtr;
+
+	if(cabinetNo == 1){
+		stHuodaoPtr = stHuodao;
+	}	
+	else if(cabinetNo == 2 && SystemPara.SubBinOpen){
+		stHuodaoPtr = stSubHuodao;
+	}	
+	else{
+		print_err(cabinetNo);
+		return 0;
+	}
+	
+	for(i = 0;i < HUODAO_MAX_ROW;i++){
+		for(j = 0;j < HUODAO_MAX_COLUMN;j++){
+			if(stHuodaoPtr[i].huodao[j].id == id){
+				if(value == 0){
+					stHuodaoPtr[i].huodao[j].count = 0;
+					if(stHuodaoPtr[i].huodao[j].state != HUODAO_STATE_FAULT){
+						stHuodaoPtr[i].huodao[j].state = HUODAO_STATE_EMPTY;
+					}
+				}
+				else{
+					stHuodaoPtr[i].huodao[j].count = value & 0x3F;
+					if(stHuodaoPtr[i].huodao[j].state != HUODAO_STATE_FAULT){
+						stHuodaoPtr[i].huodao[j].state = HUODAO_STATE_NORMAL;
+					}
+				}
+			}
+		}
+	}
+	
+	return 1;
+}
+
+
+/*****************************************************************************
+** Function name:	hd_ids_by_level	
+** Descriptions:	通过层号获取该层的起始ID和结束ID											 			
+** parameters:		cabinetNo:箱柜编号		
+					level :层号   
+					startId 起始ID stopid 结束ID
+** Returned value:	0:失败; 1成功
+*******************************************************************************/
+unsigned char hd_ids_by_level(unsigned char cabinetNo,unsigned char level,unsigned char *startId,unsigned char *stopId)
+{
+	unsigned char i,j,temp = 0;
+	ST_LEVEL_HUODAO *stHuodaoPtr;
+	*startId = 0;
+	*stopId = 0;
+	if(cabinetNo == 1){
+		stHuodaoPtr = stHuodao;
+	}	
+	else if(cabinetNo == 2 && SystemPara.SubBinOpen){
+		stHuodaoPtr = stSubHuodao;
+	}	
+	else{
+		print_err(cabinetNo);
+		return 0;
+	}
+	
+	for(i = 0;i < HUODAO_MAX_ROW;i++){
+		if(stHuodaoPtr[i].openFlag != 1)
+			continue;
+		temp++;
+		if(level != temp)
+			continue;
+		for(j = 0;j < HUODAO_MAX_COLUMN;j++){
+			if(stHuodaoPtr[i].huodao[j].openFlag == 1 &&
+				stHuodaoPtr[i].huodao[j].id != 0){
+				if(*startId == 0){
+					*startId = stHuodaoPtr[i].huodao[j].id;
+				}
+				else{
+					*stopId = stHuodaoPtr[i].huodao[j].id;
+				}
+			}
+		}
+	}
+
+	
+	return (*startId != 0 && *stopId != 0);
+}
+
+
 
 /*--------------------------------------------------------------------------------
 										修改记录

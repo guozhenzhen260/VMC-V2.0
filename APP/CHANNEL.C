@@ -1958,6 +1958,7 @@ void ChannelOneAddGoods(unsigned char Binnum)
 	uint8_t key,logicNo = 0,j;	
 	uint8_t state=0;
 	unsigned char flushFlag = 1,returnFlag = 0,lang,enterSub = 0;
+	unsigned char adminflag=0;
 	lang = SystemPara.Language;
 	while(1)
 	{
@@ -2013,7 +2014,7 @@ void ChannelOneAddGoods(unsigned char Binnum)
 					if(state == 3 || state == 1)
 						ChannelSetParam(logicNo,Binnum,CHANNELSTATE,1,0);
 				}
-				else
+				else if(SystemPara.PcEnable==UBOX_PC)
 				{
 					if(AdminRPTWeihu(2,logicNo,j))
 					{
@@ -2021,6 +2022,28 @@ void ChannelOneAddGoods(unsigned char Binnum)
 						state = ChannelGetParamValue(logicNo,3,Binnum);
 						if(state == 3 || state == 1)
 							ChannelSetParam(logicNo,Binnum,CHANNELSTATE,1,0);
+					}
+				}
+				if(SystemPara.PcEnable==SIMPUBOX_PC)
+				{
+					if(hd_id_by_logic(1,logicNo))
+					{
+						//判断能否得到这个货道的存货数量
+						adminflag=GetAdminSIMPLEAPI(3,hd_id_by_logic(1,logicNo));
+						if(adminflag>0)
+						{
+							//修改这个货道存货数量
+							ChannelReadChannelParam(Binnum,logicNo);
+							TracePC("\r\n APPUbox AdminChannel");
+							//同步到pc机上这个货道的存货数量
+							AdminRPTSIMPLE(3,hd_id_by_logic(Binnum,logicNo),hd_get_by_logic(Binnum,logicNo,2));
+						}
+						else
+						{
+							
+							LCDPrintf(5,5,0,SystemPara.Language,"操作失败");
+							OSTimeDly(OS_TICKS_PER_SEC * 2);
+						}						
 					}
 				}
 				OSTimeDly(200);
@@ -2119,8 +2142,8 @@ void ChannelLevelAddGoods(unsigned char Binnum)
 			key = ReadKeyValue();
 			if(key == '1' || key == 'E')
 			{
-				//if(SystemPara.PcEnable== 0)
-				if(1)
+				if(SystemPara.PcEnable== 0)
+				//if(1)
 				{
 					//获取真实的层号
 					if(hd_get_index(Binnum,levelNo * 10 + 1,1,&i,&j))
@@ -2128,9 +2151,13 @@ void ChannelLevelAddGoods(unsigned char Binnum)
 						hd_add_goods(Binnum,i + 1,2);	
 					}	
 				}
-				else
+				else if(SystemPara.PcEnable==UBOX_PC)
 				{
 					AdminRPTWeihu(8,levelNo,0); 
+				}
+				else if(SystemPara.PcEnable==SIMPUBOX_PC)
+				{
+					AdminRPTSIMPLE(2,levelNo,0);
 				}
 				flush = 1;
 				enterSub = 0;
@@ -2175,14 +2202,18 @@ void ChannelAllLevelAddGoods(unsigned char Binnum)
 		key = GetKeyInValue();
 		if(key == 1 || (key == 0x0F))
 		{
-			//if(SystemPara.PcEnable==0)
-			if(1)
+			if(SystemPara.PcEnable==0)
+			//if(1)
 			{
 				hd_add_goods(Binnum,0,3);
 			}
-			else
+			else if(SystemPara.PcEnable==UBOX_PC)
 			{
 				AdminRPTWeihu(1,0,0);
+			}
+			else if(SystemPara.PcEnable==SIMPUBOX_PC)
+			{
+				AdminRPTSIMPLE(1,0,0);
 			}
 			break;
 		}
@@ -2202,9 +2233,12 @@ void ChannelAllLevelAddGoods(unsigned char Binnum)
 *******************************************************************************/
 void ChannelAddGoods(unsigned char cabinetNo)
 {
+
+	
 	uint8_t key;
 	unsigned char topFlush = 1,topReturnFlag = 0;
 	unsigned char lang;
+	
 	lang = SystemPara.Language;
 	while(1)
 	{

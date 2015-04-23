@@ -59,6 +59,12 @@ uint8_t MdbConversation(uint8_t Dev,uint8_t *SeDat,uint8_t SenDatLen,uint8_t *Re
 		//Trace(" %02x ",SeDat[i]);
 	}
 	MdbPutChr(check,MDB_DAT);				//送出校验和
+//	Trace("\r\nMDBSEND=[%02x,",Dev);
+//	for(i=0;i<SenDatLen;i++)				//送出数据
+//	{
+//		Trace(" %02x ",SeDat[i]);
+//	}
+//	Trace(" %02x]\r\n",check);
 	OSIntExit();
 	OSTimeDly(3);
 	MDBCONVERSATIONWAITACKTIMEOUT = 200;	//进入ACK等待，超时200ms
@@ -73,6 +79,11 @@ uint8_t MdbConversation(uint8_t Dev,uint8_t *SeDat,uint8_t SenDatLen,uint8_t *Re
 									  //Trace("\r\n R- ");	
 									  *RevLen = Uart2GetStr(RevDat,MDB_MAX_BLOCK_SIZE);
 									  //Trace(" [%02x]",*RevLen);
+//									  Trace("MDBREC=");
+//									  for(i=0;i<*RevLen;i++)				//送出数据
+//									  {
+//											Trace(" %02x ",RevDat[i]);
+//									  }
 									  err = 1;
 									  break;	
 				case MDB_OUT_RANGE	: 

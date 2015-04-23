@@ -103,7 +103,12 @@ uint8_t BillDevInit()
 {
 	unsigned char BillRdBuff[36],BillRdLen,ComStatus,i;	
 	unsigned char j;
-			
+	memset(BillRdBuff,0,sizeof(BillRdBuff));
+	for(j = 0; j < 16; j++) 
+	{
+		 stDevValue.BillValue[j]=0;
+		 //TraceBill("\r\nqqDrvChangebuf[%d] = %d,%d", j,ChangerRdBuff[j+2],stDevValue.CoinNum[j]);
+	}
 	//Reset
 	for(ComStatus = 0, j = 0; j < 10 && ComStatus != 1; j++)
 	{
@@ -149,7 +154,7 @@ uint8_t BillDevInit()
 	    {
 	  	  stDevValue.BillEscrowFun = 1; //ÓÐÔÝ´æ
 	    }			
-		for(i=0;i<16;i++)
+		for(i=0;i<BillRdLen-11;i++)
 		{
 			if(BillRdBuff[11+i] == 0xFF) 
 			{
@@ -159,6 +164,10 @@ uint8_t BillDevInit()
 			nBillvalue[i] = (uint32_t)BillRdBuff[i+11] * stDevValue.BillScale;	
 			stDevValue.BillValue[i] = nBillvalue[i];			
 		}	
+		for(i = 0; i < 16; i++) 
+		{
+			 TraceBill("\r\n%dDrvBill[%d] = %d", BillRdLen,i,stDevValue.BillValue[i]);
+		}
 	}
 	
 	//ÂÖÑ¯Ö½±ÒÆ÷
@@ -861,7 +870,12 @@ uint8_t RecyclerDevInit()
 	unsigned char BillRdBuff[36],BillRdLen,ComStatus,i;	
 	unsigned char j;
 	uint8_t VMCdata[2]={0x00,0x00};
-			
+	memset(BillRdBuff,0,sizeof(BillRdBuff));	
+	for(j = 0; j < 16; j++) 
+	{
+		 stDevValue.BillValue[j]=0;
+		 //TraceBill("\r\nqqDrvChangebuf[%d] = %d,%d", j,ChangerRdBuff[j+2],stDevValue.CoinNum[j]);
+	}
 	//1Reset
 	for(ComStatus = 0, j = 0; j < 10 && ComStatus != 1; j++)
 	{
@@ -921,7 +935,7 @@ uint8_t RecyclerDevInit()
 	    {
 	  	  stDevValue.BillEscrowFun = 1; //ÓÐÔÝ´æ
 	    }			
-		for(i=0;i<8;i++)
+		for(i=0;i<BillRdLen-11;i++)
 		{
 			if(BillRdBuff[11+i] == 0xFF) 
 			{
@@ -930,7 +944,11 @@ uint8_t RecyclerDevInit()
 			
 			nBillvalue[i] = (uint32_t)BillRdBuff[i+11] * stDevValue.BillScale;	
 			stDevValue.BillValue[i] = nBillvalue[i];			
-		}	
+		}
+		for(i = 0; i < 16; i++) 
+		{
+			 TraceBill("\r\n%dDrvRec[%d] = %d", BillRdLen,i,stDevValue.BillValue[i]);
+		}
 	}
 	
 	//4security

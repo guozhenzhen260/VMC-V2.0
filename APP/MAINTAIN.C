@@ -1051,6 +1051,43 @@ uint8_t AdminRPTWeihu(uint8_t adminType,uint8_t Column,uint8_t ColumnSum)
 	return res;
 }
 
+/*********************************************************************************************************
+** Function name:     	AdminRPTSIMPLE
+** Descriptions:	    补货配置
+** input parameters:    adminType:1加满全部货道,2按层加满,3按货道加满，4最长出货时间，5自动退币时间
+** output parameters:   无
+** Returned value:      1ACK,0NAK
+*********************************************************************************************************/
+uint8_t AdminRPTSIMPLE(uint8_t adminType,uint8_t Column,uint8_t ColumnSum)
+{
+	uint8_t res = 0;	
+	
+	while( 1 )
+	{	
+		res = AdminRPTSIMPLEAPI(adminType,Column,ColumnSum);		
+		LCDClrScreen();
+		LCDDrawRectangle(0,0,239,15);
+		LCDDrawRectangle(0,0,239,3);
+		LCDClrArea(1,4,238,14);
+		if(res)
+		{
+			LCDPrintf(5,5,0,SystemPara.Language,UserUboxPCMenuList.VPSuccess[SystemPara.Language]);
+		}
+		else
+		{
+			
+			LCDPrintf(5,5,0,SystemPara.Language,UserUboxPCMenuList.VPFail[SystemPara.Language]);
+		}	
+		OSTimeDly(OS_TICKS_PER_SEC * 2);
+		if( (adminType==4)&&(res==0) )
+			continue;
+		break;
+	}
+	return res;
+}
+
+
+
 
 
 /*********************************************************************************************************
@@ -1506,6 +1543,7 @@ void RstUserPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					SystemPara.MaxValue = keyValue;	
 					break;
 				case 2: 
+					SystemPara.SaleTime = keyValue;	
 					break;
 				case 3:						
 					break;	
@@ -1523,6 +1561,7 @@ void RstUserPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 				case 1: 	
 					break;
 				case 2: 
+					SystemPara.ColumnTime = keyValue;	
 					break;
 				case 3:
 					break;	
@@ -1547,6 +1586,7 @@ void UserTradeMaintainProcess(void)
 {
 	unsigned char Key,flag = 0, resetPar = 0,resetAcptorPar = 0;
 	uint32_t keyValue = 0;
+	unsigned char adminflag=0;
 	
 	void (*TestFunctonPtr)(void);
 	UserTradeMainMenu.PageNumb	  = 0x00;
@@ -1592,7 +1632,12 @@ void UserTradeMaintainProcess(void)
 			LCDPrintf(5,5,0,SystemPara.Language,"%s%d",UserTradeMenuList.BillValidatorType[SystemPara.Language],SystemPara.BillValidatorType);
 			LCDPrintf(5,7,0,SystemPara.Language,"%s%d",UserTradeMenuList.CoinAcceptorType[SystemPara.Language],SystemPara.CoinAcceptorType);
 			LCDPrintf(5,9,0,SystemPara.Language,"%s%d",UserTradeMenuList.CashlessDeviceType[SystemPara.Language],SystemPara.CashlessDeviceType);
-			LCDPrintf(231-8*strlen(UserTradeMenuList.PageUp[SystemPara.Language]),13,0,SystemPara.Language,UserTradeMenuList.PageUp[SystemPara.Language]);
+			if(SystemPara.PcEnable==SIMPUBOX_PC)
+			{
+				LCDPrintf(5,11,0,SystemPara.Language,"%s%d",UserTradeMenuList.SaleTime[SystemPara.Language],SystemPara.SaleTime);
+				LCDPrintf(5,13,0,SystemPara.Language,"%s%d",UserTradeMenuList.ColumnTime[SystemPara.Language],SystemPara.ColumnTime);
+				//LCDPrintf(231-8*strlen(UserTradeMenuList.PageUp[SystemPara.Language]),13,0,SystemPara.Language,UserTradeMenuList.PageUp[SystemPara.Language]);
+			}
 		}
 		else if(UserTradeMainMenu.PageNumb == 0x03)
 		{
@@ -1635,7 +1680,12 @@ void UserTradeMaintainProcess(void)
 								LCDPrintf(5,5,0,SystemPara.Language,"%s%d",UserTradeMenuList.BillValidatorType[SystemPara.Language],SystemPara.BillValidatorType);
 								LCDPrintf(5,7,0,SystemPara.Language,"%s%d",UserTradeMenuList.CoinAcceptorType[SystemPara.Language],SystemPara.CoinAcceptorType);
 								LCDPrintf(5,9,0,SystemPara.Language,"%s%d",UserTradeMenuList.CashlessDeviceType[SystemPara.Language],SystemPara.CashlessDeviceType);
-								LCDPrintf(231-8*strlen(UserTradeMenuList.PageUp[SystemPara.Language]),13,0,SystemPara.Language,UserTradeMenuList.PageUp[SystemPara.Language]);
+								if(SystemPara.PcEnable==SIMPUBOX_PC)
+								{
+									LCDPrintf(5,11,0,SystemPara.Language,"%s%d",UserTradeMenuList.SaleTime[SystemPara.Language],SystemPara.SaleTime);
+									LCDPrintf(5,13,0,SystemPara.Language,"%s%d",UserTradeMenuList.ColumnTime[SystemPara.Language],SystemPara.ColumnTime);
+									//LCDPrintf(231-8*strlen(UserTradeMenuList.PageUp[SystemPara.Language]),13,0,SystemPara.Language,UserTradeMenuList.PageUp[SystemPara.Language]);
+								}
 							}
 							else if(UserTradeMainMenu.PageNumb == 0x02)
 							{
@@ -1690,7 +1740,12 @@ void UserTradeMaintainProcess(void)
 								LCDPrintf(5,5,0,SystemPara.Language,"%s%d",UserTradeMenuList.BillValidatorType[SystemPara.Language],SystemPara.BillValidatorType);
 								LCDPrintf(5,7,0,SystemPara.Language,"%s%d",UserTradeMenuList.CoinAcceptorType[SystemPara.Language],SystemPara.CoinAcceptorType);
 								LCDPrintf(5,9,0,SystemPara.Language,"%s%d",UserTradeMenuList.CashlessDeviceType[SystemPara.Language],SystemPara.CashlessDeviceType);
-								LCDPrintf(231-8*strlen(UserTradeMenuList.PageUp[SystemPara.Language]),13,0,SystemPara.Language,UserTradeMenuList.PageUp[SystemPara.Language]);
+								if(SystemPara.PcEnable==SIMPUBOX_PC)
+								{
+									LCDPrintf(5,11,0,SystemPara.Language,"%s%d",UserTradeMenuList.SaleTime[SystemPara.Language],SystemPara.SaleTime);
+									LCDPrintf(5,13,0,SystemPara.Language,"%s%d",UserTradeMenuList.ColumnTime[SystemPara.Language],SystemPara.ColumnTime);
+									//LCDPrintf(231-8*strlen(UserTradeMenuList.PageUp[SystemPara.Language]),13,0,SystemPara.Language,UserTradeMenuList.PageUp[SystemPara.Language]);
+								}
 							}
 							else if(UserTradeMainMenu.PageNumb == 0x02)
 							{
@@ -1797,6 +1852,11 @@ void UserTradeMaintainProcess(void)
 								if(flag == 0)
 									flag = 4;
 							}
+							else if(UserTradeMainMenu.PageNumb == 0x02)
+							{
+								if(flag == 0)
+									flag = 4;
+							}
 							//Trace("\r\n 4");
 							break;
 				case '5' :	
@@ -1804,7 +1864,12 @@ void UserTradeMaintainProcess(void)
 							{
 								if(flag == 0)
 									flag = 5;
-							}							
+							}		
+							else if(UserTradeMainMenu.PageNumb == 0x02)
+							{
+								if(flag == 0)
+									flag = 5;
+							}
 							//Trace("\r\n 5");
 							break;				
 				default  :	
@@ -1895,7 +1960,8 @@ void UserTradeMaintainProcess(void)
 						case 1: 	
 							LCDPrintf(5,11,1,SystemPara.Language,"%s%ld",UserTradeMenuList.MaxValue[SystemPara.Language],keyValue);
 							break;
-						case 2: 													
+						case 2:
+							LCDPrintf(5,11,1,SystemPara.Language,"%s%d",UserTradeMenuList.SaleTime[SystemPara.Language],keyValue);
 							break;
 						case 3:																	
 							break;	
@@ -1911,7 +1977,8 @@ void UserTradeMaintainProcess(void)
 							break;
 						case 1: 
 							break;
-						case 2: 													
+						case 2:
+							LCDPrintf(5,13,1,SystemPara.Language,"%s%d",UserTradeMenuList.ColumnTime[SystemPara.Language],keyValue);
 							break;
 						case 3:																	
 							break;	
@@ -1943,6 +2010,8 @@ void UserTradeMaintainProcess(void)
 						keyValue = keyValue*10+Key;	
 						if( ((flag==4)&&(UserTradeMainMenu.PageNumb==1))
 							||((flag==3)&&(UserTradeMainMenu.PageNumb==3))
+							||((flag==4)&&(UserTradeMainMenu.PageNumb==2))
+							||((flag==5)&&(UserTradeMainMenu.PageNumb==2))
 						  )
 						{
 						}
@@ -1952,7 +2021,7 @@ void UserTradeMaintainProcess(void)
 							if(
 								((flag==1)&&(UserTradeMainMenu.PageNumb==2))
 								||((flag==2)&&(UserTradeMainMenu.PageNumb==2))
-								||((flag==3)&&(UserTradeMainMenu.PageNumb==2))
+								||((flag==3)&&(UserTradeMainMenu.PageNumb==2))								
 							)
 							{
 								resetAcptorPar = 1;
@@ -1973,15 +2042,41 @@ void UserTradeMaintainProcess(void)
 					//4.将输入数字保存到参数中
 					else if(Key == 0x0f)//确定按键
 					{
-						if( ((flag==4)&&(UserTradeMainMenu.PageNumb==1))
-							||((flag==3)&&(UserTradeMainMenu.PageNumb==3)) 
+						if( 
+							((flag==4)&&(UserTradeMainMenu.PageNumb==2)) 
+							||((flag==5)&&(UserTradeMainMenu.PageNumb==2)) 
+						  )
+						{
+							if(SystemPara.PcEnable==SIMPUBOX_PC)
+							{
+								if(flag==4)
+								{
+									//同步到pc机上这个货道的存货数量
+									adminflag=AdminRPTSIMPLEAPI(5,0,keyValue);
+								}
+								else if(flag==5)
+								{
+									//同步到pc机上这个货道的存货数量
+									adminflag=AdminRPTSIMPLEAPI(4,0,keyValue);
+								}
+								if(adminflag)
+								{
+									RstUserPara(UserTradeMainMenu.PageNumb,flag,keyValue);
+									resetAcptorPar = 1;
+								}
+								keyValue = 0;
+								flag = 0;
+							}
+						}
+						else if( ((flag==4)&&(UserTradeMainMenu.PageNumb==1))
+							||((flag==3)&&(UserTradeMainMenu.PageNumb==3)) 							
 						  )
 						{
 							RstUserPara(UserTradeMainMenu.PageNumb,flag,keyValue);
 							resetAcptorPar = 1;
 							keyValue = 0;
 							flag = 0;
-						}
+						}						
 					}
 					//Trace("\r\n input=%ld,%d",keyValue,Key);
 					break;
@@ -2557,6 +2652,7 @@ void MaintainUserProcess(void *pvData)
 {
 	unsigned char Key;
 	unsigned char adminMode = 0;
+	unsigned char adminflag=0;
 	
 	void (*TestFunctonPtr)(void);
 	pvData = pvData;
@@ -2673,7 +2769,19 @@ void MaintainUserProcess(void *pvData)
 								{
 									UserMaintainMainMenu.KeyCurrent = 0x03;
 									UserMaintainMainMenu.ExtSelfCheck = 0x00;
-									UserMaintainMainMenu.TestOperate = UserTradeMaintainProcess;
+									//判断能否得到pc参数
+									if(SystemPara.PcEnable==SIMPUBOX_PC)
+									{
+										adminflag=GetAdminSIMPLEAPI(4,0);
+										adminflag=GetAdminSIMPLEAPI(5,0);
+										if(adminflag==0)
+										{
+								
+											LCDPrintf(5,9,0,SystemPara.Language,"参数取失败");
+											OSTimeDly(OS_TICKS_PER_SEC * 2);
+										}	
+									}
+									UserMaintainMainMenu.TestOperate = UserTradeMaintainProcess;									
 								}
 							}
 							break;
@@ -3328,6 +3436,9 @@ void RstSystemPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;
 				case 5:			
 					SystemPara.SubChannel = keyValue;
+					break;
+				case 7:			
+					SystemPara.ColumnTime = keyValue;
 					break;		
 				
 			}	
@@ -3511,6 +3622,7 @@ void DefaultSystemParaMenu(void)
 					LCDPrintf(0,2,0,SystemPara.Language,"%s%d",SysMenuList.DecimalNumExt[SystemPara.Language],SystemPara.DecimalNumExt);
 					LCDPrintf(0,4,0,SystemPara.Language,"%s%d",SysMenuList.GeziDeviceType[SystemPara.Language],SystemPara.GeziDeviceType);
 					LCDPrintf(0,6,0,SystemPara.Language,"%s%d.%02d",SysMenuList.BillEnableValue[SystemPara.Language],SystemPara.BillEnableValue/100,SystemPara.BillEnableValue%100);
+					LCDPrintf(0,8,0,SystemPara.Language,"%s%d",SysMenuList.ColumnTime[SystemPara.Language],SystemPara.ColumnTime);
 					break;
 			}
 		}
@@ -3715,6 +3827,9 @@ void DefaultSystemParaMenu(void)
 						case 5:	
 							LCDPrintf(0,8,1,SystemPara.Language,"%s%d",SysMenuList.SubChannel[SystemPara.Language],keyValue);
 							break;	
+						case 7:	
+							LCDPrintf(0,8,1,SystemPara.Language,"%s%d",SysMenuList.ColumnTime[SystemPara.Language],keyValue);
+							break;		
 						
 					}	
 					break;	
