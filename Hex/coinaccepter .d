@@ -57,6 +57,7 @@
 .\Hex\coinaccepter .o: Drivers\..\.\API\LiftTableAPI.h
 .\Hex\coinaccepter .o: Drivers\..\.\API\SelectKeyAPI.h
 .\Hex\coinaccepter .o: Drivers\..\.\API\HeFanGuiAPI.h
+.\Hex\coinaccepter .o: Drivers\..\.\API\colApi.h
 .\Hex\coinaccepter .o: Drivers\..\.\API\ZhiHuiAPI.h
 .\Hex\coinaccepter .o: Drivers\..\.\API\GprsAPI.h
 .\Hex\coinaccepter .o: Drivers\..\.\APP\common.h

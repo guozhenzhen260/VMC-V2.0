@@ -511,7 +511,7 @@ unsigned char VPBusFrameUnPack( void )
 unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 {
     
-    uint8_t i=0,j=0,k=0,index=0;     
+    uint8_t i=0,j=0,k=0,index=0,tempcan=0;     
 	uint16_t tempMoney;
 	uint8_t tempSend=0;
 	uint32_t tradeMoney=0;
@@ -549,210 +549,251 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 			break;
 		case VP_VMC_SETUP:
 		    {
-			    sysVPMission.send.msgType = VP_VMC_SETUP;
-                sysVPMission.send.datLen = 63;       //3,5
+			    sysVPMission.send.msgType = VP_VMC_SETUP;                
+                i = 0;
                 //VMC支持的货柜数量
                 if(SystemPara.GeziDeviceType==1)
-					sysVPMission.send.msg[0] = 0;
+					sysVPMission.send.msg[i++] = 0;
 				else if(SystemPara.SubBinOpen==1)
-					sysVPMission.send.msg[0] = 2;	
+					sysVPMission.send.msg[i++] = 2;	
 				else
-                	sysVPMission.send.msg[0] = 1;
+                	sysVPMission.send.msg[i++] = 1;
                 //语言版本	
-				sysVPMission.send.msg[1] = SystemPara.Language; 
+				sysVPMission.send.msg[i++] = SystemPara.Language; 
 				//超时退币
-				sysVPMission.send.msg[2] = SystemPara.SaleTime;
+				sysVPMission.send.msg[i++] = SystemPara.SaleTime;
 				//面值比率
-                sysVPMission.send.msg[3] = SendCoinDem(); 	
-				//feature
-				sysVPMission.send.msg[4] = 0;
-				sysVPMission.send.msg[5] = 0;
-				sysVPMission.send.msg[6] = 0;
-				
+                sysVPMission.send.msg[i++] = 0;	
+				sysVPMission.send.msg[i++] = 0;
+				sysVPMission.send.msg[i++] = 0;				
+				sysVPMission.send.msg[i++] = SendCoinDem(); 
+
+				//特征值
+				sysVPMission.send.msg[i++] = 0;	
+				sysVPMission.send.msg[i++] = 0;
+				sysVPMission.send.msg[i++] = 0;	
+				tempcan=0;
 				//多次购买
 				if(UserPara.TransMultiMode==1)
-					sysVPMission.send.msg[7] |= 0x01;
+					tempcan |= 0x01;
 				//强制购买
 				if(UserPara.TransEscape==1)
-					sysVPMission.send.msg[7] |= 0x02;
+					tempcan |= 0x02;
+				sysVPMission.send.msg[i++] = tempcan;
+				
 
 				//纸币器
 				//收币类型
 				if((SystemPara.BillValidatorType==2)&&(SystemPara.BillITLValidator==1))
-					sysVPMission.send.msg[8] = 0x03;
+					sysVPMission.send.msg[i++] = 0x03;
 				else
-					sysVPMission.send.msg[8] = SystemPara.BillValidatorType;
+					sysVPMission.send.msg[i++] = SystemPara.BillValidatorType;
 				//投币上限
 				tempMoney = MoneySend(SystemPara.MaxValue);
-				sysVPMission.send.msg[9]  = tempMoney/256/256/256;       
-                sysVPMission.send.msg[10]  = tempMoney/256/256%256;       
-                sysVPMission.send.msg[11]  = tempMoney/256%256;       
-                sysVPMission.send.msg[12]  = tempMoney%256;
-				//面值通道1...8							
-				sysVPMission.send.msg[13]  = pcEncodAmount( MoneySend(SystemPara.BillValue[0]));
-				sysVPMission.send.msg[14]  = pcEncodAmount( MoneySend(SystemPara.BillValue[1]));
-				sysVPMission.send.msg[15]  = pcEncodAmount( MoneySend(SystemPara.BillValue[2]));
-				sysVPMission.send.msg[16]  = pcEncodAmount( MoneySend(SystemPara.BillValue[3]));
-				sysVPMission.send.msg[17]  = pcEncodAmount( MoneySend(SystemPara.BillValue[4]));
-				sysVPMission.send.msg[18]  = pcEncodAmount( MoneySend(SystemPara.BillValue[5]));
-				sysVPMission.send.msg[19]  = pcEncodAmount( MoneySend(SystemPara.BillValue[6]));
-				sysVPMission.send.msg[20]  = pcEncodAmount( MoneySend(SystemPara.BillValue[7]));
+				sysVPMission.send.msg[i++]  = tempMoney/256/256/256;       
+                sysVPMission.send.msg[i++]  = tempMoney/256/256%256;       
+                sysVPMission.send.msg[i++]  = tempMoney/256%256;       
+                sysVPMission.send.msg[i++]  = tempMoney%256;
+				//面值通道1...8		
+				if((SystemPara.BillValidatorType==2)&&(SystemPara.BillITLValidator==1))
+				{
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.BillValue[0]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.BillValue[1]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.BillValue[2]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.BillValue[3]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.BillValue[4]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.BillValue[5]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.BillValue[6]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.BillValue[7]));
+				}
+				else
+				{
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+				}
 				
 				//纸币器找零类型
 				if((SystemPara.BillValidatorType==2)&&(SystemPara.BillITLValidator==1)&&(SystemPara.BillRecyclerType==2))
-					sysVPMission.send.msg[21]  = 0x03;
+					sysVPMission.send.msg[i++]  = 0x03;
 				else
-					sysVPMission.send.msg[21]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
 				//面值通道1...8		
 				if((SystemPara.BillValidatorType==2)&&(SystemPara.BillRecyclerType==2))
 				{
-					sysVPMission.send.msg[22]  = pcEncodAmount( MoneySend(SystemPara.RecyclerValue[0]));
-					sysVPMission.send.msg[23]  = pcEncodAmount( MoneySend(stDevValue.RecyclerValue[1]));
-					sysVPMission.send.msg[24]  = pcEncodAmount( MoneySend(stDevValue.RecyclerValue[2]));
-					sysVPMission.send.msg[25]  = pcEncodAmount( MoneySend(stDevValue.RecyclerValue[3]));
-					sysVPMission.send.msg[26]  = pcEncodAmount( MoneySend(stDevValue.RecyclerValue[4]));
-					sysVPMission.send.msg[27]  = pcEncodAmount( MoneySend(stDevValue.RecyclerValue[5]));
-					sysVPMission.send.msg[28]  = pcEncodAmount( MoneySend(stDevValue.RecyclerValue[6]));
-					sysVPMission.send.msg[29]  = pcEncodAmount( MoneySend(0));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.RecyclerValue[0]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(stDevValue.RecyclerValue[1]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(stDevValue.RecyclerValue[2]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(stDevValue.RecyclerValue[3]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(stDevValue.RecyclerValue[4]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(stDevValue.RecyclerValue[5]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(stDevValue.RecyclerValue[6]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(0));
+				}
+				else
+				{
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
 				}
 				
 				//硬币器
 				//收币类型
-				sysVPMission.send.msg[30] = SystemPara.CoinAcceptorType;	
-				sysVPMission.send.msg[31] = 0;
-				sysVPMission.send.msg[32] = 0;
-				sysVPMission.send.msg[33] = 0;
-				sysVPMission.send.msg[34] = 0;
+				sysVPMission.send.msg[i++] = SystemPara.CoinAcceptorType;	
+				sysVPMission.send.msg[i++] = 0;
+				sysVPMission.send.msg[i++] = 0;
+				sysVPMission.send.msg[i++] = 0;
+				sysVPMission.send.msg[i++] = 0;
 				//面值通道1...8							
-				sysVPMission.send.msg[35]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[0]));
-				sysVPMission.send.msg[36]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[1]));
-				sysVPMission.send.msg[37]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[2]));
-				sysVPMission.send.msg[38]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[3]));
-				sysVPMission.send.msg[39]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[4]));
-				sysVPMission.send.msg[40]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[5]));
-				sysVPMission.send.msg[41]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[6]));
-				sysVPMission.send.msg[42]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[7]));
+				sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[0]));
+				sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[1]));
+				sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[2]));
+				sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[3]));
+				sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[4]));
+				sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[5]));
+				sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[6]));
+				sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.CoinValue[7]));
 				
 				//找零器
-				sysVPMission.send.msg[43] = SystemPara.CoinChangerType;	
+				sysVPMission.send.msg[i++] = SystemPara.CoinChangerType;	
 				if(SystemPara.CoinChangerType==1)
 				{
 					//面值通道1...8							
-					sysVPMission.send.msg[44]  = pcEncodAmount( MoneySend(SystemPara.HopperValue[0]));
-					sysVPMission.send.msg[45]  = pcEncodAmount( MoneySend(SystemPara.HopperValue[1]));
-					sysVPMission.send.msg[46]  = pcEncodAmount( MoneySend(SystemPara.HopperValue[2]));
-					sysVPMission.send.msg[47]  = pcEncodAmount( MoneySend(0));
-					sysVPMission.send.msg[48]  = pcEncodAmount( MoneySend(0));
-					sysVPMission.send.msg[49]  = pcEncodAmount( MoneySend(0));
-					sysVPMission.send.msg[50]  = pcEncodAmount( MoneySend(0));
-					sysVPMission.send.msg[51]  = pcEncodAmount( MoneySend(0));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.HopperValue[0]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.HopperValue[1]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(SystemPara.HopperValue[2]));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(0));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(0));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(0));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(0));
+					sysVPMission.send.msg[i++]  = pcEncodAmount( MoneySend(0));
 				}
 				else
 				{
 					//面值通道1...8							
-					sysVPMission.send.msg[44]  = 0;
-					sysVPMission.send.msg[45]  = 0;
-					sysVPMission.send.msg[46]  = 0;
-					sysVPMission.send.msg[47]  = 0;
-					sysVPMission.send.msg[48]  = 0;
-					sysVPMission.send.msg[49]  = 0;
-					sysVPMission.send.msg[50]  = 0;
-					sysVPMission.send.msg[51]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
+					sysVPMission.send.msg[i++]  = 0;
 				}
 				//读卡器
-				sysVPMission.send.msg[52] = SystemPara.CashlessDeviceType;	
+				sysVPMission.send.msg[i++] = 0;
+				sysVPMission.send.msg[i++] = 0;
+				sysVPMission.send.msg[i++] = 0;
+				sysVPMission.send.msg[i++] = 0;
+				sysVPMission.send.msg[i++] = 0;
+				sysVPMission.send.msg[i++] = SystemPara.CashlessDeviceType;	
+				//保留
+				sysVPMission.send.msg[i++] = 0;
 
 				//VMC支持的货柜数量
                 if(SystemPara.GeziDeviceType==1)
                 {
-                	sysVPMission.send.msg[53] = 0;
-					sysVPMission.send.msg[54] = 0;
-					sysVPMission.send.msg[55] = 0;
-					sysVPMission.send.msg[56] = 0;
-					sysVPMission.send.msg[57] = 0;
-					sysVPMission.send.msg[58] = 0;
-					sysVPMission.send.msg[59] = 0;
-					sysVPMission.send.msg[60] = 0;
-					sysVPMission.send.msg[61] = 0;
-					sysVPMission.send.msg[62] = 0;
+                	sysVPMission.send.msg[i++] = 0;
+					sysVPMission.send.msg[i++] = 0;
+					sysVPMission.send.msg[i++] = 0;
+					sysVPMission.send.msg[i++] = 0;
+					sysVPMission.send.msg[i++] = 0;
+					sysVPMission.send.msg[i++] = 0;
+					sysVPMission.send.msg[i++] = 0;
+					sysVPMission.send.msg[i++] = 0;
+					sysVPMission.send.msg[i++] = 0;
+					sysVPMission.send.msg[i++] = 0;
                 }
 				else
 				{
 					//主柜
-					sysVPMission.send.msg[53] = SystemPara.Channel; 
-					sysVPMission.send.msg[54] = 0;
-					sysVPMission.send.msg[55] = 0;
-					sysVPMission.send.msg[56] = 0;	
+					sysVPMission.send.msg[i++] = SystemPara.Channel; 
 					//Feature
-					sysVPMission.send.msg[57] = 0;
+					sysVPMission.send.msg[i++] = 0;
+					sysVPMission.send.msg[i++] = 0;
+					sysVPMission.send.msg[i++] = 0;						
+					tempcan=0;
 					//bit0:自动补货
 					if(SystemPara.CunhuoKou==0)
-						sysVPMission.send.msg[57] |= 0x01; 
+						tempcan |= 0x01; 
 					//bit1:出货确认
 					if(SystemPara.GOCIsOpen)
-						sysVPMission.send.msg[57] |= 0x02; 	
+						tempcan |= 0x02; 	
 					//Bit2:压缩机
 					if(acdc_status_API(1,2)!=0xff)
-						sysVPMission.send.msg[57] |= 0x04; 		
+						tempcan |= 0x04; 		
 					//Bit3:照明灯
 					if(acdc_status_API(1,1)!=0xff)
-						sysVPMission.send.msg[57] |= 0x08; 	
+						tempcan |= 0x08; 	
 					//Bit4:加热
 					if(acdc_status_API(1,3)!=0xff)
-						sysVPMission.send.msg[57] |= 0x10; 	
+						tempcan |= 0x10; 	
 					//Bit5:除臭
 					if(acdc_status_API(1,4)!=0xff)
-						sysVPMission.send.msg[57] |= 0x20; 	
+						tempcan |= 0x20; 	
 					//Bit6- Bit7:按键板
 					if(SystemPara.UserSelectKeyBoard)
 					{
 						if(SystemPara.threeSelectKey)
-							sysVPMission.send.msg[57] |= 0x40; 	
+							tempcan |= 0x40; 	
 						else
-							sysVPMission.send.msg[57] |= 0x80; 	
-					}		
+							tempcan |= 0x80; 	
+					}	
+					sysVPMission.send.msg[i++] = tempcan;
 
 					//副柜
 					if(SystemPara.SubBinOpen)	
 					{
-						sysVPMission.send.msg[58] = SystemPara.SubChannel; 
-						sysVPMission.send.msg[59] = 0;
-						sysVPMission.send.msg[60] = 0;
-						sysVPMission.send.msg[61] = 0;
+						sysVPMission.send.msg[i++] = SystemPara.SubChannel; 
 						//Feature
-						sysVPMission.send.msg[62] = 0;
+						sysVPMission.send.msg[i++] = 0;
+						sysVPMission.send.msg[i++] = 0;
+						sysVPMission.send.msg[i++] = 0;						
+						tempcan = 0;
 						//bit0:自动补货
 						if(SystemPara.CunhuoKou==0)
-							sysVPMission.send.msg[62] |= 0x01; 
+							tempcan |= 0x01; 
 						//bit1:出货确认
 						if(SystemPara.GOCIsOpen)
-							sysVPMission.send.msg[62] |= 0x02; 	
+							tempcan |= 0x02; 	
 						//Bit2:压缩机
 						if(acdc_status_API(2,2)!=0xff)
-							sysVPMission.send.msg[62] |= 0x04; 		
+							tempcan |= 0x04; 		
 						//Bit3:照明灯
 						if(acdc_status_API(2,1)!=0xff)
-							sysVPMission.send.msg[62] |= 0x08; 	
+							tempcan |= 0x08; 	
 						//Bit4:加热
 						if(acdc_status_API(2,3)!=0xff)
-							sysVPMission.send.msg[62] |= 0x10; 	
+							tempcan |= 0x10; 	
 						//Bit5:除臭
 						if(acdc_status_API(2,4)!=0xff)
-							sysVPMission.send.msg[62] |= 0x20; 	
+							tempcan |= 0x20; 	
 						//Bit6- Bit7:按键板
+
+						sysVPMission.send.msg[i++] = tempcan;
 					}
 					else
 					{
-						sysVPMission.send.msg[58] = 0;
-						sysVPMission.send.msg[59] = 0;
-						sysVPMission.send.msg[60] = 0;
-						sysVPMission.send.msg[61] = 0;
-						sysVPMission.send.msg[62] = 0;
+						sysVPMission.send.msg[i++] = 0;
+						sysVPMission.send.msg[i++] = 0;
+						sysVPMission.send.msg[i++] = 0;
+						sysVPMission.send.msg[i++] = 0;
+						sysVPMission.send.msg[i++] = 0;
 						
-					}
-					
+					}					
 					
 				}
+				sysVPMission.send.datLen = i;       //3,5
 				
 			}
 			break;

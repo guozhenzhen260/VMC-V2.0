@@ -57,6 +57,7 @@
 .\Hex\pcoin.o: Drivers\..\.\API\LiftTableAPI.h
 .\Hex\pcoin.o: Drivers\..\.\API\SelectKeyAPI.h
 .\Hex\pcoin.o: Drivers\..\.\API\HeFanGuiAPI.h
+.\Hex\pcoin.o: Drivers\..\.\API\colApi.h
 .\Hex\pcoin.o: Drivers\..\.\API\ZhiHuiAPI.h
 .\Hex\pcoin.o: Drivers\..\.\API\GprsAPI.h
 .\Hex\pcoin.o: Drivers\..\.\APP\common.h

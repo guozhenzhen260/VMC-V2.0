@@ -57,6 +57,7 @@
 .\Hex\billaccepter.o: Drivers\..\.\API\LiftTableAPI.h
 .\Hex\billaccepter.o: Drivers\..\.\API\SelectKeyAPI.h
 .\Hex\billaccepter.o: Drivers\..\.\API\HeFanGuiAPI.h
+.\Hex\billaccepter.o: Drivers\..\.\API\colApi.h
 .\Hex\billaccepter.o: Drivers\..\.\API\ZhiHuiAPI.h
 .\Hex\billaccepter.o: Drivers\..\.\API\GprsAPI.h
 .\Hex\billaccepter.o: Drivers\..\.\APP\common.h

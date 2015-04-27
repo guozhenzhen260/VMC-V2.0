@@ -57,6 +57,7 @@
 .\Hex\vector_table.o: Firmware\..\.\API\LiftTableAPI.h
 .\Hex\vector_table.o: Firmware\..\.\API\SelectKeyAPI.h
 .\Hex\vector_table.o: Firmware\..\.\API\HeFanGuiAPI.h
+.\Hex\vector_table.o: Firmware\..\.\API\colApi.h
 .\Hex\vector_table.o: Firmware\..\.\API\ZhiHuiAPI.h
 .\Hex\vector_table.o: Firmware\..\.\API\GprsAPI.h
 .\Hex\vector_table.o: Firmware\..\.\APP\common.h

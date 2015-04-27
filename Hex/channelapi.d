@@ -57,6 +57,7 @@
 .\Hex\channelapi.o: API\..\.\API\LiftTableAPI.h
 .\Hex\channelapi.o: API\..\.\API\SelectKeyAPI.h
 .\Hex\channelapi.o: API\..\.\API\HeFanGuiAPI.h
+.\Hex\channelapi.o: API\..\.\API\colApi.h
 .\Hex\channelapi.o: API\..\.\API\ZhiHuiAPI.h
 .\Hex\channelapi.o: API\..\.\API\GprsAPI.h
 .\Hex\channelapi.o: API\..\.\APP\common.h

@@ -382,7 +382,7 @@ unsigned char save_hefan_huodao_info(unsigned char cabinetNo)
 	buf[len_lh + 1] = LUINT16(crc);
 	rst = AT45DBWritePage(hefan_flash_page_lh[cabinetNo - 1],buf);
 
-	
+	#if 0
 	print_hefan("save hefan[%d] state =%d nums= %d\r\n",
 		cabinetNo - 1,stHefanCabinet[(cabinetNo - 1)].state,
 		stHefanCabinet[(cabinetNo - 1)].huodaoNums);
@@ -396,6 +396,7 @@ unsigned char save_hefan_huodao_info(unsigned char cabinetNo)
 			stHefanCabinet[(cabinetNo - 1)].huodao[i].id
 			);
 	}
+	#endif
 	return rst;
 }
 
@@ -454,7 +455,7 @@ unsigned char read_hefan_huodao_info(unsigned char cabinetNo)
 		return 0;
 	//复制货道上半部信息
 	memcpy((void *)&st_ptr[len_th],buf,len_lh);
-
+	#if 0
 	print_hefan("read hefan[%d] state =%d nums= %d\r\n",
 	cabinetNo - 1,stHefanCabinet[(cabinetNo - 1)].state,
 	stHefanCabinet[(cabinetNo - 1)].huodaoNums);
@@ -468,6 +469,7 @@ unsigned char read_hefan_huodao_info(unsigned char cabinetNo)
 			stHefanCabinet[(cabinetNo - 1)].huodao[i].id
 			);
 	}
+	#endif
 	return 1;
 	
 

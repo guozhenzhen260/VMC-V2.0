@@ -57,6 +57,7 @@
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\API\LiftTableAPI.h
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\API\SelectKeyAPI.h
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\API\HeFanGuiAPI.h
+.\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\API\colApi.h
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\API\ZhiHuiAPI.h
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\API\GprsAPI.h
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\APP\common.h

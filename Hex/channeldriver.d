@@ -57,6 +57,7 @@
 .\Hex\channeldriver.o: Drivers\..\.\API\LiftTableAPI.h
 .\Hex\channeldriver.o: Drivers\..\.\API\SelectKeyAPI.h
 .\Hex\channeldriver.o: Drivers\..\.\API\HeFanGuiAPI.h
+.\Hex\channeldriver.o: Drivers\..\.\API\colApi.h
 .\Hex\channeldriver.o: Drivers\..\.\API\ZhiHuiAPI.h
 .\Hex\channeldriver.o: Drivers\..\.\API\GprsAPI.h
 .\Hex\channeldriver.o: Drivers\..\.\APP\common.h

@@ -140,7 +140,9 @@ void TIMER0_IRQHandler (void)
 		if(Timer.pcm_handle_timeout)
 			Timer.pcm_handle_timeout--;
 		if(Timer.getTempTimer)
-			Timer.getTempTimer--;	
+			Timer.getTempTimer--;
+		if(Timer.mdb_col_timer)
+			Timer.mdb_col_timer--;	
 	}
 	OSIntExit();
 }

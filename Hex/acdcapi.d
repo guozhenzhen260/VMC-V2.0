@@ -57,6 +57,7 @@
 .\Hex\acdcapi.o: API\..\.\API\LiftTableAPI.h
 .\Hex\acdcapi.o: API\..\.\API\SelectKeyAPI.h
 .\Hex\acdcapi.o: API\..\.\API\HeFanGuiAPI.h
+.\Hex\acdcapi.o: API\..\.\API\colApi.h
 .\Hex\acdcapi.o: API\..\.\API\ZhiHuiAPI.h
 .\Hex\acdcapi.o: API\..\.\API\GprsAPI.h
 .\Hex\acdcapi.o: API\..\.\APP\common.h

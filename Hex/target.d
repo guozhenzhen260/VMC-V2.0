@@ -57,6 +57,7 @@
 .\Hex\target.o: Firmware\..\.\API\LiftTableAPI.h
 .\Hex\target.o: Firmware\..\.\API\SelectKeyAPI.h
 .\Hex\target.o: Firmware\..\.\API\HeFanGuiAPI.h
+.\Hex\target.o: Firmware\..\.\API\colApi.h
 .\Hex\target.o: Firmware\..\.\API\ZhiHuiAPI.h
 .\Hex\target.o: Firmware\..\.\API\GprsAPI.h
 .\Hex\target.o: Firmware\..\.\APP\common.h

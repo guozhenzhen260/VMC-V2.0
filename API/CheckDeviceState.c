@@ -101,7 +101,7 @@ uint8_t GetScaleError()
 uint8_t IsErrorState()
 { 
 	uint8_t coinError = 0,hopperError = 0,GOCError = 0,ColBoardError = 0,ColEmpErr = 0,PcErr=0;
-	static uint8_t billError = 0;
+	static uint8_t billError = 0,ErrorStatus=0;//ErrorStatus上报故障状态
 	//纸币器	
 	if(SystemPara.BillValidatorType==MDB_BILLACCEPTER)
 	{
@@ -333,29 +333,33 @@ uint8_t GetWeihuStatus()
 *********************************************************************************************************/
 uint8_t ErrorStatus(uint8_t type)
 { 
-	//GOC    0=正常，1=被软件禁用，2=故障，3=不支持出货检测功能 
+	//找零器状态：0=正常，1=被软件临时禁用，2=故障，3=设备不存在
 	if(type == 1)
 	{
-		if(SystemPara.GOCIsOpen == 1)
+		//MDB找零器
+		if(SystemPara.CoinChangerType==MDB_CHANGER)
 		{
-			if(SystemPara.SubBinOpen==1)
+			if(
+				(DeviceStateBusiness.CoinCommunicate)||(DeviceStateBusiness.Coinsensor)||(DeviceStateBusiness.Cointubejam)||(DeviceStateBusiness.Coinromchk)
+				||(DeviceStateBusiness.Coinjam)||(DeviceStateBusiness.CoinremoveTube)||(DeviceStateBusiness.CoinunknowError)
+			  )
 			{
-				if( (DeviceStateBusiness.GOCError != 0)&&(DeviceStateBusiness.GOCErrorSub != 0) )
-				{
-					return 2;
-				}
-			}
-			else
+				return 2;
+			}			
+			
+		}
+		//Hopper找零器
+		else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
+		{
+			if(DeviceStateBusiness.Hopper1State != 0)
 			{
-				if(DeviceStateBusiness.GOCError != 0)
-				{
-					return 2;
-				}
+				return 2;
 			}
-			return 0;
 		}
 		else
-			return 1;
+			return 3;
+		
+		return 0;
 	}
 	//纸币器	0=正常，1=被软件临时禁用，2=故障，3=设备不存在
 	if(type == 2)
@@ -375,10 +379,10 @@ uint8_t ErrorStatus(uint8_t type)
 			return 0;
 		}
 		else
-			return 1;
+			return 3;
 	}
 	
-	//硬币器   硬币器状态（包含找零功能）：0=正常，1=被软件临时禁用，2=故障，3=设备不存在
+	//硬币器   硬币器状态：0=正常，1=被软件临时禁用，2=故障，3=设备不存在
 	if(type == 3)
 	{
 		if(SystemPara.CoinAcceptorType==MDB_COINACCEPTER)
@@ -401,14 +405,14 @@ uint8_t ErrorStatus(uint8_t type)
 				return 1;			
 		}
 		else
-			return 1;
+			return 3;
 		
 		return 0;
 	}
 	//vmc 0=正常，1= 正常货道商品全部售空，或非售卖时间，2=故障，3=维护模式
 	if(type == 4)
 	{
-		if(DeviceStateBusiness.Emp_Gol != 0&&(SystemPara.GeziDeviceType==0))
+		if((DeviceStateBusiness.Emp_Gol != 0)&&(SystemPara.GeziDeviceType==0))
 			return 1;
 		else if(IsErrorState())
 			return 2;

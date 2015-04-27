@@ -57,6 +57,7 @@
 .\Hex\traceapi.o: API\..\.\API\LiftTableAPI.h
 .\Hex\traceapi.o: API\..\.\API\SelectKeyAPI.h
 .\Hex\traceapi.o: API\..\.\API\HeFanGuiAPI.h
+.\Hex\traceapi.o: API\..\.\API\colApi.h
 .\Hex\traceapi.o: API\..\.\API\ZhiHuiAPI.h
 .\Hex\traceapi.o: API\..\.\API\GprsAPI.h
 .\Hex\traceapi.o: API\..\.\APP\common.h

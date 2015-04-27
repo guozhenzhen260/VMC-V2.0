@@ -57,6 +57,7 @@
 .\Hex\buzzer.o: Drivers\..\.\API\LiftTableAPI.h
 .\Hex\buzzer.o: Drivers\..\.\API\SelectKeyAPI.h
 .\Hex\buzzer.o: Drivers\..\.\API\HeFanGuiAPI.h
+.\Hex\buzzer.o: Drivers\..\.\API\colApi.h
 .\Hex\buzzer.o: Drivers\..\.\API\ZhiHuiAPI.h
 .\Hex\buzzer.o: Drivers\..\.\API\GprsAPI.h
 .\Hex\buzzer.o: Drivers\..\.\APP\common.h

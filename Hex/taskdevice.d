@@ -57,6 +57,7 @@
 .\Hex\taskdevice.o: Drivers\..\.\API\LiftTableAPI.h
 .\Hex\taskdevice.o: Drivers\..\.\API\SelectKeyAPI.h
 .\Hex\taskdevice.o: Drivers\..\.\API\HeFanGuiAPI.h
+.\Hex\taskdevice.o: Drivers\..\.\API\colApi.h
 .\Hex\taskdevice.o: Drivers\..\.\API\ZhiHuiAPI.h
 .\Hex\taskdevice.o: Drivers\..\.\API\GprsAPI.h
 .\Hex\taskdevice.o: Drivers\..\.\APP\common.h

@@ -57,6 +57,7 @@
 .\Hex\i2c.o: Drivers\..\.\API\LiftTableAPI.h
 .\Hex\i2c.o: Drivers\..\.\API\SelectKeyAPI.h
 .\Hex\i2c.o: Drivers\..\.\API\HeFanGuiAPI.h
+.\Hex\i2c.o: Drivers\..\.\API\colApi.h
 .\Hex\i2c.o: Drivers\..\.\API\ZhiHuiAPI.h
 .\Hex\i2c.o: Drivers\..\.\API\GprsAPI.h
 .\Hex\i2c.o: Drivers\..\.\APP\common.h

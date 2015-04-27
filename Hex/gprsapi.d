@@ -57,6 +57,7 @@
 .\Hex\gprsapi.o: API\..\.\API\LiftTableAPI.h
 .\Hex\gprsapi.o: API\..\.\API\SelectKeyAPI.h
 .\Hex\gprsapi.o: API\..\.\API\HeFanGuiAPI.h
+.\Hex\gprsapi.o: API\..\.\API\colApi.h
 .\Hex\gprsapi.o: API\..\.\API\ZhiHuiAPI.h
 .\Hex\gprsapi.o: API\..\.\API\GprsAPI.h
 .\Hex\gprsapi.o: API\..\.\APP\common.h

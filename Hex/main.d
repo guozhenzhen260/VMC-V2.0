@@ -57,6 +57,7 @@
 .\Hex\main.o: APP\..\.\API\LiftTableAPI.h
 .\Hex\main.o: APP\..\.\API\SelectKeyAPI.h
 .\Hex\main.o: APP\..\.\API\HeFanGuiAPI.h
+.\Hex\main.o: APP\..\.\API\colApi.h
 .\Hex\main.o: APP\..\.\API\ZhiHuiAPI.h
 .\Hex\main.o: APP\..\.\API\GprsAPI.h
 .\Hex\main.o: APP\..\.\APP\common.h

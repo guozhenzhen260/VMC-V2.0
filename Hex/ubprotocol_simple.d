@@ -57,6 +57,7 @@
 .\Hex\ubprotocol_simple.o: Uart3Driver\..\.\API\LiftTableAPI.h
 .\Hex\ubprotocol_simple.o: Uart3Driver\..\.\API\SelectKeyAPI.h
 .\Hex\ubprotocol_simple.o: Uart3Driver\..\.\API\HeFanGuiAPI.h
+.\Hex\ubprotocol_simple.o: Uart3Driver\..\.\API\colApi.h
 .\Hex\ubprotocol_simple.o: Uart3Driver\..\.\API\ZhiHuiAPI.h
 .\Hex\ubprotocol_simple.o: Uart3Driver\..\.\API\GprsAPI.h
 .\Hex\ubprotocol_simple.o: Uart3Driver\..\.\APP\common.h

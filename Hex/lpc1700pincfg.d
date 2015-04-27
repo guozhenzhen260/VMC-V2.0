@@ -57,6 +57,7 @@
 .\Hex\lpc1700pincfg.o: Firmware\..\.\API\LiftTableAPI.h
 .\Hex\lpc1700pincfg.o: Firmware\..\.\API\SelectKeyAPI.h
 .\Hex\lpc1700pincfg.o: Firmware\..\.\API\HeFanGuiAPI.h
+.\Hex\lpc1700pincfg.o: Firmware\..\.\API\colApi.h
 .\Hex\lpc1700pincfg.o: Firmware\..\.\API\ZhiHuiAPI.h
 .\Hex\lpc1700pincfg.o: Firmware\..\.\API\GprsAPI.h
 .\Hex\lpc1700pincfg.o: Firmware\..\.\APP\common.h

@@ -57,6 +57,7 @@
 .\Hex\mdbchanger.o: Drivers\..\.\API\LiftTableAPI.h
 .\Hex\mdbchanger.o: Drivers\..\.\API\SelectKeyAPI.h
 .\Hex\mdbchanger.o: Drivers\..\.\API\HeFanGuiAPI.h
+.\Hex\mdbchanger.o: Drivers\..\.\API\colApi.h
 .\Hex\mdbchanger.o: Drivers\..\.\API\ZhiHuiAPI.h
 .\Hex\mdbchanger.o: Drivers\..\.\API\GprsAPI.h
 .\Hex\mdbchanger.o: Drivers\..\.\APP\common.h

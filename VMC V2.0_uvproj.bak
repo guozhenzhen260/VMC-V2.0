@@ -595,6 +595,11 @@
               <FileType>1</FileType>
               <FilePath>.\Uart3Driver\VMC_GPRS_PC.c</FilePath>
             </File>
+            <File>
+              <FileName>UBProtocol_SIMPLE.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Uart3Driver\UBProtocol_SIMPLE.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

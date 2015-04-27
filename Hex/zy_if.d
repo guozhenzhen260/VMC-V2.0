@@ -57,6 +57,7 @@
 .\Hex\zy_if.o: Firmware\..\.\API\LiftTableAPI.h
 .\Hex\zy_if.o: Firmware\..\.\API\SelectKeyAPI.h
 .\Hex\zy_if.o: Firmware\..\.\API\HeFanGuiAPI.h
+.\Hex\zy_if.o: Firmware\..\.\API\colApi.h
 .\Hex\zy_if.o: Firmware\..\.\API\ZhiHuiAPI.h
 .\Hex\zy_if.o: Firmware\..\.\API\GprsAPI.h
 .\Hex\zy_if.o: Firmware\..\.\APP\common.h

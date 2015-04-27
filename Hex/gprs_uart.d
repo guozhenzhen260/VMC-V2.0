@@ -57,6 +57,7 @@
 .\Hex\gprs_uart.o: Drivers\..\.\API\LiftTableAPI.h
 .\Hex\gprs_uart.o: Drivers\..\.\API\SelectKeyAPI.h
 .\Hex\gprs_uart.o: Drivers\..\.\API\HeFanGuiAPI.h
+.\Hex\gprs_uart.o: Drivers\..\.\API\colApi.h
 .\Hex\gprs_uart.o: Drivers\..\.\API\ZhiHuiAPI.h
 .\Hex\gprs_uart.o: Drivers\..\.\API\GprsAPI.h
 .\Hex\gprs_uart.o: Drivers\..\.\APP\common.h

@@ -582,7 +582,7 @@ void Uart2TaskDevice(void *pvData)
 					case HEFANGUI_ZHAOMINGKAI:
 					case HEFANGUI_ZHAOMINGGUAN:
 						TraceChannel("recvMDBCMD    lvel=%d\r\n",AccepterMsg->HeFanGuiHandle);
-						//rst = HeFanGuiDriver(AccepterMsg->Binnum,AccepterMsg->HeFanGuiHandle,AccepterMsg->HeFanGuiNum,MsgAccepterPack.HeFanGuiBuf);
+						rst = COL_driver(AccepterMsg->Binnum,AccepterMsg->HeFanGuiHandle,AccepterMsg->HeFanGuiNum,MsgAccepterPack.HeFanGuiBuf);
 						TraceChannel("Task_res==%d\r\n",rst);
 						MsgAccepterPack.HeFanGuiHandle = AccepterMsg->HeFanGuiHandle;
 						MsgAccepterPack.HeFanGuiRst = rst;

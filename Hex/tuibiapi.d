@@ -57,6 +57,7 @@
 .\Hex\tuibiapi.o: API\..\.\API\LiftTableAPI.h
 .\Hex\tuibiapi.o: API\..\.\API\SelectKeyAPI.h
 .\Hex\tuibiapi.o: API\..\.\API\HeFanGuiAPI.h
+.\Hex\tuibiapi.o: API\..\.\API\colApi.h
 .\Hex\tuibiapi.o: API\..\.\API\ZhiHuiAPI.h
 .\Hex\tuibiapi.o: API\..\.\API\GprsAPI.h
 .\Hex\tuibiapi.o: API\..\.\APP\common.h

@@ -57,6 +57,7 @@
 .\Hex\checkdevicestate.o: API\..\.\API\LiftTableAPI.h
 .\Hex\checkdevicestate.o: API\..\.\API\SelectKeyAPI.h
 .\Hex\checkdevicestate.o: API\..\.\API\HeFanGuiAPI.h
+.\Hex\checkdevicestate.o: API\..\.\API\colApi.h
 .\Hex\checkdevicestate.o: API\..\.\API\ZhiHuiAPI.h
 .\Hex\checkdevicestate.o: API\..\.\API\GprsAPI.h
 .\Hex\checkdevicestate.o: API\..\.\APP\common.h

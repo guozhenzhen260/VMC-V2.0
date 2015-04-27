@@ -57,6 +57,7 @@
 .\Hex\xmt.o: Uart1Driver\..\.\API\LiftTableAPI.h
 .\Hex\xmt.o: Uart1Driver\..\.\API\SelectKeyAPI.h
 .\Hex\xmt.o: Uart1Driver\..\.\API\HeFanGuiAPI.h
+.\Hex\xmt.o: Uart1Driver\..\.\API\colApi.h
 .\Hex\xmt.o: Uart1Driver\..\.\API\ZhiHuiAPI.h
 .\Hex\xmt.o: Uart1Driver\..\.\API\GprsAPI.h
 .\Hex\xmt.o: Uart1Driver\..\.\APP\common.h

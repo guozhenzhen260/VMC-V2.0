@@ -57,6 +57,7 @@
 .\Hex\taskuart0device.o: Uart0Driver\..\.\API\LiftTableAPI.h
 .\Hex\taskuart0device.o: Uart0Driver\..\.\API\SelectKeyAPI.h
 .\Hex\taskuart0device.o: Uart0Driver\..\.\API\HeFanGuiAPI.h
+.\Hex\taskuart0device.o: Uart0Driver\..\.\API\colApi.h
 .\Hex\taskuart0device.o: Uart0Driver\..\.\API\ZhiHuiAPI.h
 .\Hex\taskuart0device.o: Uart0Driver\..\.\API\GprsAPI.h
 .\Hex\taskuart0device.o: Uart0Driver\..\.\APP\common.h

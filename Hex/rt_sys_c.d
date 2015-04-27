@@ -57,6 +57,7 @@
 .\Hex\rt_sys_c.o: Startup\..\.\API\LiftTableAPI.h
 .\Hex\rt_sys_c.o: Startup\..\.\API\SelectKeyAPI.h
 .\Hex\rt_sys_c.o: Startup\..\.\API\HeFanGuiAPI.h
+.\Hex\rt_sys_c.o: Startup\..\.\API\colApi.h
 .\Hex\rt_sys_c.o: Startup\..\.\API\ZhiHuiAPI.h
 .\Hex\rt_sys_c.o: Startup\..\.\API\GprsAPI.h
 .\Hex\rt_sys_c.o: Startup\..\.\APP\common.h

@@ -1,6 +1,7 @@
----- g_HeFanGuiMail 匹配 (5 在 4 文件 ) ----
-Common.c (app):59:OS_EVENT *g_HeFanGuiMail;
-Common.c (app):169:	g_HeFanGuiMail = OSMboxCreate(NULL);//压缩机展示灯邮箱
-Common.h (app):580:extern OS_EVENT *g_HeFanGuiMail;
-HeFanGuiAPI.c (api):596:	OSMboxPost(g_HeFanGuiMail,&MsgAccepterPack);
-Taskuart1device.c (uart1driver):172:			GeziMsg = OSMboxPend(g_HeFanGuiMail,OS_TICKS_PER_SEC/100,&ComStatus);
+---- StatusRPTAPI 匹配 (6 在 4 文件 ) ----
+Business.c (app):2951:						StatusRPTAPI();
+Business.c (app):3310:						StatusRPTAPI();
+PCComAPI.c (api):209:void StatusRPTAPI()
+PCComAPI.c (api):563:							StatusRPTAPI();
+PCComAPI.h (api):34:extern void StatusRPTAPI(void);
+UBProtocol.c (uart3driver):2829:	StatusRPTAPI();

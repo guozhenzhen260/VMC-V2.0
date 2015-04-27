@@ -57,6 +57,7 @@
 .\Hex\selectkeyapi.o: API\..\.\API\LiftTableAPI.h
 .\Hex\selectkeyapi.o: API\..\.\API\SelectKeyAPI.h
 .\Hex\selectkeyapi.o: API\..\.\API\HeFanGuiAPI.h
+.\Hex\selectkeyapi.o: API\..\.\API\colApi.h
 .\Hex\selectkeyapi.o: API\..\.\API\ZhiHuiAPI.h
 .\Hex\selectkeyapi.o: API\..\.\API\GprsAPI.h
 .\Hex\selectkeyapi.o: API\..\.\APP\common.h

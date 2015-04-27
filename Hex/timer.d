@@ -57,6 +57,7 @@
 .\Hex\timer.o: Drivers\..\.\API\LiftTableAPI.h
 .\Hex\timer.o: Drivers\..\.\API\SelectKeyAPI.h
 .\Hex\timer.o: Drivers\..\.\API\HeFanGuiAPI.h
+.\Hex\timer.o: Drivers\..\.\API\colApi.h
 .\Hex\timer.o: Drivers\..\.\API\ZhiHuiAPI.h
 .\Hex\timer.o: Drivers\..\.\API\GprsAPI.h
 .\Hex\timer.o: Drivers\..\.\APP\common.h

@@ -57,6 +57,7 @@
 .\Hex\coinaccepterapi .o: API\..\.\API\LiftTableAPI.h
 .\Hex\coinaccepterapi .o: API\..\.\API\SelectKeyAPI.h
 .\Hex\coinaccepterapi .o: API\..\.\API\HeFanGuiAPI.h
+.\Hex\coinaccepterapi .o: API\..\.\API\colApi.h
 .\Hex\coinaccepterapi .o: API\..\.\API\ZhiHuiAPI.h
 .\Hex\coinaccepterapi .o: API\..\.\API\GprsAPI.h
 .\Hex\coinaccepterapi .o: API\..\.\APP\common.h

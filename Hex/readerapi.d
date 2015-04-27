@@ -57,6 +57,7 @@
 .\Hex\readerapi.o: API\..\.\API\LiftTableAPI.h
 .\Hex\readerapi.o: API\..\.\API\SelectKeyAPI.h
 .\Hex\readerapi.o: API\..\.\API\HeFanGuiAPI.h
+.\Hex\readerapi.o: API\..\.\API\colApi.h
 .\Hex\readerapi.o: API\..\.\API\ZhiHuiAPI.h
 .\Hex\readerapi.o: API\..\.\API\GprsAPI.h
 .\Hex\readerapi.o: API\..\.\APP\common.h

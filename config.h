@@ -112,7 +112,7 @@ extern "C" {
 #include ".\API\LiftTableAPI.h"
 #include ".\API\SelectKeyAPI.h"
 #include ".\API\HeFanGuiAPI.h"
-
+#include ".\API\colApi.h"
 #include ".\API\ZhiHuiAPI.h" //add by yoc 2013.12.16
 #include ".\API\GprsAPI.h"
 /*********************************************************************************************************

@@ -57,6 +57,7 @@
 .\Hex\billaccepterapi.o: API\..\.\API\LiftTableAPI.h
 .\Hex\billaccepterapi.o: API\..\.\API\SelectKeyAPI.h
 .\Hex\billaccepterapi.o: API\..\.\API\HeFanGuiAPI.h
+.\Hex\billaccepterapi.o: API\..\.\API\colApi.h
 .\Hex\billaccepterapi.o: API\..\.\API\ZhiHuiAPI.h
 .\Hex\billaccepterapi.o: API\..\.\API\GprsAPI.h
 .\Hex\billaccepterapi.o: API\..\.\APP\common.h

@@ -57,6 +57,7 @@
 .\Hex\changerapi.o: API\..\.\API\LiftTableAPI.h
 .\Hex\changerapi.o: API\..\.\API\SelectKeyAPI.h
 .\Hex\changerapi.o: API\..\.\API\HeFanGuiAPI.h
+.\Hex\changerapi.o: API\..\.\API\colApi.h
 .\Hex\changerapi.o: API\..\.\API\ZhiHuiAPI.h
 .\Hex\changerapi.o: API\..\.\API\GprsAPI.h
 .\Hex\changerapi.o: API\..\.\APP\common.h

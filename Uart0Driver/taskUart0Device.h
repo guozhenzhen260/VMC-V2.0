@@ -18,7 +18,7 @@
 
 #endif
 
-#define PRINT_HEFAN_ENABLE  0
+#define PRINT_HEFAN_ENABLE  1
 #if PRINT_HEFAN_ENABLE == 1
 #define  print_hefan(...)       Trace(__VA_ARGS__)
 
