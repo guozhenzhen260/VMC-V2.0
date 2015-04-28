@@ -157,6 +157,7 @@
 #define VP_INFO_ERR           23
 #define VP_INFO_HEFANGGUI     24
 #define VP_INFO_CABINET       25
+#define VP_INFO_CABERR        26
 
 
 #define VP_TIME_OUT 150

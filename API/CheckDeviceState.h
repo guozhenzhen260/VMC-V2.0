@@ -16,6 +16,8 @@ extern uint8_t HopperIsEmpty(void);
 
 extern uint8_t ChangerIsErr(void);
 
+extern uint8_t BillIsErr(void);
+
 extern void SetBillCoinStatus(uint8_t type,uint8_t enable);
 
 extern uint8_t GetBillCoinStatus(uint8_t type);

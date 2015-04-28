@@ -31,6 +31,7 @@ extern uint8_t AdminRPTAPI(uint8_t adminType,uint8_t Column,uint8_t ColumnSum);
 extern uint8_t AdminRPTSIMPLEAPI(uint8_t adminType,uint8_t Column,uint8_t ColumnSum);
 extern uint8_t GetAdminSIMPLEAPI(uint8_t adminType,uint8_t Column);
 extern uint8_t GetAdminSIMPLEAPI(uint8_t adminType,uint8_t Column);
+extern void BillStatusRPTAPI(void);
 extern void StatusRPTAPI(void);
 extern void ButtonSIMPLERPTAPI(uint8_t channel_id);
 extern void PollAPI(uint32_t payAllMoney);

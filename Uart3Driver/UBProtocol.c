@@ -1312,18 +1312,348 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 							i = 0;				
 							sysVPMission.send.msg[i++] = VP_INFO_ERR;
 
+							//ÕÒÁãÆ÷×´Ì¬
+							//MDBÕÒÁãÆ÷
+							if(SystemPara.CoinChangerType==MDB_CHANGER)
+							{
+								if(DeviceStateBusiness.CoinCommunicate)
+								{
+									sysVPMission.send.msg[i++] = 0x08;
+									sysVPMission.send.msg[i++] = 0xa2;
+								}
+								else if(DeviceStateBusiness.Coinsensor)
+								{
+									sysVPMission.send.msg[i++] = 0x08;
+									sysVPMission.send.msg[i++] = 0xa3;
+								}
+								else if(DeviceStateBusiness.Cointubejam)
+								{
+									sysVPMission.send.msg[i++] = 0x08;
+									sysVPMission.send.msg[i++] = 0xa4;
+								}
+								else if(DeviceStateBusiness.Coinromchk)
+								{
+									sysVPMission.send.msg[i++] = 0x08;
+									sysVPMission.send.msg[i++] = 0xa5;
+								}
+								else if(DeviceStateBusiness.Coinrouting)
+								{
+									sysVPMission.send.msg[i++] = 0x08;
+									sysVPMission.send.msg[i++] = 0xa6;
+								}							
+								else if(DeviceStateBusiness.Coinjam)
+								{
+									sysVPMission.send.msg[i++] = 0x08;
+									sysVPMission.send.msg[i++] = 0xa7;
+								}
+								else if(DeviceStateBusiness.CoinremoveTube)
+								{
+									sysVPMission.send.msg[i++] = 0x08;
+									sysVPMission.send.msg[i++] = 0xa8;
+								}
+								else if(DeviceStateBusiness.Coindisable)
+								{
+									sysVPMission.send.msg[i++] = 0x08;
+									sysVPMission.send.msg[i++] = 0xa9;
+								}
+								else if(DeviceStateBusiness.CoinunknowError)
+								{
+									sysVPMission.send.msg[i++] = 0x08;
+									sysVPMission.send.msg[i++] = 0xaa;
+								}
+								else
+								{
+									sysVPMission.send.msg[i++] = 0x08;
+									sysVPMission.send.msg[i++] = 0xa1;
+								}	
+								
+							}
+							//HopperÕÒÁãÆ÷
+							else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
+							{
+								if(SystemPara.HopperValue[0]==0)
+								{
+									sysVPMission.send.msg[i++] = 0x13;
+									sysVPMission.send.msg[i++] = 0x88;
+								}
+								else
+								{
+									if(DeviceStateBusiness.Hopper1State==0)
+									{
+										sysVPMission.send.msg[i++] = 0x13;
+										sysVPMission.send.msg[i++] = 0x89;
+									}
+									if(DeviceStateBusiness.Hopper1State==1)
+									{
+										sysVPMission.send.msg[i++] = 0x13;
+										sysVPMission.send.msg[i++] = 0x8a;
+									}
+									if(DeviceStateBusiness.Hopper1State==2)
+									{
+										sysVPMission.send.msg[i++] = 0x13;
+										sysVPMission.send.msg[i++] = 0x8b;
+									}
+								}
+								if(SystemPara.HopperValue[1]==0)
+								{
+									sysVPMission.send.msg[i++] = 0x13;
+									sysVPMission.send.msg[i++] = 0x8c;
+								}
+								else
+								{
+									if(DeviceStateBusiness.Hopper2State==0)
+									{
+										sysVPMission.send.msg[i++] = 0x13;
+										sysVPMission.send.msg[i++] = 0x8d;
+									}
+									if(DeviceStateBusiness.Hopper2State==1)
+									{
+										sysVPMission.send.msg[i++] = 0x13;
+										sysVPMission.send.msg[i++] = 0x8e;
+									}
+									if(DeviceStateBusiness.Hopper2State==2)
+									{
+										sysVPMission.send.msg[i++] = 0x13;
+										sysVPMission.send.msg[i++] = 0x8f;
+									}
+								}
+								if(SystemPara.HopperValue[2]==0)
+								{
+									sysVPMission.send.msg[i++] = 0x13;
+									sysVPMission.send.msg[i++] = 0x90;
+								}
+								else
+								{
+									if(DeviceStateBusiness.Hopper3State==0)
+									{
+										sysVPMission.send.msg[i++] = 0x13;
+										sysVPMission.send.msg[i++] = 0x91;
+									}
+									if(DeviceStateBusiness.Hopper3State==1)
+									{
+										sysVPMission.send.msg[i++] = 0x13;
+										sysVPMission.send.msg[i++] = 0x92;
+									}
+									if(DeviceStateBusiness.Hopper3State==2)
+									{
+										sysVPMission.send.msg[i++] = 0x13;
+										sysVPMission.send.msg[i++] = 0x93;
+									}
+								}
+							}
+							else
+							{
+								sysVPMission.send.msg[i++] = 0x08;
+								sysVPMission.send.msg[i++] = 0xa0;
+							}
+														
+							//5.Ó²±ÒÆ÷Ä£¿é	
+							if(SystemPara.CoinAcceptorType==MDB_COINACCEPTER)				
+							{															
+								if(DeviceStateBusiness.CoinCommunicate)
+								{
+									sysVPMission.send.msg[i++] = 0x0f;
+									sysVPMission.send.msg[i++] = 0xa2;
+								}
+								else if(DeviceStateBusiness.Coinsensor)
+								{
+									sysVPMission.send.msg[i++] = 0x0f;
+									sysVPMission.send.msg[i++] = 0xa3;
+								}
+								else if(DeviceStateBusiness.Cointubejam)
+								{
+									sysVPMission.send.msg[i++] = 0x0f;
+									sysVPMission.send.msg[i++] = 0xa4;
+								}
+								else if(DeviceStateBusiness.Coinromchk)
+								{
+									sysVPMission.send.msg[i++] = 0x0f;
+									sysVPMission.send.msg[i++] = 0xa5;
+								}
+								else if(DeviceStateBusiness.Coinrouting)
+								{
+									sysVPMission.send.msg[i++] = 0x0f;
+									sysVPMission.send.msg[i++] = 0xa6;
+								}							
+								else if(DeviceStateBusiness.Coinjam)
+								{
+									sysVPMission.send.msg[i++] = 0x0f;
+									sysVPMission.send.msg[i++] = 0xa7;
+								}
+								else if(DeviceStateBusiness.CoinremoveTube)
+								{
+									sysVPMission.send.msg[i++] = 0x0f;
+									sysVPMission.send.msg[i++] = 0xa8;
+								}
+								else if(DeviceStateBusiness.Coindisable)
+								{
+									sysVPMission.send.msg[i++] = 0x0f;
+									sysVPMission.send.msg[i++] = 0xa9;
+								}
+								else if(DeviceStateBusiness.CoinunknowError)
+								{
+									sysVPMission.send.msg[i++] = 0x0f;
+									sysVPMission.send.msg[i++] = 0xaa;
+								}
+								else if(GetBillCoinStatus(2)==0)
+								{
+									sysVPMission.send.msg[i++] = 0x0f;
+									sysVPMission.send.msg[i++] = 0xa0;
+								}
+								else 
+								{
+									sysVPMission.send.msg[i++] = 0x0f;
+									sysVPMission.send.msg[i++] = 0xa1;
+								}
+							}
+							//Âö³åÓ²±ÒÆ÷
+							else if((SystemPara.CoinAcceptorType == PARALLEL_COINACCEPTER)||(SystemPara.CoinAcceptorType == SERIAL_COINACCEPTER))
+							{
+								if(GetBillCoinStatus(2)==0)
+								{
+									sysVPMission.send.msg[i++] = 0x0f;
+									sysVPMission.send.msg[i++] = 0xa0;
+								}
+								else 
+								{
+									sysVPMission.send.msg[i++] = 0x0f;
+									sysVPMission.send.msg[i++] = 0xa1;
+								}
+							}
+							else 
+							{
+								sysVPMission.send.msg[i++] = 0x0f;
+								sysVPMission.send.msg[i++] = 0xa0;
+							}
+														
+							//7.Ö½±ÒÆ÷Ä£¿é
+							if(SystemPara.BillValidatorType==MDB_BILLACCEPTER)					
+							{
+								if(DeviceStateBusiness.BillCommunicate)
+								{
+									sysVPMission.send.msg[i++] = 0x17;
+									sysVPMission.send.msg[i++] = 0x72;
+								}
+								else if(DeviceStateBusiness.Billmoto)
+								{
+									sysVPMission.send.msg[i++] = 0x17;
+									sysVPMission.send.msg[i++] = 0x73;
+								}
+								else if(DeviceStateBusiness.Billsensor)
+								{
+									sysVPMission.send.msg[i++] = 0x17;
+									sysVPMission.send.msg[i++] = 0x74;
+								}
+								else if(DeviceStateBusiness.Billromchk)
+								{
+									sysVPMission.send.msg[i++] = 0x17;
+									sysVPMission.send.msg[i++] = 0x75;
+								}
+								else if(DeviceStateBusiness.Billjam)
+								{
+									sysVPMission.send.msg[i++] = 0x17;
+									sysVPMission.send.msg[i++] = 0x76;
+								}
+								else if(DeviceStateBusiness.BillremoveCash)
+								{
+									sysVPMission.send.msg[i++] = 0x17;
+									sysVPMission.send.msg[i++] = 0x77;
+								}
+								else if(DeviceStateBusiness.BillcashErr)
+								{
+									sysVPMission.send.msg[i++] = 0x17;
+									sysVPMission.send.msg[i++] = 0x78;
+								}
+								else if(DeviceStateBusiness.Billdisable)
+								{
+									sysVPMission.send.msg[i++] = 0x17;
+									sysVPMission.send.msg[i++] = 0x79;
+								}
+								else if(TubeMoneyEnough())
+								{
+									sysVPMission.send.msg[i++] = 0x17;
+									sysVPMission.send.msg[i++] = 0x7a;
+								}
+								else if(GetBillCoinStatus(1)==0)
+								{
+									sysVPMission.send.msg[i++] = 0x17;
+									sysVPMission.send.msg[i++] = 0x70;
+								}
+								else
+								{
+									sysVPMission.send.msg[i++] = 0x17;
+									sysVPMission.send.msg[i++] = 0x71;
+								}	
+							}
+							else
+							{
+								sysVPMission.send.msg[i++] = 0x17;
+								sysVPMission.send.msg[i++] = 0x70;
+							}
+							
+							sysVPMission.send.datLen = i;   
+						}
+						break;
+					case VP_INFO_HEFANGGUI:
+						sysVPMission.send.datLen  = 4;
+						sysVPMission.send.msg[0]  = VP_INFO_HEFANGGUI;
+						sysVPMission.send.msg[1]  = sysVPMission.Control_Bin;
+						sysVPMission.send.msg[2]  = sysVPMission.Control_Huodao;
+						sysVPMission.send.msg[3]  = sysVPMission.value;
+						break;
+					case VP_INFO_CABINET:
+						i = 0;
+						sysVPMission.send.msg[i++]  = VP_INFO_CABINET;
+						sysVPMission.send.msg[i++]  = 1;
+						for(cabinet = 0,cabno=0;cabinet<sysVPMission.cabinetNums;cabinet++)
+						{
+							sysVPMission.send.msg[i++]  = sysVPMission.cabinetdata[cabno++];
+							sysVPMission.send.msg[i++]  = sysVPMission.cabinetdata[cabno++];
+							sysVPMission.send.msg[i++]  = sysVPMission.cabinetdata[cabno++];
+						}
+						sysVPMission.send.datLen = i;
+						break;
+					case VP_INFO_CABERR:
+						TracePC("\r\nDrvCabErr=%d",sysVPMission.Control_Bin);
+						i = 0;
+						sysVPMission.send.msg[i++]  = VP_INFO_CABERR;
+						//1¹ñÉè±¸×´Ì¬
+						if(sysVPMission.Control_Bin==1)
+						{
+							//1.»õµÀÀàÐÍ
+							if((SystemPara.GeziDeviceType==1)||(SystemPara.Channel==0))
+							{
+								sysVPMission.send.msg[i++] = 0x06;
+								sysVPMission.send.msg[i++] = 0xd0;
+							}
+							else if(SystemPara.Channel==1)
+							{
+								sysVPMission.send.msg[i++] = 0x06;
+								sysVPMission.send.msg[i++] = 0xd1;
+							}
+							else if(SystemPara.Channel==2)
+							{
+								sysVPMission.send.msg[i++] = 0x06;
+								sysVPMission.send.msg[i++] = 0xd2;
+							}
+							else if(SystemPara.Channel==3)
+							{
+								sysVPMission.send.msg[i++] = 0x06;
+								sysVPMission.send.msg[i++] = 0xd3;
+							}
+							else if(SystemPara.Channel==4)
+							{
+								sysVPMission.send.msg[i++] = 0x06;
+								sysVPMission.send.msg[i++] = 0xd4;
+							}
+							
 							if(SystemPara.GeziDeviceType==0)
 							{
 								//1.GOC¹ÊÕÏÄ£¿é
 								if(SystemPara.GOCIsOpen == 0)
 								{
 									sysVPMission.send.msg[i++] = 0x03;
-									sysVPMission.send.msg[i++] = 0xe8;
-									if(SystemPara.SubBinOpen==1)
-									{
-										sysVPMission.send.msg[i++] = 0x03;
-										sysVPMission.send.msg[i++] = 0xeb;
-									}
+									sysVPMission.send.msg[i++] = 0xe8;									
 									
 								}
 								else if(SystemPara.GOCIsOpen == 1)
@@ -1337,22 +1667,9 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 									{
 										sysVPMission.send.msg[i++] = 0x03;
 										sysVPMission.send.msg[i++] = 0xea;
-									}
-									if(SystemPara.SubBinOpen==1)
-									{
-										if(DeviceStateBusiness.GOCErrorSub==0)//2¹ñ
-										{
-											sysVPMission.send.msg[i++] = 0x03;
-											sysVPMission.send.msg[i++] = 0xec;
-										}
-										else
-										{
-											sysVPMission.send.msg[i++] = 0x03;
-											sysVPMission.send.msg[i++] = 0xed;
-										}
-									}
+									}									
 								}
-								
+																
 								//2.µ¯»É»õµÀÄ£¿é
 								//1¹ñ
 								if(SystemPara.Channel==1)
@@ -1368,21 +1685,7 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 										sysVPMission.send.msg[i++] = 0xd2;
 									}	
 								}
-								//2¹ñ
-								if((SystemPara.SubBinOpen==1)&&(SystemPara.SubChannel==1))							
-								{
-									if(DeviceStateBusiness.ColBoardErrorSub==0)
-									{
-										sysVPMission.send.msg[i++] = 0x07;
-										sysVPMission.send.msg[i++] = 0xd4;
-									}
-									else
-									{
-										sysVPMission.send.msg[i++] = 0x07;
-										sysVPMission.send.msg[i++] = 0xd5;
-									}	
-								}
-								
+															
 
 								//3.Éý½µ»úÄ£¿é
 								//1¹ñ
@@ -1461,16 +1764,7 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 										sysVPMission.send.msg[i++] = 0xc6;
 									}
 								}
-								
-								
-								//2¹ñ
-								if((SystemPara.SubBinOpen==1)&&((SystemPara.SubChannel==2)||(SystemPara.SubChannel==3)||(SystemPara.SubChannel==4)))	
-								{
-									sysVPMission.send.msg[i++] = 0x0b;
-									sysVPMission.send.msg[i++] = 0xc8;
-								}
-								
-								
+																
 								//4.»õµÀÈ«²»¿ÉÓÃ
 								if(DeviceStateBusiness.Emp_Gol)
 								{
@@ -1478,193 +1772,7 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 									sysVPMission.send.msg[i++] = 0xd6;
 								}
 							}
-							
-							//5.Ó²±ÒÆ÷Ä£¿é	
-							if(SystemPara.CoinAcceptorType)							
-							{
-								if((DeviceStateBusiness.CoinCommunicate==0)&&(DeviceStateBusiness.Coinsensor==0)&&(DeviceStateBusiness.Cointubejam==0)&&(DeviceStateBusiness.Coinromchk==0)&&(DeviceStateBusiness.Coinrouting==0)
-									&&(DeviceStateBusiness.Coinjam==0)&&(DeviceStateBusiness.CoinremoveTube==0)&&(DeviceStateBusiness.Coindisable==0)&&(DeviceStateBusiness.CoinunknowError==0))
-								{
-									sysVPMission.send.msg[i++] = 0x0f;
-									sysVPMission.send.msg[i++] = 0xa1;
-								}								
-								if(DeviceStateBusiness.CoinCommunicate)
-								{
-									sysVPMission.send.msg[i++] = 0x0f;
-									sysVPMission.send.msg[i++] = 0xa2;
-								}
-								if(DeviceStateBusiness.Coinsensor)
-								{
-									sysVPMission.send.msg[i++] = 0x0f;
-									sysVPMission.send.msg[i++] = 0xa3;
-								}
-								if(DeviceStateBusiness.Cointubejam)
-								{
-									sysVPMission.send.msg[i++] = 0x0f;
-									sysVPMission.send.msg[i++] = 0xa4;
-								}
-								if(DeviceStateBusiness.Coinromchk)
-								{
-									sysVPMission.send.msg[i++] = 0x0f;
-									sysVPMission.send.msg[i++] = 0xa5;
-								}
-								if(DeviceStateBusiness.Coinrouting)
-								{
-									sysVPMission.send.msg[i++] = 0x0f;
-									sysVPMission.send.msg[i++] = 0xa6;
-								}							
-								if(DeviceStateBusiness.Coinjam)
-								{
-									sysVPMission.send.msg[i++] = 0x0f;
-									sysVPMission.send.msg[i++] = 0xa7;
-								}
-								if(DeviceStateBusiness.CoinremoveTube)
-								{
-									sysVPMission.send.msg[i++] = 0x0f;
-									sysVPMission.send.msg[i++] = 0xa8;
-								}
-								if(DeviceStateBusiness.Coindisable)
-								{
-									sysVPMission.send.msg[i++] = 0x0f;
-									sysVPMission.send.msg[i++] = 0xa9;
-								}
-								if(DeviceStateBusiness.CoinunknowError)
-								{
-									sysVPMission.send.msg[i++] = 0x0f;
-									sysVPMission.send.msg[i++] = 0xaa;
-								}
-							}
-
-							//6.HopperÄ£¿é
-							if(SystemPara.CoinChangerType == HOPPER_CHANGER)
-							{
-								if(SystemPara.HopperValue[0]==0)
-								{
-									sysVPMission.send.msg[i++] = 0x13;
-									sysVPMission.send.msg[i++] = 0x88;
-								}
-								else
-								{
-									if(DeviceStateBusiness.Hopper1State==0)
-									{
-										sysVPMission.send.msg[i++] = 0x13;
-										sysVPMission.send.msg[i++] = 0x89;
-									}
-									if(DeviceStateBusiness.Hopper1State==1)
-									{
-										sysVPMission.send.msg[i++] = 0x13;
-										sysVPMission.send.msg[i++] = 0x8a;
-									}
-									if(DeviceStateBusiness.Hopper1State==2)
-									{
-										sysVPMission.send.msg[i++] = 0x13;
-										sysVPMission.send.msg[i++] = 0x8b;
-									}
-								}
-								if(SystemPara.HopperValue[1]==0)
-								{
-									sysVPMission.send.msg[i++] = 0x13;
-									sysVPMission.send.msg[i++] = 0x8c;
-								}
-								else
-								{
-									if(DeviceStateBusiness.Hopper2State==0)
-									{
-										sysVPMission.send.msg[i++] = 0x13;
-										sysVPMission.send.msg[i++] = 0x8d;
-									}
-									if(DeviceStateBusiness.Hopper2State==1)
-									{
-										sysVPMission.send.msg[i++] = 0x13;
-										sysVPMission.send.msg[i++] = 0x8e;
-									}
-									if(DeviceStateBusiness.Hopper2State==2)
-									{
-										sysVPMission.send.msg[i++] = 0x13;
-										sysVPMission.send.msg[i++] = 0x8f;
-									}
-								}
-								if(SystemPara.HopperValue[2]==0)
-								{
-									sysVPMission.send.msg[i++] = 0x13;
-									sysVPMission.send.msg[i++] = 0x90;
-								}
-								else
-								{
-									if(DeviceStateBusiness.Hopper3State==0)
-									{
-										sysVPMission.send.msg[i++] = 0x13;
-										sysVPMission.send.msg[i++] = 0x91;
-									}
-									if(DeviceStateBusiness.Hopper3State==1)
-									{
-										sysVPMission.send.msg[i++] = 0x13;
-										sysVPMission.send.msg[i++] = 0x92;
-									}
-									if(DeviceStateBusiness.Hopper3State==2)
-									{
-										sysVPMission.send.msg[i++] = 0x13;
-										sysVPMission.send.msg[i++] = 0x93;
-									}
-								}
-							}
-							
-							//7.Ö½±ÒÆ÷Ä£¿é
-							if(SystemPara.BillValidatorType)							
-							{
-								if((DeviceStateBusiness.BillCommunicate==0)&&(DeviceStateBusiness.Billmoto==0)&&(DeviceStateBusiness.Billsensor==0)&&(DeviceStateBusiness.Billromchk==0)&&(DeviceStateBusiness.Billjam==0)
-									&&(DeviceStateBusiness.BillremoveCash==0)&&(DeviceStateBusiness.BillcashErr==0)&&(DeviceStateBusiness.Billdisable==0)&&(TubeMoneyEnough()==0))
-								{
-									sysVPMission.send.msg[i++] = 0x17;
-									sysVPMission.send.msg[i++] = 0x71;
-								}
-								if(DeviceStateBusiness.BillCommunicate)
-								{
-									sysVPMission.send.msg[i++] = 0x17;
-									sysVPMission.send.msg[i++] = 0x72;
-								}
-								if(DeviceStateBusiness.Billmoto)
-								{
-									sysVPMission.send.msg[i++] = 0x17;
-									sysVPMission.send.msg[i++] = 0x73;
-								}
-								if(DeviceStateBusiness.Billsensor)
-								{
-									sysVPMission.send.msg[i++] = 0x17;
-									sysVPMission.send.msg[i++] = 0x74;
-								}
-								if(DeviceStateBusiness.Billromchk)
-								{
-									sysVPMission.send.msg[i++] = 0x17;
-									sysVPMission.send.msg[i++] = 0x75;
-								}
-								if(DeviceStateBusiness.Billjam)
-								{
-									sysVPMission.send.msg[i++] = 0x17;
-									sysVPMission.send.msg[i++] = 0x76;
-								}
-								if(DeviceStateBusiness.BillremoveCash)
-								{
-									sysVPMission.send.msg[i++] = 0x17;
-									sysVPMission.send.msg[i++] = 0x77;
-								}
-								if(DeviceStateBusiness.BillcashErr)
-								{
-									sysVPMission.send.msg[i++] = 0x17;
-									sysVPMission.send.msg[i++] = 0x78;
-								}
-								if(DeviceStateBusiness.Billdisable)
-								{
-									sysVPMission.send.msg[i++] = 0x17;
-									sysVPMission.send.msg[i++] = 0x79;
-								}
-								if(TubeMoneyEnough())
-								{
-									sysVPMission.send.msg[i++] = 0x17;
-									sysVPMission.send.msg[i++] = 0x7a;
-								}
-							}
-							
+																			
 							//8.							
 							//1¹ñ¼ÓÈÈÄ£¿é¹ÊÕÏ
 							if(acdc_status_API(1,3)==0)
@@ -1688,27 +1796,7 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 								sysVPMission.send.msg[i++] = 0x1b;
 								sysVPMission.send.msg[i++] = 0x5a;
 							}	
-							//2¹ñ¼ÓÈÈÄ£¿é¹ÊÕÏ
-							if(acdc_status_API(2,3)==0)
-							{
-								sysVPMission.send.msg[i++] = 0x1b;
-								sysVPMission.send.msg[i++] = 0x5b;
-							}	
-							else if(acdc_status_API(2,3)==1)
-							{
-								sysVPMission.send.msg[i++] = 0x1b;
-								sysVPMission.send.msg[i++] = 0x5c;
-								//¶ÁÈ¡2¹ñÎÂ¶È
-								sysVPMission.send.msg[i++] = 0xff;
-								sysVPMission.send.msg[i++] = 0x02;
-								sysVPMission.send.msg[i++] = 0xfe;
-								sysVPMission.send.msg[i++] = 0xfe;
-							}
-							else if(acdc_status_API(2,3)==2)
-							{
-								sysVPMission.send.msg[i++] = 0x1b;
-								sysVPMission.send.msg[i++] = 0x5d;
-							}	
+							
 							//1¹ñÖÆÀäÄ£¿é¹ÊÕÏ
 							if(acdc_status_API(1,2)==0)
 							{
@@ -1719,28 +1807,18 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 							{
 								sysVPMission.send.msg[i++] = 0x1b;
 								sysVPMission.send.msg[i++] = 0x5f;
+								//¶ÁÈ¡1¹ñÎÂ¶È
+								sysVPMission.send.msg[i++] = 0xff;
+								sysVPMission.send.msg[i++] = 0x03;
+								sysVPMission.send.msg[i++] = 0xfe;
+								sysVPMission.send.msg[i++] = 0xfe;
 							}
 							else if(acdc_status_API(1,2)==2)
 							{
 								sysVPMission.send.msg[i++] = 0x1b;
 								sysVPMission.send.msg[i++] = 0x60;
 							}	
-							//2¹ñÖÆÀäÄ£¿é¹ÊÕÏ
-							if(acdc_status_API(2,2)==0)
-							{
-								sysVPMission.send.msg[i++] = 0x1b;
-								sysVPMission.send.msg[i++] = 0x61;
-							}	
-							else if(acdc_status_API(2,2)==1)
-							{
-								sysVPMission.send.msg[i++] = 0x1b;
-								sysVPMission.send.msg[i++] = 0x62;
-							}
-							else if(acdc_status_API(2,2)==2)
-							{
-								sysVPMission.send.msg[i++] = 0x1b;
-								sysVPMission.send.msg[i++] = 0x63;
-							}	
+							
 							//1¹ñÕÕÃ÷¿é¹ÊÕÏ
 							if(acdc_status_API(1,1)==0)
 							{
@@ -1757,22 +1835,7 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 								sysVPMission.send.msg[i++] = 0x1b;
 								sysVPMission.send.msg[i++] = 0x66;
 							}
-							//2¹ñÕÕÃ÷¿é¹ÊÕÏ
-							if(acdc_status_API(2,1)==0)
-							{
-								sysVPMission.send.msg[i++] = 0x1b;
-								sysVPMission.send.msg[i++] = 0x67;
-							}	
-							else if(acdc_status_API(2,1)==1)
-							{
-								sysVPMission.send.msg[i++] = 0x1b;
-								sysVPMission.send.msg[i++] = 0x68;
-							}
-							else if(acdc_status_API(2,1)==2)
-							{
-								sysVPMission.send.msg[i++] = 0x1b;
-								sysVPMission.send.msg[i++] = 0x69;
-							}
+							
 							//1¹ñÖÆ³ý³ô¿é¹ÊÕÏ
 							if(acdc_status_API(1,4)==0)
 							{
@@ -1789,62 +1852,181 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 								sysVPMission.send.msg[i++] = 0x1b;
 								sysVPMission.send.msg[i++] = 0x6c;
 							}
+							
+						
+						}
+						//2¹ñÉè±¸×´Ì¬
+						else if(sysVPMission.Control_Bin==2)
+						{
+							//1.»õµÀÀàÐÍ
+							if((SystemPara.GeziDeviceType==1)||(SystemPara.SubChannel==0)||(SystemPara.SubBinOpen==0))
+							{
+								sysVPMission.send.msg[i++] = 0x06;
+								sysVPMission.send.msg[i++] = 0xd0;
+							}
+							else if((SystemPara.SubBinOpen==1)&&(SystemPara.SubChannel==1))
+							{
+								sysVPMission.send.msg[i++] = 0x06;
+								sysVPMission.send.msg[i++] = 0xd1;
+							}
+							else if((SystemPara.SubBinOpen==1)&&(SystemPara.SubChannel==2))
+							{
+								sysVPMission.send.msg[i++] = 0x06;
+								sysVPMission.send.msg[i++] = 0xd2;
+							}
+							else if((SystemPara.SubBinOpen==1)&&(SystemPara.SubChannel==3))
+							{
+								sysVPMission.send.msg[i++] = 0x06;
+								sysVPMission.send.msg[i++] = 0xd3;
+							}
+							else if((SystemPara.SubBinOpen==1)&&(SystemPara.SubChannel==4))
+							{
+								sysVPMission.send.msg[i++] = 0x06;
+								sysVPMission.send.msg[i++] = 0xd4;
+							}
+							
+							if(SystemPara.GeziDeviceType==0)
+							{
+								//1.GOC¹ÊÕÏÄ£¿é
+								if(SystemPara.GOCIsOpen == 0)
+								{
+									if(SystemPara.SubBinOpen==1)
+									{
+										sysVPMission.send.msg[i++] = 0x03;
+										sysVPMission.send.msg[i++] = 0xe8;
+									}
+									
+								}
+								else if(SystemPara.GOCIsOpen == 1)
+								{									
+									if(SystemPara.SubBinOpen==1)
+									{
+										if(DeviceStateBusiness.GOCErrorSub==0)//2¹ñ
+										{
+											sysVPMission.send.msg[i++] = 0x03;
+											sysVPMission.send.msg[i++] = 0xe9;
+										}
+										else
+										{
+											sysVPMission.send.msg[i++] = 0x03;
+											sysVPMission.send.msg[i++] = 0xea;
+										}
+									}
+								}
+								
+								//2.µ¯»É»õµÀÄ£¿é								
+								//2¹ñ
+								if((SystemPara.SubBinOpen==1)&&(SystemPara.SubChannel==1))							
+								{
+									if(DeviceStateBusiness.ColBoardErrorSub==0)
+									{
+										sysVPMission.send.msg[i++] = 0x07;
+										sysVPMission.send.msg[i++] = 0xd1;
+									}
+									else
+									{
+										sysVPMission.send.msg[i++] = 0x07;
+										sysVPMission.send.msg[i++] = 0xd2;
+									}	
+								}
+								
+
+								//3.Éý½µ»úÄ£¿é
+								//2¹ñ
+								if((SystemPara.SubBinOpen==1)&&((SystemPara.SubChannel==2)||(SystemPara.SubChannel==3)||(SystemPara.SubChannel==4)))	
+								{
+									sysVPMission.send.msg[i++] = 0x0b;
+									sysVPMission.send.msg[i++] = 0xb9;
+								}
+								
+								
+								//4.»õµÀÈ«²»¿ÉÓÃ
+								if(DeviceStateBusiness.Emp_Gol)
+								{
+									sysVPMission.send.msg[i++] = 0x07;
+									sysVPMission.send.msg[i++] = 0xd6;
+								}
+							}
+																			
+							//8.		
+							//2¹ñ¼ÓÈÈÄ£¿é¹ÊÕÏ
+							if(acdc_status_API(2,3)==0)
+							{
+								sysVPMission.send.msg[i++] = 0x1b;
+								sysVPMission.send.msg[i++] = 0x58;
+							}	
+							else if(acdc_status_API(2,3)==1)
+							{
+								sysVPMission.send.msg[i++] = 0x1b;
+								sysVPMission.send.msg[i++] = 0x59;
+								//¶ÁÈ¡2¹ñÎÂ¶È
+								sysVPMission.send.msg[i++] = 0xff;
+								sysVPMission.send.msg[i++] = 0x01;
+								sysVPMission.send.msg[i++] = 0xfe;
+								sysVPMission.send.msg[i++] = 0xfe;
+							}
+							else if(acdc_status_API(2,3)==2)
+							{
+								sysVPMission.send.msg[i++] = 0x1b;
+								sysVPMission.send.msg[i++] = 0x5a;
+							}								
+							//2¹ñÖÆÀäÄ£¿é¹ÊÕÏ
+							if(acdc_status_API(2,2)==0)
+							{
+								sysVPMission.send.msg[i++] = 0x1b;
+								sysVPMission.send.msg[i++] = 0x5e;
+							}	
+							else if(acdc_status_API(2,2)==1)
+							{
+								sysVPMission.send.msg[i++] = 0x1b;
+								sysVPMission.send.msg[i++] = 0x5f;
+								//¶ÁÈ¡1¹ñÎÂ¶È
+								sysVPMission.send.msg[i++] = 0xff;
+								sysVPMission.send.msg[i++] = 0x03;
+								sysVPMission.send.msg[i++] = 0xfe;
+								sysVPMission.send.msg[i++] = 0xfe;
+							}
+							else if(acdc_status_API(2,2)==2)
+							{
+								sysVPMission.send.msg[i++] = 0x1b;
+								sysVPMission.send.msg[i++] = 0x60;
+							}								
+							//2¹ñÕÕÃ÷¿é¹ÊÕÏ
+							if(acdc_status_API(2,1)==0)
+							{
+								sysVPMission.send.msg[i++] = 0x1b;
+								sysVPMission.send.msg[i++] = 0x64;
+							}	
+							else if(acdc_status_API(2,1)==1)
+							{
+								sysVPMission.send.msg[i++] = 0x1b;
+								sysVPMission.send.msg[i++] = 0x65;
+							}
+							else if(acdc_status_API(2,1)==2)
+							{
+								sysVPMission.send.msg[i++] = 0x1b;
+								sysVPMission.send.msg[i++] = 0x66;
+							}							
 							//2¹ñÖÆ³ý³ô¿é¹ÊÕÏ
 							if(acdc_status_API(2,4)==0)
 							{
 								sysVPMission.send.msg[i++] = 0x1b;
-								sysVPMission.send.msg[i++] = 0x6d;
+								sysVPMission.send.msg[i++] = 0x6a;
 							}	
 							else if(acdc_status_API(2,4)==1)
 							{
 								sysVPMission.send.msg[i++] = 0x1b;
-								sysVPMission.send.msg[i++] = 0x6e;
+								sysVPMission.send.msg[i++] = 0x6b;
 							}
 							else if(acdc_status_API(2,4)==2)
 							{
 								sysVPMission.send.msg[i++] = 0x1b;
-								sysVPMission.send.msg[i++] = 0x6f;
+								sysVPMission.send.msg[i++] = 0x6c;
 							}
-							
-							//9.PC¹ÊÕÏ							
-							if((PCError(1)==0)&&(PCError(2)==0))
-							{
-								sysVPMission.send.msg[i++] = 0x1f;
-								sysVPMission.send.msg[i++] = 0x41;
-							}
-							if(PCError(1))
-							{
-								sysVPMission.send.msg[i++] = 0x1f;
-								sysVPMission.send.msg[i++] = 0x42;
-							}								
-							if(PCError(2))
-							{
-								sysVPMission.send.msg[i++] = 0x1f;
-								sysVPMission.send.msg[i++] = 0x43;
-							}
-							
-							
-							sysVPMission.send.datLen = i;   
+						
 						}
-						break;
-					case VP_INFO_HEFANGGUI:
-						sysVPMission.send.datLen  = 4;
-						sysVPMission.send.msg[0]  = VP_INFO_HEFANGGUI;
-						sysVPMission.send.msg[1]  = sysVPMission.Control_Bin;
-						sysVPMission.send.msg[2]  = sysVPMission.Control_Huodao;
-						sysVPMission.send.msg[3]  = sysVPMission.value;
-						break;
-					case VP_INFO_CABINET:
-						i = 0;
-						sysVPMission.send.msg[i++]  = VP_INFO_CABINET;
-						sysVPMission.send.msg[i++]  = 1;
-						for(cabinet = 0,cabno=0;cabinet<sysVPMission.cabinetNums;cabinet++)
-						{
-							sysVPMission.send.msg[i++]  = sysVPMission.cabinetdata[cabno++];
-							sysVPMission.send.msg[i++]  = sysVPMission.cabinetdata[cabno++];
-							sysVPMission.send.msg[i++]  = sysVPMission.cabinetdata[cabno++];
-						}
-						sysVPMission.send.datLen = i;
+						
+						sysVPMission.send.datLen = i; 
 						break;
 				}
 				/*
@@ -3009,29 +3191,47 @@ unsigned char VP_CMD_GetInfoExp( void )
 	    VPMsgPackSend( VP_NAK_RPT, 0 );	 
 		return VP_ERR_PAR;
 	}
-	//·¢ËÍÓÊÏä¸øvmc
-	MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_INFOIND;	
-	MsgUboxPack[g_Ubox_Index].Type = sysVPMission.receive.msg[0];
-	MsgUboxPack[g_Ubox_Index].Control_device = sysVPMission.receive.msg[1];
-	OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
-	UpdateIndex();
-	OSTimeDly(OS_TICKS_PER_SEC/10);
-	//È¡µÃ·µ»ØÖµ
-	AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*10,&ComStatus);
-	if(ComStatus == OS_NO_ERR)
+	switch(sysVPMission.receive.msg[0])
 	{
-		switch(AccepterUboxMsg->PCCmd)
-		{
-			case MBOX_VMCTOPC_ACK:
-				TracePC("\r\n Drv Info_Ind ACK"); 
-				VPMsgPackSend( VP_ACK_RPT, 0  );	
-				break;
-			case MBOX_VMCTOPC_NAK:
-				TracePC("\r\n Drv Info_Ind NAK"); 
-				VPMsgPackSend( VP_NAK_RPT, 0  );	
-				break;	
-		}
-	}	
+		case 24:
+		case 25:
+			//·¢ËÍÓÊÏä¸øvmc
+			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_INFOIND;	
+			MsgUboxPack[g_Ubox_Index].Type = sysVPMission.receive.msg[0];
+			MsgUboxPack[g_Ubox_Index].Control_device = sysVPMission.receive.msg[1];
+			OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
+			UpdateIndex();
+			OSTimeDly(OS_TICKS_PER_SEC/10);
+			//È¡µÃ·µ»ØÖµ
+			AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*10,&ComStatus);
+			if(ComStatus == OS_NO_ERR)
+			{
+				switch(AccepterUboxMsg->PCCmd)
+				{
+					case MBOX_VMCTOPC_ACK:
+						TracePC("\r\n Drv Info_Ind ACK"); 
+						VPMsgPackSend( VP_ACK_RPT, 0  );	
+						break;
+					case MBOX_VMCTOPC_NAK:
+						TracePC("\r\n Drv Info_Ind NAK"); 
+						VPMsgPackSend( VP_NAK_RPT, 0  );	
+						break;	
+				}
+			}		
+			break;
+		case 26:
+			TracePC("\r\n Drv Info_Ind ACK"); 
+			VPMsgPackSend( VP_ACK_RPT, 0  );
+			OSTimeDly(OS_TICKS_PER_SEC/10);
+			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;		
+			MsgUboxPack[g_Ubox_Index].Type = sysVPMission.receive.msg[0];
+			MsgUboxPack[g_Ubox_Index].Control_device=sysVPMission.receive.msg[1];
+			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+			UpdateIndex();
+			OSTimeDly(OS_TICKS_PER_SEC/100);	
+			break;
+	}
+	
     return VP_ERR_NULL;	
 }
 

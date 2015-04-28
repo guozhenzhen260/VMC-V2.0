@@ -101,7 +101,7 @@ uint8_t GetScaleError()
 uint8_t IsErrorState()
 { 
 	uint8_t coinError = 0,hopperError = 0,GOCError = 0,ColBoardError = 0,ColEmpErr = 0,PcErr=0;
-	static uint8_t billError = 0,ErrorStatus=0;//ErrorStatus上报故障状态
+	static uint8_t billError = 0;
 	//纸币器	
 	if(SystemPara.BillValidatorType==MDB_BILLACCEPTER)
 	{
@@ -266,6 +266,30 @@ uint8_t ChangerIsErr()
 	}
 	return 0;
 }
+
+/*********************************************************************************************************
+** Function name:       BillIsErr
+** Descriptions:        纸币器是否不可用状态
+** input parameters:    1故障,0正常
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+uint8_t BillIsErr()
+{ 
+	if(SystemPara.BillValidatorType==MDB_BILLACCEPTER)
+	{
+		if(
+			(DeviceStateBusiness.BillCommunicate)||(DeviceStateBusiness.Billmoto)||(DeviceStateBusiness.Billsensor)||(DeviceStateBusiness.Billromchk)
+			||(DeviceStateBusiness.Billjam)||(DeviceStateBusiness.BillremoveCash)||(DeviceStateBusiness.BillcashErr)
+		  )
+		{
+			return 1;
+		}		
+		//TraceBill("\r\n MiddBillState=%d",billError);
+	}
+	return 0;
+}
+
 
 /*********************************************************************************************************
 ** Function name:       SetBillCoinStatus

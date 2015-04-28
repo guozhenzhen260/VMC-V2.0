@@ -198,6 +198,38 @@ void CostRPTAPI(uint8_t costType,uint32_t costMoney,uint32_t payAllMoney)
 }
 
 
+/*********************************************************************************************************
+** Function name:       BillStatusRPTAPI
+** Descriptions:        向PC机下发纸币器设备故障和恢复状态
+** input parameters:    
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void BillStatusRPTAPI()
+{
+	static uint8_t billError = 0;
+	switch(SystemPara.PcEnable)
+	{	
+		case UBOX_PC:
+			if(BillIsErr()==1)
+			{
+				if(billError==0)
+				{
+					StatusRPTAPI();
+					billError=1;
+				}
+			}
+			else
+			{
+				if(billError==1)
+				{
+					StatusRPTAPI();
+					billError=0;
+				}
+			}
+			break;
+	}
+}
 
 /*********************************************************************************************************
 ** Function name:       StatusRPTAPI
@@ -1188,13 +1220,7 @@ void PollAPI(uint32_t payAllMoney)
 						MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;		
 						MsgUboxPack[g_Ubox_Index].Type = AccepterUboxMsg->Type;
 						MsgUboxPack[g_Ubox_Index].payAllMoney = payAllMoney;
-						if(AccepterUboxMsg->Type==23)
-						{
-							MsgUboxPack[g_Ubox_Index].check_st = ErrorStatus(1);
-							MsgUboxPack[g_Ubox_Index].bv_st = ErrorStatus(2);	
-							MsgUboxPack[g_Ubox_Index].cc_st = ErrorStatus(3);	
-						}
-						else if(AccepterUboxMsg->Type==24)
+						if(AccepterUboxMsg->Type==24)
 						{
 							ChannelAPIProcess(0,HEFANGUI_CHAXUN,AccepterUboxMsg->Control_device);	
 							MsgUboxPack[g_Ubox_Index].Control_device = AccepterUboxMsg->Control_device;

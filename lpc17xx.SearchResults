@@ -1,7 +1,6 @@
----- StatusRPTAPI 匹配 (6 在 4 文件 ) ----
-Business.c (app):2951:						StatusRPTAPI();
-Business.c (app):3310:						StatusRPTAPI();
-PCComAPI.c (api):209:void StatusRPTAPI()
-PCComAPI.c (api):563:							StatusRPTAPI();
-PCComAPI.h (api):34:extern void StatusRPTAPI(void);
-UBProtocol.c (uart3driver):2829:	StatusRPTAPI();
+---- MBOX_VMCTOPC_INFORPT 匹配 (5 在 4 文件 ) ----
+Common.h (app):867:#define MBOX_VMCTOPC_INFORPT     		    0x17
+PCComAPI.c (api):598:							MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;		
+PCComAPI.c (api):1220:						MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;		
+Taskuart3device.c (uart3driver):369:					case MBOX_VMCTOPC_INFORPT:						
+UBProtocol.c (uart3driver):2983:			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;		

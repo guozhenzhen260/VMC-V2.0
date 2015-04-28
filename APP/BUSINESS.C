@@ -2944,7 +2944,7 @@ void BusinessProcess(void *pvData)
 				if(Timer.CheckDevStateTimer==0)
 				{
 					Timer.CheckDevStateTimer = 5;
-					CheckDeviceState();
+					CheckDeviceState();					
 					if(IsErrorState())
 					{
 						Timer.DispFreeTimer=0;
@@ -2954,6 +2954,10 @@ void BusinessProcess(void *pvData)
 						BillCoinCtr(2,2,2);
 						rstTime();
 						vmcStatus = VMC_ERROR;
+					}
+					else
+					{
+						BillStatusRPTAPI();//判断纸币器是否故障或恢复，上报给pc
 					}
 				}
 				//5.是否进入维护状态
