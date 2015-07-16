@@ -27,6 +27,7 @@ extern void TuiMoneyInd(void);
 extern uint8_t VendoutSIMPLEInd(uint16_t columnNo);
 extern void GetmoneySIMPLEInd(uint16_t payInMoney);
 extern void PriceSIMPLEInd(uint16_t payInMoney);
+extern void TxtSIMPLEInd(char *disp);
 extern void BillCoinCtr(uint8_t billCtr,uint8_t coinCtr,uint8_t readerCtr);
 extern void rstTime(void);
 extern uint32_t GetReaderAmount(void);

@@ -49,7 +49,7 @@ static OS_STK Uart1DeviceTaskStk[256];
 void DispVersionText()
 {	
 	LCDPutLOGOBmp(24,LINE2,SystemPara.Logo);
-	LCDNumberFontPrintf(40,LINE15,2,"version%d.%02d",2,11);	
+	LCDNumberFontPrintf(40,LINE15,2,"version%d.%02d",2,12);	
 }
 
 /*********************************************************************************************************

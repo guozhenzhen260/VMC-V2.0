@@ -452,9 +452,9 @@ void Uart3TaskDevice(void *pvData)
 		{
 			VPMissionSIMPLESIMPLE_Poll();
 			//OSTimeDly(OS_TICKS_PER_SEC/4);
-			OSTimeDly(OS_TICKS_PER_SEC/2);
+			OSTimeDly(OS_TICKS_PER_SEC/50);
 			//取得返回值
-			AccepterSIMPLEUboxMsg = OSQPend(g_SIMPLEUbox_VMCTOPCQ,20,&ComStatus);
+			AccepterSIMPLEUboxMsg = OSQPend(g_SIMPLEUbox_VMCTOPCQ,1,&ComStatus);
 			if(ComStatus == OS_NO_ERR)
 			{
 				switch(AccepterSIMPLEUboxMsg->VMCTOPCCmd)
@@ -473,7 +473,8 @@ void Uart3TaskDevice(void *pvData)
 						break;
 					case MBOX_SIMPLEVMCTOPC_GETADMIN:						
 						TracePC("\r\n Taskpend GetAdmin=%d,%d",AccepterSIMPLEUboxMsg->admintype,AccepterSIMPLEUboxMsg->admincolumn);					
-						VPMissionSIMPLE_Get_Admin(AccepterSIMPLEUboxMsg->admintype,AccepterSIMPLEUboxMsg->admincolumn);
+						VPSIMPLE_Sethdquery(AccepterSIMPLEUboxMsg->admincolumn);
+						VPMissionSIMPLE_Get_Admin2(AccepterSIMPLEUboxMsg->admintype);
 						break;	
 				}
 			}

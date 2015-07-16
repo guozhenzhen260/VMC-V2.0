@@ -958,6 +958,7 @@ typedef struct
 	//display显示
 	uint8_t distype;   //显示类型，0用户余额，1时间，2文本，3商品单价                  
 	uint16_t payInMoney;//投入金额
+	uint8_t  disp[5];//字符串
 	//上报按键对应商品id
 	uint8_t btnchannel_id;                  //vmc上报给PC按键对应商品id
 	//admin
@@ -972,6 +973,7 @@ extern MessageSIMPLEUboxPCPack MsgSIMPLEUboxPack[SIMPLEUBOX_SIZE];
 extern uint8_t  g_SIMPLEUbox_Index;
 
 extern OS_EVENT *g_SIMPLEUbox_VMCTOPCQ;
+extern OS_EVENT *g_SIMPLEUbox_VMCTOPCBackCMail;
 extern OS_EVENT *g_SIMPLEUbox_PCTOVMCQ;	
 
 /******************************************展示位通讯结构体*****************************************************/

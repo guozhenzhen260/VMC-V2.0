@@ -362,6 +362,7 @@ uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char
 {
 	unsigned char BillRdBuff[36],BillRdLen,ComStatus,BillWrBuff[1];
 	uint8_t type=0,i=0;
+	static uint8_t billrec=0;
 
 
 	switch(billOpt)
@@ -413,6 +414,7 @@ uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char
 	if(ComStatus == 1)
 	{
 		MdbBillErr.Communicate = 0;
+		billrec=0;
 		TraceBill("\r\nDrvBill= %02d-",BillRdLen);
 		for(i=0;i<16;i++)
 		{
@@ -533,8 +535,14 @@ uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char
 	}
 	else
 	{
-		TraceBill("\r\n Drvbill commuFail=%d",ComStatus);	
-		BillDevReject();
+		billrec++;
+		TraceBill("\r\n Drvbill commuFail=%d,billrec=%d",ComStatus,billrec);
+		if(billrec>=30)
+		{
+			TraceBill("\r\n Drvbill commReject");
+			BillDevReject();
+			billrec=0;
+		}
 		MdbBillErr.Communicate = 1;
 	}
 	

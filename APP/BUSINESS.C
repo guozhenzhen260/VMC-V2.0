@@ -2820,6 +2820,28 @@ void PriceSIMPLEInd(uint16_t payInMoney)
 	}
 }
 
+/*********************************************************************************************************
+** Function name:     	TxtSIMPLEInd
+** Descriptions:	    PC机发送字符串,并产生状态变化
+** input parameters:    
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+void TxtSIMPLEInd(char *disp)
+{
+	//uint16_t debtMoney=0;
+	char strlanguage[30] = {0},streng[30] = {0};
+	//2产生状态变化
+	if(GetAmountMoney())
+	{
+		GetmoneySIMPLEInd(0);
+	}
+	sprintf(strlanguage,"%s",disp);
+	sprintf(streng,"%s",disp);
+	LCDPrintf(80,LINE15,0,SystemPara.Language,streng);
+	
+	
+}
 
 
 /*********************************************************************************************************

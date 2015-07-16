@@ -100,13 +100,15 @@ extern struct VP_MissionSIMPLE sysVPMissionSIMPLE;
 //
 //
 ////unsigned char VPBusTxMsg( void );
+extern void VPSIMPLE_Sethdquery(uint8_t num);
 extern void SIMPLESIMPLEVPSerialInit(void);
 extern unsigned char VPMissionSIMPLESIMPLE_Poll( void );
 extern unsigned char VPMissionSIMPLE_Button_RPT( uint8_t btnchannel_id );
 extern unsigned char VPMissionSIMPLE_Vendout_RPT( uint8_t channel_result );
 extern unsigned char VPMissionSIMPLE_Get_Admin( unsigned char admintype,unsigned char hdstart);
-extern unsigned char VPMissionSIMPLE_Set_Admin( unsigned char admintype,unsigned char hdstart,unsigned char hdend);
+extern unsigned char VPMissionSIMPLE_Get_Admin2( unsigned char admintype);
+extern void VPSIMPLE_Admin_Ind(void);
 extern unsigned char VPMissionSIMPLE_Admin_RPT( unsigned char admintype,uint8_t admincolumn,uint8_t admincolumnsum);
-
+extern unsigned char VPSIMPLE_Result_Ind(void);
 #endif
 

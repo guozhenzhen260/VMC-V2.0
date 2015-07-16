@@ -448,4 +448,41 @@ uint8_t ErrorStatus(uint8_t type)
 	return 0;
 }
 
+/*********************************************************************************************************
+** Function name:       SIMPLEErrorStatus
+** Descriptions:        为SIMPLEUBox作的整机状态检测接口
+** input parameters:    无
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+uint8_t SIMPLEErrorStatus(uint8_t type)
+{ 
+	//正常货道商品全部售空，或非售卖时间
+	if(type == 1)
+	{
+		if((DeviceStateBusiness.Emp_Gol != 0)&&(SystemPara.GeziDeviceType==0))
+			return 1;
+		else
+			return 0;
+	}
+	//是否故障
+	if(type == 2)
+	{
+		if(IsErrorState())
+			return 1;
+		else	
+			return 0;		
+	}
+	
+	//维护模式
+	if(type == 3)
+	{
+		if(weihuMode==1)
+			return 1;
+		else
+			return 0;
+	}	
+}
+
+
 

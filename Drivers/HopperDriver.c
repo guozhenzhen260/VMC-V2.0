@@ -107,6 +107,7 @@ unsigned char HopperAccepter_Handle(unsigned char DeviceCmdType,unsigned char Ad
 				if(stEvbHp[i].Add == MsgAdd)
 				{
 					stEvbHp[i].State = 0x03;
+					stEvbHp[i].StateChk=0x80;
 					break;
 				}
 			}		

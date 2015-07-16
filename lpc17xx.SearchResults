@@ -1,6 +1,2 @@
----- MBOX_VMCTOPC_INFORPT 匹配 (5 在 4 文件 ) ----
-Common.h (app):867:#define MBOX_VMCTOPC_INFORPT     		    0x17
-PCComAPI.c (api):598:							MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;		
-PCComAPI.c (api):1220:						MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;		
-Taskuart3device.c (uart3driver):369:					case MBOX_VMCTOPC_INFORPT:						
-UBProtocol.c (uart3driver):2983:			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;		
+---- APPUbox AdminChannel 匹配 (1 在 1 文件 ) ----
+Channel.c (app):2062:							TracePC("\r\n APPUbox AdminChannel");

@@ -23,5 +23,7 @@ extern void SetBillCoinStatus(uint8_t type,uint8_t enable);
 extern uint8_t GetBillCoinStatus(uint8_t type);
 
 extern uint8_t ErrorStatus(uint8_t type);
+
+extern uint8_t SIMPLEErrorStatus(uint8_t type);
 #endif
 

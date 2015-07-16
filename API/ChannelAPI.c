@@ -2717,6 +2717,70 @@ unsigned char hd_state_by_id(unsigned char cabinetNo,unsigned char id)
 }
 
 /*****************************************************************************
+** Function name:	hd_get_by_id	
+** Descriptions:	通过ID号读取货道参数值													 			
+** parameters:		logicNo:逻辑地址
+					type：1——货道单价
+						  2——货道数量
+						  3——货道状态  货道状态：1:可用;2:故障;3:无货;4:PC置位不可用	
+						  4——货道最大存货量
+						  5——选货按键值
+						  6——成功交易次数
+						  7——商品编号					
+** Returned value:	0：无，其他相应值
+*******************************************************************************/
+unsigned int hd_get_by_id(unsigned char cabinetNo,unsigned char id,unsigned char type)
+{
+	unsigned char  i,j,err;
+	unsigned int value = 0;
+	ST_LEVEL_HUODAO *stHuodaoPtr;
+	if(cabinetNo == 1)
+		stHuodaoPtr = stHuodao;
+	else if(cabinetNo == 2 && SystemPara.SubBinOpen)
+		stHuodaoPtr = stSubHuodao;
+	else
+		return 0;
+	
+	err = hd_get_index(cabinetNo,id,4,&i,&j);
+	if(err)
+	{
+		switch(type)
+		{
+			case HUODAO_TYPE_PRICE:
+				value = stHuodaoPtr[i].huodao[j].price;
+				break;
+			case HUODAO_TYPE_COUNT:
+				value = stHuodaoPtr[i].huodao[j].count;
+				break;
+			case HUODAO_TYPE_MAX_COUNT:
+				value = stHuodaoPtr[i].huodao[j].maxCount;
+				break;
+			case HUODAO_TYPE_STATE:
+				value = stHuodaoPtr[i].huodao[j].state;
+				break;
+			case HUODAO_TYPE_SELECTNO:
+				value = stHuodaoPtr[i].huodao[j].selectNo;
+				break;
+			case HUODAO_TYPE_ID:
+				value = stHuodaoPtr[i].huodao[j].id;
+				break;
+			case HUODAO_TYPE_SUC_COUNT:
+				value = stHuodaoPtr[i].huodao[j].sucCount;
+				break;
+			case HUODAO_TYPE_OPEN:
+				value = (stHuodaoPtr[i].openFlag) ? (stHuodaoPtr[i].huodao[j].openFlag) : 0;
+				break;
+			default:
+				break;
+		}
+		
+	}
+	return value;
+	
+}
+
+
+/*****************************************************************************
 ** Function name:	hd_setNums_by_id	
 ** Descriptions:	      通过ID号设置货道余量											 			
 ** parameters:		cabinetNo:箱柜编号		

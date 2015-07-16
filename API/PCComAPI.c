@@ -656,12 +656,11 @@ uint8_t AdminRPTSIMPLEAPI(uint8_t adminType,uint8_t Column,uint8_t ColumnSum)
 			OSQPost(g_SIMPLEUbox_VMCTOPCQ,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
 			UpdateSIMPLEIndex();
 			//取得返回值
-			AccepterSIMPLEUboxMsg = OSQPend(g_SIMPLEUbox_PCTOVMCQ,OS_TICKS_PER_SEC*200,&ComStatus);
+			AccepterSIMPLEUboxMsg = OSMboxPend(g_SIMPLEUbox_VMCTOPCBackCMail,OS_TICKS_PER_SEC*200,&ComStatus);
 			if(ComStatus == OS_NO_ERR)
 			{				
 				switch(AccepterSIMPLEUboxMsg->PCTOVMCCmd)
 				{
-					//出货
 					case MBOX_SIMPLEVMCTOPC_RESULTIND:
 						TracePC("\r\n MiddUbox AdminResult=%d",AccepterSIMPLEUboxMsg->adminresult);
 						if(AccepterSIMPLEUboxMsg->adminresult==0)
@@ -704,12 +703,11 @@ uint8_t GetAdminSIMPLEAPI(uint8_t adminType,uint8_t Column)
 			OSQPost(g_SIMPLEUbox_VMCTOPCQ,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
 			UpdateSIMPLEIndex();
 			//取得返回值
-			AccepterSIMPLEUboxMsg = OSQPend(g_SIMPLEUbox_PCTOVMCQ,OS_TICKS_PER_SEC*200,&ComStatus);
+			AccepterSIMPLEUboxMsg = OSMboxPend(g_SIMPLEUbox_VMCTOPCBackCMail,OS_TICKS_PER_SEC*200,&ComStatus);
 			if(ComStatus == OS_NO_ERR)
 			{				
 				switch(AccepterSIMPLEUboxMsg->PCTOVMCCmd)
 				{
-					//出货
 					case MBOX_SIMPLEVMCTOPC_RESULTIND:
 						TracePC("\r\n MiddUbox GetAdminResult=%d",AccepterSIMPLEUboxMsg->adminresult);
 						if(AccepterSIMPLEUboxMsg->adminresult==0)
@@ -762,7 +760,7 @@ void PollAPI(uint32_t payAllMoney)
 {
 	MessageUboxPCPack *AccepterUboxMsg;
 	unsigned char ComStatus;
-	//uint8_t resultdisp[8]={0, 0, 0, 0, 0, 0, 0, 0};
+	char disp[5]={0, 0, 0, 0, 0};
 	//uint8_t recoin;
 	unsigned char ComReturn = 0;
 	uint16_t columnNo=0;
@@ -1333,7 +1331,16 @@ void PollAPI(uint32_t payAllMoney)
 							case 3:
 								TracePC("\r\n MiddUbox price=%ld",AccepterSIMPLEUboxMsg->payInMoney);
 								PriceSIMPLEInd(AccepterSIMPLEUboxMsg->payInMoney);
-								break;	
+								break;								
+							case 2:
+								disp[0]=AccepterSIMPLEUboxMsg->disp[0];
+								disp[1]=AccepterSIMPLEUboxMsg->disp[1];
+								disp[2]=AccepterSIMPLEUboxMsg->disp[2];
+								disp[3]=AccepterSIMPLEUboxMsg->disp[3];
+								disp[4]=AccepterSIMPLEUboxMsg->disp[4];
+								TracePC("\r\n MiddUbox disptxt=%c%c%c%c%c",disp[0],disp[1],disp[2],disp[3],disp[4]);
+								TxtSIMPLEInd(disp);
+								break;
 						}
 						break;
 				}

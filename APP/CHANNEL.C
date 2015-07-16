@@ -1532,6 +1532,10 @@ unsigned char ChannelReadChannelParam(unsigned char Bin,unsigned char logicnum)
 			case '2'://Ê£ÓàÁ¿
 				enterEdit = 2;
 				break;
+				
+			case '3': //ÐÞ¸Ä×´Ì¬
+				enterEdit = 3;
+				break;
 			case '4'://ID /selectNo
 				if(SystemPara.UserSelectKeyBoard==1)
 					enterEdit = 4; //selectNo
@@ -1612,6 +1616,21 @@ unsigned char ChannelReadChannelParam(unsigned char Bin,unsigned char logicnum)
 						else
 							LCDPrintf(8,7,1,lang," %s%s%d",ui_aisle_admin.no_2[lang],ui_aisle_admin.columnCount[lang],tempVlaue);
 						break;
+
+						case 3: //ÐÞ¸Ä»õµ½×´Ì¬
+							if(editChanged){
+								stHUodaoPtr[i].huodao[j].state = tempVlaue;
+								if(tempVlaue == HUODAO_STATE_EMPTY){
+									stHUodaoPtr[i].huodao[j].count = 0;
+								}
+							}	
+							else{
+								LCDPrintf(8,9,1,lang," %s%s%d",ui_aisle_admin.no_3[lang],ui_aisle_admin.columnStatus[lang],tempVlaue);
+
+							}		
+						break;
+
+						
 					case 4:
 						if(editChanged)
 							stHUodaoPtr[i].huodao[j].selectNo= tempVlaue;
@@ -1655,6 +1674,12 @@ unsigned char ChannelReadChannelParam(unsigned char Bin,unsigned char logicnum)
 				{
 					case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':case '0':
 						tempVlaue = tempVlaue * 10 + key - '0';
+						
+						if(enterEdit == 3){
+							if(tempVlaue > 5){
+								tempVlaue = HUODAO_STATE_NOT;
+							}
+						}
 						editFlush = 1;
 						break;
 					case 'C':
