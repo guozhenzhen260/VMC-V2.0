@@ -92,6 +92,42 @@ unsigned char hdstart=1,hdend=1;//开始遍历的货单号，结束的货道号
 #pragma arm section zidata
 
 /*********************************************************************************************************
+** Function name:     	VPSIMPLE_hdnums
+** Descriptions:	    设置货道数量
+** input parameters:    
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+unsigned char VPSIMPLE_hdnums()
+{
+	return hd_nums_by_id(1)+22;
+}
+
+/*********************************************************************************************************
+** Function name:     	VPSIMPLE_hdnums
+** Descriptions:	    得到下一个有效的货道
+** input parameters:    
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+void VPSIMPLE_gethdstart()
+{
+	while(hdstart<=hdend)
+	{
+		if(hd_SIMPLEstate_by_id(1,hdstart)==1)
+		{
+			hdstart++;
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+
+
+
+/*********************************************************************************************************
 ** Function name:     	VPSIMPLE_Sethdquery
 ** Descriptions:	    设置需要查询存货数量的货道
 ** input parameters:    
@@ -376,7 +412,7 @@ unsigned char SIMPLESIMPLEVPMsgPackSend( unsigned char msgType )
 							sysVPMissionSIMPLE.send.msg[i++] = 0x10; //flag1
 						}
 						sysVPMissionSIMPLE.send.msg[i++] = 0;    //flag2
-						sysVPMissionSIMPLE.send.msg[i++] = hd_nums_by_id(1);    //货道个数
+						sysVPMissionSIMPLE.send.msg[i++] = VPSIMPLE_hdnums();    //货道个数
 						sysVPMissionSIMPLE.send.msg[i++] = 0;    //展示位个数
 						sysVPMissionSIMPLE.send.msg[i++] = 51;    //软件版本字符串长度
 						sysVPMissionSIMPLE.send.msg[i++]  = 'e';
@@ -433,7 +469,7 @@ unsigned char SIMPLESIMPLEVPMsgPackSend( unsigned char msgType )
 						break;
 					case 1:
 						TracePC("\r\n Drv info=1huoemp");
-						hdnum=0;
+						hdnum=0x01;
 						if(SIMPLEErrorStatus(1)||SIMPLEErrorStatus(2))
 							hdnum|=0x04;
 						if(SIMPLEErrorStatus(3))
@@ -441,74 +477,20 @@ unsigned char SIMPLESIMPLEVPMsgPackSend( unsigned char msgType )
 							hdnum|=0x02;
 						}						
 						sysVPMissionSIMPLE.send.msg[i++]  = hdnum;//flag	
-						hdnum=hd_nums_by_id(1);    //货道个数
-						if(hdnum%8==0)
-							ceng  = hdnum/8;//后面跟的channel的字节数	
-						else
-							ceng  = hdnum/8+1;//后面跟的channel的字节数	
-						sysVPMissionSIMPLE.send.msg[i++]  = ceng;//后面跟的channel的字节数	
-
-						for(j=0;j<ceng;j++)
+						hdnum=VPSIMPLE_hdnums();    //货道个数
+						sysVPMissionSIMPLE.send.msg[i++]  = 0;//后面跟的channel的字节数,我们弹簧机都是0	
+						/*	
+						for(j=1;j<=hdnum;j++)
 						{
-							hdstate=0;
-							if((j*8+1)<=hdnum)
+							if(hd_state_by_id(1,j))
 							{
-								if(hd_state_by_id(1,(j*8+1)))
-								{
-									hdstate|=0x01;
-								}
+								sysVPMissionSIMPLE.send.msg[i++]  = hd_get_by_id(1,j,2);//货道售空信息
 							}
-							if((j*8+2)<=hdnum)
+							else
 							{
-								if(hd_state_by_id(1,(j*8+2)))
-								{
-									hdstate|=0x02;
-								}
+								sysVPMissionSIMPLE.send.msg[i++]  = 0;//货道售空信息
 							}
-							if((j*8+3)<=hdnum)
-							{
-								if(hd_state_by_id(1,(j*8+3)))
-								{
-									hdstate|=0x04;
-								}
-							}
-							if((j*8+4)<=hdnum)
-							{
-								if(hd_state_by_id(1,(j*8+4)))
-								{
-									hdstate|=0x08;
-								}
-							}
-							if((j*8+5)<=hdnum)
-							{
-								if(hd_state_by_id(1,(j*8+5)))
-								{
-									hdstate|=0x10;
-								}
-							}
-							if((j*8+6)<=hdnum)
-							{
-								if(hd_state_by_id(1,(j*8+6)))
-								{
-									hdstate|=0x20;
-								}
-							}
-							if((j*8+7)<=hdnum)
-							{
-								if(hd_state_by_id(1,(j*8+7)))
-								{
-									hdstate|=0x40;
-								}
-							}
-							if((j*8+8)<=hdnum)
-							{
-								if(hd_state_by_id(1,(j*8+8)))
-								{
-									hdstate|=0x80;
-								}
-							}
-							sysVPMissionSIMPLE.send.msg[i++]  = hdstate;//货道售空信息
-						}						
+						}	*/				
 						break;
 					case 2:
 						TracePC("\r\n Drv info=2err");
@@ -526,21 +508,11 @@ unsigned char SIMPLESIMPLEVPMsgPackSend( unsigned char msgType )
 						break;
 					case 4:
 						TracePC("\r\n Drv info=4huoerr");
-						hdnum=hd_nums_by_id(1);    //货道个数
+						hdnum=VPSIMPLE_hdnums();    //货道个数
 						sysVPMissionSIMPLE.send.msg[i++] = hdnum;    //货道个数
 						for(j=1;j<=hdnum;j++)
-						{
-							hdstate=0;
-							huodaost=hd_get_by_id(1,j,3);
-							if(huodaost==2)//故障
-							{
-								hdstate=0x02;								
-							}
-							else if(huodaost==4)//pc禁用
-							{
-								hdstate=0x01;								
-							}
-							sysVPMissionSIMPLE.send.msg[i++] = hdstate;							
+						{							
+							sysVPMissionSIMPLE.send.msg[i++] = hd_SIMPLEstate_by_id(1,j);							
 						}
 						break;
 				}
@@ -558,6 +530,7 @@ unsigned char SIMPLESIMPLEVPMsgPackSend( unsigned char msgType )
 			break;	
 		case SIMPLE_VEND_RPT:
 		    {
+				TracePC("\r\n Drv SIMPLE_VEND_RPT=%d",sysVPMissionSIMPLE.channel_result);
 				i = 0;
 				sysVPMissionSIMPLE.send.msgType = SIMPLE_VEND_RPT;
 				sysVPMissionSIMPLE.send.msg[i++] = sysVPMissionSIMPLE.channel_id;
@@ -653,9 +626,8 @@ unsigned char VPMissionSIMPLE_Setup_RPT( void )
 *********************************************************************************************************/
 unsigned char VPSIMPLE_Vendout_Ind( void )
 {
-	//MessageSIMPLEUboxPCPack *AccepterSIMPLEUboxMsg;
-	//unsigned char ComStatus;
-
+	unsigned char ComStatus;
+	MessageSIMPLEUboxPCPack *AccepterSIMPLEUboxMsg;
 
 	//SN相同时，不重新出货
 	if((sysVPMissionSIMPLE.SN  == sysVPMissionSIMPLE.receive.msg[1])&&(sysVPMissionSIMPLE.SN  > 0))
@@ -677,6 +649,18 @@ unsigned char VPSIMPLE_Vendout_Ind( void )
 		UpdateSIMPLEIndex();
 		OSTimeSet(0);
 		TracePC("\r\n Drv %dVendout_Ind",OSTimeGet()); 
+		//取得返回值
+		AccepterSIMPLEUboxMsg = OSMboxPend(g_SIMPLEUbox_PCTOVMCBackCMail,OS_TICKS_PER_SEC*200,&ComStatus);
+		if(ComStatus == OS_NO_ERR)
+		{				
+			switch(AccepterSIMPLEUboxMsg->VMCTOPCCmd)
+			{
+				case MBOX_SIMPLEVMCTOPC_VENDOUT:
+					TracePC("\r\n Drv vendout=%d,%d,%d",sysVPMissionSIMPLE.channel_id,sysVPMissionSIMPLE.SN,AccepterSIMPLEUboxMsg->channel_result);
+					VPMissionSIMPLE_Vendout_RPT(AccepterSIMPLEUboxMsg->channel_result);
+					break;
+			}		
+		}
 	}
     return VP_ERRSIMPLE_NULL;	
 }
@@ -828,130 +812,9 @@ unsigned char VPMissionSIMPLE_Vendout_RPT( uint8_t channel_result )
 	return VP_ERRSIMPLE_NULL;
 }
 
-/*********************************************************************************************************
-** Function name:       VPMissionSIMPLE_Get_Admin
-** Descriptions:        向PC请求参数信息
-** input parameters:    type
-                        
-						
-** output parameters:   无
-** Returned value:      无
-*********************************************************************************************************/
-unsigned char VPMissionSIMPLE_Get_Admin( unsigned char admintype,unsigned char hdstart)
-{
-	unsigned char recRes=0;
-	unsigned char recAck=VP_ERRSIMPLE_PAR;	
-	//-------------------------------------------
-	sysVPMissionSIMPLE.getadmintype = admintype;
-	
-	//TracePC("\r\n Drv Admin=%d,%d,%d",sysVPMissionSIMPLE.admintype,sysVPMissionSIMPLE.admincolumn,sysVPMissionSIMPLE.admincolumnsum);	
-	//3请求从某一个货道编号的商品剩余量,4获取当前最长出货时间,5获取当前自动退币时间
-	switch(sysVPMissionSIMPLE.getadmintype)
-	{
-		case 3:		
-			sysVPMissionSIMPLE.getadmincolumn = hdstart;
-			SIMPLESIMPLEVPMsgPackSend( SIMPLE_GET_ADMIN);		
-			Timer.PCRecTimer = VP_TIMSIMPLEE_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( SIMPLESIMPLEVPBusFrameUnPack() )
-				{ 	
-					TracePC("\r\n Drv rec=ok"); 
-					recRes = 1;	
-					break;
-				}		
-			}
-			if( recRes== 0 )
-			{
-
-				TracePC("\r\n Drv UboxGetAdminTimeFail");
-		        recAck= VP_ERRSIMPLE_COM;
-			}
-			else
-			{
-				if( sysVPMissionSIMPLE.receive.msgType==SIMPLE_ADMIN_IND )
-				{						
-					TracePC("\r\n Drv UboxGetAdminSuchd=%d,sum=%d",sysVPMissionSIMPLE.receive.msg[1],sysVPMissionSIMPLE.receive.msg[2]);
-					hd_setNums_by_id(1,sysVPMissionSIMPLE.receive.msg[1],sysVPMissionSIMPLE.receive.msg[2]);
-					recAck= VP_ERRSIMPLE_NULL;
-				}
-				
-			}
-			//memset( &sysVPMissionSIMPLE.receive, 0, sizeof(sysVPMissionSIMPLE.receive) );			
-			break;
-		case 4:		
-			SIMPLESIMPLEVPMsgPackSend( SIMPLE_GET_ADMIN);		
-			Timer.PCRecTimer = VP_TIMSIMPLEE_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( SIMPLESIMPLEVPBusFrameUnPack() )
-				{ 	
-					TracePC("\r\n Drv rec=ok"); 
-					recRes = 1;	
-					break;
-				}		
-			}
-			if( recRes== 0 )
-			{
-
-				TracePC("\r\n Drv UboxGetAdminTimeFail");
-		        recAck= VP_ERRSIMPLE_COM;
-			}
-			else
-			{
-				if( sysVPMissionSIMPLE.receive.msgType==SIMPLE_ADMIN_IND )
-				{						
-					TracePC("\r\n Drv UboxGetAdminSuchd=%d",sysVPMissionSIMPLE.receive.msg[1]);
-					SystemPara.ColumnTime=sysVPMissionSIMPLE.receive.msg[1];
-					recAck= VP_ERRSIMPLE_NULL;
-				}
-				
-			}
-			//memset( &sysVPMissionSIMPLE.receive, 0, sizeof(sysVPMissionSIMPLE.receive) );			
-			break;	
-		case 5:		
-			SIMPLESIMPLEVPMsgPackSend( SIMPLE_GET_ADMIN);		
-			Timer.PCRecTimer = VP_TIMSIMPLEE_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( SIMPLESIMPLEVPBusFrameUnPack() )
-				{ 	
-					TracePC("\r\n Drv rec=ok"); 
-					recRes = 1;	
-					break;
-				}		
-			}
-			if( recRes== 0 )
-			{
-
-				TracePC("\r\n Drv UboxGetAdminTimeFail");
-		        recAck= VP_ERRSIMPLE_COM;
-			}
-			else
-			{
-				if( sysVPMissionSIMPLE.receive.msgType==SIMPLE_ADMIN_IND )
-				{						
-					TracePC("\r\n Drv UboxGetAdminSuchd=%d",sysVPMissionSIMPLE.receive.msg[1]);
-					SystemPara.SaleTime=sysVPMissionSIMPLE.receive.msg[1];
-					recAck= VP_ERRSIMPLE_NULL;
-				}
-				
-			}
-			//memset( &sysVPMissionSIMPLE.receive, 0, sizeof(sysVPMissionSIMPLE.receive) );			
-			break;		
-	}
-	//发送邮箱给vmc
-	MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEVMCTOPC_RESULTIND;	
-	MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].adminresult = recAck;
-	OSQPost(g_SIMPLEUbox_PCTOVMCQ,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
-	UpdateSIMPLEIndex();
-	memset( &sysVPMissionSIMPLE.receive, 0, sizeof(sysVPMissionSIMPLE.receive) );
-	return recAck;
-
-}
 
 /*********************************************************************************************************
-** Function name:       VPMissionSIMPLE_Set_Admin
+** Function name:       VPMissionSIMPLE_Get_Admin2
 ** Descriptions:        向PC请求参数信息
 ** input parameters:    admintype=3货道存货数量，4出货时间，5退币时间
                         
@@ -973,6 +836,52 @@ unsigned char VPMissionSIMPLE_Get_Admin2( unsigned char admintype)
 		case 3:			
 			TracePC("\r\n Drv colget=%d",hdstart);
 			sysVPMissionSIMPLE.getadmincolumn = hdstart;
+			SIMPLESIMPLEVPMsgPackSend( SIMPLE_GET_ADMIN);
+			Timer.PCRecTimer = VP_TIME_OUT;
+			while( Timer.PCRecTimer )
+			{
+				if(VPMissionSIMPLESIMPLE_Poll()==VP_ERRSIMPLE_NULL)
+				{
+					recRes = 1;	
+					break;
+				}
+				OSTimeDly(4);
+			}
+			if(recRes==0)
+			{ 	
+				TracePC("\r\n Drv UboxAdminTimeFail");
+				recAck= VP_ERRSIMPLE_COM;	
+				MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEVMCTOPC_RESULTIND;	
+				MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].adminresult = recAck;
+				OSMboxPost(g_SIMPLEUbox_VMCTOPCBackCMail,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);					
+				UpdateSIMPLEIndex();
+			}
+			break;
+		case 4:	//出货时间		
+			TracePC("\r\n Drv chuhuo",hdstart);
+			SIMPLESIMPLEVPMsgPackSend( SIMPLE_GET_ADMIN);
+			Timer.PCRecTimer = VP_TIME_OUT;
+			while( Timer.PCRecTimer )
+			{
+				if(VPMissionSIMPLESIMPLE_Poll()==VP_ERRSIMPLE_NULL)
+				{
+					recRes = 1;	
+					break;
+				}
+				OSTimeDly(4);
+			}
+			if(recRes==0)
+			{ 	
+				TracePC("\r\n Drv UboxAdminTimeFail");
+				recAck= VP_ERRSIMPLE_COM;	
+				MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEVMCTOPC_RESULTIND;	
+				MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].adminresult = recAck;
+				OSMboxPost(g_SIMPLEUbox_VMCTOPCBackCMail,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);					
+				UpdateSIMPLEIndex();
+			}
+			break;
+		case 5:	//退币时间	
+			TracePC("\r\n Drv tuibi",hdstart);
 			SIMPLESIMPLEVPMsgPackSend( SIMPLE_GET_ADMIN);
 			Timer.PCRecTimer = VP_TIME_OUT;
 			while( Timer.PCRecTimer )
@@ -1018,6 +927,7 @@ void VPSIMPLE_Admin_Ind()
 			hd_setNums_by_id(1,sysVPMissionSIMPLE.receive.msg[1],sysVPMissionSIMPLE.receive.msg[2]);
 			memset( &sysVPMissionSIMPLE.receive, 0, sizeof(sysVPMissionSIMPLE.receive) );
 			hdstart++;
+			VPSIMPLE_gethdstart();
 			if(hdstart<=hdend)
 			{
 				VPMissionSIMPLE_Get_Admin2(3);
@@ -1033,6 +943,22 @@ void VPSIMPLE_Admin_Ind()
 				UpdateSIMPLEIndex();
 			}
 			break;
+		case 4:
+			TracePC("\r\n Drv UboxAdmin_chuhuo=%dsec",sysVPMissionSIMPLE.receive.msg[1]);
+			memset( &sysVPMissionSIMPLE.receive, 0, sizeof(sysVPMissionSIMPLE.receive) );
+			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEVMCTOPC_RESULTIND;	
+			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].adminresult = recAck;
+			OSMboxPost(g_SIMPLEUbox_VMCTOPCBackCMail,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
+			UpdateSIMPLEIndex();
+			break;
+		case 5:
+			TracePC("\r\n Drv UboxAdmin_payout=%dsec",sysVPMissionSIMPLE.receive.msg[1]);
+			memset( &sysVPMissionSIMPLE.receive, 0, sizeof(sysVPMissionSIMPLE.receive) );			
+			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEVMCTOPC_RESULTIND;	
+			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].adminresult = recAck;
+			OSMboxPost(g_SIMPLEUbox_VMCTOPCBackCMail,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
+			UpdateSIMPLEIndex();
+			break;	
 	}
 }
 
@@ -1129,46 +1055,11 @@ unsigned char VPMissionSIMPLE_Admin_RPT( unsigned char admintype,uint8_t adminco
 				MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].adminresult = recAck;
 				OSMboxPost(g_SIMPLEUbox_VMCTOPCBackCMail,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);					
 				UpdateSIMPLEIndex();
-			}
-
-			/*
-			Timer.PCRecTimer = VP_TIMSIMPLEE_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( SIMPLESIMPLEVPBusFrameUnPack() )
-				{ 	
-					TracePC("\r\n Drv rec=ok"); 					
-					recRes = 1;	
-					break;
-				}		
-			}
-			if( recRes== 0 )
-			{
-
-				TracePC("\r\n Drv UboxAdminTimeFail");
-		        recAck= VP_ERRSIMPLE_COM;
-			}
-			else
-			{
-				if( sysVPMissionSIMPLE.receive.msgType==SIMPLE_RESULT_IND )
-				{
-					if(sysVPMissionSIMPLE.receive.msg[0]>0)
-					{
-						TracePC("\r\n Drv UboxAdminAckFail");
-						 recAck= VP_ERRSIMPLE_PAR;
-					}
-					else
-					{				
-						TracePC("\r\n Drv UboxAdminSuc");						
-						recAck= VP_ERRSIMPLE_NULL;
-					}
-				}
-				
-			}	*/
+			}			
 			break;	
 		case 4:
 		case 5:	
-			sysVPMissionSIMPLE.admincolumn = admincolumn;
+			/*sysVPMissionSIMPLE.admincolumn = admincolumn;
 			sysVPMissionSIMPLE.admincolumnsum = admincolumnsum;
 			//TracePC("\r\n Drv Admin=%d,%d,%d",sysVPMissionSIMPLE.admintype,sysVPMissionSIMPLE.admincolumn,sysVPMissionSIMPLE.admincolumnsum);	
 			SIMPLESIMPLEVPMsgPackSend( SIMPLE_ADMIN_RPT);
@@ -1207,7 +1098,30 @@ unsigned char VPMissionSIMPLE_Admin_RPT( unsigned char admintype,uint8_t adminco
 					}
 				}
 				
-			}	
+			}	*/
+			sysVPMissionSIMPLE.admincolumn = admincolumn;
+			sysVPMissionSIMPLE.admincolumnsum = admincolumnsum;
+			//TracePC("\r\n Drv Admin=%d,%d,%d",sysVPMissionSIMPLE.admintype,sysVPMissionSIMPLE.admincolumn,sysVPMissionSIMPLE.admincolumnsum);	
+			SIMPLESIMPLEVPMsgPackSend( SIMPLE_ADMIN_RPT);
+			Timer.PCRecTimer = VP_TIME_OUT;
+			while( Timer.PCRecTimer )
+			{
+				if(VPMissionSIMPLESIMPLE_Poll()==VP_ERRSIMPLE_NULL)
+				{
+					recRes = 1;	
+					break;
+				}
+				OSTimeDly(4);
+			}
+			if(recRes==0)
+			{ 	
+				TracePC("\r\n Drv UboxAdminTimeFail");
+				recAck= VP_ERRSIMPLE_COM;	
+				MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEVMCTOPC_RESULTIND;	
+				MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].adminresult = recAck;
+				OSMboxPost(g_SIMPLEUbox_VMCTOPCBackCMail,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);					
+				UpdateSIMPLEIndex();
+			}
 			break;	
 	}
 	//发送邮箱给vmc
@@ -1246,9 +1160,24 @@ unsigned char VPSIMPLE_Result_Ind()
 			else
 			{				
 				TracePC("\r\n Drv UboxAdminAllSuc");
+				memset( &sysVPMissionSIMPLE.receive, 0, sizeof(sysVPMissionSIMPLE.receive) );
 				hdstart=1;//设置起始货道号
-				hdend=hd_nums_by_id(1);//设置结束货道号
-				VPMissionSIMPLE_Get_Admin2(3);
+				hdend=VPSIMPLE_hdnums();//设置结束货道号
+				VPSIMPLE_gethdstart();
+				if(hdstart<=hdend)
+				{
+					VPMissionSIMPLE_Get_Admin2(3);
+				}
+				else
+				{
+					hdstart=1;
+					hdend=1;
+					//协议成功，当货道数据完全同步完成之后，再发送邮箱给vmc表示完成了
+					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEVMCTOPC_RESULTIND;	
+					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].adminresult = recAck;
+					OSMboxPost(g_SIMPLEUbox_VMCTOPCBackCMail,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
+					UpdateSIMPLEIndex();
+				}
 				recAck= VP_ERRSIMPLE_NULL;
 			}
 			break;
@@ -1261,8 +1190,23 @@ unsigned char VPSIMPLE_Result_Ind()
 			else
 			{				
 				TracePC("\r\n Drv UboxAdminCengSuc");
+				memset( &sysVPMissionSIMPLE.receive, 0, sizeof(sysVPMissionSIMPLE.receive) );
 				hd_ids_by_level(1,sysVPMissionSIMPLE.admincolumn,&hdstart,&hdend);
-				VPMissionSIMPLE_Get_Admin2(3);
+				VPSIMPLE_gethdstart();
+				if(hdstart<=hdend)
+				{
+					VPMissionSIMPLE_Get_Admin2(3);
+				}
+				else
+				{
+					hdstart=1;
+					hdend=1;
+					//协议成功，当货道数据完全同步完成之后，再发送邮箱给vmc表示完成了
+					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEVMCTOPC_RESULTIND;	
+					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].adminresult = recAck;
+					OSMboxPost(g_SIMPLEUbox_VMCTOPCBackCMail,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
+					UpdateSIMPLEIndex();
+				}
 				recAck= VP_ERRSIMPLE_NULL;
 			}
 			break;
@@ -1275,6 +1219,47 @@ unsigned char VPSIMPLE_Result_Ind()
 			else
 			{				
 				TracePC("\r\n Drv UboxAdminSimSuc");
+				memset( &sysVPMissionSIMPLE.receive, 0, sizeof(sysVPMissionSIMPLE.receive) );
+				//hd_ids_by_level(1,sysVPMissionSIMPLE.admincolumn,&hdstart,&hdend);
+				//VPMissionSIMPLE_Get_Admin2(3);				
+				recAck= VP_ERRSIMPLE_NULL;
+				//发送邮箱给vmc
+				MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEVMCTOPC_RESULTIND;	
+				MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].adminresult = recAck;
+				OSMboxPost(g_SIMPLEUbox_VMCTOPCBackCMail,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
+				UpdateSIMPLEIndex();
+			}
+			break;
+		case 4:
+			if(sysVPMissionSIMPLE.receive.msg[0]>0)
+			{
+				TracePC("\r\n Drv UboxAdminchuhuoAckFail");
+				 recAck= VP_ERRSIMPLE_PAR;
+			}
+			else
+			{				
+				TracePC("\r\n Drv UboxAdminchuhuoSuc");
+				memset( &sysVPMissionSIMPLE.receive, 0, sizeof(sysVPMissionSIMPLE.receive) );
+				//hd_ids_by_level(1,sysVPMissionSIMPLE.admincolumn,&hdstart,&hdend);
+				//VPMissionSIMPLE_Get_Admin2(3);				
+				recAck= VP_ERRSIMPLE_NULL;
+				//发送邮箱给vmc
+				MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEVMCTOPC_RESULTIND;	
+				MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].adminresult = recAck;
+				OSMboxPost(g_SIMPLEUbox_VMCTOPCBackCMail,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
+				UpdateSIMPLEIndex();
+			}
+			break;	
+		case 5:
+			if(sysVPMissionSIMPLE.receive.msg[0]>0)
+			{
+				TracePC("\r\n Drv UboxAdminpayoutAckFail");
+				 recAck= VP_ERRSIMPLE_PAR;
+			}
+			else
+			{				
+				TracePC("\r\n Drv UboxAdminpayoutSuc");
+				memset( &sysVPMissionSIMPLE.receive, 0, sizeof(sysVPMissionSIMPLE.receive) );
 				//hd_ids_by_level(1,sysVPMissionSIMPLE.admincolumn,&hdstart,&hdend);
 				//VPMissionSIMPLE_Get_Admin2(3);				
 				recAck= VP_ERRSIMPLE_NULL;

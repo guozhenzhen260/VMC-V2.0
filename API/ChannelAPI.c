@@ -2779,6 +2779,33 @@ unsigned int hd_get_by_id(unsigned char cabinetNo,unsigned char id,unsigned char
 	
 }
 
+/*****************************************************************************
+** Function name:	hd_SIMPLEstate_by_id	
+** Descriptions:	      通过ID号获得货道状态,专为SIMPLEUBox使用											 			
+** parameters:		cabinetNo:箱柜编号		
+					id :id号
+** Returned value:	2:故障  1禁用 0正常
+*******************************************************************************/
+unsigned char hd_SIMPLEstate_by_id(unsigned char cabinetNo,unsigned char id)
+{
+	uint8_t hdstate=0,huodaost=0;
+	huodaost=hd_get_by_id(cabinetNo,id,3);
+	if(huodaost==2)//故障
+	{
+		hdstate=0x02;								
+	}
+	else if(huodaost==3)//售空
+	{
+		hdstate=0;								
+	}
+	else if((huodaost==4)||(hd_state_by_id(cabinetNo,id)==0))//pc禁用
+	{
+		hdstate=0x01;								
+	}
+	return hdstate;
+}
+
+
 
 /*****************************************************************************
 ** Function name:	hd_setNums_by_id	

@@ -95,6 +95,7 @@ MessageUboxPCPack MsgUboxPack[UBOX_SIZE];
 //UboxSIMPLEPC通讯队列
 void *SIMPLEUUboxSizeQ[SIMPLEUBOX_SIZE];
 OS_EVENT *g_SIMPLEUbox_PCTOVMCQ;//pc给vmc的消息队列
+OS_EVENT *g_SIMPLEUbox_PCTOVMCBackCMail;//pc给vmc的消息如出货命令等，需要返回给pc操作结果
 void *SIMPLEUUboxVMCTOPCQ[SIMPLEUBOX_SIZE];
 OS_EVENT *g_SIMPLEUbox_VMCTOPCQ;//vmc下发给PC的消息队列
 OS_EVENT *g_SIMPLEUbox_VMCTOPCBackCMail;//vmc给pc发送admin补货等操作后，需要返回给vmc操作结果
@@ -181,6 +182,7 @@ void CreateMBox(void)
 	g_Ubox_PCTOVMCBackQ = OSQCreate(&PCTOVMCBackSizeQ[0],UBOX_SIZE);
 	//UboxSIMPLEPC通讯队列
 	g_SIMPLEUbox_PCTOVMCQ = OSQCreate(&SIMPLEUUboxVMCTOPCQ[0],SIMPLEUBOX_SIZE);
+	g_SIMPLEUbox_PCTOVMCBackCMail = OSMboxCreate(NULL);
 	g_SIMPLEUbox_VMCTOPCQ = OSQCreate(&SIMPLEUUboxSizeQ[0],SIMPLEUBOX_SIZE);
 	g_SIMPLEUbox_VMCTOPCBackCMail = OSMboxCreate(NULL);
 	//创建升降台邮箱

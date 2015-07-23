@@ -113,7 +113,7 @@ void EINT2_IsrHandler(void)
 			//{
 				//while(--i);
 				OSQPost(QKey,&KeyPack[g_Key_Queue]);
-				//Trace("\r\n btnPost=%d",KeyPack[g_Key_Queue].Keynum);
+				TraceSelection("\r\n btnPost=%d",KeyPack[g_Key_Queue].Keynum);
 				//¸üÐÂÐòÁÐºÅ
 				if(g_Key_Queue<(KEY_QUEUE_SIZE-1))
 					g_Key_Queue++;
@@ -146,7 +146,7 @@ unsigned char ReadKeyValue(void)
 	KeyMsg = OSQPend(QKey,10,&err);
 	if(err == OS_NO_ERR)
 	{
-		//Trace("\r\n btnPend=%d",KeyMsg->Keynum);
+		TraceSelection("\r\n btnPend=%d",KeyMsg->Keynum);
 		return KeyMsg->Keynum;
 	}
 	else

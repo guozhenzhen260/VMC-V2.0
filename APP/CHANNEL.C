@@ -410,7 +410,14 @@ const UI_AISLE_ADMIN ui_aisle_admin = {
 		" Column %d:Communication failure!",
 		" SUTUN BAGLANTI HATASI!",
 		" BANDEJA %d:ERRO COMUNICA\x83\x82O!"
-	}
+	},
+	{
+			" 请输入数量: ",
+			" sum:",
+			" sum:",
+			" sum:",
+			" sum:",
+		}
 };
 
 
@@ -1016,7 +1023,7 @@ void ChannelKaojiClear(unsigned char cabinet)
 *******************************************************************************/
 unsigned char ChannelOneTestPage(unsigned char cabinetNo,unsigned char logicNo,unsigned char titleType)
 {
-	unsigned char physicNo,rst,lang;
+	unsigned char physicNo,rst,lang,status;
 	char *strTestTitle;
 	lang = SystemPara.Language;
 
@@ -1074,7 +1081,10 @@ unsigned char ChannelOneTestPage(unsigned char cabinetNo,unsigned char logicNo,u
 	}	
 	else
 	{
-		ChannelSetParam(logicNo,cabinetNo,CHANNELSTATE,2,0);
+		status = hd_get_by_logic(cabinetNo,logicNo,HUODAO_TYPE_STATE);
+		if(status == HUODAO_STATE_NORMAL || status == HUODAO_STATE_EMPTY){
+			ChannelSetParam(logicNo,cabinetNo,CHANNELSTATE,2,0);
+		}
 	}				
 	OSTimeDly(150);
 	return (rst == 0 || rst == 4);
@@ -1967,6 +1977,71 @@ void ChannelClearSuccesCount()
 	ChannelSaveParam();
 }
 
+
+
+unsigned char hd_enterNumber(unsigned char columnNo,unsigned char *n)
+{
+
+	unsigned char num,lang,key,returnFlag = 0;
+	unsigned char flush = 1;
+	lang = SystemPara.Language;
+	num = 0;
+	while(1){
+		if(flush == 1){
+			LCDClrScreen();
+			LCDDrawRectangle(0,0,239,15);
+			LCDDrawRectangle(0,0,239,3);
+			LCDClrArea(1,4,238,14);
+			LCDPrintf(8,1,0,lang," %s%d",ui_aisle_admin.enterColumNo[lang],columnNo);
+			LCDPrintf(8,5,0,lang," %s%s",ui_aisle_admin.no_1[lang],ui_aisle_admin.enterNumber[lang]);
+			LCDPrintf(8,7,0,lang," %s%s",ui_aisle_admin.no_2[lang],ui_aisle_admin.yes[lang]);
+			LCDPrintf(8,9,0,lang," %s%s",ui_aisle_admin.no_3[lang],ui_aisle_admin.cancel[lang]);
+	
+			flush = 0;
+		}
+
+		key = ReadKeyValue();
+		switch(key)
+		{
+			case '0':case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':
+				num = num * 10 + key - '0';				
+				LCDPrintf(8,5,0,lang," %s%s%d",ui_aisle_admin.no_1[lang],ui_aisle_admin.enterNumber[lang],num);
+				break;
+			case 'E':
+				returnFlag = 2;
+				break;
+			case 'C':
+				if(num > 0){
+					num = 0;
+					flush = 1;
+				}
+				else
+					returnFlag = 1;
+				break;
+			default:
+				break;
+				
+
+		}
+
+		OSTimeDly(50);
+
+		if(returnFlag == 1){
+			return 0;
+		}
+		else if(returnFlag == 2){
+			
+			*n = num;
+			return 1;
+		}
+		
+
+	}
+			
+
+}
+
+
 /*****************************************************************************
 ** Function name:	ChannelOneAddGoods	
 **
@@ -1980,8 +2055,9 @@ void ChannelClearSuccesCount()
 *******************************************************************************/
 void ChannelOneAddGoods(unsigned char Binnum)
 {
-	uint8_t key,logicNo = 0,j;	
+	uint8_t key,logicNo = 0,j,num=0;	
 	uint8_t state=0;
+	uint8_t channel_id=0;
 	unsigned char flushFlag = 1,returnFlag = 0,lang,enterSub = 0;
 	unsigned char adminflag=0;
 	lang = SystemPara.Language;
@@ -2051,24 +2127,46 @@ void ChannelOneAddGoods(unsigned char Binnum)
 				}
 				if(SystemPara.PcEnable==SIMPUBOX_PC)
 				{
-					if(hd_id_by_logic(1,logicNo))
+					channel_id=hd_id_by_logic(1,logicNo);
+					if(channel_id)
 					{
-						//判断能否得到这个货道的存货数量
-						adminflag=GetAdminSIMPLEAPI(3,hd_id_by_logic(1,logicNo));
-						if(adminflag>0)
+						if(hd_SIMPLEstate_by_id(1,channel_id)!=1)
 						{
-							//修改这个货道存货数量
-							ChannelReadChannelParam(Binnum,logicNo);
-							TracePC("\r\n APPUbox AdminChannel");
-							//同步到pc机上这个货道的存货数量
-							AdminRPTSIMPLE(3,hd_id_by_logic(Binnum,logicNo),hd_get_by_logic(Binnum,logicNo,2));
+							//判断能否得到这个货道的存货数量
+							adminflag=GetAdminSIMPLEAPI(3,channel_id);
+							if(adminflag>0)
+							{
+								//修改这个货道存货数量
+								if(hd_enterNumber(logicNo,&num) == 1)
+								{
+									TracePC("\r\n APPUbox AdminChannel=%d",num);
+									//同步到pc机上这个货道的存货数量
+									if(AdminRPTSIMPLE(3,channel_id,num))
+									{
+										ChannelSetParam(logicNo,Binnum,CHANNELCOUNT,num,0);
+										state = ChannelGetParamValue(logicNo,3,Binnum);
+										if(num>0)
+										{
+											if(state == 3 || state == 1)
+												ChannelSetParam(logicNo,Binnum,CHANNELSTATE,1,0);
+										}
+										else
+										{
+											if(state == 3 || state == 1)
+												ChannelSetParam(logicNo,Binnum,CHANNELSTATE,3,0);
+										}	
+											
+									}	
+								}								
+															
+							}
+							else
+							{
+								
+								LCDPrintf(5,5,0,SystemPara.Language,"操作失败");
+								OSTimeDly(OS_TICKS_PER_SEC * 2);
+							}
 						}
-						else
-						{
-							
-							LCDPrintf(5,5,0,SystemPara.Language,"操作失败");
-							OSTimeDly(OS_TICKS_PER_SEC * 2);
-						}						
 					}
 				}
 				OSTimeDly(200);

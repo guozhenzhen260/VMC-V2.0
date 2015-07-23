@@ -30,7 +30,6 @@ extern void ActionRPTAPI(uint8_t action,uint8_t value,uint8_t second,uint8_t col
 extern uint8_t AdminRPTAPI(uint8_t adminType,uint8_t Column,uint8_t ColumnSum);
 extern uint8_t AdminRPTSIMPLEAPI(uint8_t adminType,uint8_t Column,uint8_t ColumnSum);
 extern uint8_t GetAdminSIMPLEAPI(uint8_t adminType,uint8_t Column);
-extern uint8_t GetAdminSIMPLEAPI(uint8_t adminType,uint8_t Column);
 extern void BillStatusRPTAPI(void);
 extern void StatusRPTAPI(void);
 extern void ButtonSIMPLERPTAPI(uint8_t channel_id);

@@ -445,7 +445,8 @@ void DispChaxunPage(uint8_t *keyValue,uint8_t *keyMode)
 						channel_id=hd_id_by_logic(columnNo/100,columnNo%100);
 						if(channel_id)
 						{
-							ButtonSIMPLERPTAPI(channel_id);//上报pc按键信息
+							if(hd_SIMPLEstate_by_id(columnNo/100,channel_id)!=1)
+								ButtonSIMPLERPTAPI(channel_id);//上报pc按键信息
 						}
 						channelInput = 0;
 						memset(ChannelNum,0,sizeof(ChannelNum));
@@ -509,7 +510,8 @@ void DispChaxunPage(uint8_t *keyValue,uint8_t *keyMode)
 						//TracePC("\r\n 2APPUboxButton=%d",channel_id);
 						if(channel_id)
 						{
-							ButtonSIMPLERPTAPI(channel_id);//上报pc按键信息
+							if(hd_SIMPLEstate_by_id(columnNo/100,channel_id)!=1)
+								ButtonSIMPLERPTAPI(channel_id);//上报pc按键信息
 						}
 						channelInput = 0;
 						memset(ChannelNum,0,sizeof(ChannelNum));
@@ -2710,8 +2712,9 @@ uint8_t VendoutSIMPLEInd(uint16_t columnNo)
 *********************************************************************************************************/
 void GetmoneySIMPLEInd(uint16_t payInMoney)
 {
-	//uint8_t ChuhuoRst = 0;
+	uint32_t g_yuanAmount = 0;
 
+	g_yuanAmount = GetAmountMoney();
 	g_readerAmount=payInMoney;
 	//2产生状态变化
 	if(GetAmountMoney())
@@ -2746,8 +2749,11 @@ void GetmoneySIMPLEInd(uint16_t payInMoney)
 		memset(ChannelNum,0,sizeof(ChannelNum));
 		//Trace("\r\n 3money=%ld",GetAmountMoney());
 		OSMboxAccept(g_CoinMoneyBackMail);
-		LCDClrScreen();
-		vmcStatus = VMC_END;
+		if(g_yuanAmount>0)
+		{
+			LCDClrScreen();
+			vmcStatus = VMC_END;
+		}
 	}
 	
 }
@@ -3003,6 +3009,7 @@ void BusinessProcess(void *pvData)
 				//1.轮询按键
 				if(keyValue)
 				{
+					TraceSelection("\r\n AppKey2=%d",keyValue);
 					Timer.ChaxunTimer = 5;
 					if(GetAmountMoney() == 0)
 					{
@@ -3076,8 +3083,10 @@ void BusinessProcess(void *pvData)
 				//keyValue = 0;
 				if(keyValue)
 				{			
+					TraceSelection("\r\n AppKey1=%d",keyValue);
 					Timer.ChaxunTimer = 5;
-					vmcStatus = VMC_CHAXUN;					
+					vmcStatus = VMC_CHAXUN;	
+					break;
 				}
 				//Trace("\r\n u=%d",i++);
 				//有按下退币按键

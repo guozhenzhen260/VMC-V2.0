@@ -2767,21 +2767,31 @@ void MaintainUserProcess(void *pvData)
 							{
 								if(UserMaintainMainMenu.PageNumb == 0x00)
 								{
-									UserMaintainMainMenu.KeyCurrent = 0x03;
-									UserMaintainMainMenu.ExtSelfCheck = 0x00;
 									//判断能否得到pc参数
 									if(SystemPara.PcEnable==SIMPUBOX_PC)
 									{
 										adminflag=GetAdminSIMPLEAPI(4,0);
-										adminflag=GetAdminSIMPLEAPI(5,0);
+										//adminflag=GetAdminSIMPLEAPI(5,0);
 										if(adminflag==0)
 										{
 								
 											LCDPrintf(5,9,0,SystemPara.Language,"参数取失败");
 											OSTimeDly(OS_TICKS_PER_SEC * 2);
+											LCDPrintf(5,9,0,SystemPara.Language,UserMaintainMenuList.System[SystemPara.Language]);
 										}	
+										else
+										{
+											UserMaintainMainMenu.KeyCurrent = 0x03;
+											UserMaintainMainMenu.ExtSelfCheck = 0x00;
+											UserMaintainMainMenu.TestOperate = UserTradeMaintainProcess;	
+										}
 									}
-									UserMaintainMainMenu.TestOperate = UserTradeMaintainProcess;									
+									else
+									{
+										UserMaintainMainMenu.KeyCurrent = 0x03;
+										UserMaintainMainMenu.ExtSelfCheck = 0x00;									
+										UserMaintainMainMenu.TestOperate = UserTradeMaintainProcess;	
+									}
 								}
 							}
 							break;

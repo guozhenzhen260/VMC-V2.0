@@ -72,6 +72,8 @@ typedef struct _ui_aisle_admin_{
 	char *columnTestNA[MAXLANGUAGETYPE];
 	char *columnCommunFail[MAXLANGUAGETYPE];
 	
+	char *enterNumber[MAXLANGUAGETYPE];//" «Î ‰»Î ˝¡ø: "
+	
 	
 }UI_AISLE_ADMIN;
 

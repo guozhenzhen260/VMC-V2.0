@@ -459,10 +459,6 @@ void Uart3TaskDevice(void *pvData)
 			{
 				switch(AccepterSIMPLEUboxMsg->VMCTOPCCmd)
 				{
-					case MBOX_SIMPLEVMCTOPC_VENDOUT:
-						TracePC("\r\n Taskpend vendout=%d,%d,%d",sysVPMissionSIMPLE.channel_id,sysVPMissionSIMPLE.SN,AccepterSIMPLEUboxMsg->channel_result); 						
-						VPMissionSIMPLE_Vendout_RPT(AccepterSIMPLEUboxMsg->channel_result);
-						break;
 					case MBOX_SIMPLEVMCTOPC_BUTTONRPT:
 						TracePC("\r\n Taskpend btnchannel_id=%d",AccepterSIMPLEUboxMsg->btnchannel_id); 						
 						VPMissionSIMPLE_Button_RPT(AccepterSIMPLEUboxMsg->btnchannel_id);
@@ -473,7 +469,10 @@ void Uart3TaskDevice(void *pvData)
 						break;
 					case MBOX_SIMPLEVMCTOPC_GETADMIN:						
 						TracePC("\r\n Taskpend GetAdmin=%d,%d",AccepterSIMPLEUboxMsg->admintype,AccepterSIMPLEUboxMsg->admincolumn);					
-						VPSIMPLE_Sethdquery(AccepterSIMPLEUboxMsg->admincolumn);
+						if(AccepterSIMPLEUboxMsg->admintype==3)
+						{
+							VPSIMPLE_Sethdquery(AccepterSIMPLEUboxMsg->admincolumn);
+						}
 						VPMissionSIMPLE_Get_Admin2(AccepterSIMPLEUboxMsg->admintype);
 						break;	
 				}

@@ -975,6 +975,8 @@ extern uint8_t  g_SIMPLEUbox_Index;
 extern OS_EVENT *g_SIMPLEUbox_VMCTOPCQ;
 extern OS_EVENT *g_SIMPLEUbox_VMCTOPCBackCMail;
 extern OS_EVENT *g_SIMPLEUbox_PCTOVMCQ;	
+extern OS_EVENT *g_SIMPLEUbox_PCTOVMCBackCMail;
+
 
 /******************************************展示位通讯结构体*****************************************************/
 //启动选货按键板命令

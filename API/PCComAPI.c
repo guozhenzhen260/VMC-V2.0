@@ -1261,7 +1261,7 @@ void PollAPI(uint32_t payAllMoney)
 						//1.下发的货道或者商品id对应的货道无法出货时，返回NAK_RPT  
 						if(vendrpt)
 						{
-							TracePC("\r\n MiddSIMPLEUbox vendE4=%ld",columnNo);
+							TracePC("\r\n MiddSIMPLEUbox vendE4=%ld,vendrpt=%d",columnNo,vendrpt);
 							//0：正常；1：单价为0,3：货道故障;4:缺货；5：无此货道； 6商品ID为0 ；7PC置位不可用
 							switch(vendrpt)
 							{
@@ -1316,8 +1316,8 @@ void PollAPI(uint32_t payAllMoney)
                 	    }	
 						TracePC("\r\n %dMiddUbox vendout=%d",OSTimeGet(),MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].channel_result);
 						//返回出货结果
-						MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].VMCTOPCCmd = MBOX_SIMPLEVMCTOPC_VENDOUT;
-						OSQPost(g_SIMPLEUbox_VMCTOPCQ,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
+						MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].VMCTOPCCmd = MBOX_SIMPLEVMCTOPC_VENDOUT;						       
+					    OSMboxPost(g_SIMPLEUbox_PCTOVMCBackCMail,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);
 						UpdateSIMPLEIndex();
 						break;
 					case MBOX_SIMPLEPCTOVMC_DISPLAYIND:

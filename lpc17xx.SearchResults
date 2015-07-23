@@ -1,2 +1,14 @@
----- APPUbox AdminChannel 匹配 (1 在 1 文件 ) ----
-Channel.c (app):2062:							TracePC("\r\n APPUbox AdminChannel");
+---- Buzzer 匹配 (13 在 10 文件 ) ----
+Buzzer.c (drivers):38:void Buzzer(void)
+Buzzer.h (drivers):24:void Buzzer(void);
+Config.h:48:#include ".\Drivers\buzzer.h"
+Key.c (drivers):360:						Buzzer();
+Key.c (drivers):380:						Buzzer();
+PCComAPI.c (api):1394:	Buzzer();
+SelectKey.c (uart1driver):173:						Buzzer();//蜂鸣器叫 chen
+SelectKeyAPI.c (api):513:		Buzzer();
+TuibiAPI.c (api):51:		Buzzer();	
+UBProtocol.c (uart3driver):221:	Buzzer();
+UBProtocol.c (uart3driver):223:	Buzzer();
+UBProtocol_SIMPLE.c (uart3driver):212:	Buzzer();
+UBProtocol_SIMPLE.c (uart3driver):214:	Buzzer();
