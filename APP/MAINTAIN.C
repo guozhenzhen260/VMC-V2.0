@@ -1054,7 +1054,7 @@ uint8_t AdminRPTWeihu(uint8_t adminType,uint8_t Column,uint8_t ColumnSum)
 /*********************************************************************************************************
 ** Function name:     	AdminRPTSIMPLE
 ** Descriptions:	    补货配置
-** input parameters:    adminType:1加满全部货道,2按层加满,3按货道加满，4最长出货时间，5自动退币时间
+** input parameters:    adminType:1加满全部货道,2按层加满,3按货道加满
 ** output parameters:   无
 ** Returned value:      1ACK,0NAK
 *********************************************************************************************************/
@@ -1064,6 +1064,7 @@ uint8_t AdminRPTSIMPLE(uint8_t adminType,uint8_t Column,uint8_t ColumnSum)
 	
 	while( 1 )
 	{	
+		LCDPrintf(5,5,0,SystemPara.Language,UserUboxPCMenuList.VPBuhuoing[SystemPara.Language]);
 		res = AdminRPTSIMPLEAPI(adminType,Column,ColumnSum);		
 		LCDClrScreen();
 		LCDDrawRectangle(0,0,239,15);

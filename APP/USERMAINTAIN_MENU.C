@@ -1254,6 +1254,7 @@ typedef struct
 	char *VPFail[MAXLANGUAGETYPE];           //操作失败
 	char *VPSyning[MAXLANGUAGETYPE];       //全系统同步
 	char *VPBuhuo[MAXLANGUAGETYPE];       //补货完成
+	char *VPBuhuoing[MAXLANGUAGETYPE];       //正在补货
 } USERUBOXPCMENULIST;
 
 const USERUBOXPCMENULIST UserUboxPCMenuList = 
@@ -1327,6 +1328,13 @@ const USERUBOXPCMENULIST UserUboxPCMenuList =
 		"4.AddColumn",
 		"4.AddColumn",
 		"4.AddColumn"
+	},
+	{
+		"正在补货...",
+		"Busy...",
+		"Busy...",
+		"Busy...",
+		"Busy..."
 	}	
 };
 

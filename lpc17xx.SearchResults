@@ -1,14 +1,19 @@
----- Buzzer 匹配 (13 在 10 文件 ) ----
-Buzzer.c (drivers):38:void Buzzer(void)
-Buzzer.h (drivers):24:void Buzzer(void);
-Config.h:48:#include ".\Drivers\buzzer.h"
-Key.c (drivers):360:						Buzzer();
-Key.c (drivers):380:						Buzzer();
-PCComAPI.c (api):1394:	Buzzer();
-SelectKey.c (uart1driver):173:						Buzzer();//蜂鸣器叫 chen
-SelectKeyAPI.c (api):513:		Buzzer();
-TuibiAPI.c (api):51:		Buzzer();	
-UBProtocol.c (uart3driver):221:	Buzzer();
-UBProtocol.c (uart3driver):223:	Buzzer();
-UBProtocol_SIMPLE.c (uart3driver):212:	Buzzer();
-UBProtocol_SIMPLE.c (uart3driver):214:	Buzzer();
+---- rstTime 匹配 (18 在 3 文件 ) ----
+Business.c (app):1562:void rstTime()
+Business.c (app):1614:				rstTime();
+Business.c (app):1624:				rstTime();
+Business.c (app):1667:					rstTime();
+Business.c (app):1677:					rstTime();
+Business.c (app):1780:						rstTime();
+Business.c (app):2816:		rstTime();
+Business.c (app):2825:		rstTime();
+Business.c (app):2983:						rstTime();
+Business.c (app):3027:					rstTime();
+Business.c (app):3036:					rstTime();
+Business.c (app):3313:				rstTime();
+Business.c (app):3346:						rstTime();
+Business.c (app):3427:				rstTime();
+Business.c (app):3458:				rstTime();
+Business.h (app):32:extern void rstTime(void);
+PCComAPI.c (api):64:			rstTime();
+PCComAPI.c (api):74:			rstTime();

@@ -481,7 +481,8 @@ uint8_t SIMPLEErrorStatus(uint8_t type)
 			return 1;
 		else
 			return 0;
-	}	
+	}
+	return 0;	
 }
 
 

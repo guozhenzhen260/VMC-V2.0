@@ -215,6 +215,15 @@ void changeSIMPLEFailedBeep()
 }
 
 
+unsigned char Uart3GetChWhile()
+{
+	uint8_t ch=0;
+	while(Uart3BuffIsNotEmpty() == 0);	
+	//1.接收数据
+	ch = Uart3GetCh();	
+	TracePC("[%02x]",ch);
+	return ch;
+}
 
 /*********************************************************************************************************
 ** Function name:     	SIMPLESIMPLEVPBusFrameUnPack
@@ -278,7 +287,7 @@ unsigned char SIMPLESIMPLEVPBusFrameUnPack( void )
 			TracePC(" [%02x]",SIMPLEVPMsgBuf[i]);
 	}*/	
 		
-	if(Uart3BuffIsNotEmpty())
+	/*if(Uart3BuffIsNotEmpty())
 	{
 		OSTimeDly(20);//等待一段时间，等数据下发完毕
 		
@@ -311,9 +320,41 @@ unsigned char SIMPLESIMPLEVPBusFrameUnPack( void )
 			for(i=0;i<datalen+5;i++)
 				TracePC(" [%02x]",SIMPLEVPMsgBuf[i]);
 		}
+	}*/
+	if(Uart3BuffIsNotEmpty())
+	{
+		OSTimeDly(20);//等待一段时间，等数据下发完毕
+		
+		//1.寻找包头	
+		while(Uart3BuffIsNotEmpty() == 1)
+		{
+			if( Uart3GetCh() != VPSIMPLE_SF ) 
+			{
+				continue;
+			}
+			else
+			{
+				TracePC("\r\n Drv <<dat=");
+				SIMPLEVPMsgBuf[i++]=VPSIMPLE_SF;
+				TracePC(" [%02x]",SIMPLEVPMsgBuf[i-1]);
+				SIMPLEVPMsgBuf[i++]=Uart3GetChWhile();//MT
+				datalen=Uart3GetChWhile();//datalength
+				SIMPLEVPMsgBuf[i++]=datalen;
+				isft=1;
+				break;
+			}
+		}
+		//2.得到包的data和chk
+		if(isft)
+		{
+			for(dataindex=0;dataindex<datalen+2;dataindex++)
+			{
+				SIMPLEVPMsgBuf[i++]=Uart3GetChWhile();
+				reclen=1;
+			}			
+		}
 	}
 	
-		
 	
 	if(reclen)
 	{		
@@ -380,7 +421,7 @@ unsigned char SIMPLESIMPLEVPBusFrameUnPack( void )
 unsigned char SIMPLESIMPLEVPMsgPackSend( unsigned char msgType )
 {
 //    
-    uint8_t i=0,j=0,hdnum=0,ceng=0,hdstate=0,huodaost=0;     
+    uint8_t i=0,j=0,hdnum=0;     
 //	uint16_t tempMoney;
 //	uint8_t tempSend=0;
 //	uint32_t tradeMoney=0;
@@ -709,6 +750,7 @@ unsigned char VPSIMPLE_Display_Ind( void )
 			RTCData.minute=sysVPMissionSIMPLE.receive.msg[5];	
 			TracePC("\r\n Drv distime=%ld-%d-%d %d:%d",RTCData.year,RTCData.month,RTCData.day,RTCData.hour,RTCData.minute);
 			RTCSetTime(&RTCData);
+			rstTime();
 			break;
 		case 2:
 			TracePC("\r\n Drv disptxt=%c,%c,%c,%c,%c",sysVPMissionSIMPLE.receive.msg[1],sysVPMissionSIMPLE.receive.msg[2],
@@ -826,7 +868,7 @@ unsigned char VPMissionSIMPLE_Get_Admin2( unsigned char admintype)
 {
 	unsigned char recRes=0;
 	unsigned char recAck=VP_ERRSIMPLE_PAR;
-	unsigned char hdnum=0,i;
+	
 	//-------------------------------------------
 	sysVPMissionSIMPLE.getadmintype = admintype;
 	//TracePC("\r\n Drv Admin=%d,%d,%d",sysVPMissionSIMPLE.admintype,sysVPMissionSIMPLE.admincolumn,sysVPMissionSIMPLE.admincolumnsum);	
@@ -976,7 +1018,7 @@ unsigned char VPMissionSIMPLE_Admin_RPT( unsigned char admintype,uint8_t adminco
 {
 	unsigned char recRes=0;
 	unsigned char recAck=VP_ERRSIMPLE_PAR;
-	unsigned char hdstart=0, hdend=0;
+	
 	//-------------------------------------------
 	sysVPMissionSIMPLE.admintype = admintype;
 	//vmc上报给PC他的admin的类型1加满全部货道，2加满层架货道，3单货道补货，4最长出货时间，5自动退币时间

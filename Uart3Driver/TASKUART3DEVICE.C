@@ -452,7 +452,8 @@ void Uart3TaskDevice(void *pvData)
 		{
 			VPMissionSIMPLESIMPLE_Poll();
 			//OSTimeDly(OS_TICKS_PER_SEC/4);
-			OSTimeDly(OS_TICKS_PER_SEC/50);
+			//OSTimeDly(OS_TICKS_PER_SEC/50);
+			OSTimeDly(7);
 			//取得返回值
 			AccepterSIMPLEUboxMsg = OSQPend(g_SIMPLEUbox_VMCTOPCQ,1,&ComStatus);
 			if(ComStatus == OS_NO_ERR)
