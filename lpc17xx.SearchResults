@@ -1,19 +1,7 @@
----- rstTime 匹配 (18 在 3 文件 ) ----
-Business.c (app):1562:void rstTime()
-Business.c (app):1614:				rstTime();
-Business.c (app):1624:				rstTime();
-Business.c (app):1667:					rstTime();
-Business.c (app):1677:					rstTime();
-Business.c (app):1780:						rstTime();
-Business.c (app):2816:		rstTime();
-Business.c (app):2825:		rstTime();
-Business.c (app):2983:						rstTime();
-Business.c (app):3027:					rstTime();
-Business.c (app):3036:					rstTime();
-Business.c (app):3313:				rstTime();
-Business.c (app):3346:						rstTime();
-Business.c (app):3427:				rstTime();
-Business.c (app):3458:				rstTime();
-Business.h (app):32:extern void rstTime(void);
-PCComAPI.c (api):64:			rstTime();
-PCComAPI.c (api):74:			rstTime();
+---- MDBCONVERSATIONWAITACKTIMEOUT 匹配 (6 在 2 文件 ) ----
+Mdb_uart2.c (drivers):17:volatile unsigned int MDBCONVERSATIONWAITACKTIMEOUT;//MDB通讯超时时间
+Mdb_uart2.c (drivers):70:	MDBCONVERSATIONWAITACKTIMEOUT = 200;	//进入ACK等待，超时200ms
+Mdb_uart2.c (drivers):71:	while(MDBCONVERSATIONWAITACKTIMEOUT)
+Timer.c (drivers):17:extern volatile unsigned int MDBCONVERSATIONWAITACKTIMEOUT;
+Timer.c (drivers):94:	if(MDBCONVERSATIONWAITACKTIMEOUT)
+Timer.c (drivers):95:		MDBCONVERSATIONWAITACKTIMEOUT--;

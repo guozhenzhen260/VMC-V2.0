@@ -3414,7 +3414,8 @@ void RstSystemPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 				case 2: 
 					SystemPara.CoinValue[3] = keyValue;								
 					break;
-				case 3:						
+				case 3:	
+					SystemPara.HpEmpCoin = keyValue;	
 					break;	
 				case 4:
 					SystemPara.BillValue[3] = keyValue;									
@@ -3597,6 +3598,7 @@ void DefaultSystemParaMenu(void)
 					LCDPrintf(0,0,0,SystemPara.Language,"%s%d.%02d",SysMenuList.hopper1[SystemPara.Language],SystemPara.HopperValue[0]/100,SystemPara.HopperValue[0]%100);
 					LCDPrintf(0,2,0,SystemPara.Language,"%s%d.%02d",SysMenuList.hopper2[SystemPara.Language],SystemPara.HopperValue[1]/100,SystemPara.HopperValue[1]%100);
 					LCDPrintf(0,4,0,SystemPara.Language,"%s%d.%02d",SysMenuList.hopper3[SystemPara.Language],SystemPara.HopperValue[2]/100,SystemPara.HopperValue[2]%100);				
+					LCDPrintf(0,6,0,SystemPara.Language,"%s%d",SysMenuList.HpEmpCoin[SystemPara.Language],SystemPara.HpEmpCoin);
 					break;	
 				case 4:
 					LCDPrintf(0,0,0,SystemPara.Language,"%s%d.%02d",SysMenuList.bill1[SystemPara.Language],SystemPara.BillValue[0]/100,SystemPara.BillValue[0]%100);
@@ -3801,8 +3803,7 @@ void DefaultSystemParaMenu(void)
 							LCDPrintf(0,6,1,SystemPara.Language,"%s%ld",SysMenuList.coin4[SystemPara.Language],keyValue);								
 							break;
 						case 3:	
-							keyValue = 0;
-							flag = 0;
+							LCDPrintf(0,6,1,SystemPara.Language,"%s%d",SysMenuList.HpEmpCoin[SystemPara.Language],keyValue);
 							break;	
 						case 4:
 							LCDPrintf(0,6,1,SystemPara.Language,"%s%ld",SysMenuList.bill4[SystemPara.Language],keyValue);								

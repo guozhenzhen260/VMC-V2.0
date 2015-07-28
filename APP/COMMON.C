@@ -435,6 +435,7 @@ uint8_t LoadDefaultSystemPara(uint8_t backup)
     SystemPara.XMTTemp = RdBuf[num++];
 	SystemPara.BillEnableValue   = (RdBuf[num++]<<24)|(RdBuf[num++]<<16)|(RdBuf[num++]<<8)|(RdBuf[num++]);
 	SystemPara.ColumnTime  = RdBuf[num++];
+	SystemPara.HpEmpCoin  = RdBuf[num++];
 	
 	crc = CrcCheck(RdBuf,num);
 	//Trace("\r\n defaultsys=%d,%x,%x",num,crc/256,crc%256);
@@ -664,6 +665,7 @@ void WriteDefaultSystemPara(SYSTEMPARAMETER SysPara,uint8_t backup)
 	Wrbuf[num++] = (SysPara.BillEnableValue>>8)&0xff;
 	Wrbuf[num++] = (SysPara.BillEnableValue)&0xff;
 	Wrbuf[num++] = SysPara.ColumnTime;
+	Wrbuf[num++] = SysPara.HpEmpCoin;
 	
 	crc = CrcCheck(Wrbuf,num);	
 	//Trace("\r\n defaultsys=%d,%x,%x",num,crc/256,crc%256);

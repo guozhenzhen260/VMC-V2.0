@@ -149,6 +149,7 @@ typedef struct
 	uint8_t   XMTTemp;//是否使用温控器,1是使用
 	uint32_t  BillEnableValue;				   //选择的开纸币器交易上限,0代表永远不关纸币器
 	uint8_t   ColumnTime; //上报友宝最大出货时间	
+	uint8_t   HpEmpCoin; //当hopper缺币时,是否启用硬币器,1启用,0禁用
 	//CRCCheck
 	uint8_t		CrcCheck[2];					//CRC校验
 

@@ -100,7 +100,7 @@ uint8_t GetScaleError()
 *********************************************************************************************************/
 uint8_t IsErrorState()
 { 
-	uint8_t coinError = 0,hopperError = 0,GOCError = 0,ColBoardError = 0,ColEmpErr = 0,PcErr=0;
+	uint8_t coinError = 0,hopperError = 0,GOCError = 0,ColBoardError = 0,PcErr=0;
 	static uint8_t billError = 0;
 	//纸币器	
 	if(SystemPara.BillValidatorType==MDB_BILLACCEPTER)
@@ -133,7 +133,7 @@ uint8_t IsErrorState()
 	//Hopper找零器
 	if(SystemPara.CoinChangerType == HOPPER_CHANGER)
 	{
-		if(DeviceStateBusiness.Hopper1State != 0)
+		if(DeviceStateBusiness.Hopper1State == 2)
 		{
 			hopperError = 1;
 		}
@@ -185,10 +185,10 @@ uint8_t IsErrorState()
 				ColBoardError = 1;
 			}
 		}
-		if(DeviceStateBusiness.Emp_Gol != 0)
-		{
-			ColEmpErr = 1;
-		}
+		//if(DeviceStateBusiness.Emp_Gol != 0)
+		//{
+		//	ColEmpErr = 1;
+		//}
 	}
 
 	if(SystemPara.PcEnable == UBOX_PC)
@@ -197,7 +197,7 @@ uint8_t IsErrorState()
 			PcErr = 1;
 	}
 
-	if(coinError||hopperError||GOCError||ColBoardError||scaleError||ColEmpErr||PcErr)
+	if(coinError||hopperError||GOCError||ColBoardError||scaleError||PcErr)
 	{
 		return 1;
 	}
@@ -215,7 +215,7 @@ uint8_t IsErrorState()
 
 /*********************************************************************************************************
 ** Function name:       HopperIsEmpty
-** Descriptions:        Hopper找利器是否不可用状态
+** Descriptions:        Hopper找利器是否为空
 ** input parameters:    无
 ** output parameters:   无
 ** Returned value:      1缺币,0足够
@@ -239,7 +239,7 @@ uint8_t HopperIsEmpty()
 ** Descriptions:        找零器是否不可用状态
 ** input parameters:    1故障,0正常
 ** output parameters:   无
-** Returned value:      
+** Returned value:      1是,0不是
 *********************************************************************************************************/
 uint8_t ChangerIsErr()
 { 
@@ -436,9 +436,10 @@ uint8_t ErrorStatus(uint8_t type)
 	//vmc 0=正常，1= 正常货道商品全部售空，或非售卖时间，2=故障，3=维护模式
 	if(type == 4)
 	{
-		if((DeviceStateBusiness.Emp_Gol != 0)&&(SystemPara.GeziDeviceType==0))
-			return 1;
-		else if(IsErrorState())
+		//if((DeviceStateBusiness.Emp_Gol != 0)&&(SystemPara.GeziDeviceType==0))
+		//	return 1;
+		//else 
+		if(IsErrorState())
 			return 2;
 		else if(weihuMode==1)
 			return 3;

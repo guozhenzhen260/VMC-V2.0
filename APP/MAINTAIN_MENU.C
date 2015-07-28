@@ -92,6 +92,7 @@ typedef struct
 	char *hopper1[MAXLANGUAGETYPE];		
 	char *hopper2[MAXLANGUAGETYPE];
 	char *hopper3[MAXLANGUAGETYPE];
+	char *HpEmpCoin[MAXLANGUAGETYPE];
 	char *bill1[MAXLANGUAGETYPE];		
 	char *bill2[MAXLANGUAGETYPE];
 	char *bill3[MAXLANGUAGETYPE];
@@ -313,6 +314,13 @@ const SYSMAINMENULIST SysMenuList =
 		"3.hopper3:",
 		"3.hopper3:",
 		"3.hopper3:"
+	},
+	{
+		"¢Ü HpEmpCoin:",
+		"4.HpEmpCoin:",
+		"4.HpEmpCoin:",
+		"4.HpEmpCoin:",
+		"4.HpEmpCoin:"
 	},
 	{
 		"¢Ù Ö½±Ò1:",

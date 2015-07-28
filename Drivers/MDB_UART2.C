@@ -67,7 +67,7 @@ uint8_t MdbConversation(uint8_t Dev,uint8_t *SeDat,uint8_t SenDatLen,uint8_t *Re
 //	Trace(" %02x]\r\n",check);
 	OSIntExit();
 	OSTimeDly(3);
-	MDBCONVERSATIONWAITACKTIMEOUT = 200;	//进入ACK等待，超时200ms
+	MDBCONVERSATIONWAITACKTIMEOUT = 20;	//进入ACK等待，超时200ms
 	while(MDBCONVERSATIONWAITACKTIMEOUT)
 	{
 		Temp = GetMdbStatus();

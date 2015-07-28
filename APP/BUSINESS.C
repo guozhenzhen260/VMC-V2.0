@@ -1569,6 +1569,53 @@ void rstTime()
 	Timer.DispFreeTimer=1;
 }
 
+//设置是否开启现金设备1,开启,2关闭
+void BillCoinEnable(uint8_t enable)
+{	
+	uint8_t billCtr=0,coinCtr=0,readerCtr=0;
+	//启用
+	if(enable==1)
+	{
+		//纸币器
+		if((GetBillCoinStatus(1)==0)&&(SystemPara.BillValidatorType != OFF_BILLACCEPTER))
+		{
+			billCtr=1;
+			vmcChangeLow = 0;
+			LCDClrScreen();
+			rstTime();
+		}
+		//硬币器
+		if((GetBillCoinStatus(2)==0)
+			&&((SystemPara.CoinAcceptorType == PARALLEL_COINACCEPTER)||(SystemPara.CoinAcceptorType == SERIAL_COINACCEPTER))			
+		)
+		{
+			coinCtr=1;
+		}
+	}
+	//关闭
+	else if(enable==2)
+	{
+		//纸币器
+		if((GetBillCoinStatus(1)==1)&&(SystemPara.BillValidatorType != OFF_BILLACCEPTER))
+		{
+			billCtr=2;
+			vmcChangeLow = 1;
+			LCDClrScreen();
+			rstTime();
+		}
+		//硬币器
+		if((GetBillCoinStatus(2)==1)
+			&&((SystemPara.CoinAcceptorType == PARALLEL_COINACCEPTER)||(SystemPara.CoinAcceptorType == SERIAL_COINACCEPTER))
+			&&(SystemPara.HpEmpCoin==0)
+		)
+		{
+			coinCtr=2;
+		}
+	}
+
+	BillCoinCtr(billCtr,coinCtr,readerCtr); 
+}
+
 /*********************************************************************************************************
 ** Function name:     	UnpdateTubeMoney
 ** Descriptions:	    更新可找零金额
@@ -1578,7 +1625,96 @@ void rstTime()
 *********************************************************************************************************/
 uint8_t UnpdateTubeMoney()
 {
-	uint32_t coinMoney;	
+	uint32_t coinMoney=0,billMoney=0;	
+	uint8_t i,j=0;
+	//ChangeGetTubesAPI();
+	//OSTimeDly(OS_TICKS_PER_SEC / 10);
+	//1.添加纸币循环器金额
+	if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
+	{
+		for(i=0;i<7;i++)
+		{
+			if(stDevValue.RecyclerValue[i])
+			{
+				billMoney = billMoney + stDevValue.RecyclerValue[i]*stDevValue.RecyclerNum[i];
+				j=i;
+			}
+		}
+	}
+	//2.添加硬币存币斗金额
+	if(SystemPara.CoinChangerType == MDB_CHANGER)
+	{
+		coinMoney = stDevValue.CoinValue[0]*stDevValue.CoinNum[0] + stDevValue.CoinValue[1]*stDevValue.CoinNum[1] + stDevValue.CoinValue[2]*stDevValue.CoinNum[2]
+					+stDevValue.CoinValue[3]*stDevValue.CoinNum[3] + stDevValue.CoinValue[4]*stDevValue.CoinNum[4] + stDevValue.CoinValue[5]*stDevValue.CoinNum[5]
+					+stDevValue.CoinValue[6]*stDevValue.CoinNum[6] + stDevValue.CoinValue[7]*stDevValue.CoinNum[7]
+					+stDevValue.CoinValue[8]*stDevValue.CoinNum[8] + stDevValue.CoinValue[9]*stDevValue.CoinNum[9] + stDevValue.CoinValue[10]*stDevValue.CoinNum[10]
+					+stDevValue.CoinValue[11]*stDevValue.CoinNum[11] + stDevValue.CoinValue[12]*stDevValue.CoinNum[12] + stDevValue.CoinValue[13]*stDevValue.CoinNum[13]
+					+stDevValue.CoinValue[14]*stDevValue.CoinNum[14] + stDevValue.CoinValue[15]*stDevValue.CoinNum[15]; 
+	}
+	else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
+	{		
+		coinMoney =( !HopperIsEmpty() )? SystemPara.MaxValue:0;
+	}
+	else if(SystemPara.CoinChangerType == OFF_CHANGER)
+	{
+		coinMoney = 0;
+	}
+	//3.设置最高投币上限
+	MoneyMaxin =( (billMoney + coinMoney) > SystemPara.MaxValue )? SystemPara.MaxValue:(billMoney + coinMoney);
+	TraceBill("\r\nAppChange 5=%ld,1=%ld,rec=%ld,bill=%ld,coin=%ld,max=%ld,money=%ld,enable=%ld",stDevValue.CoinValue[0]*stDevValue.CoinNum[0],stDevValue.CoinValue[1]*stDevValue.CoinNum[1],stDevValue.RecyclerValue[j]*stDevValue.RecyclerNum[j],
+		billMoney,coinMoney,SystemPara.MaxValue,MoneyMaxin,SystemPara.BillEnableValue);
+
+	//4.是否禁用现金设备
+	if(SystemPara.CoinChangerType == MDB_CHANGER)
+	{
+		if(coinMoney < SystemPara.BillEnableValue)
+		{
+			BillCoinEnable(2);
+		}
+		else
+		{
+			BillCoinEnable(1);
+		}
+	}	
+	else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
+	{		
+		if(coinMoney < SystemPara.BillEnableValue)
+		{
+			BillCoinEnable(2);
+		}
+		else
+		{
+			BillCoinEnable(1);
+		}
+	}
+	else if(SystemPara.CoinChangerType == OFF_CHANGER)
+	{
+		//添加纸币循环器金额
+		if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
+		{
+			if((billMoney + coinMoney) < SystemPara.BillEnableValue)
+			{
+				BillCoinEnable(2);
+			}
+			else
+			{
+				BillCoinEnable(1);
+			}
+		}		
+		else
+		{
+			MoneyMaxin =SystemPara.MaxValue;
+			TraceBill("\r\nAppChange max=%ld",PriceMaxin);
+		}
+	}
+	//遇到纸币器收币后，不显示金额时，自动予以退币和复位
+	UpdateErrBill();
+	return 0;
+}
+/*
+uint8_t UnpdateTubeMoney()
+{
+	uint32_t coinMoney=0;	
 	uint8_t i,j=0;
 	//ChangeGetTubesAPI();
 	//OSTimeDly(OS_TICKS_PER_SEC / 10);
@@ -1626,7 +1762,9 @@ uint8_t UnpdateTubeMoney()
 		}
 	}	
 	else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
-	{
+	{		
+		coinMoney =( !HopperIsEmpty() )? SystemPara.MaxValue:0;
+		TraceBill("\r\nAppChange coinMoney=%ld",coinMoney);
 		//添加纸币循环器金额
 		if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
 		{
@@ -1634,13 +1772,33 @@ uint8_t UnpdateTubeMoney()
 			{
 				if(stDevValue.RecyclerValue[i])
 				{
+					coinMoney = coinMoney + stDevValue.RecyclerValue[i]*stDevValue.RecyclerNum[i];
 					j=i;
 				}
 			}
 		}
-		MoneyMaxin =( !HopperIsEmpty() )? SystemPara.MaxValue:0;
-		TraceBill("\r\nAppChange rec=%ld,max=%ld",stDevValue.RecyclerValue[j]*stDevValue.RecyclerNum[j],MoneyMaxin);
-		
+		MoneyMaxin =( coinMoney > SystemPara.MaxValue )? SystemPara.MaxValue:coinMoney;
+		TraceBill("\r\nAppChange 5=%ld,1=%ld,rec=%ld,money=%ld,max=%ld,bill=%ld",stDevValue.CoinValue[0]*stDevValue.CoinNum[0],stDevValue.CoinValue[1]*stDevValue.CoinNum[1],stDevValue.RecyclerValue[j]*stDevValue.RecyclerNum[j],coinMoney,MoneyMaxin,SystemPara.BillEnableValue);
+		if(MoneyMaxin < SystemPara.BillEnableValue)
+		{
+			if((GetBillCoinStatus(1)==1)&&(SystemPara.BillValidatorType != OFF_BILLACCEPTER))
+			{
+				BillCoinCtr(2,0,0);	
+				vmcChangeLow = 1;
+				LCDClrScreen();
+				rstTime();
+			}
+		}
+		else
+		{
+			if((GetBillCoinStatus(1)==0)&&(SystemPara.BillValidatorType != OFF_BILLACCEPTER))
+			{
+				BillCoinCtr(1,0,0);	
+				vmcChangeLow = 0;
+				LCDClrScreen();
+				rstTime();
+			}
+		}
 	}
 	else if(SystemPara.CoinChangerType == OFF_CHANGER)
 	{
@@ -1688,6 +1846,8 @@ uint8_t UnpdateTubeMoney()
 	UpdateErrBill();
 	return 0;
 }
+*/
+
 
 
 /*********************************************************************************************************
