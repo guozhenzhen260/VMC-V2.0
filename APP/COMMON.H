@@ -660,7 +660,11 @@ typedef struct
 }DEVICESTATEPACK;
 extern DEVICESTATEPACK DeviceStatePack;
 extern DEVICESTATEPACK DeviceStateBusiness;
-
+typedef struct
+{
+	unsigned char Error_Card;//ø®π ’œ
+}CARDSTATEPACK;
+extern CARDSTATEPACK CardStatePack;
 
 extern OS_EVENT *g_DeviceStateMail;
 extern OS_EVENT *g_DeviceStateBackMail;

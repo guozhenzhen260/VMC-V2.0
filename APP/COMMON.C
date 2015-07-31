@@ -62,6 +62,7 @@ OS_EVENT *g_HeFanGuiBackMail;
 MessagePack MsgAccepterPack;
 DEVICESTATEPACK DeviceStatePack;
 DEVICESTATEPACK DeviceStateBusiness;
+CARDSTATEPACK CardStatePack;
 
 //一鸣智慧通信邮箱 add by yoc 2013.12.16 
 OS_EVENT *g_PCMail;//PC控制邮箱

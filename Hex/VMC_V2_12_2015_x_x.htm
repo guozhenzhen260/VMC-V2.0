@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Hex\VMC_V2_12_2015_x_x.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Hex\VMC_V2_12_2015_x_x.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Tue Jul 28 15:31:46 2015
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Fri Jul 31 08:45:11 2015
 <BR><P>
 <H3>Maximum Stack Usage =       1960 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -35,6 +35,7 @@ Function Pointers
  <LI><a href="#[c]">TIMER1_IRQHandler</a> from timer.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[d]">TIMER2_IRQHandler</a> from timer.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[e]">TIMER3_IRQHandler</a> from timer.o(.text) referenced from vector_table.o(.constdata)
+ <LI><a href="#[c]">TIMER1_IRQHandler</a> from timer.o(.text) referenced from timer.o(.text)
  <LI><a href="#[f]">Uart0IsrHandler</a> from uart0.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[10]">Uart1IsrHandler</a> from uart1.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[11]">Uart2IsrHandler</a> from uart2.o(.text) referenced from vector_table.o(.constdata)
@@ -101,7 +102,6 @@ Function Pointers
  <LI><a href="#[13]">I2C0_IRQHandler</a> from i2c.o(.text) referenced from i2c.o(.text)
  <LI><a href="#[14]">EINT2_IsrHandler</a> from key.o(.text) referenced from key.o(.text)
  <LI><a href="#[b]">TIMER0_IRQHandler</a> from timer.o(.text) referenced from timer.o(.text)
- <LI><a href="#[c]">TIMER1_IRQHandler</a> from timer.o(.text) referenced from timer.o(.text)
  <LI><a href="#[d]">TIMER2_IRQHandler</a> from timer.o(.text) referenced from timer.o(.text)
  <LI><a href="#[e]">TIMER3_IRQHandler</a> from timer.o(.text) referenced from timer.o(.text)
  <LI><a href="#[a]">__sysTickIsr</a> from os_cpu_c.o(.text) referenced from os_cpu_c.o(.text)
@@ -1902,14 +1902,14 @@ Global Symbols
 <LI><a href="#[1c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadLogDetailAPI
 <LI><a href="#[1c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteLogDetailAPI
 <LI><a href="#[1c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteLogAPI
-<LI><a href="#[324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiUart
-<LI><a href="#[321]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiRecvAckDevice
 <LI><a href="#[303]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SIMPLESIMPLEVPBusFrameUnPack
 <LI><a href="#[300]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SIMPLESIMPLEVPBusTxMsg
 <LI><a href="#[2d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPBusFrameUnPack
 <LI><a href="#[2d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPBusTxMsg
 <LI><a href="#[295]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LiftTableUart
 <LI><a href="#[294]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RecvEvbAckFromDevice
+<LI><a href="#[324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiUart
+<LI><a href="#[321]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiRecvAckDevice
 <LI><a href="#[3c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pcSeekUart3
 <LI><a href="#[3c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pcSeekUart0
 <LI><a href="#[3b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pcShcSend
@@ -3347,8 +3347,8 @@ Global Symbols
 <LI><a href="#[26b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LiftTableDriver
 <LI><a href="#[241]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiHandle
 <LI><a href="#[1db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LiftTableHandle1
-<LI><a href="#[324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiUart
 <LI><a href="#[295]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LiftTableUart
+<LI><a href="#[324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiUart
 </UL>
 
 <P><STRONG><a name="[1a4]"></a>TraceCompress</STRONG> (Thumb, 68 bytes, Stack size 288 bytes, traceapi.o(.text))
@@ -6002,7 +6002,7 @@ Global Symbols
 <LI><a href="#[259]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillDevInit
 </UL>
 
-<P><STRONG><a name="[259]"></a>BillDevInit</STRONG> (Thumb, 964 bytes, Stack size 80 bytes, billaccepter.o(.text))
+<P><STRONG><a name="[259]"></a>BillDevInit</STRONG> (Thumb, 996 bytes, Stack size 80 bytes, billaccepter.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = BillDevInit &rArr; BillDevEnable &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -6059,7 +6059,7 @@ Global Symbols
 <LI><a href="#[283]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutValueExpanse
 </UL>
 
-<P><STRONG><a name="[283]"></a>BillRecyclerPayoutValueExpanse</STRONG> (Thumb, 378 bytes, Stack size 88 bytes, billaccepter.o(.text))
+<P><STRONG><a name="[283]"></a>BillRecyclerPayoutValueExpanse</STRONG> (Thumb, 844 bytes, Stack size 88 bytes, billaccepter.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 656 + Unknown Stack Size
 <LI>Call Chain = BillRecyclerPayoutValueExpanse &rArr; BillRecyclerTubeExpanse &rArr; BillRecyclerEnableExpanse &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -6071,7 +6071,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[261]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillDevProcess
 </UL>
 
-<P><STRONG><a name="[284]"></a>BillRecyclerPayoutNumExpanse</STRONG> (Thumb, 858 bytes, Stack size 80 bytes, billaccepter.o(.text))
+<P><STRONG><a name="[284]"></a>BillRecyclerPayoutNumExpanse</STRONG> (Thumb, 408 bytes, Stack size 80 bytes, billaccepter.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 648 + Unknown Stack Size
 <LI>Call Chain = BillRecyclerPayoutNumExpanse &rArr; BillRecyclerTubeExpanse &rArr; BillRecyclerEnableExpanse &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -6094,7 +6094,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[261]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillDevProcess
 </UL>
 
-<P><STRONG><a name="[286]"></a>BillDevEscrow</STRONG> (Thumb, 258 bytes, Stack size 64 bytes, billaccepter.o(.text))
+<P><STRONG><a name="[286]"></a>BillDevEscrow</STRONG> (Thumb, 280 bytes, Stack size 64 bytes, billaccepter.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 632 + Unknown Stack Size
 <LI>Call Chain = BillDevEscrow &rArr; BillRecyclerTubeExpanse &rArr; BillRecyclerEnableExpanse &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -6106,7 +6106,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[261]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillDevProcess
 </UL>
 
-<P><STRONG><a name="[261]"></a>BillDevProcess</STRONG> (Thumb, 1014 bytes, Stack size 104 bytes, billaccepter.o(.text))
+<P><STRONG><a name="[261]"></a>BillDevProcess</STRONG> (Thumb, 1020 bytes, Stack size 104 bytes, billaccepter.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 760 + Unknown Stack Size
 <LI>Call Chain = BillDevProcess &rArr; BillRecyclerPayoutValueExpanse &rArr; BillRecyclerTubeExpanse &rArr; BillRecyclerEnableExpanse &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -6154,7 +6154,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[25a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RecyclerDevInit
 </UL>
 
-<P><STRONG><a name="[25a]"></a>RecyclerDevInit</STRONG> (Thumb, 1730 bytes, Stack size 80 bytes, billaccepter.o(.text))
+<P><STRONG><a name="[25a]"></a>RecyclerDevInit</STRONG> (Thumb, 1748 bytes, Stack size 80 bytes, billaccepter.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 648 + Unknown Stack Size
 <LI>Call Chain = RecyclerDevInit &rArr; BillRecyclerTubeExpanse &rArr; BillRecyclerEnableExpanse &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -8039,9 +8039,9 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceChannel
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CrcCheck
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
+<LI><a href="#[30e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1PutStr
 <LI><a href="#[325]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1_ClrBuf
 <LI><a href="#[321]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiRecvAckDevice
-<LI><a href="#[30e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1PutStr
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[317]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiDriver
@@ -8290,7 +8290,6 @@ Global Symbols
 <LI><a href="#[21f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_CPIN
 <LI><a href="#[21c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_AT
 <LI><a href="#[1c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteLogDetailAPI
-<LI><a href="#[321]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiRecvAckDevice
 <LI><a href="#[320]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTMission_SetTemperature
 <LI><a href="#[316]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTMission_SetTemperatureS
 <LI><a href="#[315]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTMission_GetTemperature
@@ -8308,6 +8307,7 @@ Global Symbols
 <LI><a href="#[2ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_send
 <LI><a href="#[299]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trade_cache_init
 <LI><a href="#[2b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;task3_gprs_poll
+<LI><a href="#[321]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiRecvAckDevice
 </UL>
 
 <P><STRONG><a name="[10]"></a>Uart1IsrHandler</STRONG> (Thumb, 156 bytes, Stack size 16 bytes, uart1.o(.text))
@@ -8338,13 +8338,13 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[319]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1PutChar
 </UL>
-<BR>[Called By]<UL><LI><a href="#[324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiUart
-<LI><a href="#[30d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectKey_Command
+<BR>[Called By]<UL><LI><a href="#[30d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectKey_Command
+<LI><a href="#[324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiUart
 </UL>
 
 <P><STRONG><a name="[322]"></a>Uart1BuffIsNotEmpty</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, uart1.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[321]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiRecvAckDevice
-<LI><a href="#[30f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1_Read
+<BR><BR>[Called By]<UL><LI><a href="#[30f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1_Read
+<LI><a href="#[321]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiRecvAckDevice
 </UL>
 
 <P><STRONG><a name="[325]"></a>Uart1_ClrBuf</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, uart1.o(.text))
@@ -8352,13 +8352,13 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiUart
-<LI><a href="#[30f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1_Read
+<BR>[Called By]<UL><LI><a href="#[30f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1_Read
+<LI><a href="#[324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiUart
 </UL>
 
 <P><STRONG><a name="[323]"></a>Uart1GetCh</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, uart1.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[321]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiRecvAckDevice
-<LI><a href="#[30f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1_Read
+<BR><BR>[Called By]<UL><LI><a href="#[30f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1_Read
+<LI><a href="#[321]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiRecvAckDevice
 </UL>
 
 <P><STRONG><a name="[30f]"></a>Uart1_Read</STRONG> (Thumb, 66 bytes, Stack size 24 bytes, uart1.o(.text))
@@ -10133,7 +10133,6 @@ Global Symbols
 <LI><a href="#[1ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostRPTAPI
 <LI><a href="#[1c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteLogDetailAPI
 <LI><a href="#[1bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadPayBackKeyValue
-<LI><a href="#[324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiUart
 <LI><a href="#[318]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ZhkSerial1PutCh
 <LI><a href="#[316]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTMission_SetTemperatureS
 <LI><a href="#[311]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSelectKey
@@ -10194,6 +10193,7 @@ Global Symbols
 <LI><a href="#[37f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDlyHMSM
 <LI><a href="#[36e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSStatInit
 <LI><a href="#[35d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_TaskStat
+<LI><a href="#[324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiUart
 <LI><a href="#[3dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmcPost
 <LI><a href="#[3db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enterPCControl
 <LI><a href="#[3da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sysBoardCastCheckTask
@@ -11163,7 +11163,6 @@ Global Symbols
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitUart0
 <LI><a href="#[24c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;col_send
 <LI><a href="#[1e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hefanHuodaoInit
-<LI><a href="#[325]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1_ClrBuf
 <LI><a href="#[31d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTBusUnpack
 <LI><a href="#[317]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiDriver
 <LI><a href="#[30d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectKey_Command
@@ -11178,6 +11177,7 @@ Global Symbols
 <LI><a href="#[29b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPSerialInit
 <LI><a href="#[2b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMissionSIMPLESIMPLE_Poll
 <LI><a href="#[29d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SIMPLESIMPLEVPSerialInit
+<LI><a href="#[325]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1_ClrBuf
 <LI><a href="#[23a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncpy
 </UL>
 
@@ -11280,7 +11280,6 @@ Global Symbols
 <LI><a href="#[1c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteLogDetailAPI
 <LI><a href="#[1af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;liftTableLight
 <LI><a href="#[1b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;liftTableChuchou
-<LI><a href="#[324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiUart
 <LI><a href="#[317]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiDriver
 <LI><a href="#[2fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_total
 <LI><a href="#[2fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_register
@@ -11303,6 +11302,7 @@ Global Symbols
 <LI><a href="#[29b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPSerialInit
 <LI><a href="#[295]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LiftTableUart
 <LI><a href="#[358]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_SendCmd
+<LI><a href="#[324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiUart
 <LI><a href="#[3cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pcSendDetailTrade
 <LI><a href="#[3c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pcSendHuoDao
 <LI><a href="#[3bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pcSendHefanHuoDao

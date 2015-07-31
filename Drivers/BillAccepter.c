@@ -189,6 +189,11 @@ uint8_t BillDevInit()
 	//OSTimeDly(40);
 	TraceBill("\r\nDrv4.1=%d,%ld,%ld,%ld,%d",stDevValue.BillLevel,stDevValue.BillScale,stDevValue.BillDecimal,stDevValue.BillStkCapacity,stDevValue.BillEscrowFun);
 	TraceBill("\r\nDrv4.2=%ld,%ld,%ld,%ld,%ld,%ld,%ld,%ld",nBillvalue[0],nBillvalue[1],nBillvalue[2],nBillvalue[3],nBillvalue[4],nBillvalue[5],nBillvalue[6],nBillvalue[7]);
+	TraceBill("\r\nIden=");
+	for(i=0;i<BillRdLen;i++)
+	{
+		TraceBill(" [%02x]",stDevValue.billIDENTITYBuf[i]);
+	}
 	//OSTimeDly(OS_TICKS_PER_SEC*3);
 	BillDevEnable();
 	LCDNumberFontPrintf(40,LINE15,2,"BillAccepter-4");	
@@ -600,7 +605,7 @@ uint8_t BillDevEscrow()
 	TraceBill("\r\n DrvEscrowsend=%d",ComStatus);
 	TraceBill("\r\nDrvEscrowsend>>%#02x,%#02x\r\n",0x35,BillWrBuff[0]);
 	OSTimeDly(OS_TICKS_PER_SEC / 100);
-	Timer.EscrowTimer = 40;
+	Timer.EscrowTimer = 13;
 	while(Timer.EscrowTimer)
 	{
 		//轮询检测是否压仓成功
@@ -626,6 +631,12 @@ uint8_t BillDevEscrow()
 						BillRecyclerTubeExpanse();
 					}
 					return 1;	
+				}
+				//没有压抄成功，中途退出
+				else if((BillRdBuff[i]&0xf0)==0xa0)
+				{
+					TraceBill("\r\n DrvescrowReturn");
+					return 0;
 				}
 			}			
 			TraceBill("\r\n Drvescrow2");
@@ -656,7 +667,7 @@ uint8_t BillDevReturn()
 	}
 	TraceBill("\r\n DrvReturnsend=%d",ComStatus);
 	OSTimeDly(OS_TICKS_PER_SEC / 100);
-	Timer.EscrowTimer = 20;
+	Timer.EscrowTimer = 10;
 	while(Timer.EscrowTimer)
 	{
 		//轮询检测是否退币成功
@@ -973,7 +984,7 @@ uint8_t RecyclerDevInit()
 	for(i=0;i<BillRdLen;i++)
 	{
 		stDevValue.billIDENTITYBuf[i] = BillRdBuff[i];
-	}
+	}	
 	OSTimeDly(OS_TICKS_PER_SEC / 100);
 	TraceBill("\r\n 5DrvRecyclerIDLevel1>>%#02x,%#02x",0x37,0x00);
 	TraceBill("\r\nDrvRecyclerRec<< [%02d]-",BillRdLen);

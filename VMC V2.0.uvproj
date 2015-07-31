@@ -575,6 +575,11 @@
               <FileType>1</FileType>
               <FilePath>.\Drivers\MDBChanger.c</FilePath>
             </File>
+            <File>
+              <FileName>LFMDBReader.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Drivers\LFMDBReader.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
