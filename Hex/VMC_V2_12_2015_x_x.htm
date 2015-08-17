@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Hex\VMC_V2_12_2015_x_x.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Hex\VMC_V2_12_2015_x_x.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Fri Jul 31 08:45:11 2015
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Mon Aug 17 11:42:43 2015
 <BR><P>
 <H3>Maximum Stack Usage =       1960 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -35,7 +35,6 @@ Function Pointers
  <LI><a href="#[c]">TIMER1_IRQHandler</a> from timer.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[d]">TIMER2_IRQHandler</a> from timer.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[e]">TIMER3_IRQHandler</a> from timer.o(.text) referenced from vector_table.o(.constdata)
- <LI><a href="#[c]">TIMER1_IRQHandler</a> from timer.o(.text) referenced from timer.o(.text)
  <LI><a href="#[f]">Uart0IsrHandler</a> from uart0.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[10]">Uart1IsrHandler</a> from uart1.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[11]">Uart2IsrHandler</a> from uart2.o(.text) referenced from vector_table.o(.constdata)
@@ -102,6 +101,7 @@ Function Pointers
  <LI><a href="#[13]">I2C0_IRQHandler</a> from i2c.o(.text) referenced from i2c.o(.text)
  <LI><a href="#[14]">EINT2_IsrHandler</a> from key.o(.text) referenced from key.o(.text)
  <LI><a href="#[b]">TIMER0_IRQHandler</a> from timer.o(.text) referenced from timer.o(.text)
+ <LI><a href="#[c]">TIMER1_IRQHandler</a> from timer.o(.text) referenced from timer.o(.text)
  <LI><a href="#[d]">TIMER2_IRQHandler</a> from timer.o(.text) referenced from timer.o(.text)
  <LI><a href="#[e]">TIMER3_IRQHandler</a> from timer.o(.text) referenced from timer.o(.text)
  <LI><a href="#[a]">__sysTickIsr</a> from os_cpu_c.o(.text) referenced from os_cpu_c.o(.text)
@@ -533,7 +533,7 @@ Global Symbols
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDDrawLine
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
+<BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispIOUPage
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispQuChangePage
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispPayoutPage
@@ -556,8 +556,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClearLineDraw
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunHefangPage
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunPage
 </UL>
@@ -615,7 +615,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDNumberFontPrintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
+<BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
@@ -624,8 +624,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunHefangPage
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunPage
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
@@ -633,20 +633,20 @@ Global Symbols
 
 <P><STRONG><a name="[ad]"></a>GetAmountMoney</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, business.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TxtSIMPLEInd
-<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
-<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutIndFail
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerRecycler
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TxtSIMPLEInd
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
+<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
+<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
+<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
+<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutIndFail
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerRecycler
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateErrBill
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispSalePage
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunHefangPage
@@ -716,13 +716,13 @@ Global Symbols
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
+<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
@@ -734,7 +734,7 @@ Global Symbols
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<BR>[Called By]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 </UL>
 
 <P><STRONG><a name="[bc]"></a>DispCannotBuyPage</STRONG> (Thumb, 200 bytes, Stack size 112 bytes, business.o(.text))
@@ -772,8 +772,8 @@ Global Symbols
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostReaderRPT
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
+<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostReaderRPT
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
 </UL>
 
 <P><STRONG><a name="[bf]"></a>DispReaderVendoutFail</STRONG> (Thumb, 82 bytes, Stack size 72 bytes, business.o(.text))
@@ -807,8 +807,8 @@ Global Symbols
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<BR>[Called By]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 </UL>
 
 <P><STRONG><a name="[c2]"></a>DispQuhuoPage</STRONG> (Thumb, 80 bytes, Stack size 72 bytes, business.o(.text))
@@ -820,7 +820,7 @@ Global Symbols
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<BR>[Called By]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
@@ -833,7 +833,7 @@ Global Symbols
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<BR>[Called By]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
@@ -845,7 +845,7 @@ Global Symbols
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
+<BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
@@ -858,7 +858,7 @@ Global Symbols
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
+<BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
@@ -872,7 +872,7 @@ Global Symbols
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
 <LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
+<BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
@@ -887,15 +887,15 @@ Global Symbols
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<BR>[Called By]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[fc]"></a>GetReaderAmount</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, business.o(.text))
+<P><STRONG><a name="[fd]"></a>GetReaderAmount</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, business.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
+<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
 </UL>
 
 <P><STRONG><a name="[c8]"></a>BillCoinCtr</STRONG> (Thumb, 168 bytes, Stack size 16 bytes, business.o(.text))
@@ -912,16 +912,16 @@ Global Symbols
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillDevDisableAPI
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 </UL>
-<BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
+<BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
+<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
+<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinEnable
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateErrBill
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
@@ -937,69 +937,70 @@ Global Symbols
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetAmountMoney
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnpdateTubeMoney
+<BR>[Called By]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnpdateTubeMoney
 </UL>
 
 <P><STRONG><a name="[d5]"></a>rstTime</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, business.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
-<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<BR><BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinEnable
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 <LI><a href="#[308]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPSIMPLE_Display_Ind
 </UL>
 
-<P><STRONG><a name="[d3]"></a>BillCoinEnable</STRONG> (Thumb, 170 bytes, Stack size 24 bytes, business.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 456 + Unknown Stack Size
-<LI>Call Chain = BillCoinEnable &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
+<P><STRONG><a name="[d3]"></a>BillCoinEnable</STRONG> (Thumb, 178 bytes, Stack size 24 bytes, business.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
+<LI>Call Chain = BillCoinEnable &rArr; StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
+<BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
+<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetBillCoinStatus
 <LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rstTime
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinCtr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnpdateTubeMoney
+<BR>[Called By]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnpdateTubeMoney
 </UL>
 
-<P><STRONG><a name="[d6]"></a>UnpdateTubeMoney</STRONG> (Thumb, 730 bytes, Stack size 40 bytes, business.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 496 + Unknown Stack Size
-<LI>Call Chain = UnpdateTubeMoney &rArr; BillCoinEnable &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
+<P><STRONG><a name="[d7]"></a>UnpdateTubeMoney</STRONG> (Thumb, 730 bytes, Stack size 40 bytes, business.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 592 + Unknown Stack Size
+<LI>Call Chain = UnpdateTubeMoney &rArr; BillCoinEnable &rArr; StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceBill
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HopperIsEmpty
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HopperIsEmpty
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinEnable
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateErrBill
 </UL>
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[df]"></a>SaleTimeSet</STRONG> (Thumb, 60 bytes, Stack size 0 bytes, business.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<P><STRONG><a name="[e0]"></a>SaleTimeSet</STRONG> (Thumb, 60 bytes, Stack size 0 bytes, business.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[d8]"></a>GetMoney</STRONG> (Thumb, 518 bytes, Stack size 16 bytes, business.o(.text))
+<P><STRONG><a name="[d9]"></a>GetMoney</STRONG> (Thumb, 518 bytes, Stack size 16 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 464 + Unknown Stack Size
 <LI>Call Chain = GetMoney &rArr; GetCoinDevMoneyInAPI &rArr; ReadParallelCoinAcceptor &rArr; TraceCoin &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceBill
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReturnBillDevMoneyInAPI
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogGetMoneyAPI
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetReaderDevMoneyInAPI
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCoinDevMoneyInAPI
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetBillDevMoneyUnStackInAPI
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogGetMoneyAPI
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetReaderDevMoneyInAPI
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCoinDevMoneyInAPI
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetBillDevMoneyUnStackInAPI
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
 <LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rstTime
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinCtr
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispOverAmountPage
@@ -1012,61 +1013,61 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[e3]"></a>ChangerRecycler</STRONG> (Thumb, 448 bytes, Stack size 24 bytes, business.o(.text))
+<P><STRONG><a name="[e4]"></a>ChangerRecycler</STRONG> (Thumb, 452 bytes, Stack size 24 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 456 + Unknown Stack Size
 <LI>Call Chain = ChangerRecycler &rArr; PayoutRPTAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceBill
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutValueExpanseAPI
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
+<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutValueExpanseAPI
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetAmountMoney
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
+<BR>[Called By]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
 </UL>
 
-<P><STRONG><a name="[e5]"></a>ChangerMoney</STRONG> (Thumb, 238 bytes, Stack size 16 bytes, business.o(.text))
+<P><STRONG><a name="[e6]"></a>ChangerMoney</STRONG> (Thumb, 238 bytes, Stack size 16 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 584 + Unknown Stack Size
 <LI>Call Chain = ChangerMoney &rArr; ChangerDevPayoutAPI &rArr; ChangePayoutProcessLevel2API &rArr; MDBchange &rArr; TraceChange &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReturnBillDevMoneyInAPI
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogChangeAPI
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerRecycler
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogChangeAPI
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerRecycler
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetAmountMoney
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 </UL>
-<BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
+<BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
+<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[e9]"></a>IsCanSale</STRONG> (Thumb, 426 bytes, Stack size 24 bytes, business.o(.text))
+<P><STRONG><a name="[ea]"></a>IsCanSale</STRONG> (Thumb, 426 bytes, Stack size 24 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 456 + Unknown Stack Size
 <LI>Call Chain = IsCanSale &rArr; ReaderDevVendoutRPTAPI &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
+<BR>[Calls]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReturnBillDevMoneyInAPI
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogGetMoneyAPI
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogGetMoneyAPI
 <LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispReaderDevVendoutRPT
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetAmountMoney
 </UL>
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[eb]"></a>SaleCostMoney</STRONG> (Thumb, 86 bytes, Stack size 8 bytes, business.o(.text))
+<P><STRONG><a name="[ec]"></a>SaleCostMoney</STRONG> (Thumb, 86 bytes, Stack size 8 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = SaleCostMoney &rArr; ReaderDevVendoutResultAPI &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<BR>[Called By]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
@@ -1074,7 +1075,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[ed]"></a>DispSaleTime</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, business.o(.text))
+<P><STRONG><a name="[ee]"></a>DispSaleTime</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 224 + Unknown Stack Size
 <LI>Call Chain = DispSaleTime &rArr; LCDPrintf &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1083,18 +1084,18 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[ee]"></a>StackMoneyInd</STRONG> (Thumb, 518 bytes, Stack size 16 bytes, business.o(.text))
+<P><STRONG><a name="[ef]"></a>StackMoneyInd</STRONG> (Thumb, 546 bytes, Stack size 16 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 448 + Unknown Stack Size
 <LI>Call Chain = StackMoneyInd &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
-<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
+<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReturnBillDevMoneyInAPI
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinCtr
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispEndPage
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispSalePage
@@ -1104,30 +1105,30 @@ Global Symbols
 <LI><a href="#[1d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zh_task3_pend
 </UL>
 
-<P><STRONG><a name="[f0]"></a>CostReaderRPT</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, business.o(.text))
+<P><STRONG><a name="[f1]"></a>CostReaderRPT</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 448 + Unknown Stack Size
 <LI>Call Chain = CostReaderRPT &rArr; ReaderDevVendoutRPTAPI &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
+<BR>[Calls]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
 <LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispReaderDevVendoutRPT
 </UL>
 <BR>[Called By]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 </UL>
 
-<P><STRONG><a name="[f1]"></a>CostMoneyInd</STRONG> (Thumb, 360 bytes, Stack size 16 bytes, business.o(.text))
+<P><STRONG><a name="[f2]"></a>CostMoneyInd</STRONG> (Thumb, 360 bytes, Stack size 16 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 448 + Unknown Stack Size
 <LI>Call Chain = CostMoneyInd &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
-<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
+<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReturnBillDevMoneyInAPI
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
+<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinCtr
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispEndPage
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispSalePage
@@ -1135,29 +1136,29 @@ Global Symbols
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 </UL>
 <BR>[Called By]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 </UL>
 
-<P><STRONG><a name="[f2]"></a>VendoutInd</STRONG> (Thumb, 1070 bytes, Stack size 64 bytes, business.o(.text))
+<P><STRONG><a name="[f3]"></a>VendoutInd</STRONG> (Thumb, 1070 bytes, Stack size 64 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 732 + Unknown Stack Size
 <LI>Call Chain = VendoutInd &rArr; ChannelAPIProcess &rArr; ChannelSaveParam &rArr; hd_save_param &rArr; AT45DBWritePage &rArr; AT45DBWriteNByte &rArr; AT45DBWriteBuffer &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
+<BR>[Calls]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
-<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
+<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
-<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogTransactionAPI
-<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogBeginTransAPI
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogTransactionAPI
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogBeginTransAPI
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelGetParamValue
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostReaderRPT
-<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleCostMoney
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostReaderRPT
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleCostMoney
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinCtr
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChhuoFailPage
 <LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispQuhuoPage
@@ -1169,25 +1170,25 @@ Global Symbols
 <LI><a href="#[1d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zh_task3_pend
 </UL>
 
-<P><STRONG><a name="[f8]"></a>VendoutIndFail</STRONG> (Thumb, 118 bytes, Stack size 56 bytes, business.o(.text))
+<P><STRONG><a name="[f9]"></a>VendoutIndFail</STRONG> (Thumb, 118 bytes, Stack size 56 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 504 + Unknown Stack Size
 <LI>Call Chain = VendoutIndFail &rArr; VendoutRPTAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
+<BR>[Calls]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelGetParamValue
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetAmountMoney
 </UL>
 <BR>[Called By]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
 </UL>
 
-<P><STRONG><a name="[f9]"></a>ResetInd</STRONG> (Thumb, 104 bytes, Stack size 8 bytes, business.o(.text))
+<P><STRONG><a name="[fa]"></a>ResetInd</STRONG> (Thumb, 104 bytes, Stack size 8 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 592 + Unknown Stack Size
 <LI>Call Chain = ResetInd &rArr; ChangerMoney &rArr; ChangerDevPayoutAPI &rArr; ChangePayoutProcessLevel2API &rArr; MDBchange &rArr; TraceChange &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
-<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbBusHardwareReset
+<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbBusHardwareReset
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinCtr
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispEndPage
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetAmountMoney
@@ -1196,17 +1197,17 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
 </UL>
 
-<P><STRONG><a name="[fb]"></a>TuiMoneyInd</STRONG> (Thumb, 134 bytes, Stack size 16 bytes, business.o(.text))
+<P><STRONG><a name="[fc]"></a>TuiMoneyInd</STRONG> (Thumb, 134 bytes, Stack size 16 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 600 + Unknown Stack Size
 <LI>Call Chain = TuiMoneyInd &rArr; ChangerMoney &rArr; ChangerDevPayoutAPI &rArr; ChangePayoutProcessLevel2API &rArr; MDBchange &rArr; TraceChange &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogChangeAPI
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
-<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetReaderAmount
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogChangeAPI
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
+<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetReaderAmount
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispIOUPage
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispQuChangePage
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispPayoutPage
@@ -1216,17 +1217,17 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
 </UL>
 
-<P><STRONG><a name="[fd]"></a>VendoutSIMPLEInd</STRONG> (Thumb, 298 bytes, Stack size 24 bytes, business.o(.text))
+<P><STRONG><a name="[fe]"></a>VendoutSIMPLEInd</STRONG> (Thumb, 298 bytes, Stack size 24 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 692 + Unknown Stack Size
 <LI>Call Chain = VendoutSIMPLEInd &rArr; ChannelAPIProcess &rArr; ChannelSaveParam &rArr; hd_save_param &rArr; AT45DBWritePage &rArr; AT45DBWriteNByte &rArr; AT45DBWriteBuffer &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
+<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinCtr
 <LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChuhuoPagePC
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispSalePage
@@ -1235,23 +1236,23 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
 </UL>
 
-<P><STRONG><a name="[fe]"></a>GetmoneySIMPLEInd</STRONG> (Thumb, 180 bytes, Stack size 16 bytes, business.o(.text))
+<P><STRONG><a name="[ff]"></a>GetmoneySIMPLEInd</STRONG> (Thumb, 180 bytes, Stack size 16 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 448 + Unknown Stack Size
 <LI>Call Chain = GetmoneySIMPLEInd &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
+<BR>[Calls]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinCtr
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispSalePage
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetAmountMoney
 </UL>
 <BR>[Called By]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TxtSIMPLEInd
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TxtSIMPLEInd
 </UL>
 
-<P><STRONG><a name="[ff]"></a>PriceSIMPLEInd</STRONG> (Thumb, 456 bytes, Stack size 96 bytes, business.o(.text))
+<P><STRONG><a name="[100]"></a>PriceSIMPLEInd</STRONG> (Thumb, 456 bytes, Stack size 96 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 496 + Unknown Stack Size
 <LI>Call Chain = PriceSIMPLEInd &rArr; DispSalePage &rArr; DispBusinessText &rArr; LCDPrintf &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1270,12 +1271,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
 </UL>
 
-<P><STRONG><a name="[100]"></a>TxtSIMPLEInd</STRONG> (Thumb, 76 bytes, Stack size 80 bytes, business.o(.text))
+<P><STRONG><a name="[101]"></a>TxtSIMPLEInd</STRONG> (Thumb, 76 bytes, Stack size 80 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 528 + Unknown Stack Size
 <LI>Call Chain = TxtSIMPLEInd &rArr; GetmoneySIMPLEInd &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
+<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetAmountMoney
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
@@ -1289,49 +1290,49 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pollHuman
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pollDoorAPI
-<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mainTaskPollPC
-<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameLedControl
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
+<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mainTaskPollPC
+<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameLedControl
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
+<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceSelection
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceBill
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
 <LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetWeihuStatus
-<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
+<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
+<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevCashSaleAPI
-<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadMaintainKeyValue
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadMaintainKeyValue
 <LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadGameKeyValueAPI
 <LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadCloseHumanKeyValue
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MaintainUserProcess
-<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogTransactionAPI
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogTransactionAPI
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogEndTransAPI
-<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogBeginTransAPI
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogBeginTransAPI
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyValueAPI
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyValueAPI
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsTuibiAPI
-<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
-<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyValueAPI
-<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyAPI
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClrTuibiAPI
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
+<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyValueAPI
+<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyAPI
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClrTuibiAPI
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelGetParamValue
-<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelGetMaxGoodsPrice
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelGetMaxGoodsPrice
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
 <LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillStatusRPTAPI
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ActionRPTAPI
 <LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ACDCTimingHandle
-<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispSaleTime
+<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispSaleTime
 <LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsSaleTimeOver
-<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleCostMoney
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnpdateTubeMoney
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleCostMoney
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleTimeSet
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnpdateTubeMoney
 <LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rstTime
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinCtr
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispEndPage
@@ -1365,7 +1366,7 @@ Global Symbols
 <LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPutAscii
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDDrawRectangle
 <LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrArea
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
@@ -1394,7 +1395,7 @@ Global Symbols
 <P><STRONG><a name="[122]"></a>TubeMoneyEnough</STRONG> (Thumb, 330 bytes, Stack size 16 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = TubeMoneyEnough
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HopperIsEmpty
+<BR>[Calls]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HopperIsEmpty
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ErrorCheck
 <LI><a href="#[2d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMsgPackSend
@@ -1483,7 +1484,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDDrawRectangle
 <LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrArea
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 </UL>
@@ -1500,7 +1501,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[12f]"></a>AdminRPTWeihu</STRONG> (Thumb, 182 bytes, Stack size 24 bytes, maintain.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 560 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 576 + Unknown Stack Size
 <LI>Call Chain = AdminRPTWeihu &rArr; AdminRPTAPI &rArr; StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDDrawRectangle
@@ -1536,7 +1537,7 @@ Global Symbols
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDDrawRectangle
 <LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrArea
 <LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AdminRPT
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 </UL>
@@ -1550,7 +1551,7 @@ Global Symbols
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDDrawRectangle
 <LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrArea
 <LI><a href="#[134]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetKeyInValue
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTCReadTime
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
@@ -1583,10 +1584,10 @@ Global Symbols
 <LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintfMoney
 <LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetTubeMoney
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
 </UL>
@@ -1599,10 +1600,10 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintfMoney
 <LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetTubeMoney
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCoinDevMoneyInAPI
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCoinDevMoneyInAPI
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CoinDevEnableAPI
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CoinDevDisableAPI
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
@@ -1618,7 +1619,7 @@ Global Symbols
 <LI><a href="#[134]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetKeyInValue
 <LI><a href="#[138]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetBillDevMoneyInAPI
 <LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutNumExpanseAPI
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillDevEnableAPI
@@ -1641,7 +1642,7 @@ Global Symbols
 <LI><a href="#[131]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AdminRPTSIMPLEAPI
 <LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RstUserPara
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChooseSet
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
@@ -1679,7 +1680,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 416 + Unknown Stack Size
 <LI>Call Chain = IsAdminSet &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MaintainUserProcess
 </UL>
@@ -1688,7 +1689,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 416 + Unknown Stack Size
 <LI>Call Chain = IsFactorySet &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 </UL>
 <BR>[Called By]<UL><LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MaintainProcess
 </UL>
@@ -1698,7 +1699,7 @@ Global Symbols
 <LI>Call Chain = TestTuibi &rArr; IsTuibiAPI &rArr; ButtonRPTAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsTuibiAPI
@@ -1711,7 +1712,7 @@ Global Symbols
 <LI>Call Chain = TestATC &rArr; ReadKeyValue &rArr; TraceSelection &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
@@ -1725,10 +1726,10 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
 <LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSelectKeyAPI
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceSelection
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
-<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyAPI
+<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyAPI
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
@@ -1738,7 +1739,7 @@ Global Symbols
 <LI>Call Chain = TestKeyBoard &rArr; ReadKeyValue &rArr; TraceSelection &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
@@ -1752,13 +1753,13 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutTestAPI
 <LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
 <LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClearKey
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevEnableAPI
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevDisableAPI
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClearLineDraw
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetReaderDevMoneyInAPI
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetReaderDevMoneyInAPI
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
@@ -1769,7 +1770,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDDrawRectangle
 <LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrArea
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
@@ -1784,7 +1785,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrArea
 <LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FactoryDefaultSystemPara
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectOKCheck
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
@@ -1816,7 +1817,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RstFactoryDefaultSystemPara
 <LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrArea
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectOKCheck
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
@@ -1847,7 +1848,7 @@ Global Symbols
 <LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetAdminSIMPLEAPI
 <LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MaintainProcess
 <LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsAdminSet
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
@@ -1858,14 +1859,14 @@ Global Symbols
 <P><STRONG><a name="[152]"></a>EnterVendingSetFuction</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, maintain.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDDrawRectangle
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 </UL>
 
 <P><STRONG><a name="[153]"></a>TestGoodsChannel</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, maintain.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
@@ -1928,7 +1929,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[159]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT45DBWritePage
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CrcCheck
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RstFactoryDefaultSystemPara
@@ -1945,7 +1946,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[159]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT45DBWritePage
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CrcCheck
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RstFactoryDefaultSystemPara
@@ -1961,7 +1962,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[15a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT45DBReadPage
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CrcCheck
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDNumberFontPrintf
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -1977,7 +1978,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[15a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT45DBReadPage
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CrcCheck
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDNumberFontPrintf
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -2063,7 +2064,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelManage
 </UL>
 
-<P><STRONG><a name="[f3]"></a>ChannelAPIProcess</STRONG> (Thumb, 556 bytes, Stack size 40 bytes, channel.o(.text))
+<P><STRONG><a name="[f4]"></a>ChannelAPIProcess</STRONG> (Thumb, 556 bytes, Stack size 40 bytes, channel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 668 + Unknown Stack Size
 <LI>Call Chain = ChannelAPIProcess &rArr; ChannelSaveParam &rArr; hd_save_param &rArr; AT45DBWritePage &rArr; AT45DBWriteNByte &rArr; AT45DBWriteBuffer &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -2077,10 +2078,10 @@ Global Symbols
 <LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIHandle
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelGetParamValue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mainTaskPollPC
+<BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mainTaskPollPC
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
@@ -2332,7 +2333,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[17e]"></a>ChannelOneAddGoods</STRONG> (Thumb, 822 bytes, Stack size 64 bytes, channel.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 624 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
 <LI>Call Chain = ChannelOneAddGoods &rArr; AdminRPTWeihu &rArr; AdminRPTAPI &rArr; StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nt_huodao_exsit
@@ -2356,7 +2357,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[180]"></a>ChannelLevelAddGoods</STRONG> (Thumb, 478 bytes, Stack size 56 bytes, channel.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 616 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 632 + Unknown Stack Size
 <LI>Call Chain = ChannelLevelAddGoods &rArr; AdminRPTWeihu &rArr; AdminRPTAPI &rArr; StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hd_get_index
@@ -2374,7 +2375,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[182]"></a>ChannelAllLevelAddGoods</STRONG> (Thumb, 234 bytes, Stack size 32 bytes, channel.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 592 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 608 + Unknown Stack Size
 <LI>Call Chain = ChannelAllLevelAddGoods &rArr; AdminRPTWeihu &rArr; AdminRPTAPI &rArr; StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hd_add_goods
@@ -2390,7 +2391,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[183]"></a>ChannelAddGoods</STRONG> (Thumb, 296 bytes, Stack size 40 bytes, channel.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 664 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 680 + Unknown Stack Size
 <LI>Call Chain = ChannelAddGoods &rArr; ChannelOneAddGoods &rArr; AdminRPTWeihu &rArr; AdminRPTAPI &rArr; StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAllLevelAddGoods
@@ -2501,7 +2502,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelGetParamValue
 </UL>
 
-<P><STRONG><a name="[102]"></a>ChannelGetMaxGoodsPrice</STRONG> (Thumb, 280 bytes, Stack size 12 bytes, channel.o(.text))
+<P><STRONG><a name="[103]"></a>ChannelGetMaxGoodsPrice</STRONG> (Thumb, 280 bytes, Stack size 12 bytes, channel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = ChannelGetMaxGoodsPrice
 </UL>
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
@@ -2574,7 +2575,7 @@ Global Symbols
 <LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LiftTable1Process
 </UL>
 <BR>[Called By]<UL><LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LiftTableTest
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
 </UL>
 
 <P><STRONG><a name="[184]"></a>LiftTableTest</STRONG> (Thumb, 1852 bytes, Stack size 144 bytes, lifttable.o(.text))
@@ -2802,7 +2803,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = acdc_hot_API &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[1b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetTemperatureAPI
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;acdc_hotTimerHandle
@@ -2853,25 +2854,25 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[24]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestBillValidator
 </UL>
 
-<P><STRONG><a name="[dd]"></a>GetBillDevMoneyUnStackInAPI</STRONG> (Thumb, 48 bytes, Stack size 24 bytes, billaccepterapi.o(.text))
+<P><STRONG><a name="[de]"></a>GetBillDevMoneyUnStackInAPI</STRONG> (Thumb, 48 bytes, Stack size 24 bytes, billaccepterapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = GetBillDevMoneyUnStackInAPI &rArr; OSQPend &rArr; OS_Sched
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPend
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<BR>[Called By]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 </UL>
 
-<P><STRONG><a name="[de]"></a>StackedBillDevMoneyInAPI</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, billaccepterapi.o(.text))
+<P><STRONG><a name="[df]"></a>StackedBillDevMoneyInAPI</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, billaccepterapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = StackedBillDevMoneyInAPI &rArr; OSMboxPost &rArr; OS_EventTaskRdy
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
 <LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 </UL>
 
 <P><STRONG><a name="[d2]"></a>ReturnBillDevMoneyInAPI</STRONG> (Thumb, 106 bytes, Stack size 24 bytes, billaccepterapi.o(.text))
@@ -2880,11 +2881,11 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
 <LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateErrBill
 </UL>
 
@@ -2923,7 +2924,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[24]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestBillValidator
 </UL>
 
-<P><STRONG><a name="[e4]"></a>BillRecyclerPayoutValueExpanseAPI</STRONG> (Thumb, 122 bytes, Stack size 24 bytes, billaccepterapi.o(.text))
+<P><STRONG><a name="[e5]"></a>BillRecyclerPayoutValueExpanseAPI</STRONG> (Thumb, 138 bytes, Stack size 24 bytes, billaccepterapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 432 + Unknown Stack Size
 <LI>Call Chain = BillRecyclerPayoutValueExpanseAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -2932,7 +2933,7 @@ Global Symbols
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceBill
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerRecycler
+<BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerRecycler
 </UL>
 
 <P><STRONG><a name="[8b]"></a>CoinDevInitAPI</STRONG> (Thumb, 66 bytes, Stack size 8 bytes, coinaccepterapi .o(.text))
@@ -2940,24 +2941,24 @@ Global Symbols
 <LI>Call Chain = CoinDevInitAPI &rArr; TraceCoin &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitSerialPluseCoinAcdeptor
 <LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitParallelPluseCoinAcceptor
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainTask
 </UL>
 
-<P><STRONG><a name="[d9]"></a>GetCoinDevMoneyInAPI</STRONG> (Thumb, 146 bytes, Stack size 24 bytes, coinaccepterapi .o(.text))
+<P><STRONG><a name="[da]"></a>GetCoinDevMoneyInAPI</STRONG> (Thumb, 146 bytes, Stack size 24 bytes, coinaccepterapi .o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 448 + Unknown Stack Size
 <LI>Call Chain = GetCoinDevMoneyInAPI &rArr; ReadParallelCoinAcceptor &rArr; TraceCoin &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[1ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadSerialPluseCoinAcceptor
 <LI><a href="#[1b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadParallelCoinAcceptor
 <LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPend
 </UL>
 <BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestCoinAcceptor
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 </UL>
 
 <P><STRONG><a name="[ce]"></a>CoinDevDisableAPI</STRONG> (Thumb, 54 bytes, Stack size 8 bytes, coinaccepterapi .o(.text))
@@ -2990,7 +2991,7 @@ Global Symbols
 <LI>Call Chain = IsTuibiAPI &rArr; ButtonRPTAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ButtonRPTAPI
 <LI><a href="#[1bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadPayBackKeyValue
@@ -3000,7 +3001,7 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[109]"></a>ClrTuibiAPI</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, tuibiapi.o(.text))
+<P><STRONG><a name="[10a]"></a>ClrTuibiAPI</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, tuibiapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = ClrTuibiAPI &rArr; OSMboxPend &rArr; OS_Sched
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
@@ -3010,14 +3011,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[10a]"></a>CheckDeviceState</STRONG> (Thumb, 276 bytes, Stack size 40 bytes, checkdevicestate.o(.text))
+<P><STRONG><a name="[10b]"></a>CheckDeviceState</STRONG> (Thumb, 276 bytes, Stack size 40 bytes, checkdevicestate.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 448 + Unknown Stack Size
 <LI>Call Chain = CheckDeviceState &rArr; TraceChannel &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
 <LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
 <LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceChannel
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceBill
 <LI><a href="#[1c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceChange
 <LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
@@ -3033,7 +3034,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PCError
 </UL>
 
-<P><STRONG><a name="[10b]"></a>IsErrorState</STRONG> (Thumb, 464 bytes, Stack size 24 bytes, checkdevicestate.o(.text))
+<P><STRONG><a name="[10c]"></a>IsErrorState</STRONG> (Thumb, 464 bytes, Stack size 24 bytes, checkdevicestate.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 456 + Unknown Stack Size
 <LI>Call Chain = IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3049,10 +3050,10 @@ Global Symbols
 <LI><a href="#[1c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ErrorStatus
 </UL>
 
-<P><STRONG><a name="[d7]"></a>HopperIsEmpty</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, checkdevicestate.o(.text))
+<P><STRONG><a name="[d8]"></a>HopperIsEmpty</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, checkdevicestate.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TubeMoneyEnough
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnpdateTubeMoney
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnpdateTubeMoney
 </UL>
 
 <P><STRONG><a name="[1d4]"></a>ChangerIsErr</STRONG> (Thumb, 104 bytes, Stack size 0 bytes, checkdevicestate.o(.text))
@@ -3086,10 +3087,10 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 464 + Unknown Stack Size
 <LI>Call Chain = ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
+<BR>[Calls]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetBillCoinStatus
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
+<BR>[Called By]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
 <LI><a href="#[3d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pcStatusReq
 </UL>
 
@@ -3097,27 +3098,27 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 464 + Unknown Stack Size
 <LI>Call Chain = SIMPLEErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
+<BR>[Calls]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
 </UL>
 <BR>[Called By]<UL><LI><a href="#[304]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SIMPLESIMPLEVPMsgPackSend
 </UL>
 
-<P><STRONG><a name="[f4]"></a>LogBeginTransAPI</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, logapi.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<P><STRONG><a name="[f5]"></a>LogBeginTransAPI</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, logapi.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[db]"></a>LogGetMoneyAPI</STRONG> (Thumb, 126 bytes, Stack size 0 bytes, logapi.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<P><STRONG><a name="[dc]"></a>LogGetMoneyAPI</STRONG> (Thumb, 126 bytes, Stack size 0 bytes, logapi.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 </UL>
 
-<P><STRONG><a name="[f6]"></a>LogTransactionAPI</STRONG> (Thumb, 1010 bytes, Stack size 32 bytes, logapi.o(.text))
+<P><STRONG><a name="[f7]"></a>LogTransactionAPI</STRONG> (Thumb, 1010 bytes, Stack size 32 bytes, logapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = LogTransactionAPI &rArr; getAisleInfo &rArr; ChannelGetParamValue &rArr; hd_get_by_logic &rArr; hd_get_index
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getAisleInfo
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<BR>[Called By]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
@@ -3127,9 +3128,9 @@ Global Symbols
 
 <P><STRONG><a name="[43c]"></a>LogCardIncomeAPI</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, logapi.o(.text), UNUSED)
 
-<P><STRONG><a name="[e8]"></a>LogChangeAPI</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, logapi.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
+<P><STRONG><a name="[e9]"></a>LogChangeAPI</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, logapi.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
 </UL>
 
 <P><STRONG><a name="[1c5]"></a>WriteLogAPI</STRONG> (Thumb, 68 bytes, Stack size 528 bytes, logapi.o(.text))
@@ -3150,7 +3151,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[159]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT45DBWritePage
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CrcCheck
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
@@ -3162,7 +3163,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 952 + Unknown Stack Size
 <LI>Call Chain = LogEndTransAPI &rArr; WriteLogDetailAPI &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteLogDetailAPI
 <LI><a href="#[1c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteLogAPI
@@ -3187,7 +3188,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[15a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT45DBReadPage
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CrcCheck
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainTask
@@ -3222,13 +3223,13 @@ Global Symbols
 <LI><a href="#[1ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__c89vsprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutNumExpanseAPI
-<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutValueExpanseAPI
+<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
+<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutValueExpanseAPI
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillDevDisableAPI
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerRecycler
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnpdateTubeMoney
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerRecycler
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnpdateTubeMoney
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateErrBill
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinCtr
 <LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
@@ -3250,17 +3251,17 @@ Global Symbols
 <LI><a href="#[27e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillDevEnable
 </UL>
 
-<P><STRONG><a name="[da]"></a>TraceCoin</STRONG> (Thumb, 68 bytes, Stack size 288 bytes, traceapi.o(.text))
+<P><STRONG><a name="[db]"></a>TraceCoin</STRONG> (Thumb, 68 bytes, Stack size 288 bytes, traceapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 408 + Unknown Stack Size
 <LI>Call Chain = TraceCoin &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart0PutChar
 <LI><a href="#[1ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__c89vsprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCoinDevMoneyInAPI
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<BR>[Called By]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCoinDevMoneyInAPI
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 <LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 <LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CoinDevInitAPI
 <LI><a href="#[260]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CoinDevProcessExpanse
@@ -3279,8 +3280,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[1cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart0PutChar
 <LI><a href="#[1ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__c89vsprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
 <LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevInitAPI
 <LI><a href="#[278]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EvbConversation
@@ -3294,7 +3295,7 @@ Global Symbols
 <LI><a href="#[296]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HopperAccepter_Handle
 </UL>
 
-<P><STRONG><a name="[e1]"></a>TraceReader</STRONG> (Thumb, 68 bytes, Stack size 288 bytes, traceapi.o(.text))
+<P><STRONG><a name="[e2]"></a>TraceReader</STRONG> (Thumb, 68 bytes, Stack size 288 bytes, traceapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 408 + Unknown Stack Size
 <LI>Call Chain = TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3302,13 +3303,13 @@ Global Symbols
 <LI><a href="#[1ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__c89vsprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutTestAPI
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
+<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevCashSaleAPI
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetReaderDevMoneyInAPI
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleCostMoney
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetReaderDevMoneyInAPI
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleCostMoney
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 <LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 <LI><a href="#[264]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevProcess
@@ -3339,8 +3340,8 @@ Global Symbols
 <LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LiftTableTest
 <LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIHandle
 <LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelReadChannelParam
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
 <LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 <LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1TaskDevice
 <LI><a href="#[278]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EvbConversation
@@ -3386,7 +3387,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
 <LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSelectKeyAPI
 <LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestSelectKey
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyValueAPI
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyValueAPI
 <LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1TaskDevice
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectInitAPI
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
@@ -3410,19 +3411,19 @@ Global Symbols
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AdminRPTAPI
 <LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ErrorCheck
 <LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PCError
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
+<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ButtonSIMPLERPTAPI
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ButtonRPTAPI
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ActionRPTAPI
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
+<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunPage
 <LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3TaskDevice
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PCInitAPI
@@ -3484,11 +3485,11 @@ Global Symbols
 
 <P><STRONG><a name="[1d0]"></a>UpdateIndex</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, pccomapi.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AdminRPTAPI
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
+<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ButtonRPTAPI
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ActionRPTAPI
 <LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3TaskDevice
@@ -3537,7 +3538,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
 </UL>
 
-<P><STRONG><a name="[e2]"></a>PayoutRPTAPI</STRONG> (Thumb, 172 bytes, Stack size 24 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[e3]"></a>PayoutRPTAPI</STRONG> (Thumb, 172 bytes, Stack size 24 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 432 + Unknown Stack Size
 <LI>Call Chain = PayoutRPTAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3547,10 +3548,10 @@ Global Symbols
 <LI><a href="#[1cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateIndex
 </UL>
-<BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerRecycler
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerRecycler
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 <LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangeMoneyInd
 </UL>
 
@@ -3572,8 +3573,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 608 + Unknown Stack Size
 <LI>Call Chain = ChangeMoneyInd &rArr; ChangerDevPayoutAPI &rArr; ChangePayoutProcessLevel2API &rArr; MDBchange &rArr; TraceChange &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
+<BR>[Calls]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ActionRPTAPI
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 </UL>
@@ -3589,22 +3590,22 @@ Global Symbols
 <LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
 <LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTCSetTime
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
-<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
-<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TxtSIMPLEInd
-<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
-<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutIndFail
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostReaderRPT
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
+<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TxtSIMPLEInd
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
+<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
+<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
+<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
+<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutIndFail
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostReaderRPT
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinCtr
-<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetReaderAmount
+<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetReaderAmount
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetAmountMoney
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zh_task3_pend
@@ -3622,15 +3623,15 @@ Global Symbols
 <LI><a href="#[1b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;acdc_led_API
 <LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;acdc_cpr_API
 </UL>
-<BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
+<BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[107]"></a>WaitForPCInit</STRONG> (Thumb, 138 bytes, Stack size 8 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[108]"></a>WaitForPCInit</STRONG> (Thumb, 138 bytes, Stack size 8 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 844 + Unknown Stack Size
 <LI>Call Chain = WaitForPCInit &rArr; PollAPI &rArr; zh_task3_pend &rArr; VendoutInd &rArr; ChannelAPIProcess &rArr; ChannelSaveParam &rArr; hd_save_param &rArr; AT45DBWritePage &rArr; AT45DBWriteNByte &rArr; AT45DBWriteBuffer &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
-<BR>[Calls]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mainTaskPollPC
+<BR>[Calls]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mainTaskPollPC
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
 <LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClearLineDraw
 <LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rstTime
@@ -3641,31 +3642,31 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[dc]"></a>PayinRPTAPI</STRONG> (Thumb, 348 bytes, Stack size 16 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[dd]"></a>PayinRPTAPI</STRONG> (Thumb, 348 bytes, Stack size 16 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = PayinRPTAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zh_task3_post
 <LI><a href="#[1cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateIndex
 </UL>
-<BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 </UL>
 
-<P><STRONG><a name="[10c]"></a>StatusRPTAPI</STRONG> (Thumb, 1270 bytes, Stack size 48 bytes, pccomapi.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 512 + Unknown Stack Size
+<P><STRONG><a name="[d6]"></a>StatusRPTAPI</STRONG> (Thumb, 1332 bytes, Stack size 64 bytes, pccomapi.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 528 + Unknown Stack Size
 <LI>Call Chain = StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HopperIsEmpty
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HopperIsEmpty
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateIndex
@@ -3673,21 +3674,22 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AdminRPTAPI
 <LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillStatusRPTAPI
+<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinEnable
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 <LI><a href="#[2e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_GetStatus
 </UL>
 
 <P><STRONG><a name="[10d]"></a>BillStatusRPTAPI</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, pccomapi.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 520 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 536 + Unknown Stack Size
 <LI>Call Chain = BillStatusRPTAPI &rArr; StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
+<BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
 <LI><a href="#[1d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillIsErr
 </UL>
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[b1]"></a>ButtonRPTAPI</STRONG> (Thumb, 196 bytes, Stack size 16 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[b1]"></a>ButtonRPTAPI</STRONG> (Thumb, 256 bytes, Stack size 16 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = ButtonRPTAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3703,29 +3705,29 @@ Global Symbols
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunPage
 </UL>
 
-<P><STRONG><a name="[f7]"></a>VendoutRPTAPI</STRONG> (Thumb, 466 bytes, Stack size 40 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[f8]"></a>VendoutRPTAPI</STRONG> (Thumb, 350 bytes, Stack size 40 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 448 + Unknown Stack Size
 <LI>Call Chain = VendoutRPTAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zh_task3_post
 <LI><a href="#[1cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateIndex
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutIndFail
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutIndFail
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
 <P><STRONG><a name="[12e]"></a>AdminRPTAPI</STRONG> (Thumb, 320 bytes, Stack size 24 bytes, pccomapi.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 536 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = AdminRPTAPI &rArr; StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateIndex
@@ -3747,7 +3749,7 @@ Global Symbols
 <LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AdminRPTSIMPLE
 </UL>
 
-<P><STRONG><a name="[151]"></a>GetAdminSIMPLEAPI</STRONG> (Thumb, 374 bytes, Stack size 24 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[151]"></a>GetAdminSIMPLEAPI</STRONG> (Thumb, 372 bytes, Stack size 24 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 432 + Unknown Stack Size
 <LI>Call Chain = GetAdminSIMPLEAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3857,8 +3859,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[1de]"></a>SelectionKeyMBox</STRONG> (Thumb, 80 bytes, Stack size 0 bytes, selectkeyapi.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
-<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyValueAPI
+<BR><BR>[Called By]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyValueAPI
 <LI><a href="#[1df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HuodaoSetSelectionKeyAPI
 <LI><a href="#[1dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKey
 </UL>
@@ -3868,11 +3870,11 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectionKeyMBox
 </UL>
-<BR>[Called By]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyAPI
+<BR>[Called By]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyAPI
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectInitAPI
 </UL>
 
-<P><STRONG><a name="[104]"></a>FreeSelectionKeyAPI</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, selectkeyapi.o(.text))
+<P><STRONG><a name="[105]"></a>FreeSelectionKeyAPI</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, selectkeyapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = FreeSelectionKeyAPI &rArr; OSMboxPost &rArr; OS_EventTaskRdy
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
@@ -3882,7 +3884,7 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[103]"></a>FreeSelectionKeyValueAPI</STRONG> (Thumb, 574 bytes, Stack size 16 bytes, selectkeyapi.o(.text))
+<P><STRONG><a name="[104]"></a>FreeSelectionKeyValueAPI</STRONG> (Thumb, 574 bytes, Stack size 16 bytes, selectkeyapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = FreeSelectionKeyValueAPI &rArr; ChannelGetSelectColumn &rArr; hd_logicNo_by_selectNo &rArr; hd_get_index
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
@@ -3892,7 +3894,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[ef]"></a>SaleSelectionKeyAPI</STRONG> (Thumb, 496 bytes, Stack size 16 bytes, selectkeyapi.o(.text))
+<P><STRONG><a name="[f0]"></a>SaleSelectionKeyAPI</STRONG> (Thumb, 496 bytes, Stack size 16 bytes, selectkeyapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 108<LI>Call Chain = SaleSelectionKeyAPI &rArr; ChannelGetParamValue &rArr; hd_get_by_logic &rArr; hd_get_index
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
@@ -3900,11 +3902,11 @@ Global Symbols
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelGetParamValue
 <LI><a href="#[1de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectionKeyMBox
 </UL>
-<BR>[Called By]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<BR>[Called By]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
@@ -3923,7 +3925,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelReadChannelParam
 <LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestSelectKey
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyValueAPI
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyValueAPI
 </UL>
 
 <P><STRONG><a name="[94]"></a>SelectInitAPI</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, selectkeyapi.o(.text))
@@ -3938,7 +3940,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainTask
 </UL>
 
-<P><STRONG><a name="[108]"></a>KeyValueAPI</STRONG> (Thumb, 182 bytes, Stack size 24 bytes, selectkeyapi.o(.text))
+<P><STRONG><a name="[109]"></a>KeyValueAPI</STRONG> (Thumb, 182 bytes, Stack size 24 bytes, selectkeyapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 448 + Unknown Stack Size
 <LI>Call Chain = KeyValueAPI &rArr; ReadKeyValue &rArr; TraceSelection &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -4208,7 +4210,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestColumnByPC
 <LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelOneTestPage
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
 </UL>
 
 <P><STRONG><a name="[1f0]"></a>ChannelResetinit</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, channelapi.o(.text))
@@ -4217,7 +4219,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hd_init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mainTaskPollPC
+<BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mainTaskPollPC
 </UL>
 
 <P><STRONG><a name="[8f]"></a>ChannelGetFlashData</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, channelapi.o(.text))
@@ -4242,7 +4244,7 @@ Global Symbols
 <LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelManage
 <LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelClearSuccesCount
 <LI><a href="#[28]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAttributeManage
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
 <LI><a href="#[2c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pc_aisle_set
 <LI><a href="#[2ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pc_ailse_num_set
 <LI><a href="#[2c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pc_goods_set
@@ -4267,8 +4269,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[1f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hd_logicNo_by_id
 <LI><a href="#[1e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hd_logicNo_by_selectNo
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
-<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyValueAPI
+<BR>[Called By]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyValueAPI
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunPage
 <LI><a href="#[1cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ColumnCheckError
 </UL>
@@ -4283,7 +4285,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LiftTableTest
 <LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelOneAddGoods
 <LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelOneTestPage
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
 <LI><a href="#[20b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setAisleInfo
 <LI><a href="#[1f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pcSetHuodao
 </UL>
@@ -4295,7 +4297,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LiftTable1Process
 <LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelOneTestPage
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
 <LI><a href="#[208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_check_huodao
 <LI><a href="#[1f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pcSetHuodao
 </UL>
@@ -4317,10 +4319,10 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelCheckCountOrPrice
 <LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelOneAddGoods
-<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
-<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutIndFail
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutIndFail
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunHefangPage
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunPage
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
@@ -4556,7 +4558,7 @@ Global Symbols
 <LI><a href="#[203]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hopper_Distribute
 <LI><a href="#[1c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceChange
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
+<BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
 </UL>
 
 <P><STRONG><a name="[204]"></a>ChangeGetTubesAPI</STRONG> (Thumb, 268 bytes, Stack size 8 bytes, changerapi.o(.text))
@@ -4597,10 +4599,10 @@ Global Symbols
 <LI><a href="#[204]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangeGetTubesAPI
 <LI><a href="#[1c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceChange
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
+<BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
 </UL>
 
-<P><STRONG><a name="[e7]"></a>ChangerDevPayoutAPI</STRONG> (Thumb, 864 bytes, Stack size 48 bytes, changerapi.o(.text))
+<P><STRONG><a name="[e8]"></a>ChangerDevPayoutAPI</STRONG> (Thumb, 864 bytes, Stack size 48 bytes, changerapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 568 + Unknown Stack Size
 <LI>Call Chain = ChangerDevPayoutAPI &rArr; ChangePayoutProcessLevel2API &rArr; MDBchange &rArr; TraceChange &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -4611,7 +4613,7 @@ Global Symbols
 <LI><a href="#[1c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceChange
 </UL>
 <BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestChanger
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
 <LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangeMoneyInd
 </UL>
 
@@ -4642,15 +4644,15 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainTask
 </UL>
 
-<P><STRONG><a name="[e0]"></a>GetReaderDevMoneyInAPI</STRONG> (Thumb, 96 bytes, Stack size 24 bytes, readerapi.o(.text))
+<P><STRONG><a name="[e1]"></a>GetReaderDevMoneyInAPI</STRONG> (Thumb, 96 bytes, Stack size 24 bytes, readerapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 432 + Unknown Stack Size
 <LI>Call Chain = GetReaderDevMoneyInAPI &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 </UL>
 <BR>[Called By]<UL><LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestCashless
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 </UL>
 
 <P><STRONG><a name="[d0]"></a>ReaderDevDisableAPI</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, readerapi.o(.text))
@@ -4677,39 +4679,39 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
 <LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 </UL>
 <BR>[Called By]<UL><LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestCashless
 </UL>
 
-<P><STRONG><a name="[ea]"></a>ReaderDevVendoutRPTAPI</STRONG> (Thumb, 208 bytes, Stack size 24 bytes, readerapi.o(.text))
+<P><STRONG><a name="[eb]"></a>ReaderDevVendoutRPTAPI</STRONG> (Thumb, 208 bytes, Stack size 24 bytes, readerapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 432 + Unknown Stack Size
 <LI>Call Chain = ReaderDevVendoutRPTAPI &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
 <LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostReaderRPT
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
+<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostReaderRPT
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsCanSale
 </UL>
 
-<P><STRONG><a name="[ec]"></a>ReaderDevVendoutResultAPI</STRONG> (Thumb, 136 bytes, Stack size 8 bytes, readerapi.o(.text))
+<P><STRONG><a name="[ed]"></a>ReaderDevVendoutResultAPI</STRONG> (Thumb, 136 bytes, Stack size 8 bytes, readerapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 416 + Unknown Stack Size
 <LI>Call Chain = ReaderDevVendoutResultAPI &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleCostMoney
+<BR>[Called By]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleCostMoney
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
@@ -4720,7 +4722,7 @@ Global Symbols
 <LI>Call Chain = ReaderDevCashSaleAPI &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
 </UL>
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
@@ -4745,9 +4747,9 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pc_trade_info_clear
 <LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pollHuman
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pollDoorAPI
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
+<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ButtonRPTAPI
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ActionRPTAPI
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PCInitAPI
@@ -4760,7 +4762,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelGetParamValue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogTransactionAPI
+<BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogTransactionAPI
 <LI><a href="#[210]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zh_goods_update
 <LI><a href="#[20f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_sn_to_no
 <LI><a href="#[208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_check_huodao
@@ -4793,9 +4795,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[209]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQAccept
 <LI><a href="#[208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_check_huodao
@@ -4981,7 +4983,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 464 + Unknown Stack Size
 <LI>Call Chain = zh_fault_update &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
+<BR>[Calls]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
 </UL>
 <BR>[Called By]<UL><LI><a href="#[217]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zh_all_update
 </UL>
@@ -4994,7 +4996,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 464 + Unknown Stack Size
 <LI>Call Chain = zh_run_update &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
+<BR>[Calls]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
 </UL>
 <BR>[Called By]<UL><LI><a href="#[217]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zh_all_update
 </UL>
@@ -5059,7 +5061,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = GPRS_AT &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5081,7 +5083,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = GPRS_CPIN &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5093,7 +5095,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = GPRS_IPR &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5105,7 +5107,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 560 + Unknown Stack Size
 <LI>Call Chain = GPRS_CSQ &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5138,7 +5140,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = GPRS_QIFGCNT &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5180,7 +5182,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = GPRS_QISTAT &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5192,7 +5194,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = GPRS_QIREGAPP &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5204,7 +5206,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = GPRS_QIACT &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5216,7 +5218,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 560 + Unknown Stack Size
 <LI>Call Chain = GPRS_QILOCIP &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5228,7 +5230,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = GPRS_QIMUX &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5240,7 +5242,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 704 + Unknown Stack Size
 <LI>Call Chain = GPRS_QIOPEN &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5258,7 +5260,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1232 + Unknown Stack Size
 <LI>Call Chain = GPRS_QISEND &rArr; GPRS_SendData &rArr; OSTimeDly &rArr; OS_Sched
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[230]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_SendData
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
@@ -5275,7 +5277,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = GPRS_QISTATE &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5284,7 +5286,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[232]"></a>GPRS_QIPOWERDOWN</STRONG> (Thumb, 94 bytes, Stack size 144 bytes, gprsapi.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR><BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5294,7 +5296,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 944 + Unknown Stack Size
 <LI>Call Chain = GPRS_QIRD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5307,7 +5309,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 936 + Unknown Stack Size
 <LI>Call Chain = GPRS_QIHEAD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5319,7 +5321,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 936 + Unknown Stack Size
 <LI>Call Chain = GPRS_QISHOWPT &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5331,7 +5333,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 936 + Unknown Stack Size
 <LI>Call Chain = GPRS_QISHOWLA &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5343,7 +5345,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 936 + Unknown Stack Size
 <LI>Call Chain = GPRS_QICLOSE &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5358,7 +5360,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 936 + Unknown Stack Size
 <LI>Call Chain = GPRS_QIDEACT &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[21d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_MissionProcess
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ComparisonSTR
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -5371,7 +5373,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1000 + Unknown Stack Size
 <LI>Call Chain = GPRS_Init &rArr; GPRS_QIDEACT &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDNumberFontPrintf
 <LI><a href="#[238]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_QIDEACT
@@ -5429,7 +5431,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1008 + Unknown Stack Size
 <LI>Call Chain = mvc_gprs_init &rArr; GPRS_Init &rArr; GPRS_QIDEACT &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[239]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_Init
 <LI><a href="#[238]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_QIDEACT
@@ -5449,7 +5451,7 @@ Global Symbols
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
 <LI><a href="#[246]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hefanCabinetControl
 <LI><a href="#[244]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hefanHuodaoInfo
 <LI><a href="#[243]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hefan_clear_trade
@@ -5510,7 +5512,7 @@ Global Symbols
 <LI>Call Chain = HeFanGuiHandle &rArr; TraceChannel &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceChannel
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[240]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiSendMBox
 </UL>
 <BR>[Called By]<UL><LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hefanMannage
@@ -5539,7 +5541,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[240]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiSendMBox
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
 </UL>
 
 <P><STRONG><a name="[1f7]"></a>getHefanHuodaotState</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, hefanguiapi.o(.text))
@@ -5802,7 +5804,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = colReset &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[253]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;col_status
 <LI><a href="#[252]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;col_poll
 <LI><a href="#[24e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;col_reset
@@ -5845,7 +5847,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 456 + Unknown Stack Size
 <LI>Call Chain = COL_driver &rArr; colReset &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[256]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;colCtrl
 <LI><a href="#[255]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;colTrade
 <LI><a href="#[254]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;colReset
@@ -5853,19 +5855,19 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 </UL>
 
-<P><STRONG><a name="[19]"></a>Uart2TaskDevice</STRONG> (Thumb, 3652 bytes, Stack size 120 bytes, taskdevice.o(.text))
+<P><STRONG><a name="[19]"></a>Uart2TaskDevice</STRONG> (Thumb, 3668 bytes, Stack size 120 bytes, taskdevice.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1200 + Unknown Stack Size
 <LI>Call Chain = Uart2TaskDevice &rArr; LiftTableDriver &rArr; LiftTableUart &rArr; TraceChannel &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
 <LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
 <LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceChannel
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceBill
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxAccept
-<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbBusHardwareReset
+<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbBusHardwareReset
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[25a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RecyclerDevInit
 <LI><a href="#[264]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevProcess
@@ -5894,14 +5896,14 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text)
 </UL>
-<P><STRONG><a name="[fa]"></a>MdbBusHardwareReset</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, mdb_uart2.o(.text))
+<P><STRONG><a name="[fb]"></a>MdbBusHardwareReset</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, mdb_uart2.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = MdbBusHardwareReset &rArr; InitUart2 &rArr; zyIsrSet
 </UL>
 <BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitUart2
 <LI><a href="#[26d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetUart2MdbMode
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
+<BR>[Called By]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
 <LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 </UL>
 
@@ -6059,8 +6061,8 @@ Global Symbols
 <LI><a href="#[283]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutValueExpanse
 </UL>
 
-<P><STRONG><a name="[283]"></a>BillRecyclerPayoutValueExpanse</STRONG> (Thumb, 844 bytes, Stack size 88 bytes, billaccepter.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 656 + Unknown Stack Size
+<P><STRONG><a name="[283]"></a>BillRecyclerPayoutValueExpanse</STRONG> (Thumb, 926 bytes, Stack size 96 bytes, billaccepter.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 664 + Unknown Stack Size
 <LI>Call Chain = BillRecyclerPayoutValueExpanse &rArr; BillRecyclerTubeExpanse &rArr; BillRecyclerEnableExpanse &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceBill
@@ -6106,8 +6108,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[261]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillDevProcess
 </UL>
 
-<P><STRONG><a name="[261]"></a>BillDevProcess</STRONG> (Thumb, 1020 bytes, Stack size 104 bytes, billaccepter.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 760 + Unknown Stack Size
+<P><STRONG><a name="[261]"></a>BillDevProcess</STRONG> (Thumb, 1022 bytes, Stack size 104 bytes, billaccepter.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 768 + Unknown Stack Size
 <LI>Call Chain = BillDevProcess &rArr; BillRecyclerPayoutValueExpanse &rArr; BillRecyclerTubeExpanse &rArr; BillRecyclerEnableExpanse &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceBill
@@ -6177,7 +6179,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 464 + Unknown Stack Size
 <LI>Call Chain = CoinDevEnable &rArr; TraceCoin &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[24d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbConversation
 </UL>
 <BR>[Called By]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
@@ -6188,8 +6190,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = CoinDevInit &rArr; CoinDevEnable &rArr; TraceCoin &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceBill
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDNumberFontPrintf
@@ -6216,7 +6218,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 480 + Unknown Stack Size
 <LI>Call Chain = CoinDevProcess &rArr; TraceCoin &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[24d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbConversation
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
@@ -6227,21 +6229,21 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 472 + Unknown Stack Size
 <LI>Call Chain = CoinDevProcessExpanse &rArr; TraceCoin &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[24d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbConversation
 </UL>
 <BR>[Called By]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 </UL>
 
 <P><STRONG><a name="[28b]"></a>ReaderUpdateRecMsg</STRONG> (Thumb, 146 bytes, Stack size 8 bytes, mdbreader.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<BR><BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 </UL>
 
 <P><STRONG><a name="[28c]"></a>ReaderSessionComplete</STRONG> (Thumb, 104 bytes, Stack size 64 bytes, mdbreader.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 472 + Unknown Stack Size
 <LI>Call Chain = ReaderSessionComplete &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[24d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbConversation
 </UL>
 <BR>[Called By]<UL><LI><a href="#[264]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevProcess
@@ -6257,7 +6259,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 488 + Unknown Stack Size
 <LI>Call Chain = ReaderCashSale &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[24d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbConversation
 </UL>
 <BR>[Called By]<UL><LI><a href="#[264]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevProcess
@@ -6267,7 +6269,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 472 + Unknown Stack Size
 <LI>Call Chain = ReaderSessionVendFail &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[24d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbConversation
 </UL>
 <BR>[Called By]<UL><LI><a href="#[264]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevProcess
@@ -6277,7 +6279,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 536 + Unknown Stack Size
 <LI>Call Chain = ReaderSessionVendSuccess &rArr; ReaderSessionComplete &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[24d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbConversation
 <LI><a href="#[28c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderSessionComplete
 </UL>
@@ -6288,7 +6290,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 488 + Unknown Stack Size
 <LI>Call Chain = ReaderSessionVendRequest &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[24d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbConversation
 </UL>
 <BR>[Called By]<UL><LI><a href="#[264]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevProcess
@@ -6298,7 +6300,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 472 + Unknown Stack Size
 <LI>Call Chain = ReaderDevDisable &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[24d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbConversation
 </UL>
@@ -6309,7 +6311,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 472 + Unknown Stack Size
 <LI>Call Chain = ReaderDevEnable &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[24d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbConversation
 </UL>
@@ -6321,7 +6323,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 616 + Unknown Stack Size
 <LI>Call Chain = ReaderDevProcess &rArr; ReaderSessionVendSuccess &rArr; ReaderSessionComplete &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[24d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbConversation
 <LI><a href="#[292]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevEnable
@@ -6341,7 +6343,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 704 + Unknown Stack Size
 <LI>Call Chain = ReaderDevInit &rArr; ReaderDevProcess &rArr; ReaderSessionVendSuccess &rArr; ReaderSessionComplete &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDNumberFontPrintf
 <LI><a href="#[264]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevProcess
@@ -6440,7 +6442,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 592 + Unknown Stack Size
 <LI>Call Chain = HopperAccepter_HpOutHandle &rArr; HopperAccepter_Handle &rArr; EvbConversation &rArr; TraceChannel &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[296]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HopperAccepter_Handle
 </UL>
 <BR>[Called By]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
@@ -6497,7 +6499,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDNumberFontPrintf
 <LI><a href="#[23d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mvc_gprs_init
@@ -7129,7 +7131,7 @@ Global Symbols
 <LI>Call Chain = VP_CMD_GetStatus &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[2d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMsgPackSend
 </UL>
@@ -7225,7 +7227,7 @@ Global Symbols
 <LI>Call Chain = VP_Vendout_Ind &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateIndex
@@ -7377,7 +7379,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1272 + Unknown Stack Size
 <LI>Call Chain = vmc_gprs_send &rArr; GPRS_SendReport &rArr; GPRS_QISEND &rArr; GPRS_SendData &rArr; OSTimeDly &rArr; OS_Sched
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[23b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_SendReport
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_total
@@ -7395,7 +7397,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1520 + Unknown Stack Size
 <LI>Call Chain = vmc_gprs_recv &rArr; GPRS_GetAckReport &rArr; GPRS_QIRD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[23c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_GetAckReport
 <LI><a href="#[237]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPRS_QICLOSE
@@ -7436,7 +7438,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1648 + Unknown Stack Size
 <LI>Call Chain = vmc_gprs_goods &rArr; vmc_gprs_recv &rArr; GPRS_GetAckReport &rArr; GPRS_QIRD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getAisleInfo
 <LI><a href="#[2f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;msg_head_config
 <LI><a href="#[2ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_recv
@@ -7452,7 +7454,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1688 + Unknown Stack Size
 <LI>Call Chain = vmc_gprs_trade_send &rArr; vmc_gprs_goods &rArr; vmc_gprs_recv &rArr; GPRS_GetAckReport &rArr; GPRS_QIRD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[2c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_logic_to_no
 <LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getAisleInfo
 <LI><a href="#[1c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadLogDetailAPI
@@ -7466,7 +7468,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 416 + Unknown Stack Size
 <LI>Call Chain = trade_cache_init &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3TaskDevice
 </UL>
@@ -7475,7 +7477,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1544 + Unknown Stack Size
 <LI>Call Chain = vmc_gprs_poll &rArr; vmc_gprs_recv &rArr; GPRS_GetAckReport &rArr; GPRS_QIRD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[2f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;msg_head_config
 <LI><a href="#[2ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_recv
 <LI><a href="#[2ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_send
@@ -7488,7 +7490,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1720 + Unknown Stack Size
 <LI>Call Chain = vmc_gprs_aisle &rArr; vmc_gprs_recv &rArr; GPRS_GetAckReport &rArr; GPRS_QIRD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getAisleInfo
 <LI><a href="#[2f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;msg_head_config
 <LI><a href="#[2ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_recv
@@ -7505,7 +7507,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1592 + Unknown Stack Size
 <LI>Call Chain = vmc_gprs_config &rArr; vmc_gprs_recv &rArr; GPRS_GetAckReport &rArr; GPRS_QIRD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[2f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;msg_head_config
 <LI><a href="#[2ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_recv
 <LI><a href="#[2ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_send
@@ -7521,7 +7523,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1616 + Unknown Stack Size
 <LI>Call Chain = vmc_gprs_run &rArr; vmc_gprs_recv &rArr; GPRS_GetAckReport &rArr; GPRS_QIRD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[2f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;msg_head_config
 <LI><a href="#[2ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_recv
 <LI><a href="#[2ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_send
@@ -7537,7 +7539,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1608 + Unknown Stack Size
 <LI>Call Chain = vmc_gprs_fualt &rArr; vmc_gprs_recv &rArr; GPRS_GetAckReport &rArr; GPRS_QIRD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getAisleInfo
 <LI><a href="#[2f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;msg_head_config
 <LI><a href="#[2ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_recv
@@ -7554,7 +7556,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1736 + Unknown Stack Size
 <LI>Call Chain = ship_cache_poll &rArr; vmc_gprs_aisle &rArr; vmc_gprs_recv &rArr; GPRS_GetAckReport &rArr; GPRS_QIRD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[20c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_trade_info_write
 <LI><a href="#[2f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_fualt
 <LI><a href="#[2f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_gprs_run
@@ -7573,7 +7575,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1584 + Unknown Stack Size
 <LI>Call Chain = vmc_gprs_register &rArr; vmc_gprs_recv &rArr; GPRS_GetAckReport &rArr; GPRS_QIRD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[23d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mvc_gprs_init
 <LI><a href="#[2f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;msg_head_config
@@ -7590,7 +7592,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1792 + Unknown Stack Size
 <LI>Call Chain = vmc_gprs_total &rArr; vmc_gprs_recv &rArr; GPRS_GetAckReport &rArr; GPRS_QIRD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[214]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_batch_info_read
 <LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getAisleInfo
 <LI><a href="#[2f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;msg_head_config
@@ -7630,7 +7632,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1856 + Unknown Stack Size
 <LI>Call Chain = task3_gprs_poll &rArr; vmc_gprs_setup &rArr; vmc_gprs_total &rArr; vmc_gprs_recv &rArr; GPRS_GetAckReport &rArr; GPRS_QIRD &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[23d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mvc_gprs_init
 <LI><a href="#[217]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zh_all_update
@@ -7760,7 +7762,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
 <LI><a href="#[1cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateSIMPLEIndex
 <LI><a href="#[306]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMissionSIMPLE_Vendout_RPT
@@ -7919,7 +7921,7 @@ Global Symbols
 <LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
 <LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceChannel
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceSelection
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDNumberFontPrintf
 <LI><a href="#[316]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTMission_SetTemperatureS
@@ -7986,7 +7988,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = XMTMission_GetTemperature &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[31d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTBusUnpack
 <LI><a href="#[31b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTMsgPackSend
 <LI><a href="#[31e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTSerialInit
@@ -8000,7 +8002,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 432 + Unknown Stack Size
 <LI>Call Chain = XMTMission_SetTemperature &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[31d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTBusUnpack
 <LI><a href="#[31b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTMsgPackSend
 <LI><a href="#[31f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay
@@ -8012,7 +8014,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 448 + Unknown Stack Size
 <LI>Call Chain = XMTMission_SetTemperatureS &rArr; XMTMission_SetTemperature &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[320]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTMission_SetTemperature
 <LI><a href="#[315]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTMission_GetTemperature
@@ -8025,7 +8027,7 @@ Global Symbols
 <LI>Call Chain = HeFanGuiRecvAckDevice &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CrcCheck
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[323]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1GetCh
 <LI><a href="#[322]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1BuffIsNotEmpty
 </UL>
@@ -8111,7 +8113,7 @@ Global Symbols
 <LI><a href="#[328]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zyIsrSet
 <LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbBusHardwareReset
+<BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbBusHardwareReset
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainTask
 </UL>
 
@@ -8147,7 +8149,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[26d]"></a>SetUart2MdbMode</STRONG> (Thumb, 50 bytes, Stack size 0 bytes, uart2.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbBusHardwareReset
+<BR><BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbBusHardwareReset
 <LI><a href="#[278]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EvbConversation
 <LI><a href="#[295]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LiftTableUart
 </UL>
@@ -8186,11 +8188,11 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[1a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCompress
 <LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceChannel
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceSelection
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceBill
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[1cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceLed
 <LI><a href="#[1c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceChange
 <LI><a href="#[329]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintLog
@@ -8223,7 +8225,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[1cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart0PutChar
 </UL>
 
-<P><STRONG><a name="[f5]"></a>Trace</STRONG> (Thumb, 62 bytes, Stack size 288 bytes, uart0.o(.text))
+<P><STRONG><a name="[f6]"></a>Trace</STRONG> (Thumb, 62 bytes, Stack size 288 bytes, uart0.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 408 + Unknown Stack Size
 <LI>Call Chain = Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -8256,7 +8258,7 @@ Global Symbols
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MaintainUserProcess
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogEndTransAPI
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsTuibiAPI
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 <LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3TaskDevice
 <LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 <LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1TaskDevice
@@ -8609,13 +8611,13 @@ Global Symbols
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectOKCheck
 <LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PasswordCheck
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MaintainUserProcess
-<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
+<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
+<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinEnable
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispEndPage
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunFreePage
@@ -8790,7 +8792,7 @@ Global Symbols
 <LI><a href="#[331]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UC1608EPutData
 </UL>
 <BR>[Called By]<UL><LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestCashless
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDSpecialPicPrintf
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispSalePage
@@ -8863,8 +8865,8 @@ Global Symbols
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectOKCheck
 <LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PasswordCheck
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MaintainUserProcess
-<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TxtSIMPLEInd
-<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispSaleTime
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TxtSIMPLEInd
+<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispSaleTime
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispEndPage
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispSalePage
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispErrPage
@@ -8896,7 +8898,7 @@ Global Symbols
 <LI><a href="#[338]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPutAsciiFont
 <LI><a href="#[1ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__c89vsprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
+<BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispEndPage
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispSalePage
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunFreePage
@@ -9142,7 +9144,7 @@ Global Symbols
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectOKCheck
 <LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PasswordCheck
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MaintainUserProcess
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyValueAPI
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyValueAPI
 <LI><a href="#[24a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hefanInitPage
 <LI><a href="#[248]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hefanAddgoods
 <LI><a href="#[247]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hefanControl
@@ -9163,7 +9165,7 @@ Global Symbols
 
 <P><STRONG><a name="[44b]"></a>EnableKeyBoard</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, key.o(.text), UNUSED)
 
-<P><STRONG><a name="[101]"></a>ReadMaintainKeyValue</STRONG> (Thumb, 130 bytes, Stack size 8 bytes, key.o(.text))
+<P><STRONG><a name="[102]"></a>ReadMaintainKeyValue</STRONG> (Thumb, 130 bytes, Stack size 8 bytes, key.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = ReadMaintainKeyValue &rArr; OSTimeDly &rArr; OS_Sched
 </UL>
 <BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
@@ -9177,7 +9179,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 </UL>
 <BR>[Called By]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsTuibiAPI
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClrTuibiAPI
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClrTuibiAPI
 </UL>
 
 <P><STRONG><a name="[1e0]"></a>ReadGameKeyValue</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, key.o(.text))
@@ -9196,7 +9198,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[105]"></a>gameLedControl</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, key.o(.text))
+<P><STRONG><a name="[106]"></a>gameLedControl</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, key.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = gameLedControl &rArr; OSTimeDly &rArr; OS_Sched
 </UL>
 <BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
@@ -9249,17 +9251,17 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = ReadParallelCoinAcceptor &rArr; TraceCoin &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPend
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCoinDevMoneyInAPI
+<BR>[Called By]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCoinDevMoneyInAPI
 </UL>
 
 <P><STRONG><a name="[349]"></a>ScanPPCoinChannel</STRONG> (Thumb, 284 bytes, Stack size 16 bytes, pcoin.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = ScanPPCoinChannel &rArr; TraceCoin &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[1cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 </UL>
 <BR>[Called By]<UL><LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER1_IRQHandler
@@ -9293,14 +9295,14 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPend
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCoinDevMoneyInAPI
+<BR>[Called By]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCoinDevMoneyInAPI
 </UL>
 
 <P><STRONG><a name="[34a]"></a>ScanSPCoinChannel</STRONG> (Thumb, 110 bytes, Stack size 8 bytes, pcoin.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 416 + Unknown Stack Size
 <LI>Call Chain = ScanSPCoinChannel &rArr; TraceCoin &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[1cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 </UL>
 <BR>[Called By]<UL><LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER1_IRQHandler
@@ -9843,19 +9845,19 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutTestAPI
 <LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutNumExpanseAPI
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
+<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevCashSaleAPI
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsTuibiAPI
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClrTuibiAPI
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutValueExpanseAPI
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClrTuibiAPI
+<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutValueExpanseAPI
+<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetmoneySIMPLEInd
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
+<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackMoneyInd
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClearDealPar
 <LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
@@ -9894,16 +9896,16 @@ Global Symbols
 <LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutNumExpanseAPI
 <LI><a href="#[131]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AdminRPTSIMPLEAPI
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AdminRPTAPI
-<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mainTaskPollPC
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
+<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mainTaskPollPC
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReturnBillDevMoneyInAPI
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsTuibiAPI
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetReaderDevMoneyInAPI
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClrTuibiAPI
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutValueExpanseAPI
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetReaderDevMoneyInAPI
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClrTuibiAPI
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
+<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutValueExpanseAPI
 <LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 <LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1TaskDevice
 <LI><a href="#[240]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiSendMBox
@@ -9931,22 +9933,22 @@ Global Symbols
 <LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutTestAPI
 <LI><a href="#[138]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetBillDevMoneyInAPI
 <LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutNumExpanseAPI
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
-<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
+<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaleSelectionKeyAPI
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReturnBillDevMoneyInAPI
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
+<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevEnableAPI
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevDisableAPI
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevCashSaleAPI
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyValueAPI
-<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyAPI
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyValueAPI
+<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FreeSelectionKeyAPI
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CoinDevEnableAPI
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CoinDevDisableAPI
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutValueExpanseAPI
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerDevPayoutAPI
+<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillRecyclerPayoutValueExpanseAPI
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillDevEnableAPI
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillDevDisableAPI
 <LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3TaskDevice
@@ -10053,29 +10055,29 @@ Global Symbols
 <LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ErrorCheck
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectOKCheck
 <LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PasswordCheck
-<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameLedControl
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
-<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadMaintainKeyValue
+<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameLedControl
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
+<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StackedBillDevMoneyInAPI
+<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutResultAPI
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReaderDevVendoutRPTAPI
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadMaintainKeyValue
 <LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadCloseHumanKeyValue
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
-<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbBusHardwareReset
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
+<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MdbBusHardwareReset
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MaintainUserProcess
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogEndTransAPI
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ButtonRPTAPI
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ActionRPTAPI
-<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
+<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
+<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetInd
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CostMoneyInd
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateErrBill
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillCoinCtr
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispEndPage
@@ -10232,15 +10234,15 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[36d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_Sched
 </UL>
 
-<P><STRONG><a name="[e6]"></a>OSTimeGet</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, os_time.o(.text))
+<P><STRONG><a name="[e7]"></a>OSTimeGet</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, os_time.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = OSTimeGet
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
+<BR>[Called By]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutSIMPLEInd
+<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TuiMoneyInd
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
 <LI><a href="#[307]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPSIMPLE_Vendout_Ind
 <LI><a href="#[2e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_Vendout_Ind
 </UL>
@@ -10406,8 +10408,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
 <LI><a href="#[138]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetBillDevMoneyInAPI
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCoinDevMoneyInAPI
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetBillDevMoneyUnStackInAPI
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCoinDevMoneyInAPI
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetBillDevMoneyUnStackInAPI
 <LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3TaskDevice
 <LI><a href="#[1ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadSerialPluseCoinAcceptor
 <LI><a href="#[1b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadParallelCoinAcceptor
@@ -10433,11 +10435,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetAdminSIMPLEAPI
 <LI><a href="#[131]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AdminRPTSIMPLEAPI
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AdminRPTAPI
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
+<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutRPTAPI
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayoutRPTAPI
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PayinRPTAPI
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ButtonSIMPLERPTAPI
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ButtonRPTAPI
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ActionRPTAPI
@@ -10790,19 +10792,19 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 </UL>
-<BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mainTaskPollPC
+<BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mainTaskPollPC
 </UL>
 
-<P><STRONG><a name="[106]"></a>mainTaskPollPC</STRONG> (Thumb, 262 bytes, Stack size 24 bytes, taskuart0device.o(.text))
+<P><STRONG><a name="[107]"></a>mainTaskPollPC</STRONG> (Thumb, 262 bytes, Stack size 24 bytes, taskuart0device.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 700 + Unknown Stack Size
 <LI>Call Chain = mainTaskPollPC &rArr; ChannelResetinit &rArr; hd_init &rArr; hefanHuodaoInit &rArr; save_hefan_huodao_info &rArr; AT45DBWritePage &rArr; AT45DBWriteNByte &rArr; AT45DBWriteBuffer &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
 <LI><a href="#[1f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelResetinit
 <LI><a href="#[3dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmcPost
 </UL>
-<BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
+<BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitForPCInit
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
@@ -10873,11 +10875,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCompress
 <LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceChannel
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceSelection
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceReader
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceCoin
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceBill
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDNumberFontPrintf
 <LI><a href="#[1cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceLed
@@ -10897,8 +10899,8 @@ Global Symbols
 <LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelSomeColumnTest
 <LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelKaojiCheckPage
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintfMoney
-<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TxtSIMPLEInd
-<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TxtSIMPLEInd
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispIOUPage
 <LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChuhuoPagePC
 <LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChuhuoPage
@@ -11103,7 +11105,7 @@ Global Symbols
 <LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FactoryDefaultSystemPara
 <LI><a href="#[2e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceMaintainProcess
 <LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UserTradeMaintainProcess
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CheckDeviceState
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadLogAPI
 <LI><a href="#[23f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;read_hefan_huodao_info
 <LI><a href="#[214]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_batch_info_read
@@ -11211,8 +11213,8 @@ Global Symbols
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteUserSystemPara
 <LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteDefaultSystemPara
 <LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FactoryDefaultSystemPara
-<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TxtSIMPLEInd
-<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TxtSIMPLEInd
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PriceSIMPLEInd
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispEndPage
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispIOUPage
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispQuChangePage

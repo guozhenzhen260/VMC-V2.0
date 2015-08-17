@@ -1,7 +1,8 @@
----- MDBCONVERSATIONWAITACKTIMEOUT 匹配 (6 在 2 文件 ) ----
-Mdb_uart2.c (drivers):17:volatile unsigned int MDBCONVERSATIONWAITACKTIMEOUT;//MDB通讯超时时间
-Mdb_uart2.c (drivers):70:	MDBCONVERSATIONWAITACKTIMEOUT = 200;	//进入ACK等待，超时200ms
-Mdb_uart2.c (drivers):71:	while(MDBCONVERSATIONWAITACKTIMEOUT)
-Timer.c (drivers):17:extern volatile unsigned int MDBCONVERSATIONWAITACKTIMEOUT;
-Timer.c (drivers):94:	if(MDBCONVERSATIONWAITACKTIMEOUT)
-Timer.c (drivers):95:		MDBCONVERSATIONWAITACKTIMEOUT--;
+---- BillCoinEnable 匹配 (7 在 1 文件 ) ----
+Business.c (app):1573:void BillCoinEnable(uint8_t enable)
+Business.c (app):1674:			BillCoinEnable(2);
+Business.c (app):1678:			BillCoinEnable(1);
+Business.c (app):1685:			BillCoinEnable(2);
+Business.c (app):1689:			BillCoinEnable(1);
+Business.c (app):1699:				BillCoinEnable(2);
+Business.c (app):1703:				BillCoinEnable(1);

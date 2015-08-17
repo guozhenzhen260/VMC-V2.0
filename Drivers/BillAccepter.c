@@ -31,7 +31,7 @@ uint32_t nBillvalue[16]={0};
 MDBBILLERROR MdbBillErr;
 
 extern unsigned char BillRecyclerPayoutNumExpanse(unsigned int RecyPayoutMoney,unsigned char RecyPayoutNum);
-extern unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney);
+extern unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney,unsigned int *RecyPayoutMoneyBack);
 extern void BillRecyclerTubeExpanse(void);
 
 
@@ -363,7 +363,7 @@ void BillDevEnable(void)
 						billOptBack--纸币器控制返回结果
 ** Returned value:      有纸币收入返回1，无返回0
 *********************************************************************************************************/
-uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char billOpt,unsigned char *billOptBack,uint32_t RecyPayoutMoney,uint8_t RecyPayoutNum)
+uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char billOpt,unsigned char *billOptBack,uint32_t RecyPayoutMoney,uint8_t RecyPayoutNum,unsigned int *RecyPayoutMoneyBack)
 {
 	unsigned char BillRdBuff[36],BillRdLen,ComStatus,BillWrBuff[1];
 	uint8_t type=0,i=0;
@@ -404,7 +404,7 @@ uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char
 			break;
 		case MBOX_BILLRECYPAYOUTVALUE:
 			//TraceBill("\r\n DrvRECPay=%ld,Num=%d",RecyPayoutMoney,RecyPayoutNum);
-			if(BillRecyclerPayoutValueExpanse(RecyPayoutMoney))
+			if(BillRecyclerPayoutValueExpanse(RecyPayoutMoney,RecyPayoutMoneyBack))
 				*billOptBack = 6;	
 			else
 				*billOptBack = 5;		
@@ -1140,12 +1140,14 @@ unsigned char BillRecyclerPayoutNumExpanse(unsigned int RecyPayoutMoney,unsigned
 ** output parameters:   无
 ** Returned value:      1找零成功,0找零失败
 *********************************************************************************************************/
-unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney)
+unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney,unsigned int *RecyPayoutMoneyBack)
 {
 	uint8_t BillRdBuff[36],BillRdLen,ComStatus,VMCdata[3]={0x07,0x00,0x00},VMCPoll[1]={0x09},i,payout=1;
 	uint8_t billscale,dispenseValue;	
 	uint8_t payStatus=0;
+	uint32_t RecyclerValue=0;
 
+	*RecyPayoutMoneyBack=0;
 	billscale = stDevValue.BillScale;
 	dispenseValue = RecyPayoutMoney / billscale;//发送找零基准数量 
 	VMCdata[1]=HUINT16(dispenseValue);
@@ -1192,6 +1194,23 @@ unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney)
 					TraceBill(" %#02x ",BillRdBuff[i]);
 				}
 				TraceBill("\r\n");
+				//5得到找零多少钱
+				for(i=0;i<7;i++)
+				{
+					if(stDevValue.RecyclerValue[i])
+					{
+						RecyclerValue=stDevValue.RecyclerValue[i];//得到可以暂存到循环斗的面值
+						break;
+					}
+				}
+				for(i=0;i<BillRdLen;i++)
+				{
+					if(BillRdBuff[i]>0)
+					{
+						*RecyPayoutMoneyBack=RecyclerValue*BillRdBuff[i];
+						break;
+					}
+				}
 				OSTimeDly(7);
 				//5发送指令更新币斗剩余纸币数量
 				BillRecyclerTubeExpanse();

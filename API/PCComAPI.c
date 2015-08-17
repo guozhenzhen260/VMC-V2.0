@@ -303,7 +303,7 @@ void StatusRPTAPI()
 			MsgUboxPack[g_Ubox_Index].coinSum[4] = stDevValue.CoinNum[4];
 			MsgUboxPack[g_Ubox_Index].coinSum[5] = stDevValue.CoinNum[5];
 			MsgUboxPack[g_Ubox_Index].tem_st = UserPara.CompressorCtr.flag;
-			TracePC("\r\n MiddUboxSataus=%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%ld",stDevValue.CoinValue[0],stDevValue.CoinNum[0],stDevValue.CoinValue[1],stDevValue.CoinNum[1],
+			TracePC("\r\n MiddUboxSataus check_st=%d,bv_st=%d,cc_st=%d,vmc_st=%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%ld",MsgUboxPack[g_Ubox_Index].check_st,MsgUboxPack[g_Ubox_Index].bv_st,MsgUboxPack[g_Ubox_Index].cc_st,MsgUboxPack[g_Ubox_Index].vmc_st,stDevValue.CoinValue[0],stDevValue.CoinNum[0],stDevValue.CoinValue[1],stDevValue.CoinNum[1],
 				stDevValue.CoinValue[2],stDevValue.CoinNum[2],stDevValue.CoinValue[3],stDevValue.CoinNum[3],stDevValue.CoinValue[4],stDevValue.CoinNum[4],stDevValue.CoinValue[5],stDevValue.CoinNum[5],MsgUboxPack[g_Ubox_Index].change);	
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
 			UpdateIndex();

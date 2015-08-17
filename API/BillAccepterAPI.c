@@ -383,7 +383,7 @@ unsigned char BillRecyclerPayoutNumExpanseAPI(unsigned int RecyPayoutMoney,unsig
 ** output parameters:   ÎÞ
 ** Returned value:      1ÕÒÁã³É¹¦,0ÕÒÁãÊ§°Ü
 *********************************************************************************************************/
-unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney)
+unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney,uint32_t  *RecyPayoutMoneyBack)
 {
 	MessagePack *BillMsg;
 	uint8_t err,ReturnBack = 1;
@@ -405,14 +405,16 @@ unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney)
 					BillMsg = OSMboxPend(g_BillMoneyBackMail,OS_TICKS_PER_SEC*60,&err);//·µ»ØÊÇ·ñÕÒÁã³É¹¦ 		
 					if(err == OS_NO_ERR) 
 					{					
-						//4.Ñ¹³­³É¹¦£¬·¢ËÍÑ¹³­³É¹¦¸øÖ½±ÒÆ÷
+						//4.ÕÒÁã³É¹¦£¬·¢ËÍÕÒÁã³É¹¦¸øÖ½±ÒÆ÷
 						if(BillMsg->BillBackCmd == MBOX_BILLRECYPAYOUTSUCC)
 						{
+							*RecyPayoutMoneyBack=BillMsg->RecyPayoutMoneyBack;
 							ReturnBack = 1;
 						}
-						//5.Ñ¹³­Ê§°Ü£¬·¢ËÍÑ¹³­Ê§°Ü¸øÖ½±ÒÆ÷
+						//5.ÕÒÁãÊ§°Ü£¬·¢ËÍÕÒÁãÊ§°Ü¸øÖ½±ÒÆ÷
 						else if(BillMsg->BillBackCmd == MBOX_BILLRECYPAYOUTFAIL)
 						{
+							*RecyPayoutMoneyBack=0;
 							ReturnBack = 0;
 						}
 						//Trace("\r\n 2.=%d",ReturnBack);					
@@ -420,6 +422,7 @@ unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney)
 					else
 					{
 						ReturnBack = 1;
+						*RecyPayoutMoneyBack=0;
 					}	
 				}
 					

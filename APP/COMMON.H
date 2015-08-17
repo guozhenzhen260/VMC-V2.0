@@ -553,6 +553,7 @@ typedef struct
 	//纸币找零循环器
 	uint32_t  RecyPayoutMoney;			    //找零金额
 	uint8_t   RecyPayoutNum;				//找零数量
+	uint32_t  RecyPayoutMoneyBack;			//实际找零金额
 	
 } MessagePack;	
 extern MessagePack MsgAccepterPack;

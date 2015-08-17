@@ -9,6 +9,339 @@ Project File Date:  07/29/2015
 <h2>Output:</h2>
 Build target 'VMC-V2.02'
 linking...
-Program Size: Code=264960 RO-data=74704 RW-data=1752 ZI-data=43312  
+Program Size: Code=264972 RO-data=74804 RW-data=1752 ZI-data=43312  
 FromELF: creating hex file...
 ".\Hex\VMC_V2_12_2015_x_x.axf" - 0 Error(s), 0 Warning(s).
+Build target 'VMC-V2.02'
+compiling TASKDEVICE.C...
+Drivers\TASKDEVICE.C(235): error:  #165: too few arguments in function call
+Drivers\TASKDEVICE.C:                           flag = BillDevProcess(&Billvalue,&Billtype,billOpt,&billOptBack,RecyPayoutMoney,RecyPayoutNum);
+Drivers\TASKDEVICE.C:                                                                                                                        ^
+Drivers\TASKDEVICE.C: Drivers\TASKDEVICE.C: 0 warnings, 1 error
+compiling BillAccepter.c...
+Drivers\BillAccepter.c(407): error:  #167: argument of type "unsigned int" is incompatible with parameter of type "unsigned int *"
+Drivers\BillAccepter.c:                         if(BillRecyclerPayoutValueExpanse(RecyPayoutMoney,*RecyPayoutMoneyBack))
+Drivers\BillAccepter.c:                                                                           ^
+Drivers\BillAccepter.c: Drivers\BillAccepter.c: 0 warnings, 1 error
+Target not created
+Build target 'VMC-V2.02'
+compiling TASKDEVICE.C...
+Drivers\TASKDEVICE.C(235): error:  #165: too few arguments in function call
+Drivers\TASKDEVICE.C:                           flag = BillDevProcess(&Billvalue,&Billtype,billOpt,&billOptBack,RecyPayoutMoney,RecyPayoutNum);
+Drivers\TASKDEVICE.C:                                                                                                                        ^
+Drivers\TASKDEVICE.C: Drivers\TASKDEVICE.C: 0 warnings, 1 error
+compiling BillAccepter.c...
+Target not created
+Build target 'VMC-V2.02'
+compiling TASKDEVICE.C...
+Drivers\TASKDEVICE.C(235): error:  #165: too few arguments in function call
+Drivers\TASKDEVICE.C:                           flag = BillDevProcess(&Billvalue,&Billtype,billOpt,&billOptBack,RecyPayoutMoney,RecyPayoutNum);
+Drivers\TASKDEVICE.C:                                                                                                                        ^
+Drivers\TASKDEVICE.C: Drivers\TASKDEVICE.C: 0 warnings, 1 error
+compiling BillAccepter.c...
+Target not created
+Build target 'VMC-V2.02'
+compiling TASKDEVICE.C...
+linking...
+Program Size: Code=265064 RO-data=74804 RW-data=1752 ZI-data=43312  
+FromELF: creating hex file...
+".\Hex\VMC_V2_12_2015_x_x.axf" - 0 Error(s), 0 Warning(s).
+Build target 'VMC-V2.02'
+compiling MAIN.C...
+compiling BUSINESS.C...
+APP\BUSINESS.C(2017): error:  #165: too few arguments in function call
+APP\BUSINESS.C:                                         status=BillRecyclerPayoutValueExpanseAPI(stDevValue.RecyclerValue[i]*num);
+APP\BUSINESS.C:                                                                                                                 ^
+APP\BUSINESS.C(2002): warning:  #177-D: variable "RecyPayoutMoneyBack" was declared but never referenced
+APP\BUSINESS.C:         uint32_t  RecyPayoutMoneyBack=0;
+APP\BUSINESS.C:                   ^
+APP\BUSINESS.C: APP\BUSINESS.C: 1 warning, 1 error
+compiling MAINTAIN.C...
+APP\USERMAINTAIN_MENU.C(137): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                        ^
+APP\USERMAINTAIN_MENU.C(137): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                                   ^
+APP\USERMAINTAIN_MENU.C(144): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>"
+APP\USERMAINTAIN_MENU.C:                       ^
+APP\USERMAINTAIN_MENU.C(261): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                        ^
+APP\USERMAINTAIN_MENU.C(261): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                                   ^
+APP\USERMAINTAIN_MENU.C(268): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>"
+APP\USERMAINTAIN_MENU.C:                       ^
+APP\USERMAINTAIN_MENU.C(282): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "1.FALHA NA COMUNICA\x83\x82\O"
+APP\USERMAINTAIN_MENU.C:                                            ^
+APP\USERMAINTAIN_MENU.C(352): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "1.FALHA COMUNICA\x83\x82\O"
+APP\USERMAINTAIN_MENU.C:                                         ^
+APP\USERMAINTAIN_MENU.C(394): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "7.REMO\x83\x82\O DE MOEDA"
+APP\USERMAINTAIN_MENU.C:                               ^
+APP\USERMAINTAIN_MENU.C(450): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "1.ERRO GOC NO ARM\x81\RIO CENTRAL"
+APP\USERMAINTAIN_MENU.C:                                      ^
+APP\USERMAINTAIN_MENU.C(457): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "2.ERRO GOC NO SUB ARM\x81\RIO"
+APP\USERMAINTAIN_MENU.C:                                          ^
+APP\USERMAINTAIN_MENU.C(643): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                        ^
+APP\USERMAINTAIN_MENU.C(643): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                                   ^
+APP\USERMAINTAIN_MENU.C(650): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>"
+APP\USERMAINTAIN_MENU.C:                       ^
+APP\USERMAINTAIN_MENU.C(771): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                        ^
+APP\USERMAINTAIN_MENU.C(771): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                                   ^
+APP\USERMAINTAIN_MENU.C(778): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>"
+APP\USERMAINTAIN_MENU.C:                       ^
+APP\USERMAINTAIN_MENU.C(813): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "5.D\x84\VIDA NA QUANTIDADE:"
+APP\USERMAINTAIN_MENU.C:                        ^
+APP\USERMAINTAIN_MENU.C(943): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "PROGRAMA\x83\x82\O DE COMPRA"
+APP\USERMAINTAIN_MENU.C:                                 ^
+APP\USERMAINTAIN_MENU.C(950): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                        ^
+APP\USERMAINTAIN_MENU.C(950): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                                   ^
+APP\USERMAINTAIN_MENU.C(957): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>"
+APP\USERMAINTAIN_MENU.C:                       ^
+APP\USERMAINTAIN_MENU.C(964): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "1.HOR\x81\RIO"
+APP\USERMAINTAIN_MENU.C:                          ^
+APP\USERMAINTAIN_MENU.C(971): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "2.REFRIGERA\x83\x82\O"
+APP\USERMAINTAIN_MENU.C:                                    ^
+APP\USERMAINTAIN_MENU.C(1109): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "HOR\x81\RIO"
+APP\USERMAINTAIN_MENU.C:                        ^
+APP\USERMAINTAIN_MENU.C(1116): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                        ^
+APP\USERMAINTAIN_MENU.C(1116): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                                   ^
+APP\USERMAINTAIN_MENU.C(1123): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>"
+APP\USERMAINTAIN_MENU.C:                       ^
+APP\USERMAINTAIN_MENU.C(1137): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "2.M\x85\S:   "
+APP\USERMAINTAIN_MENU.C:                        ^
+APP\USERMAINTAIN_MENU.C(1274): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                        ^
+APP\USERMAINTAIN_MENU.C(1274): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                                   ^
+APP\USERMAINTAIN_MENU.C(1281): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>"
+APP\USERMAINTAIN_MENU.C:                       ^
+APP\USERMAINTAIN_MENU.C(1375): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                        ^
+APP\USERMAINTAIN_MENU.C(1375): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>"
+APP\USERMAINTAIN_MENU.C:                                   ^
+APP\USERMAINTAIN_MENU.C(1382): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>"
+APP\USERMAINTAIN_MENU.C:                       ^
+APP\USERMAINTAIN_MENU.C(1410): warning:  #192-D: unrecognized character escape sequence
+APP\USERMAINTAIN_MENU.C:                "4.LEITURA CART\x82\O:"
+APP\USERMAINTAIN_MENU.C:                                   ^
+APP\USERMAINTAIN_MENU.C: APP\MAINTAIN.C: 36 warnings, 0 errors
+compiling COMMON.C...
+compiling LANGUAGE.C...
+APP\LANGUAGE.C(376): warning:  #192-D: unrecognized character escape sequence
+APP\LANGUAGE.C:           "FALHA NA COBRAN\x83\A",
+APP\LANGUAGE.C:                               ^
+APP\LANGUAGE.C: APP\LANGUAGE.C: 1 warning, 0 errors
+compiling CHANNEL.C...
+APP\CHANNEL.C(39): warning:  #192-D: unrecognized character escape sequence
+APP\CHANNEL.C:                  "CONFIGURA\x83\x82\O DE ATRIBUTO DE ARMARIO"
+APP\CHANNEL.C:                                    ^
+APP\CHANNEL.C(95): warning:  #192-D: unrecognized character escape sequence
+APP\CHANNEL.C:                  "INSIRA C\x80\DIGO DA BANDEJA:"
+APP\CHANNEL.C:                               ^
+APP\CHANNEL.C(109): warning:  #192-D: unrecognized character escape sequence
+APP\CHANNEL.C:                  "C\x80\DIGO DA BANDEJA:"
+APP\CHANNEL.C:                        ^
+APP\CHANNEL.C(116): warning:  #192-D: unrecognized character escape sequence
+APP\CHANNEL.C:                  "COLUNA N\x82\O DISPONIVEL!"
+APP\CHANNEL.C:                               ^
+APP\CHANNEL.C(123): warning:  #192-D: unrecognized character escape sequence
+APP\CHANNEL.C:                  "SITUA\x83\x82\O DA BANDEJA:"
+APP\CHANNEL.C:                                ^
+APP\CHANNEL.C(137): warning:  #192-D: unrecognized character escape sequence
+APP\CHANNEL.C:                  "BENDEIJA SITUA\x83\x82\O:"
+APP\CHANNEL.C:                                         ^
+APP\CHANNEL.C(211): warning:  #192-D: unrecognized character escape sequence
+APP\CHANNEL.C:                  "SITUA\x83\x82\O DAS BANDEJAS"
+APP\CHANNEL.C:                                ^
+APP\CHANNEL.C(234): warning:  #192-D: unrecognized character escape sequence
+APP\CHANNEL.C:                  "PRE\x83\O UNIT\x81\RIO:"
+APP\CHANNEL.C:                          ^
+APP\CHANNEL.C(234): warning:  #192-D: unrecognized character escape sequence
+APP\CHANNEL.C:                  "PRE\x83\O UNIT\x81\RIO:"
+APP\CHANNEL.C:                                     ^
+APP\CHANNEL.C(304): warning:  #192-D: unrecognized character escape sequence
+APP\CHANNEL.C:                  "SITUA\x83\x82\O DAS BANDEJAS"
+APP\CHANNEL.C:                                ^
+APP\CHANNEL.C(325): warning:  #192-D: unrecognized character escape sequence
+APP\CHANNEL.C:                  "PRE\x83\O NA BANDEJA 0"
+APP\CHANNEL.C:                          ^
+APP\CHANNEL.C: APP\CHANNEL.C: 11 warnings, 0 errors
+compiling LIFTTABLE.c...
+APP\LIFTTABLE.c(56): warning:  #192-D: unrecognized character escape sequence
+APP\LIFTTABLE.c:                " COLUNA N\x82\O DISPONIVEL!"
+APP\LIFTTABLE.c:                              ^
+APP\LIFTTABLE.c(133): warning:  #192-D: unrecognized character escape sequence
+APP\LIFTTABLE.c:                " ERRO DA PLACA DE DISTRIBUI\x83\x82\O"
+APP\LIFTTABLE.c:                                                    ^
+APP\LIFTTABLE.c(147): warning:  #192-D: unrecognized character escape sequence
+APP\LIFTTABLE.c:                " SITUA\x83x82\O DAS PORTS DA MAQUINA"
+APP\LIFTTABLE.c:                              ^
+APP\LIFTTABLE.c(182): warning:  #192-D: unrecognized character escape sequence
+APP\LIFTTABLE.c:                " C\x80\DIGO DA BANDEJA:"
+APP\LIFTTABLE.c:                       ^
+APP\LIFTTABLE.c(508): warning:  #111-D: statement is unreachable
+APP\LIFTTABLE.c:                        break;
+APP\LIFTTABLE.c:                        ^
+APP\LIFTTABLE.c(691): warning:  #111-D: statement is unreachable
+APP\LIFTTABLE.c:                        break;
+APP\LIFTTABLE.c:                        ^
+APP\LIFTTABLE.c: APP\LIFTTABLE.c: 6 warnings, 0 errors
+compiling ACDC.C...
+APP\ACDC.C(67): warning:  #192-D: unrecognized character escape sequence
+APP\ACDC.C:             "REFRIGERA\x83\x82\O"
+APP\ACDC.C:                               ^
+APP\ACDC.C(81): warning:  #192-D: unrecognized character escape sequence
+APP\ACDC.C:             "REFRIGERA\x83\x82\O"
+APP\ACDC.C:                               ^
+APP\ACDC.C(88): warning:  #192-D: unrecognized character escape sequence
+APP\ACDC.C:             "TEMPO DE OPERA\x83\x82\O"
+APP\ACDC.C:                                    ^
+APP\ACDC.C: APP\ACDC.C: 3 warnings, 0 errors
+compiling ACDCAPI.c...
+compiling BillAccepterAPI.c...
+compiling CoinAccepterAPI .c...
+compiling TuibiAPI.c...
+compiling CheckDeviceState.c...
+compiling LogAPI.c...
+compiling TraceAPI.c...
+compiling PCComAPI.c...
+compiling LiftTableAPI.c...
+compiling SelectKeyAPI.c...
+compiling ChannelAPI.c...
+compiling ChangerAPI.c...
+compiling ReaderAPI.c...
+compiling ZhiHuiAPI.c...
+compiling GprsAPI.c...
+compiling HeFanGuiAPI.c...
+API\HeFanGuiAPI.c(365): warning:  #177-D: variable "i" was declared but never referenced
+API\HeFanGuiAPI.c:      unsigned char buf[512] = {0},rst,*st_ptr,i;
+API\HeFanGuiAPI.c:                                               ^
+API\HeFanGuiAPI.c(434): warning:  #177-D: variable "i" was declared but never referenced
+API\HeFanGuiAPI.c:      unsigned char buf[512] = {0},*st_ptr,i;
+API\HeFanGuiAPI.c:                                           ^
+API\HeFanGuiAPI.c: API\HeFanGuiAPI.c: 2 warnings, 0 errors
+compiling colApi.c...
+compiling TASKDEVICE.C...
+compiling MDB_UART2.C...
+compiling EVB_UART2.C...
+compiling BillAccepter.c...
+compiling CoinAccepter .c...
+compiling MDBReader.c...
+compiling LiftTableDriver.c...
+compiling ACDCDriver.c...
+compiling ChannelDriver.c...
+compiling HopperDriver.c...
+compiling MDBChanger.c...
+compiling LFMDBReader.c...
+compiling TASKUART3DEVICE.C...
+compiling ZHIHUIPC.c...
+compiling UBProtocol.c...
+compiling VMC_GPRS_PC.c...
+compiling UBProtocol_SIMPLE.c...
+compiling SelectKey.c...
+compiling TASKUART1DEVICE.C...
+compiling xmt.c...
+compiling HeFanGui.c...
+compiling UART2.C...
+compiling UART0.C...
+compiling UART1.C...
+compiling UART3.C...
+compiling RTC.C...
+compiling I2C.C...
+compiling LCD.C...
+compiling KEY.C...
+compiling PCOIN.C...
+compiling TIMER.C...
+compiling BUZZER.C...
+compiling AT45DB161D.C...
+compiling GPRS_UART.c...
+compiling Os_cpu_c.c...
+compiling LPC1700PinCfg.c...
+compiling target.c...
+compiling vector_table.c...
+compiling zy_if.c...
+compiling rt_sys_c.c...
+compiling taskUart0Device.c...
+Target not created
+Build target 'VMC-V2.02'
+compiling BUSINESS.C...
+linking...
+Program Size: Code=265088 RO-data=74804 RW-data=1752 ZI-data=43316  
+FromELF: creating hex file...
+".\Hex\VMC_V2_12_2015_x_x.axf" - 0 Error(s), 0 Warning(s).
+Build target 'VMC-V2.02'
+compiling BUSINESS.C...
+linking...
+Program Size: Code=265132 RO-data=74804 RW-data=1752 ZI-data=43316  
+FromELF: creating hex file...
+".\Hex\VMC_V2_12_2015_x_x.axf" - 0 Error(s), 0 Warning(s).
+Build target 'VMC-V2.02'
+compiling BUSINESS.C...
+compiling BillAccepterAPI.c...
+linking...
+Program Size: Code=265120 RO-data=74804 RW-data=1752 ZI-data=43316  
+FromELF: creating hex file...
+".\Hex\VMC_V2_12_2015_x_x.axf" - 0 Error(s), 0 Warning(s).
+Build target 'VMC-V2.02'
+linking...
+Program Size: Code=265120 RO-data=74804 RW-data=1752 ZI-data=43316  
+FromELF: creating hex file...
+".\Hex\VMC_V2_12_2015_x_x.axf" - 0 Error(s), 0 Warning(s).
+Build target 'VMC-V2.02'
+linking...
+Program Size: Code=265120 RO-data=74804 RW-data=1752 ZI-data=43316  
+FromELF: creating hex file...
+".\Hex\VMC_V2_13_2015_x_x.axf" - 0 Error(s), 0 Warning(s).
+Build target 'VMC-V2.02'
+compiling MAIN.C...
+linking...
+Program Size: Code=265120 RO-data=74804 RW-data=1752 ZI-data=43316  
+FromELF: creating hex file...
+".\Hex\VMC_V2_13_2015_x_x.axf" - 0 Error(s), 0 Warning(s).
+Build target 'VMC-V2.02'
+compiling BillAccepter.c...
+linking...
+Program Size: Code=265140 RO-data=74804 RW-data=1752 ZI-data=43316  
+FromELF: creating hex file...
+".\Hex\VMC_V2_13_2015_x_x.axf" - 0 Error(s), 0 Warning(s).

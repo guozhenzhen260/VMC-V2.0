@@ -1582,7 +1582,7 @@ void BillCoinEnable(uint8_t enable)
 			billCtr=1;
 			vmcChangeLow = 0;
 			LCDClrScreen();
-			rstTime();
+			rstTime();			
 		}
 		//硬币器
 		if((GetBillCoinStatus(2)==0)
@@ -1614,6 +1614,11 @@ void BillCoinEnable(uint8_t enable)
 	}
 
 	BillCoinCtr(billCtr,coinCtr,readerCtr); 
+	//有做纸币器操作之后，需要上报设备状态
+	if(billCtr>0)
+	{
+		StatusRPTAPI();
+	}
 }
 
 /*********************************************************************************************************
@@ -1994,6 +1999,7 @@ void ChangerRecycler(void)
 {
 	uint8_t i,num,status;
 	uint32_t paymoney=0;
+	uint32_t  RecyPayoutMoneyBack=0;
 	if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
 	{
 		paymoney=GetAmountMoney();
@@ -2008,10 +2014,11 @@ void ChangerRecycler(void)
 					TraceBill("\r\n AppNeednum=%d",num);
 					num=(stDevValue.RecyclerNum[i]>=num)?num:stDevValue.RecyclerNum[i];
 					TraceBill("\r\n AppRealnum=%d",num);
-					status=BillRecyclerPayoutValueExpanseAPI(stDevValue.RecyclerValue[i]*num);
+					status=BillRecyclerPayoutValueExpanseAPI(stDevValue.RecyclerValue[i]*num,&RecyPayoutMoneyBack);
+					TraceBill("\r\n AppRecback st=%d,pay=%ld",status,RecyPayoutMoneyBack);
 					if(status==1)
 					{
-						paymoney = (g_coinAmount + g_billAmount)-stDevValue.RecyclerValue[i]*num;
+						paymoney = (g_coinAmount + g_billAmount)-RecyPayoutMoneyBack;
 						g_billAmount=0;
 						g_coinAmount = paymoney;
 						TraceBill("\r\n Apppay=%ld",paymoney);

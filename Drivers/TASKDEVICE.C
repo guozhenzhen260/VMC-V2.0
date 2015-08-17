@@ -53,6 +53,7 @@ void Uart2TaskDevice(void *pvData)
 	uint8_t flag = 0,rst=0;
 	uint8_t getTube = 0,getHopper = 0;
 	uint8_t ReaderType = 0, cmdOpt = 0, billOpt = 0,billOptBack = 0,coinOptBack = 0;
+	unsigned int RecyPayoutMoneyBack=0;
 	uint16_t  ReaderPrice;
 	unsigned char PayoutNum[8];
 	unsigned char ComStatus;
@@ -232,7 +233,7 @@ void Uart2TaskDevice(void *pvData)
 		if(SystemPara.BillValidatorType==MDB_BILLACCEPTER)
 		{			
 			//Ö½±ÒÆ÷Í¨Ñ¶º¯Êý
-			flag = BillDevProcess(&Billvalue,&Billtype,billOpt,&billOptBack,RecyPayoutMoney,RecyPayoutNum);
+			flag = BillDevProcess(&Billvalue,&Billtype,billOpt,&billOptBack,RecyPayoutMoney,RecyPayoutNum,&RecyPayoutMoneyBack);
 			billOpt = 0;
 			if(flag == 1)
 			{
@@ -272,8 +273,9 @@ void Uart2TaskDevice(void *pvData)
 					billOptBack = 0;
 					break;
 				case 6:
-					TraceBill("\r\n TaskRecPayoutSuccess");
-					MsgAccepterPack.BillBackCmd = MBOX_BILLRECYPAYOUTSUCC;						
+					TraceBill("\r\n TaskRecPayoutSuccess=%ld",RecyPayoutMoneyBack);
+					MsgAccepterPack.BillBackCmd = MBOX_BILLRECYPAYOUTSUCC;	
+					MsgAccepterPack.RecyPayoutMoneyBack=RecyPayoutMoneyBack;
 					OSMboxPost(g_BillMoneyBackMail,&MsgAccepterPack);
 					billOptBack = 0;
 					break;					

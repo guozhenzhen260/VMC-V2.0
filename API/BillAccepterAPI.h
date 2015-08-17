@@ -17,6 +17,6 @@ extern uint8_t ReturnBillDevMoneyInAPI(void);
 
 extern unsigned char BillRecyclerPayoutNumExpanseAPI(unsigned int RecyPayoutMoney,unsigned char RecyPayoutNum);
 
-extern unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney);
+extern unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney,uint32_t  *RecyPayoutMoneyBack);
 
 #endif

@@ -23,7 +23,7 @@ extern void BillDevDisable(void);
 
 extern void BillDevEnable(void);
 
-extern unsigned char BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char billOpt,unsigned char *billOptBack,uint32_t RecyPayoutMoney,uint8_t RecyPayoutNum);
+extern unsigned char BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char billOpt,unsigned char *billOptBack,uint32_t RecyPayoutMoney,uint8_t RecyPayoutNum,unsigned int *RecyPayoutMoneyBack);
 
 extern uint8_t BillDevEscrow(void);
 
