@@ -510,8 +510,11 @@ void DispChaxunPage(uint8_t *keyValue,uint8_t *keyMode)
 						//TracePC("\r\n 2APPUboxButton=%d",channel_id);
 						if(channel_id)
 						{
-							if(hd_SIMPLEstate_by_id(columnNo/100,channel_id)!=1)
-								ButtonSIMPLERPTAPI(channel_id);//上报pc按键信息
+							if(hd_SIMPLEstate_by_id(columnNo/100,channel_id)!=1)//货道没有禁能
+							{
+								if(hd_get_by_id(columnNo/100,channel_id,3)!=3)
+									ButtonSIMPLERPTAPI(channel_id);//上报pc按键信息
+							}
 						}
 						channelInput = 0;
 						memset(ChannelNum,0,sizeof(ChannelNum));
@@ -2947,19 +2950,19 @@ void PriceSIMPLEInd(uint16_t payInMoney)
 	switch(SystemPara.DecimalNum) 
 	{
 	  case 2://以分为单位
-		  sprintf(strlanguage,"%s %s,%s%02d.%02d",BUSINESS[SystemPara.Language][7],ChannelNum,BUSINESS[SystemPara.Language][3],debtMoney/100,debtMoney%100);
-		  sprintf(streng,"%s %s,%s%02d.%02d",BUSINESS[1][7],ChannelNum,BUSINESS[1][3],debtMoney/100,debtMoney%100); 
+		  sprintf(strlanguage,"%s%02d.%02d",BUSINESS[SystemPara.Language][3],debtMoney/100,debtMoney%100);
+		  sprintf(streng,"%s%02d.%02d",BUSINESS[1][3],debtMoney/100,debtMoney%100); 
 		  break;
 
 	  case 1://以角为单位
 		  debtMoney /= 10;
-		  sprintf(strlanguage,"%s %s,%s%d.%d",BUSINESS[SystemPara.Language][7],ChannelNum,BUSINESS[SystemPara.Language][3],debtMoney/10,debtMoney%10);
-		  sprintf(streng,"%s %s,%s%d.%d",BUSINESS[1][7],ChannelNum,BUSINESS[1][3],debtMoney/10,debtMoney%10);
+		  sprintf(strlanguage,"%s%d.%d",BUSINESS[SystemPara.Language][3],debtMoney/10,debtMoney%10);
+		  sprintf(streng,"%s%d.%d",BUSINESS[1][3],debtMoney/10,debtMoney%10);
 		  break;
 	  
 	  case 0://以元为单位
-		  sprintf(strlanguage,"%s %s,%s%d",BUSINESS[SystemPara.Language][7],ChannelNum,BUSINESS[SystemPara.Language][3],debtMoney/100);
-		  sprintf(streng,"%s %s,%s%d",BUSINESS[1][7],ChannelNum,BUSINESS[1][3],debtMoney/100);
+		  sprintf(strlanguage,"%s%d",BUSINESS[SystemPara.Language][3],debtMoney/100);
+		  sprintf(streng,"%s%d",BUSINESS[1][3],debtMoney/100);
 		  break;
 	}	
 	//strcpy(streng,BUSINESS[1][3]);

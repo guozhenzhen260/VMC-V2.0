@@ -1,8 +1,5 @@
----- BillCoinEnable 匹配 (7 在 1 文件 ) ----
-Business.c (app):1573:void BillCoinEnable(uint8_t enable)
-Business.c (app):1674:			BillCoinEnable(2);
-Business.c (app):1678:			BillCoinEnable(1);
-Business.c (app):1685:			BillCoinEnable(2);
-Business.c (app):1689:			BillCoinEnable(1);
-Business.c (app):1699:				BillCoinEnable(2);
-Business.c (app):1703:				BillCoinEnable(1);
+---- MBOX_SIMPLEPCTOVMC_DISPLAYIND 匹配 (4 在 3 文件 ) ----
+Common.h (app):946:#define MBOX_SIMPLEPCTOVMC_DISPLAYIND    0x03
+PCComAPI.c (api):1323:					case MBOX_SIMPLEPCTOVMC_DISPLAYIND:
+UBProtocol_SIMPLE.c (uart3driver):746:			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEPCTOVMC_DISPLAYIND;	
+UBProtocol_SIMPLE.c (uart3driver):766:			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEPCTOVMC_DISPLAYIND;	
