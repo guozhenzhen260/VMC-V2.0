@@ -1,5 +1,5 @@
----- MBOX_SIMPLEPCTOVMC_DISPLAYIND 匹配 (4 在 3 文件 ) ----
-Common.h (app):946:#define MBOX_SIMPLEPCTOVMC_DISPLAYIND    0x03
-PCComAPI.c (api):1323:					case MBOX_SIMPLEPCTOVMC_DISPLAYIND:
-UBProtocol_SIMPLE.c (uart3driver):746:			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEPCTOVMC_DISPLAYIND;	
-UBProtocol_SIMPLE.c (uart3driver):766:			MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].PCTOVMCCmd = MBOX_SIMPLEPCTOVMC_DISPLAYIND;	
+---- MBOX_BILLRECYPAYOUTSUCC 匹配 (4 在 3 文件 ) ----
+BillAccepterAPI.c (api):359:					if(BillMsg->BillBackCmd == MBOX_BILLRECYPAYOUTSUCC)
+BillAccepterAPI.c (api):409:						if(BillMsg->BillBackCmd == MBOX_BILLRECYPAYOUTSUCC)
+Common.h (app):496:#define MBOX_BILLRECYPAYOUTSUCC			0x29
+Taskdevice.c (drivers):277:					MsgAccepterPack.BillBackCmd = MBOX_BILLRECYPAYOUTSUCC;	
