@@ -1,5 +1,33 @@
----- MBOX_BILLRECYPAYOUTSUCC 匹配 (4 在 3 文件 ) ----
-BillAccepterAPI.c (api):359:					if(BillMsg->BillBackCmd == MBOX_BILLRECYPAYOUTSUCC)
-BillAccepterAPI.c (api):409:						if(BillMsg->BillBackCmd == MBOX_BILLRECYPAYOUTSUCC)
-Common.h (app):496:#define MBOX_BILLRECYPAYOUTSUCC			0x29
-Taskdevice.c (drivers):277:					MsgAccepterPack.BillBackCmd = MBOX_BILLRECYPAYOUTSUCC;	
+---- SystemPara.hefangGui 匹配 (32 在 9 文件 ) ----
+Acdc.c (app):772:	while(SystemPara.SubBinOpen || SystemPara.hefangGui)
+Acdc.c (app):784:			if(SystemPara.SubBinOpen && SystemPara.hefangGui)
+Acdc.c (app):791:			else if(SystemPara.hefangGui)
+Acdc.c (app):811:			else if(SystemPara.hefangGui)
+Acdc.c (app):818:			if(SystemPara.hefangGui)
+Acdc.c (app):992:	while(SystemPara.SubBinOpen || SystemPara.hefangGui)
+Acdc.c (app):1004:			if(SystemPara.SubBinOpen && SystemPara.hefangGui)
+Acdc.c (app):1011:			else if(SystemPara.hefangGui)
+Acdc.c (app):1031:			else if(SystemPara.hefangGui)
+Acdc.c (app):1038:			if(SystemPara.hefangGui)
+Business.c (app):274:	if( (subType==1)||(SystemPara.hefangGui==1) )
+Business.c (app):395:		if( (SystemPara.SubBinOpen==1)||(SystemPara.hefangGui==1) )
+Channel.c (app):644:	if(Binnum>2 && SystemPara.hefangGui)
+Channel.c (app):1826:	while(SystemPara.SubBinOpen || SystemPara.hefangGui)
+Channel.c (app):1838:			if(SystemPara.SubBinOpen && SystemPara.hefangGui)
+Channel.c (app):1845:			else if(SystemPara.hefangGui)
+Channel.c (app):1865:			else if(SystemPara.hefangGui)
+Channel.c (app):1872:			if(SystemPara.hefangGui)
+Channel.c (app):2432:	while(SystemPara.SubBinOpen || SystemPara.hefangGui)
+Channel.c (app):2444:			if(SystemPara.SubBinOpen && SystemPara.hefangGui)
+Channel.c (app):2451:			else if(SystemPara.hefangGui)
+Channel.c (app):2475:			else if(SystemPara.hefangGui)
+Channel.c (app):2482:			if(SystemPara.hefangGui)
+Common.c (app):433:	SystemPara.hefangGui = RdBuf[num++];
+Common.c (app):657:	Wrbuf[num++] = SystemPara.hefangGui;
+Maintain.c (app):3501:					SystemPara.hefangGui = keyValue;	
+Maintain.c (app):3620:					LCDPrintf(0,12,0,SystemPara.Language,"%s%d",SysMenuList.hefangGui[SystemPara.Language],SystemPara.hefangGui);
+Taskdevice.c (drivers):571:		if(SystemPara.hefangGui==MDB_GEZI)
+taskUart0Device.c (uart0driver):1098:	buf[index1++] = (SystemPara.hefangGui & 0x01) |
+taskUart0Device.c (uart0driver):1253:	SystemPara.hefangGui = temp & 0x01;
+Taskuart1device.c (uart1driver):100:	if(SystemPara.hefangGui==SERIAL_GEZI)
+Uart1.c (drivers):40:    if( (SystemPara.threeSelectKey==1)||(SystemPara.XMTTemp==1)||(SystemPara.hefangGui==1) )
