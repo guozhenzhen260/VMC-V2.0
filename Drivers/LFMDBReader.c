@@ -555,7 +555,11 @@ void LFReaderDevProcess(uint32_t *RecvMoney,uint8_t cmdOpt,uint16_t  ReaderPrice
 					TraceReader("\r\nDrvReader7BeginSession<<%#02x,%#02x,%ld\r\n",ReaderRdBuff[i+1],ReaderRdBuff[i+2],*RecvMoney);
 					//Reader_BeginSession(buf,len);//得到卡内金额		
 					//ReaderPara.cReaderSta = READER_STA_SESSION_IDLE;
-					//Reader_PostToVmc(buf[0]);//display balance	将卡金额邮箱发送给vmc交易流程，开始进行交易						
+					//Reader_PostToVmc(buf[0]);//display balance	将卡金额邮箱发送给vmc交易流程，开始进行交易	
+					if(*RecvMoney==0)
+					{
+						LFReaderSessionComplete();
+					}
 					return;
 				
 				case RTV_SESSION_CANCEL_REQUEST://7情况一拔卡，取消交易session

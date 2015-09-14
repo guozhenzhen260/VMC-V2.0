@@ -1165,13 +1165,13 @@ Removing Unused input sections from the image.
     Removing gprsapi.o(.data), (4 bytes).
     Removing mdbchanger.o(.bss), (32 bytes).
     Removing mdbchanger.o(.data), (1 bytes).
-    Removing lfmdbreader.o(.text), (3448 bytes).
+    Removing lfmdbreader.o(.text), (3460 bytes).
     Removing lfmdbreader.o(.constdata), (73 bytes).
     Removing lfmdbreader.o(.data), (1 bytes).
     Removing xmt.o(.data), (6 bytes).
     Removing os_mutex.o(.text), (1368 bytes).
 
-8 unused section(s) (total 4933 bytes) removed from the image.
+8 unused section(s) (total 4945 bytes) removed from the image.
 
 ==============================================================================
 

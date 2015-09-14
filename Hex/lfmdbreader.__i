@@ -1,0 +1,1 @@
+-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\NXP\LPC17xx" -o ".\Hex\lfmdbreader.o" --omf_browse ".\Hex\lfmdbreader.crf" --depend ".\Hex\lfmdbreader.d" "Drivers\LFMDBReader.c"
