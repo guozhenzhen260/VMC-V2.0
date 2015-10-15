@@ -435,7 +435,7 @@ unsigned char LiftTable2Process(unsigned char Binnum,const unsigned char Channel
 	if(ChannelNum == 0x00)
 		return 0xff;
 	level = ChannelNum / 10 ;
-	PhysicNum = ChannelNum % 10;
+	PhysicNum = (ChannelNum % 10 == 0) ? 10: ChannelNum % 10;
 	switch(HandleType)
 	{
 		//³ö»õ

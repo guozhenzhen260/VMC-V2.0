@@ -1609,7 +1609,7 @@ void BillCoinEnable(uint8_t enable)
 		//硬币器
 		if((GetBillCoinStatus(2)==1)
 			&&((SystemPara.CoinAcceptorType == PARALLEL_COINACCEPTER)||(SystemPara.CoinAcceptorType == SERIAL_COINACCEPTER))
-			&&(SystemPara.HpEmpCoin==0)
+			&&(SystemPara.HpEmpCoin!=1)
 		)
 		{
 			coinCtr=2;
@@ -2025,7 +2025,10 @@ void ChangerRecycler(void)
 						g_billAmount=0;
 						g_coinAmount = paymoney;
 						TraceBill("\r\n Apppay=%ld",paymoney);
-						PayoutRPTAPI(1,0,stDevValue.RecyclerValue[i]*num,paymoney);
+						if(SystemPara.EasiveEnable == 1)
+						{
+							PayoutRPTAPI(1,0,RecyPayoutMoneyBack,paymoney);
+						}
 					}
 					break;
 				}
@@ -2045,6 +2048,7 @@ uint32_t ChangerMoney(void)
 {	
 	uint32_t backmoney;
 	unsigned char ComStatus;
+	uint32_t tempmoney;//用来给友宝上报纸币和硬币找零金额之总和的
 
 	//暂存退币
 	if(g_holdValue)
@@ -2057,6 +2061,7 @@ uint32_t ChangerMoney(void)
 		TracePC("\r\n AppHoldRet%d",OSTimeGet());
 		OSTimeDly(OS_TICKS_PER_SEC/2);
 	}
+	tempmoney=GetAmountMoney();//用来给友宝上报纸币和硬币找零金额之总和的
 	//纸币循环找零器
 	ChangerRecycler();
 	//找零硬币
@@ -2072,28 +2077,57 @@ uint32_t ChangerMoney(void)
 	{
 		ComStatus = 1;
 	}
-	//找零失败
-	if(!ComStatus)
-	{		
-		TracePC("\r\n Appchange Fail");
-		LogChangeAPI(GetAmountMoney()-backmoney,backmoney);//记录日志
-		PayoutRPTAPI(0,0,GetAmountMoney()-backmoney,backmoney);
-		OSTimeDly(OS_TICKS_PER_SEC);
-		PayinRPTAPI(2,0,0);//上报PC端
-		g_coinAmount = 0;
-		g_billAmount = 0;
-		return  backmoney;
+
+	if(SystemPara.EasiveEnable == 1)
+	{
+		//找零失败
+		if(!ComStatus)
+		{		
+			TracePC("\r\n Appchange Fail");
+			LogChangeAPI(GetAmountMoney()-backmoney,backmoney);//记录日志
+			PayoutRPTAPI(0,0,GetAmountMoney()-backmoney,backmoney);
+			//OSTimeDly(OS_TICKS_PER_SEC);
+			//PayinRPTAPI(2,0,0);//上报PC端
+			g_coinAmount = 0;
+			g_billAmount = 0;
+			return  backmoney;
+		}
+		//找零成功
+		else
+		{
+			TracePC("\r\n Appchange succ%d",OSTimeGet());
+			LogChangeAPI(GetAmountMoney(),0);//记录日志
+			PayoutRPTAPI(0,0,GetAmountMoney(),0);
+			g_coinAmount = 0;
+			g_billAmount = 0;
+			return 0;
+		}
 	}
-	//找零成功
 	else
 	{
-		TracePC("\r\n Appchange succ%d",OSTimeGet());
-		LogChangeAPI(GetAmountMoney(),0);//记录日志
-		PayoutRPTAPI(0,0,GetAmountMoney(),0);
-		g_coinAmount = 0;
-		g_billAmount = 0;
-		return 0;
-	}
+		//找零失败
+		if(!ComStatus)
+		{		
+			TracePC("\r\n Appchange Fail");
+			LogChangeAPI(tempmoney-backmoney,backmoney);//记录日志
+			PayoutRPTAPI(0,0,tempmoney-backmoney,0);
+			//OSTimeDly(OS_TICKS_PER_SEC);
+			//PayinRPTAPI(2,0,0);//上报PC端
+			g_coinAmount = 0;
+			g_billAmount = 0;
+			return  backmoney;
+		}
+		//找零成功
+		else
+		{
+			TracePC("\r\n Appchange succ%d",OSTimeGet());
+			LogChangeAPI(tempmoney,0);//记录日志
+			PayoutRPTAPI(0,0,tempmoney,0);
+			g_coinAmount = 0;
+			g_billAmount = 0;
+			return 0;
+		}
+	}	
 }
 
 
@@ -2791,6 +2825,8 @@ void TuiMoneyInd()
 	{
 		DispPayoutPage();
 		TracePC("\r\n AppTui%d",OSTimeGet());
+		ActionRPTAPI(2,0,30,0,1,GetAmountMoney(),GetAmountMoney());
+		OSTimeDly(OS_TICKS_PER_SEC*2);
 		debtMoney = ChangerMoney();
 		if(debtMoney)
 		{
@@ -2807,9 +2843,12 @@ void TuiMoneyInd()
 		DispPayoutPage();
 		TracePC("\r\n Appchange Fail");
 		LogChangeAPI(0,0);//记录日志
-		PayoutRPTAPI(0,0,0,0);
-		OSTimeDly(OS_TICKS_PER_SEC);
-		PayinRPTAPI(2,0,0);//上报PC端
+		if(SystemPara.EasiveEnable == 1)
+		{
+			PayoutRPTAPI(0,0,0,0);
+		}
+		//OSTimeDly(OS_TICKS_PER_SEC);
+		//PayinRPTAPI(2,0,0);//上报PC端
 		g_coinAmount = 0;
 		g_billAmount = 0;
 		vmcStatus = VMC_END;
@@ -3609,9 +3648,12 @@ void BusinessProcess(void *pvData)
 				{
 					//ActionRPTAPI(5,1,0,0,0,0,0);
 					SetWeihuStatus(1);
-					//OSTimeDly(OS_TICKS_PER_SEC);
-					//StatusRPTAPI();
-					//OSTimeDly(OS_TICKS_PER_SEC);
+					if(SystemPara.EasiveEnable == 0)
+					{
+						OSTimeDly(OS_TICKS_PER_SEC);
+						StatusRPTAPI();
+						OSTimeDly(OS_TICKS_PER_SEC);
+					}
 				}
 				
 				do
@@ -3630,9 +3672,12 @@ void BusinessProcess(void *pvData)
 				{
 					ActionRPTAPI(5,0,0,0,0,0,0);
 					SetWeihuStatus(0);
-					//OSTimeDly(OS_TICKS_PER_SEC);
-					//StatusRPTAPI();
-					//OSTimeDly(OS_TICKS_PER_SEC);
+					if(SystemPara.EasiveEnable == 0)
+					{
+						OSTimeDly(OS_TICKS_PER_SEC);
+						StatusRPTAPI();
+						OSTimeDly(OS_TICKS_PER_SEC);
+					}
 					//globalSys.pcInitFlag = 0;
 				}
 				PriceMaxin = ChannelGetMaxGoodsPrice(1);

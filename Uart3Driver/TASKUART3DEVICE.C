@@ -141,7 +141,14 @@ void Uart3TaskDevice(void *pvData)
 					LCDNumberFontPrintf(40,LINE15,2,"BAccepter-1");
 				}
 				VPSerialInit();
-				VPMission_Act_RPT(VP_ACT_PCON,0,0,0,0,0,0);
+				if(SystemPara.EasiveEnable == 1)
+				{
+					VPMission_Act_RPT(VP_ACT_PCON,0,0,0,0,0,0);
+				}
+				else
+				{
+					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+				}	
 				NowPCDev = PC_UBOX;	
 			}
 			else
@@ -373,18 +380,39 @@ void Uart3TaskDevice(void *pvData)
 				}
 				OSTimeDly(OS_TICKS_PER_SEC/4);
 			}	
+
+			//每隔时间，发送action指令
+			//交易模式下
 			if(GetWeihuStatus()==0)
 			{
+				//如果未启动完成，在易丰协议下，需要连续发送主机已经重启指令
 				if(isInit==0)
 				{
-					if(Timer.ActionPCTimer==0)
+					if(SystemPara.EasiveEnable == 1)
 					{
-						Timer.ActionPCTimer = 5;
-						VPMission_Act_RPT(VP_ACT_PCON,0,0,0,0,0,0);
-						OSTimeDly(OS_TICKS_PER_SEC/4);
+						if(Timer.ActionPCTimer==0)
+						{
+							Timer.ActionPCTimer = 5;
+							VPMission_Act_RPT(VP_ACT_PCON,0,0,0,0,0,0);
+							OSTimeDly(OS_TICKS_PER_SEC/4);
+						}
+					}
+				}
+				//如果启动完成，在友宝协议下，每10s发送一次heart指令
+				else
+				{
+					if(SystemPara.EasiveEnable == 0)
+					{
+						if(Timer.ActionPCTimer==0)
+						{
+							Timer.ActionPCTimer = 10;
+							VPMission_Act_RPT(VP_ACT_HEART,0,0,0,0,0,0);
+							OSTimeDly(OS_TICKS_PER_SEC/4);
+						}
 					}
 				}
 			}
+			//维护模式下
 			else if(GetWeihuStatus()==1)
 			{
 				if(Timer.ActionPCTimer==0)

@@ -240,6 +240,8 @@ void BillStatusRPTAPI()
 *********************************************************************************************************/
 void StatusRPTAPI()
 {
+	uint32_t coinMoney=0;
+	
 	switch(SystemPara.PcEnable)
 	{
 		case ZHIHUI_PC:
@@ -262,20 +264,30 @@ void StatusRPTAPI()
 			}
 			else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
 			{
-				MsgUboxPack[g_Ubox_Index].change  =( !HopperIsEmpty() )? SystemPara.MaxValue:0;				
+				coinMoney =( !HopperIsEmpty() )? SystemPara.MaxValue:0;
+				if(coinMoney < SystemPara.BillEnableValue)
+				{
+					MsgUboxPack[g_Ubox_Index].change  = 0;
+				}
+				else
+				{
+					MsgUboxPack[g_Ubox_Index].change  = coinMoney;
+				}
+				//MsgUboxPack[g_Ubox_Index].change  =( !HopperIsEmpty() )? SystemPara.MaxValue:0;				
 			}
 			//ÎÞÓ²±ÒÆ÷
 			else if(SystemPara.CoinChangerType == OFF_CHANGER)
 			{	
 				MsgUboxPack[g_Ubox_Index].change =0;
 			}
+			
 			//Ìí¼ÓÖ½±ÒÑ­»·Æ÷Ê±£¬¿ÉÕÒÓ²±Ò½ð¶î
-			if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
-			{
-				MsgUboxPack[g_Ubox_Index].change += stDevValue.RecyclerValue[0]*stDevValue.RecyclerNum[0] + stDevValue.RecyclerValue[1]*stDevValue.RecyclerNum[1] + stDevValue.RecyclerValue[2]*stDevValue.RecyclerNum[2]
-						+stDevValue.RecyclerValue[3]*stDevValue.RecyclerNum[3] + stDevValue.RecyclerValue[4]*stDevValue.RecyclerNum[4] + stDevValue.RecyclerValue[5]*stDevValue.RecyclerNum[5]
-						+stDevValue.RecyclerValue[6]*stDevValue.RecyclerNum[6];
-			}
+			//if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
+			//{
+			//	MsgUboxPack[g_Ubox_Index].change += stDevValue.RecyclerValue[0]*stDevValue.RecyclerNum[0] + stDevValue.RecyclerValue[1]*stDevValue.RecyclerNum[1] + stDevValue.RecyclerValue[2]*stDevValue.RecyclerNum[2]
+			//			+stDevValue.RecyclerValue[3]*stDevValue.RecyclerNum[3] + stDevValue.RecyclerValue[4]*stDevValue.RecyclerNum[4] + stDevValue.RecyclerValue[5]*stDevValue.RecyclerNum[5]
+			//			+stDevValue.RecyclerValue[6]*stDevValue.RecyclerNum[6];
+			//}
 			//Ìí¼ÓÖ½±ÒÑ­»·Æ÷Ê±£¬Ö½±ÒµÄ´æ±ÒÊýÁ¿
 			if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
 			{
