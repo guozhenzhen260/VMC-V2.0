@@ -401,8 +401,8 @@ unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney,uin
 					OSMboxPost(g_BillMoneyMail,&MsgAccepterPack);
 					TraceBill("\r\n MddRECPay=%ld",RecyPayoutMoney);
 					OSMboxAccept(g_BillMoneyBackMail);
-					//3.等待是否找零成功
-					BillMsg = OSMboxPend(g_BillMoneyBackMail,OS_TICKS_PER_SEC*60,&err);//返回是否找零成功 		
+					//3.等待是否找零成功60*5
+					BillMsg = OSMboxPend(g_BillMoneyBackMail,OS_TICKS_PER_SEC*20,&err);//返回是否找零成功 		
 					if(err == OS_NO_ERR) 
 					{					
 						//4.找零成功，发送找零成功给纸币器
@@ -422,7 +422,7 @@ unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney,uin
 					else
 					{
 						ReturnBack = 1;
-						*RecyPayoutMoneyBack=0;
+						*RecyPayoutMoneyBack=RecyPayoutMoney;
 					}	
 				}
 					

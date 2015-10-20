@@ -308,15 +308,53 @@ void StatusRPTAPI()
 				MsgUboxPack[g_Ubox_Index].recyclerSum[5] = 0;
 			}
 			//硬币的存币数量
-			MsgUboxPack[g_Ubox_Index].coinSum[0] = stDevValue.CoinNum[0];
-			MsgUboxPack[g_Ubox_Index].coinSum[1] = stDevValue.CoinNum[1];
-			MsgUboxPack[g_Ubox_Index].coinSum[2] = stDevValue.CoinNum[2];
-			MsgUboxPack[g_Ubox_Index].coinSum[3] = stDevValue.CoinNum[3];
-			MsgUboxPack[g_Ubox_Index].coinSum[4] = stDevValue.CoinNum[4];
-			MsgUboxPack[g_Ubox_Index].coinSum[5] = stDevValue.CoinNum[5];
+			if(SystemPara.CoinChangerType == MDB_CHANGER)
+			{
+				MsgUboxPack[g_Ubox_Index].coinSum[0] = stDevValue.CoinNum[0];
+				MsgUboxPack[g_Ubox_Index].coinSum[1] = stDevValue.CoinNum[1];
+				MsgUboxPack[g_Ubox_Index].coinSum[2] = stDevValue.CoinNum[2];
+				MsgUboxPack[g_Ubox_Index].coinSum[3] = stDevValue.CoinNum[3];
+				MsgUboxPack[g_Ubox_Index].coinSum[4] = stDevValue.CoinNum[4];
+				MsgUboxPack[g_Ubox_Index].coinSum[5] = stDevValue.CoinNum[5];
+			}
+			//找零斗的存币数量
+			else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
+			{
+				//正常
+				if(DeviceStateBusiness.Hopper1State==0)
+				{
+					MsgUboxPack[g_Ubox_Index].coinSum[0] = 255;
+				}
+				else
+				{
+					MsgUboxPack[g_Ubox_Index].coinSum[0] = 0;
+				}	
+				//正常
+				if(DeviceStateBusiness.Hopper2State==0)
+				{
+					MsgUboxPack[g_Ubox_Index].coinSum[1] = 255;
+				}
+				else
+				{
+					MsgUboxPack[g_Ubox_Index].coinSum[1] = 0;
+				}
+				//正常
+				if(DeviceStateBusiness.Hopper3State==0)
+				{
+					MsgUboxPack[g_Ubox_Index].coinSum[2] = 255;
+				}
+				else
+				{
+					MsgUboxPack[g_Ubox_Index].coinSum[2] = 0;
+				}
+				MsgUboxPack[g_Ubox_Index].coinSum[3] = 0;
+				MsgUboxPack[g_Ubox_Index].coinSum[4] = 0;
+				MsgUboxPack[g_Ubox_Index].coinSum[5] = 0;
+			}
+			
 			MsgUboxPack[g_Ubox_Index].tem_st = UserPara.CompressorCtr.flag;
-			TracePC("\r\n MiddUboxSataus check_st=%d,bv_st=%d,cc_st=%d,vmc_st=%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%ld",MsgUboxPack[g_Ubox_Index].check_st,MsgUboxPack[g_Ubox_Index].bv_st,MsgUboxPack[g_Ubox_Index].cc_st,MsgUboxPack[g_Ubox_Index].vmc_st,stDevValue.CoinValue[0],stDevValue.CoinNum[0],stDevValue.CoinValue[1],stDevValue.CoinNum[1],
-				stDevValue.CoinValue[2],stDevValue.CoinNum[2],stDevValue.CoinValue[3],stDevValue.CoinNum[3],stDevValue.CoinValue[4],stDevValue.CoinNum[4],stDevValue.CoinValue[5],stDevValue.CoinNum[5],MsgUboxPack[g_Ubox_Index].change);	
+			TracePC("\r\n MiddUboxSataus check_st=%d,bv_st=%d,cc_st=%d,vmc_st=%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,change=%ld",MsgUboxPack[g_Ubox_Index].check_st,MsgUboxPack[g_Ubox_Index].bv_st,MsgUboxPack[g_Ubox_Index].cc_st,MsgUboxPack[g_Ubox_Index].vmc_st,stDevValue.CoinValue[0],MsgUboxPack[g_Ubox_Index].coinSum[0],stDevValue.CoinValue[1],MsgUboxPack[g_Ubox_Index].coinSum[1],
+				stDevValue.CoinValue[2],MsgUboxPack[g_Ubox_Index].coinSum[2],stDevValue.CoinValue[3],MsgUboxPack[g_Ubox_Index].coinSum[3],stDevValue.CoinValue[4],MsgUboxPack[g_Ubox_Index].coinSum[4],stDevValue.CoinValue[5],MsgUboxPack[g_Ubox_Index].coinSum[5],MsgUboxPack[g_Ubox_Index].change);	
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);

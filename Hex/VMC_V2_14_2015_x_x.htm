@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Hex\VMC_V2_14_2015_x_x.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Hex\VMC_V2_14_2015_x_x.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Thu Oct 15 11:59:41 2015
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Tue Oct 20 10:30:09 2015
 <BR><P>
 <H3>Maximum Stack Usage =       1960 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -35,7 +35,6 @@ Function Pointers
  <LI><a href="#[c]">TIMER1_IRQHandler</a> from timer.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[d]">TIMER2_IRQHandler</a> from timer.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[e]">TIMER3_IRQHandler</a> from timer.o(.text) referenced from vector_table.o(.constdata)
- <LI><a href="#[19]">Uart2TaskDevice</a> from taskdevice.o(.text) referenced from main.o(.text)
  <LI><a href="#[f]">Uart0IsrHandler</a> from uart0.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[10]">Uart1IsrHandler</a> from uart1.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[11]">Uart2IsrHandler</a> from uart2.o(.text) referenced from vector_table.o(.constdata)
@@ -47,6 +46,7 @@ Function Pointers
  <LI><a href="#[16]">__s_OS_ENTER_CRITICAL</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
  <LI><a href="#[17]">__s_OS_EXIT_CRITICAL</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
  <LI><a href="#[18]">__s_changeToSYSMode</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
+ <LI><a href="#[19]">Uart2TaskDevice</a> from taskdevice.o(.text) referenced from main.o(.text)
  <LI><a href="#[1a]">Uart1TaskDevice</a> from taskuart1device.o(.text) referenced from main.o(.text)
  <LI><a href="#[1b]">Uart3TaskDevice</a> from taskuart3device.o(.text) referenced from main.o(.text)
  <LI><a href="#[1c]">ChannelLookUpSuccessCount</a> from channel.o(.text) referenced from maintain.o(.text)
@@ -73,6 +73,7 @@ Function Pointers
  <LI><a href="#[2f]">taskEntry</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from target.o(.text)
  <LI><a href="#[30]">ClrUart0Buff</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
+ <LI><a href="#[7a]">MainTask</a> from main.o(.text) referenced from main.o(.text)
  <LI><a href="#[31]">Uart0GetCh</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
  <LI><a href="#[32]">Uart0BuffIsNotEmpty</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
  <LI><a href="#[33]">Uart0PutStr</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
@@ -85,7 +86,6 @@ Function Pointers
  <LI><a href="#[39]">_snputc</a> from _snputc.o(.text) referenced from __2snprintf.o(.text)
  <LI><a href="#[3a]">_printf_input_char</a> from _printf_char_common.o(.text) referenced from _printf_char_common.o(.text)
  <LI><a href="#[3b]">_get_lc_ctype</a> from lc_ctype_c.o(locale$$code) referenced from rt_ctype_table.o(.text)
- <LI><a href="#[7a]">MainTask</a> from main.o(.text) referenced from main.o(.text)
  <LI><a href="#[127]">LogTransaction</a> from maintain.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[129]">LogClearRecord</a> from maintain.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[149]">TestCashless</a> from maintain.o(.text) referenced from maintain.o(.text)
@@ -2925,7 +2925,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[24]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestBillValidator
 </UL>
 
-<P><STRONG><a name="[e6]"></a>BillRecyclerPayoutValueExpanseAPI</STRONG> (Thumb, 138 bytes, Stack size 24 bytes, billaccepterapi.o(.text))
+<P><STRONG><a name="[e6]"></a>BillRecyclerPayoutValueExpanseAPI</STRONG> (Thumb, 136 bytes, Stack size 24 bytes, billaccepterapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 432 + Unknown Stack Size
 <LI>Call Chain = BillRecyclerPayoutValueExpanseAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3663,7 +3663,7 @@ Global Symbols
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 </UL>
 
-<P><STRONG><a name="[d7]"></a>StatusRPTAPI</STRONG> (Thumb, 1224 bytes, Stack size 72 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[d7]"></a>StatusRPTAPI</STRONG> (Thumb, 1500 bytes, Stack size 72 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 536 + Unknown Stack Size
 <LI>Call Chain = StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3681,7 +3681,7 @@ Global Symbols
 <LI><a href="#[2e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_GetStatus
 </UL>
 
-<P><STRONG><a name="[10f]"></a>BillStatusRPTAPI</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[10f]"></a>BillStatusRPTAPI</STRONG> (Thumb, 98 bytes, Stack size 8 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 544 + Unknown Stack Size
 <LI>Call Chain = BillStatusRPTAPI &rArr; StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3707,7 +3707,7 @@ Global Symbols
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunPage
 </UL>
 
-<P><STRONG><a name="[f9]"></a>VendoutRPTAPI</STRONG> (Thumb, 418 bytes, Stack size 40 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[f9]"></a>VendoutRPTAPI</STRONG> (Thumb, 350 bytes, Stack size 40 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 448 + Unknown Stack Size
 <LI>Call Chain = VendoutRPTAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3738,7 +3738,7 @@ Global Symbols
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AdminRPT
 </UL>
 
-<P><STRONG><a name="[132]"></a>AdminRPTSIMPLEAPI</STRONG> (Thumb, 312 bytes, Stack size 32 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[132]"></a>AdminRPTSIMPLEAPI</STRONG> (Thumb, 472 bytes, Stack size 32 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 440 + Unknown Stack Size
 <LI>Call Chain = AdminRPTSIMPLEAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3751,7 +3751,7 @@ Global Symbols
 <LI><a href="#[131]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AdminRPTSIMPLE
 </UL>
 
-<P><STRONG><a name="[152]"></a>GetAdminSIMPLEAPI</STRONG> (Thumb, 404 bytes, Stack size 24 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[152]"></a>GetAdminSIMPLEAPI</STRONG> (Thumb, 164 bytes, Stack size 24 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 432 + Unknown Stack Size
 <LI>Call Chain = GetAdminSIMPLEAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
