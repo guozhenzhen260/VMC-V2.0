@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Hex\VMC_V2_14_2015_x_x.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Hex\VMC_V2_14_2015_x_x.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Tue Oct 20 10:57:14 2015
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Tue Oct 20 11:00:29 2015
 <BR><P>
 <H3>Maximum Stack Usage =       1960 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -42,14 +42,15 @@ Function Pointers
  <LI><a href="#[13]">I2C0_IRQHandler</a> from i2c.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[14]">EINT2_IsrHandler</a> from key.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[9]">__s_OSCtxSw</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
- <LI><a href="#[19]">Uart2TaskDevice</a> from taskdevice.o(.text) referenced from main.o(.text)
  <LI><a href="#[15]">__s_OSStartHighRdy</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
- <LI><a href="#[1a]">Uart1TaskDevice</a> from taskuart1device.o(.text) referenced from main.o(.text)
  <LI><a href="#[16]">__s_OS_ENTER_CRITICAL</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
  <LI><a href="#[17]">__s_OS_EXIT_CRITICAL</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
  <LI><a href="#[18]">__s_changeToSYSMode</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
+ <LI><a href="#[19]">Uart2TaskDevice</a> from taskdevice.o(.text) referenced from main.o(.text)
+ <LI><a href="#[1a]">Uart1TaskDevice</a> from taskuart1device.o(.text) referenced from main.o(.text)
  <LI><a href="#[1b]">Uart3TaskDevice</a> from taskuart3device.o(.text) referenced from main.o(.text)
  <LI><a href="#[1c]">ChannelLookUpSuccessCount</a> from channel.o(.text) referenced from maintain.o(.text)
+ <LI><a href="#[2f]">taskEntry</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[1d]">RTCParaMenu</a> from maintain.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[1e]">acdc_controlHot</a> from acdc.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[1f]">ACDCManageCompressor</a> from acdc.o(.text) referenced from maintain.o(.text)
@@ -70,7 +71,6 @@ Function Pointers
  <LI><a href="#[2e]">TraceMaintainProcess</a> from maintain.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[9]">__s_OSCtxSw</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
- <LI><a href="#[2f]">taskEntry</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from target.o(.text)
  <LI><a href="#[30]">ClrUart0Buff</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
  <LI><a href="#[31]">Uart0GetCh</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
