@@ -243,11 +243,11 @@ uint8_t HopperIsEmpty()
 *********************************************************************************************************/
 uint8_t ChangerIsErr()
 { 
-	if(SystemPara.CoinAcceptorType==OFF_COINACCEPTER)
+	if(SystemPara.CoinChangerType==OFF_CHANGER)
 	{
 		return 1;
 	}
-	else if(SystemPara.CoinAcceptorType==MDB_COINACCEPTER)
+	else if(SystemPara.CoinChangerType==MDB_CHANGER)
 	{
 		if(
 			(DeviceStateBusiness.CoinCommunicate)||(DeviceStateBusiness.Coinsensor)||(DeviceStateBusiness.Cointubejam)||(DeviceStateBusiness.Coinromchk)
@@ -375,7 +375,7 @@ uint8_t ErrorStatus(uint8_t type)
 		//Hopper’“¡„∆˜
 		else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
 		{
-			if(DeviceStateBusiness.Hopper1State != 0)
+			if(DeviceStateBusiness.Hopper1State == 2)
 			{
 				return 2;
 			}

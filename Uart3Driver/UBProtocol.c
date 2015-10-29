@@ -95,6 +95,8 @@ struct GoodsAttribute sysGoodsAttr[10];
 #pragma arm section zidata
 
 uint8_t GoodsRev;
+uint8_t GoodsSN;//ack与nak的sn序列号
+
 
 
 /*********************************************************************************************************
@@ -608,13 +610,16 @@ unsigned char VPBusFrameUnPack( void )
 unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 {
     
-    uint8_t i=0,j=0,k=0,index=0,tempcan=0;     
+    uint8_t i=0,j=0,k=0,index=0,tempcan=0;
+	uint8_t issnup=0;//1时不升级sn,0时需要升级sn
 	uint16_t tempMoney;
 	uint8_t tempSend=0;
 	uint32_t tradeMoney=0;
 	uint8_t cabinet=0,cabno=0;
 	//u_char xdata len = 0;
 
+    GoodsSN=sysVPMission.receive.sn;
+    
 	if( msgType>VP_MT_MAX_SEND )
 		return VP_ERR_PAR;
     if(flag>1)
@@ -630,12 +635,14 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
             {
 				sysVPMission.send.msgType = VP_ACK_RPT;
                 sysVPMission.send.datLen = 0;
+				issnup=1;
 			}
 			break;
 		case VP_NAK_RPT:
 		    {
 				sysVPMission.send.msgType = VP_NAK_RPT;
                 sysVPMission.send.datLen = 0;
+				issnup=1;
 			}
 			break;
 		case VP_POLL:
@@ -2340,9 +2347,16 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 			sysVPMission.send.verFlag += VP_PROTOCOL_NAK;
 		}
 	}
-	
-	//更新SN流水号			
-	PackSNUpdate();
+
+	if(issnup==0)
+	{
+		//更新SN流水号			
+		PackSNUpdate();
+	}
+	else
+	{
+		sysVPMission.send.sn=GoodsSN;
+	}
 	
     VPBusTxMsg();    
 	return VP_ERR_NULL;
@@ -2795,59 +2809,65 @@ unsigned char VPMission_ColumnSta_RPT( void )
 		}
 		sysVPMission.send.msg[0] = bin;
 		hd_huodao_rpt_vp(bin,&sysVPMission.send.msg[1]);
+		flag = VPMsgPackSend( VP_HUODAO_RPT, 0);   //Not need ACK
+		if( flag != VP_ERR_NULL )
+		{
+			return VP_ERR_PAR;
+		}	
+		/*
+		while( retry )
+		{
+			Timer.PCRecTimer = VP_TIME_OUT;
+			while( Timer.PCRecTimer )
+			{
+				if( VPBusFrameUnPack() )
+				{			
+					if(LogPara.offLineFlag == 1)
+					{
+						LogPara.offLineFlag = 0;					
+						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					}
+					recRes = 1;
+					break;
+				}
+			}
+			if(Timer.PCRecTimer==0)
+			{
+				retry--;
+				//TracePC("\r\n Drv failretry=%d",retry); 
+			}	
+			if(recRes)
+			{
+				break;
+			}
+		}	
+		if( retry== 0 ) 
+		{
+			OSTimeDly(10);		
+			LogPara.offLineFlag = 1;	
+			return VP_ERR_COM;
+		}
+		*/
+
+		switch( sysVPMission.receive.msgType )
+		{
+			default:
+				break;
+		}
 	}	
 	else
 	{
 		sysVPMission.send.msg[0] = bin;
 		sysVPMission.send.msg[1] = bin;
+		flag = VPMsgPackSend( VP_HUODAO_RPT, 0);   //Not need ACK
+		if( flag != VP_ERR_NULL )
+		{
+			return VP_ERR_PAR;
+		}
 	}
 	
 		
-	flag = VPMsgPackSend( VP_HUODAO_RPT, 0);   //Not need ACK
-	if( flag != VP_ERR_NULL )
-	{
-		return VP_ERR_PAR;
-	}	
-	/*
-	while( retry )
-	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
-		{
-			if( VPBusFrameUnPack() )
-			{			
-				if(LogPara.offLineFlag == 1)
-				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-				}
-				recRes = 1;
-				break;
-			}
-		}
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
-		}
-	}	
-	if( retry== 0 ) 
-	{
-		OSTimeDly(10);		
-		LogPara.offLineFlag = 1;	
-		return VP_ERR_COM;
-	}
-	*/
-
-	switch( sysVPMission.receive.msgType )
-	{
-		default:
-			break;
-	}
+	
 	
 	return VP_ERR_NULL;
 
@@ -2874,6 +2894,22 @@ unsigned char VP_CMD_GetColumnSta( void )
 		VPMsgPackSend( VP_ACK_RPT, 0  );
 	}
 	*/
+	//2.ACK	
+	/**/
+	if(SystemPara.EasiveEnable == 1)
+	{
+		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
+		{
+			VPMsgPackSend( VP_ACK_RPT, 0);
+		}
+	}
+	else
+	{
+		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
+		{
+			VPMsgPackSend( VP_ACK_RPT, 0 );
+		}
+	}
 	OSTimeDly(OS_TICKS_PER_SEC / 10);
 	
 	//2.
@@ -2936,7 +2972,7 @@ unsigned char VPMission_Status_RPT( uint8_t check_st,uint8_t bv_st,uint8_t cc_st
 		sysVPMission.recyclerSum[2] = 0xfe;
 		sysVPMission.recyclerSum[3] = 0xfe;
 		sysVPMission.recyclerSum[4] = 0xfd;
-		sysVPMission.recyclerSum[5] = 0xff;
+		sysVPMission.recyclerSum[5] = SystemPara.SaleTime;
 		if(sysVPMission.change>0)
 			sysVPMission.coinSum[0] = 50;
 		else
@@ -2947,53 +2983,65 @@ unsigned char VPMission_Status_RPT( uint8_t check_st,uint8_t bv_st,uint8_t cc_st
 		sysVPMission.coinSum[4] = 0;
 		sysVPMission.coinSum[5] = 0;
 	}
-	//==============================================================
-	flag = VPMsgPackSend( VP_STATUS_RPT, 1);  //1-0, not need ACK
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	while( retry )
+	if(SystemPara.EasiveEnable == 1)
 	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
+		//==============================================================
+		flag = VPMsgPackSend( VP_STATUS_RPT, 1);  //1-0, not need ACK
+	    if( flag != VP_ERR_NULL )
+	    {
+			return VP_ERR_PAR;
+		}
+		while( retry )
 		{
-			if( VPBusFrameUnPack() )
-			{			
-				if(LogPara.offLineFlag == 1)
-				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+			Timer.PCRecTimer = VP_TIME_OUT;
+			while( Timer.PCRecTimer )
+			{
+				if( VPBusFrameUnPack() )
+				{			
+					if(LogPara.offLineFlag == 1)
+					{
+						LogPara.offLineFlag = 0;					
+						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					}
+					recRes = 1;
+					break;
 				}
-				recRes = 1;
+			}
+			if(Timer.PCRecTimer==0)
+			{
+				retry--;
+				//TracePC("\r\n Drv failretry=%d",retry); 
+			}	
+			if(recRes)
+			{
 				break;
 			}
-		}
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
 		}	
-		if(recRes)
+		if( retry== 0 )	
 		{
-			break;
+			OSTimeDly(10);	
+			if(LogPara.offLineFlag == 0)
+			{
+				LogPara.offLineFlag = 1;
+				LogPara.offDetailPage = LogPara.LogDetailPage;
+			}
+	        return VP_ERR_COM;
 		}
-	}	
-	if( retry== 0 )	
-	{
-		OSTimeDly(10);	
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
-		}
-        return VP_ERR_COM;
-	}
 
-    switch( sysVPMission.receive.msgType )
+	    switch( sysVPMission.receive.msgType )
+		{
+			default:
+			    break;
+		}
+	}
+	else
 	{
-		default:
-		    break;
+		//==============================================================
+		flag = VPMsgPackSend( VP_STATUS_RPT, 0);  //1-0, not need ACK
+	    if( flag != VP_ERR_NULL )
+	    {
+			return VP_ERR_PAR;
+		}
 	}
 	//------------------------------------------------------
     /*//1.硬币器状态cc_st
@@ -3324,9 +3372,25 @@ unsigned char VP_CMD_GetStatus( void )
 	//MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_STATUSIND;				
 	//OSMboxPost(g_Ubox_PCTOVMCMail,&MsgUboxPack[g_Ubox_Index]);	
 	//UpdateIndex();
+	//2.ACK	
+	/**/
+	if(SystemPara.EasiveEnable == 1)
+	{
+		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
+		{
+			VPMsgPackSend( VP_ACK_RPT, 0);
+		}
+	}
+	else
+	{
+		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
+		{
+			VPMsgPackSend( VP_ACK_RPT, 0 );
+		}
+	}
 	
 	TracePC("\r\n Drv Payout_Ind ACK"); 
-	VPMsgPackSend( VP_ACK_RPT, 0  );
+	//VPMsgPackSend( VP_ACK_RPT, 0  );
 	OSTimeDly(OS_TICKS_PER_SEC/10);
 	StatusRPTAPI();
 	/*
@@ -3381,53 +3445,65 @@ unsigned char VPMission_Info_RPT( unsigned char type, unsigned int payAllMoney,u
 	sysVPMission.value = value;
 	sysVPMission.cabinetNums = cabinetNums;
 	memcpy(sysVPMission.cabinetdata,(uint8_t *)cabinetdata,30);
-	//===========================================
-	flag = VPMsgPackSend( VP_INFO_RPT, 1);
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	while( retry )
+	if(SystemPara.EasiveEnable == 1)
 	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
+		//===========================================
+		flag = VPMsgPackSend( VP_INFO_RPT, 1);
+	    if( flag != VP_ERR_NULL )
+	    {
+			return VP_ERR_PAR;
+		}
+		while( retry )
 		{
-			if( VPBusFrameUnPack() )
+			Timer.PCRecTimer = VP_TIME_OUT;
+			while( Timer.PCRecTimer )
 			{
-				if(LogPara.offLineFlag == 1)
+				if( VPBusFrameUnPack() )
 				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					if(LogPara.offLineFlag == 1)
+					{
+						LogPara.offLineFlag = 0;					
+						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					}
+					recRes = 1;
+					break;
 				}
-				recRes = 1;
+			}
+			if(Timer.PCRecTimer==0)
+			{
+				retry--;
+				//TracePC("\r\n Drv failretry=%d",retry); 
+			}	
+			if(recRes)
+			{
 				break;
 			}
+			
 		}
-		if(Timer.PCRecTimer==0)
+		if( retry== 0 )
 		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
+			OSTimeDly(10);		
+			if(LogPara.offLineFlag == 0)
+			{
+				LogPara.offLineFlag = 1;
+				LogPara.offDetailPage = LogPara.LogDetailPage;
+			}
+	        return VP_ERR_COM;
 		}
-		
+	    switch( sysVPMission.receive.msgType )
+		{
+			default:
+			    break;
+		}
 	}
-	if( retry== 0 )
+	else
 	{
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
+		//===========================================
+		flag = VPMsgPackSend( VP_INFO_RPT, 0);
+	    if( flag != VP_ERR_NULL )
+	    {
+			return VP_ERR_PAR;
 		}
-        return VP_ERR_COM;
-	}
-    switch( sysVPMission.receive.msgType )
-	{
-		default:
-		    break;
 	}
 	return VP_ERR_NULL;
 }
@@ -3442,8 +3518,8 @@ unsigned char VPMission_Info_RPT( unsigned char type, unsigned int payAllMoney,u
 *********************************************************************************************************/
 unsigned char VP_CMD_GetInfo( void )
 {
-	MessageUboxPCPack *AccepterUboxMsg;
-	unsigned char ComStatus;
+	//MessageUboxPCPack *AccepterUboxMsg;
+	//unsigned char ComStatus;
 
 	//1.Check the data
     if( sysVPMission.receive.datLen != 1  )
@@ -3451,6 +3527,23 @@ unsigned char VP_CMD_GetInfo( void )
 	    VPMsgPackSend( VP_NAK_RPT, 0 );	 
 		return VP_ERR_PAR;
 	}
+	//2.ACK	
+	/**/
+	if(SystemPara.EasiveEnable == 1)
+	{
+		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
+		{
+			VPMsgPackSend( VP_ACK_RPT, 0);
+		}
+	}
+	else
+	{
+		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
+		{
+			VPMsgPackSend( VP_ACK_RPT, 0 );
+		}
+	}
+	
 	switch(sysVPMission.receive.msg[0])
 	{
 		case 24:
@@ -3461,6 +3554,7 @@ unsigned char VP_CMD_GetInfo( void )
 			OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/10);
+			/*
 			//取得返回值
 			AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*10,&ComStatus);
 			if(ComStatus == OS_NO_ERR)
@@ -3476,12 +3570,12 @@ unsigned char VP_CMD_GetInfo( void )
 						VPMsgPackSend( VP_NAK_RPT, 0  );	
 						break;	
 				}
-			}	
+			}*/	
 			break;
 		default:
-			TracePC("\r\n Drv Info_Ind ACK"); 
-			VPMsgPackSend( VP_ACK_RPT, 0  );
-			OSTimeDly(OS_TICKS_PER_SEC/10);
+			//TracePC("\r\n Drv Info_Ind ACK"); 
+			//VPMsgPackSend( VP_ACK_RPT, 0  );
+			//OSTimeDly(OS_TICKS_PER_SEC/10);
 			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;		
 			MsgUboxPack[g_Ubox_Index].Type = sysVPMission.receive.msg[0];
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
@@ -3502,8 +3596,8 @@ unsigned char VP_CMD_GetInfo( void )
 *********************************************************************************************************/
 unsigned char VP_CMD_GetInfoExp( void )
 {
-	MessageUboxPCPack *AccepterUboxMsg;
-	unsigned char ComStatus;
+	//MessageUboxPCPack *AccepterUboxMsg;
+	//unsigned char ComStatus;
 
 	//1.Check the data
     if( sysVPMission.receive.datLen > 2  )
@@ -3511,6 +3605,23 @@ unsigned char VP_CMD_GetInfoExp( void )
 	    VPMsgPackSend( VP_NAK_RPT, 0 );	 
 		return VP_ERR_PAR;
 	}
+	//2.ACK	
+	/**/
+	if(SystemPara.EasiveEnable == 1)
+	{
+		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
+		{
+			VPMsgPackSend( VP_ACK_RPT, 0);
+		}
+	}
+	else
+	{
+		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
+		{
+			VPMsgPackSend( VP_ACK_RPT, 0 );
+		}
+	}
+	
 	switch(sysVPMission.receive.msg[0])
 	{
 		case 24:
@@ -3522,7 +3633,7 @@ unsigned char VP_CMD_GetInfoExp( void )
 			OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/10);
-			//取得返回值
+			/*//取得返回值
 			AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*10,&ComStatus);
 			if(ComStatus == OS_NO_ERR)
 			{
@@ -3537,12 +3648,12 @@ unsigned char VP_CMD_GetInfoExp( void )
 						VPMsgPackSend( VP_NAK_RPT, 0  );	
 						break;	
 				}
-			}		
+			}*/		
 			break;
 		case 26:
-			TracePC("\r\n Drv Info_Ind ACK"); 
-			VPMsgPackSend( VP_ACK_RPT, 0  );
-			OSTimeDly(OS_TICKS_PER_SEC/10);
+			//TracePC("\r\n Drv Info_Ind ACK"); 
+			//VPMsgPackSend( VP_ACK_RPT, 0  );
+			//OSTimeDly(OS_TICKS_PER_SEC/10);
 			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;		
 			MsgUboxPack[g_Ubox_Index].Type = sysVPMission.receive.msg[0];
 			MsgUboxPack[g_Ubox_Index].Control_device=sysVPMission.receive.msg[1];
@@ -3775,14 +3886,29 @@ unsigned char VPMission_OfflineData_RPT( void )
 *********************************************************************************************************/
 unsigned char VP_Payout_Ind( void )
 {	 	
-	MessageUboxPCPack *AccepterUboxMsg;
-	unsigned char ComStatus;
+	//MessageUboxPCPack *AccepterUboxMsg;
+//	unsigned char ComStatus;
 
     //1.Check the data
     if( sysVPMission.receive.datLen != 4  )
 	{
 	    VPMsgPackSend( VP_NAK_RPT, 0  );	 
 		return VP_ERR_PAR;
+	}
+	//2.ACK
+	if(SystemPara.EasiveEnable == 1)
+	{
+		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
+        {
+	    	VPMsgPackSend( VP_ACK_RPT, 0);
+        }
+	}
+	else
+	{
+		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
+	    {
+			VPMsgPackSend( VP_ACK_RPT, 0 );
+		}
 	}
 	    
 	sysVPMission.changeMoney = MoneyRec(sysVPMission.receive.msg[1],sysVPMission.receive.msg[2]);
@@ -3794,6 +3920,8 @@ unsigned char VP_Payout_Ind( void )
 	OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
 	UpdateIndex();
 	OSTimeDly(OS_TICKS_PER_SEC/10);
+	TracePC("\r\n Drv Payout_Ind"); 
+	/*
 	//取得返回值
 	AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*10,&ComStatus);
 	if(ComStatus == OS_NO_ERR)
@@ -3810,6 +3938,7 @@ unsigned char VP_Payout_Ind( void )
 				break;	
 		}
 	}
+	*/
 	/*//if( (sysVPMission.changeDev != 0) || (sysVPMission.changeMoney < SystemParameter.HopperCoinPrice1 ) )
     if( (sysVPMission.changeDev != 0) || (sysVPMission.changeMoney > sysMDBMission.coinAllValue ) || (sysMDBMission.coinDeviceStatus!=0) )
 	{
@@ -3846,10 +3975,11 @@ unsigned char VP_Payout_Ind( void )
 *********************************************************************************************************/
 unsigned char VP_Cost_Ind( void )
 {
-	MessageUboxPCPack *AccepterUboxMsg;
-	unsigned char ComStatus;
+//	MessageUboxPCPack *AccepterUboxMsg;
+//	unsigned char ComStatus;
 	//u_char xdata len = 0;
 	//u_char xdata str[20];
+//	unsigned char ComReturn = 0;
 
     //1.Check the data
     if( sysVPMission.receive.datLen != 4  )
@@ -3857,8 +3987,25 @@ unsigned char VP_Cost_Ind( void )
 	    VPMsgPackSend( VP_NAK_RPT, 0 );	 
 		return VP_ERR_PAR;
 	}
+	//2.ACK
+	if(SystemPara.EasiveEnable == 1)
+	{
+		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
+        {
+	    	VPMsgPackSend( VP_ACK_RPT, 0);
+        }
+	}
+	else
+	{
+		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
+	    {
+			VPMsgPackSend( VP_ACK_RPT, 0 );
+		}
+	}
+		
     sysVPMission.costMoney = MoneyRec(sysVPMission.receive.msg[1],sysVPMission.receive.msg[2]);
 	sysVPMission.type = sysVPMission.receive.msg[3];
+	
 	//发送邮箱给vmc
 	MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_COSTIND;				
 	MsgUboxPack[g_Ubox_Index].costMoney = sysVPMission.costMoney;
@@ -3867,6 +4014,7 @@ unsigned char VP_Cost_Ind( void )
 	UpdateIndex();
 	OSTimeDly(OS_TICKS_PER_SEC/10);
 	TracePC("\r\n Drv Cost_Ind"); 
+	/*
 	//取得返回值
 	AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*5,&ComStatus);
 	if(ComStatus == OS_NO_ERR)
@@ -3883,6 +4031,8 @@ unsigned char VP_Cost_Ind( void )
 				break;	
 		}
 	}	
+	*/
+	
 	/*
 	//2.得到当前投入的金额
 	if( sysITLMission.billHoldingFlag == 1 )
@@ -3937,8 +4087,8 @@ unsigned char VP_Cost_Ind( void )
 unsigned char VP_Vendout_Ind( void )
 {
 	unsigned char method = 0;
-	MessageUboxPCPack *AccepterUboxMsg;
-	unsigned char ComStatus;
+	//MessageUboxPCPack *AccepterUboxMsg;
+	//unsigned char ComStatus;
     
 	//1.Check the data
     if( sysVPMission.receive.datLen != 6  )
@@ -3946,6 +4096,23 @@ unsigned char VP_Vendout_Ind( void )
 	    VPMsgPackSend( VP_NAK_RPT, 0  );	 
 		return VP_ERR_PAR;
 	}
+	//2.ACK	
+	/**/
+	if(SystemPara.EasiveEnable == 1)
+	{
+		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
+		{
+			VPMsgPackSend( VP_ACK_RPT, 0);
+		}
+	}
+	else
+	{
+		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
+		{
+			VPMsgPackSend( VP_ACK_RPT, 0 );
+		}
+	}
+	
 	
 /*	if(sysVPMission.ErrFlag2 == 1)
 	{
@@ -3976,6 +4143,7 @@ unsigned char VP_Vendout_Ind( void )
 	OSTimeSet(0);
 	TracePC("\r\n Drv %dVendout_Ind",OSTimeGet()); 
 	OSTimeDly(OS_TICKS_PER_SEC/10);	
+	/*
 	//取得返回值
 	AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*5,&ComStatus);
 	if(ComStatus == OS_NO_ERR)
@@ -3992,7 +4160,7 @@ unsigned char VP_Vendout_Ind( void )
 				break;	
 		}
 	}	
-	
+	*/
 	/*
 
 	if(method == 1)
@@ -4160,8 +4328,8 @@ unsigned char VP_Vendout_Ind( void )
 *********************************************************************************************************/
 unsigned char VP_Reset_Ind( void )
 {
-	MessageUboxPCPack *AccepterUboxMsg;
-	unsigned char ComStatus;
+	//MessageUboxPCPack *AccepterUboxMsg;
+	//unsigned char ComStatus;
     
 	//1.Check the data
     if( sysVPMission.receive.datLen != 1  )
@@ -4169,12 +4337,30 @@ unsigned char VP_Reset_Ind( void )
 	    VPMsgPackSend( VP_NAK_RPT, 0  );	 
 		return VP_ERR_PAR;
 	}
+	//2.ACK	
+	/**/
+	if(SystemPara.EasiveEnable == 1)
+	{
+		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
+		{
+			VPMsgPackSend( VP_ACK_RPT, 0);
+		}
+	}
+	else
+	{
+		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
+		{
+			VPMsgPackSend( VP_ACK_RPT, 0 );
+		}
+	}
+	
     //发送邮箱给vmc
 	MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_RESETIND;				
 	OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
 	UpdateIndex();
 	OSTimeDly(OS_TICKS_PER_SEC/10);
 	TracePC("\r\n Drv Reset_Ind"); 
+	/*
 	//取得返回值
 	AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*10,&ComStatus);
 	if(ComStatus == OS_NO_ERR)
@@ -4191,6 +4377,7 @@ unsigned char VP_Reset_Ind( void )
 				break;	
 		}
 	}	
+	*/
     return VP_ERR_NULL;	
 }
 
@@ -4210,7 +4397,7 @@ unsigned char VP_Control_Ind( void )
 	
 	//1.Check the data
     //2.ACK	
-    /*
+    /**/
     if(SystemPara.EasiveEnable == 1)
 	{
 		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
@@ -4225,7 +4412,7 @@ unsigned char VP_Control_Ind( void )
 			VPMsgPackSend( VP_ACK_RPT, 0 );
 		}
 	}
-	*/
+	
 	//发送邮箱给vmc
     MsgUboxPack[g_Ubox_Index].Type  = sysVPMission.receive.msg[0];
 	//sysVPMission.ctrValue = sysVPMission.receive.msg[1];
@@ -4280,9 +4467,9 @@ unsigned char VP_Control_Ind( void )
 	UpdateIndex();
 	OSTimeSet(0);
 	OSTimeDly(OS_TICKS_PER_SEC/10);
-	//TracePC("\r\n Drv %dControl_Ind",OSTimeGet()); 
-	TracePC("\r\n Drv Control_Ind ACK"); 
-	VPMsgPackSend( VP_ACK_RPT, 0  );
+	TracePC("\r\n Drv %dControl_Ind",OSTimeGet()); 
+	//TracePC("\r\n Drv Control_Ind ACK"); 
+	//VPMsgPackSend( VP_ACK_RPT, 0  );
 	/*
 	//取得返回值
 	AccepterUboxMsg = OSMboxPend(g_Ubox_PCTOVMCBackCMail,OS_TICKS_PER_SEC*10,&ComStatus);
@@ -4365,7 +4552,7 @@ unsigned char VPMission_Poll( uint8_t *isInit )
 		}
 		if(Timer.PCRecTimer==0)
 		{
-			if(LogPara.offLineFlag == 1)
+			if(LogPara.offLineFlag == 1)//离线退出
 				retry=0;
 			else
 				retry--;
@@ -4373,7 +4560,28 @@ unsigned char VPMission_Poll( uint8_t *isInit )
 		}	
 		if(recRes)
 		{
-			break;
+			//如果发现接收有延后，可以超前一步再接收一次数据	
+			if(sysVPMission.receive.msgType==VP_ACK)
+			{
+				if( VPBusFrameUnPack() )
+				{
+					TracePC("\r\n Drv PollLine2=%d",LogPara.offLineFlag); 
+				    if(LogPara.offLineFlag == 1)
+					{
+						TracePC("\r\n Drv PollLine2OK"); 
+						LogPara.offLineFlag = 0;					
+						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					}	
+					TracePC("\r\n Drv rec2=ok"); 
+					recRes = 1;
+					if(SystemPara.EasiveEnable == 0)
+					{
+						if(globalSys.pcInitFlag == 0)
+							globalSys.pcInitFlag = 1;
+					}
+				}
+			}
+			break;//接收到数据退出
 		}
 	}
 	//TracePC("\r\n Drv retry=%d",retry); 
@@ -4491,53 +4699,65 @@ unsigned char VPMission_Payin_RPT(uint8_t dev,uint16_t payInMoney,uint32_t payAl
 	}    
 	sysVPMission.payInMoney = payInMoney;
 	sysVPMission.payAllMoney = payAllMoney;
-	//===========================================
-	flag = VPMsgPackSend( VP_PAYIN_RPT, 1);
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	while( retry )
+	if(SystemPara.EasiveEnable == 1)
 	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
+		//===========================================
+		flag = VPMsgPackSend( VP_PAYIN_RPT, 1);
+	    if( flag != VP_ERR_NULL )
+	    {
+			return VP_ERR_PAR;
+		}
+		while( retry )
 		{
-			if( VPBusFrameUnPack() )
-			{			
-				if(LogPara.offLineFlag == 1)
-				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+			Timer.PCRecTimer = VP_TIME_OUT;
+			while( Timer.PCRecTimer )
+			{
+				if( VPBusFrameUnPack() )
+				{			
+					if(LogPara.offLineFlag == 1)
+					{
+						LogPara.offLineFlag = 0;					
+						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					}
+					recRes = 1;
+					break;
 				}
-				recRes = 1;
+			}
+			if(Timer.PCRecTimer==0)
+			{
+				retry--;
+				//TracePC("\r\n Drv failretry=%d",retry); 
+			}	
+			if(recRes)
+			{
 				break;
 			}
-		}
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
 		}	
-		if(recRes)
+		if( retry== 0 )	
 		{
-			break;
+			OSTimeDly(10);		
+			if(LogPara.offLineFlag == 0)
+			{
+				LogPara.offLineFlag = 1;
+				LogPara.offDetailPage = LogPara.LogDetailPage;
+			}
+	        return VP_ERR_COM;
 		}
-	}	
-	if( retry== 0 )	
-	{
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
-		}
-        return VP_ERR_COM;
-	}
 
-    switch( sysVPMission.receive.msgType )
+	    switch( sysVPMission.receive.msgType )
+		{
+			default:
+			    break;
+		}
+	}
+	else
 	{
-		default:
-		    break;
+		//===========================================
+		flag = VPMsgPackSend( VP_PAYIN_RPT, 0);
+	    if( flag != VP_ERR_NULL )
+	    {
+			return VP_ERR_PAR;
+		}
 	}
 	return VP_ERR_NULL;
 }
@@ -4727,54 +4947,66 @@ unsigned char VPMission_Button_RPT( unsigned char type, unsigned char value,uint
     //{   
     //	Buzzer();
     //}
-	//===========================================
-    //1-0: button message, not need ACK
-	flag = VPMsgPackSend( VP_BUTTON_RPT, 1);   
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	
-    while( retry )
+    if(SystemPara.EasiveEnable == 1)
 	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
+		//===========================================
+	    //1-0: button message, not need ACK
+		flag = VPMsgPackSend( VP_BUTTON_RPT, 1);   
+	    if( flag != VP_ERR_NULL )
+	    {
+			return VP_ERR_PAR;
+		}
+		
+	    while( retry )
 		{
-			if( VPBusFrameUnPack() )
+			Timer.PCRecTimer = VP_TIME_OUT;
+			while( Timer.PCRecTimer )
 			{
-				if(LogPara.offLineFlag == 1)
+				if( VPBusFrameUnPack() )
 				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					if(LogPara.offLineFlag == 1)
+					{
+						LogPara.offLineFlag = 0;					
+						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					}
+					recRes = 1;
+					break;
 				}
-				recRes = 1;
+			}	
+			if(Timer.PCRecTimer==0)
+			{
+				retry--;
+				//TracePC("\r\n Drv failretry=%d",retry); 
+			}	
+			if(recRes)
+			{
 				break;
 			}
-		}	
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
 		}
-	}
-	if( retry== 0 )
-	{
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
+		if( retry== 0 )
 		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
+			OSTimeDly(10);		
+			if(LogPara.offLineFlag == 0)
+			{
+				LogPara.offLineFlag = 1;
+				LogPara.offDetailPage = LogPara.LogDetailPage;
+			}
+	        return VP_ERR_COM;
 		}
-        return VP_ERR_COM;
-	}
-	switch( sysVPMission.receive.msgType )
+		switch( sysVPMission.receive.msgType )
+		{
+			default:
+			    break;
+		}
+    }
+	else
 	{
-		default:
-		    break;
+		//1-0: button message, not need ACK
+		flag = VPMsgPackSend( VP_BUTTON_RPT, 0);   
+	    if( flag != VP_ERR_NULL )
+	    {
+			return VP_ERR_PAR;
+		}
 	}
 	return VP_ERR_NULL;
 
@@ -4914,104 +5146,117 @@ unsigned char VPMission_Act_RPT( unsigned char action, uint8_t value,uint8_t sec
 	sysVPMission.costMoney = cost;
 	sysVPMission.payAllMoney = payAllMoney;	
 	//===========================================
-    flag = VPMsgPackSend( VP_ACTION_RPT, 1);   
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	while( retry )
+	if(SystemPara.EasiveEnable == 1)
 	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
+	    flag = VPMsgPackSend( VP_ACTION_RPT, 1);   
+	    if( flag != VP_ERR_NULL )
+	    {
+			return VP_ERR_PAR;
+		}
+		
+		while( retry )
 		{
-			if( VPBusFrameUnPack() )
+			Timer.PCRecTimer = VP_TIME_OUT;
+			while( Timer.PCRecTimer )
 			{
-				TracePC("\r\n Drv ActLine=%d",LogPara.offLineFlag); 
-				if(LogPara.offLineFlag == 1)
+				if( VPBusFrameUnPack() )
 				{
-					TracePC("\r\n Drv ActLineOK"); 
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					TracePC("\r\n Drv ActLine=%d",LogPara.offLineFlag); 
+					if(LogPara.offLineFlag == 1)
+					{
+						TracePC("\r\n Drv ActLineOK"); 
+						LogPara.offLineFlag = 0;					
+						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					}
+					recRes = 1;
+					//Trace("\r\n getaction1");
+					break;
 				}
-				recRes = 1;
-				//Trace("\r\n getaction1");
+			}	
+			if(Timer.PCRecTimer==0)
+			{
+				retry--;
+				//TracePC("\r\n Drv failretry=%d",retry); 
+			}	
+			if(recRes)
+			{
 				break;
 			}
-		}	
-		if(Timer.PCRecTimer==0)
+		}
+		if( retry== 0 )
 		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
+			OSTimeDly(10);		
+			if(LogPara.offLineFlag == 0)
+			{
+				LogPara.offLineFlag = 1;
+				LogPara.offDetailPage = LogPara.LogDetailPage;
+			}
+	        return VP_ERR_COM;
+		}
+		
+		//Trace("\r\n getaction2=%d",sysVPMission.receive.msgType);
+		switch( sysVPMission.receive.msgType )
+		{		
+			case VP_GET_SETUP_IND: 
+				VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
+				break;
+			case VP_HOUDAO_IND:
+			    VP_CMD_HuodaoPar(); //1,0
+			    break;
+			case VP_HUODAO_SET_IND: 
+				VP_CMD_HuodaoNo();			
+				break;
+			case VP_POSITION_IND:
+			    VP_CMD_Position();  //1,0	
+				break;	
+			case VP_SALEPRICE_IND:
+				VP_CMD_GoodsPar();	  //1,0
+				break;	
+			case VP_GET_HUODAO:
+				VP_CMD_GetColumnSta();  //1,0        
+	            break;	
+			case VP_VENDOUT_IND:
+			    VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
+			    break;
+			case VP_RESET_IND:
+			    VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
+			    break;
+			case VP_CONTROL_IND:
+			    VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
+			    break;
+			case VP_GETINFO_IND://120419 by cq TotalSell 			
+				VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
+				break;
+			case VP_GET_STATUS:
+			    VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
+			    break;		
+			case VP_COST_IND://添加扣款函数;by gzz 20110823
+			    VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
+			    break;	
+			case VP_PAYOUT_IND:
+			    VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
+			    break;   	
+			case VP_GET_OFFLINEDATA_IND:
+				VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
+				break;	
+			case VP_GETINFO_INDEXP:
+				VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
+				break;		
+			case VP_SET_HUODAO: 
+				//Trace("\r\n getaction3");
+				VP_CMD_SetHuodao();
+				break;
+			default:
+			    break;
 		}
 	}
-	if( retry== 0 )
+	else
 	{
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
+	    flag = VPMsgPackSend( VP_ACTION_RPT, 0);   
+	    if( flag != VP_ERR_NULL )
+	    {
+			return VP_ERR_PAR;
 		}
-        return VP_ERR_COM;
-	}
-	//Trace("\r\n getaction2=%d",sysVPMission.receive.msgType);
-	switch( sysVPMission.receive.msgType )
-	{		
-		case VP_GET_SETUP_IND: 
-			VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
-			break;
-		case VP_HOUDAO_IND:
-		    VP_CMD_HuodaoPar(); //1,0
-		    break;
-		case VP_HUODAO_SET_IND: 
-			VP_CMD_HuodaoNo();			
-			break;
-		case VP_POSITION_IND:
-		    VP_CMD_Position();  //1,0	
-			break;	
-		case VP_SALEPRICE_IND:
-			VP_CMD_GoodsPar();	  //1,0
-			break;	
-		case VP_GET_HUODAO:
-			VP_CMD_GetColumnSta();  //1,0        
-            break;	
-		case VP_VENDOUT_IND:
-		    VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
-		    break;
-		case VP_RESET_IND:
-		    VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
-		    break;
-		case VP_CONTROL_IND:
-		    VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
-		    break;
-		case VP_GETINFO_IND://120419 by cq TotalSell 			
-			VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
-			break;
-		case VP_GET_STATUS:
-		    VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
-		    break;		
-		case VP_COST_IND://添加扣款函数;by gzz 20110823
-		    VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
-		    break;	
-		case VP_PAYOUT_IND:
-		    VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
-		    break;   	
-		case VP_GET_OFFLINEDATA_IND:
-			VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
-			break;	
-		case VP_GETINFO_INDEXP:
-			VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
-			break;		
-		case VP_SET_HUODAO: 
-			//Trace("\r\n getaction3");
-			VP_CMD_SetHuodao();
-			break;
-		default:
-		    break;
 	}
 	return VP_ERR_NULL;
 }

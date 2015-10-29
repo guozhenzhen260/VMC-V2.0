@@ -488,7 +488,7 @@ void ErrorCheck(void)
 				{
 					LCDPrintf(5,lineNum+=2,0,SystemPara.Language,UserMaintainErrorMenuList.Error_SOMD2[SystemPara.Language]);
 				}
-				if(DeviceStateBusiness.Emp_Gol)
+				if((DeviceStateBusiness.Emp_Gol)&&(SystemPara.GeziDeviceType==0))
 				{
 					LCDPrintf(5,lineNum+=2,0,SystemPara.Language,UserMaintainErrorMenuList.Emp_Gol[SystemPara.Language]);
 				}

@@ -43,7 +43,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Hex\</OutputDirectory>
-          <OutputName>VMC_V2_13_2015_x_x</OutputName>
+          <OutputName>VMC_V2_14_2015_x_x</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>

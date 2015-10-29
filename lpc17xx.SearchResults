@@ -1,23 +1,4 @@
----- RecyPayoutMoneyBack 匹配 (24 在 7 文件 ) ----
-BillAccepter.c (drivers):34:extern unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney,unsigned int *RecyPayoutMoneyBack);
-BillAccepter.c (drivers):366:uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char billOpt,unsigned char *billOptBack,uint32_t RecyPayoutMoney,uint8_t RecyPayoutNum,unsigned int *RecyPayoutMoneyBack)
-BillAccepter.c (drivers):407:			if(BillRecyclerPayoutValueExpanse(RecyPayoutMoney,RecyPayoutMoneyBack))
-BillAccepter.c (drivers):1143:unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney,unsigned int *RecyPayoutMoneyBack)
-BillAccepter.c (drivers):1150:	*RecyPayoutMoneyBack=0;
-BillAccepter.c (drivers):1210:						*RecyPayoutMoneyBack=RecyclerValue*BillRdBuff[i];
-BillAccepter.h (drivers):26:extern unsigned char BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char billOpt,unsigned char *billOptBack,uint32_t RecyPayoutMoney,uint8_t RecyPayoutNum,unsigned int *RecyPayoutMoneyBack);
-BillAccepterAPI.c (api):386:unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney,uint32_t  *RecyPayoutMoneyBack)
-BillAccepterAPI.c (api):411:							*RecyPayoutMoneyBack=BillMsg->RecyPayoutMoneyBack;
-BillAccepterAPI.c (api):417:							*RecyPayoutMoneyBack=0;
-BillAccepterAPI.c (api):425:						*RecyPayoutMoneyBack=0;
-BillAccepterAPI.h (api):20:extern unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney,uint32_t  *RecyPayoutMoneyBack);
-Business.c (app):2005:	uint32_t  RecyPayoutMoneyBack=0;
-Business.c (app):2020:					status=BillRecyclerPayoutValueExpanseAPI(stDevValue.RecyclerValue[i]*num,&RecyPayoutMoneyBack);
-Business.c (app):2021:					TraceBill("\r\n AppRecback st=%d,pay=%ld",status,RecyPayoutMoneyBack);
-Business.c (app):2024:						paymoney = (g_coinAmount + g_billAmount)-RecyPayoutMoneyBack;
-Business.c (app):2030:							PayoutRPTAPI(1,0,RecyPayoutMoneyBack,paymoney);
-Common.h (app):556:	uint32_t  RecyPayoutMoneyBack;			//实际找零金额
-Taskdevice.c (drivers):56:	unsigned int RecyPayoutMoneyBack=0;
-Taskdevice.c (drivers):236:			flag = BillDevProcess(&Billvalue,&Billtype,billOpt,&billOptBack,RecyPayoutMoney,RecyPayoutNum,&RecyPayoutMoneyBack);
-Taskdevice.c (drivers):276:					TraceBill("\r\n TaskRecPayoutSuccess=%ld",RecyPayoutMoneyBack);
-Taskdevice.c (drivers):278:					MsgAccepterPack.RecyPayoutMoneyBack=RecyPayoutMoneyBack;
+---- SaleTime 匹配 (3 在 1 文件 ) ----
+Business.c (app):2389:** Function name:     	IsSaleTimeOver
+Business.c (app):2411:** Function name:     	IsSaleTimeOver
+Business.c (app):2433:** Function name:     	DispSaleTime

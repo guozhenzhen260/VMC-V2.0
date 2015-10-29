@@ -1,9 +1,9 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html><head>
-<title>Static Call Graph - [.\Hex\VMC_V2_14_2015_x_x.axf]</title></head>
+<title>Static Call Graph - [.\Hex\VMC_V2_15_2015_x_x.axf]</title></head>
 <body><HR>
-<H1>Static Call Graph for image .\Hex\VMC_V2_14_2015_x_x.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Fri Oct 23 18:07:19 2015
+<H1>Static Call Graph for image .\Hex\VMC_V2_15_2015_x_x.axf</H1><HR>
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Tue Oct 27 10:23:40 2015
 <BR><P>
 <H3>Maximum Stack Usage =       1960 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -3451,8 +3451,6 @@ Global Symbols
 <LI><a href="#[2e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_Cost_Ind
 <LI><a href="#[2e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_Payout_Ind
 <LI><a href="#[2e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_OfflineData_RPT
-<LI><a href="#[2e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_GetInfoExp
-<LI><a href="#[2e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_GetInfo
 <LI><a href="#[2e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_GetStatus
 <LI><a href="#[2e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_SetHuodao
 <LI><a href="#[2e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_Position
@@ -3584,7 +3582,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
 </UL>
 
-<P><STRONG><a name="[111]"></a>PollAPI</STRONG> (Thumb, 3232 bytes, Stack size 64 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[111]"></a>PollAPI</STRONG> (Thumb, 2770 bytes, Stack size 64 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 836 + Unknown Stack Size
 <LI>Call Chain = PollAPI &rArr; zh_task3_pend &rArr; VendoutInd &rArr; ChannelAPIProcess &rArr; ChannelSaveParam &rArr; hd_save_param &rArr; AT45DBWritePage &rArr; AT45DBWriteNByte &rArr; AT45DBWriteBuffer &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -3645,7 +3643,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[de]"></a>PayinRPTAPI</STRONG> (Thumb, 348 bytes, Stack size 16 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[de]"></a>PayinRPTAPI</STRONG> (Thumb, 664 bytes, Stack size 16 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = PayinRPTAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3663,7 +3661,7 @@ Global Symbols
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMoney
 </UL>
 
-<P><STRONG><a name="[d7]"></a>StatusRPTAPI</STRONG> (Thumb, 1500 bytes, Stack size 72 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[d7]"></a>StatusRPTAPI</STRONG> (Thumb, 1378 bytes, Stack size 72 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 536 + Unknown Stack Size
 <LI>Call Chain = StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3681,7 +3679,7 @@ Global Symbols
 <LI><a href="#[2e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_GetStatus
 </UL>
 
-<P><STRONG><a name="[10f]"></a>BillStatusRPTAPI</STRONG> (Thumb, 98 bytes, Stack size 8 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[10f]"></a>BillStatusRPTAPI</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 544 + Unknown Stack Size
 <LI>Call Chain = BillStatusRPTAPI &rArr; StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3707,7 +3705,7 @@ Global Symbols
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunPage
 </UL>
 
-<P><STRONG><a name="[f9]"></a>VendoutRPTAPI</STRONG> (Thumb, 350 bytes, Stack size 40 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[f9]"></a>VendoutRPTAPI</STRONG> (Thumb, 444 bytes, Stack size 40 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 448 + Unknown Stack Size
 <LI>Call Chain = VendoutRPTAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3738,7 +3736,7 @@ Global Symbols
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AdminRPT
 </UL>
 
-<P><STRONG><a name="[132]"></a>AdminRPTSIMPLEAPI</STRONG> (Thumb, 472 bytes, Stack size 32 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[132]"></a>AdminRPTSIMPLEAPI</STRONG> (Thumb, 312 bytes, Stack size 32 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 440 + Unknown Stack Size
 <LI>Call Chain = AdminRPTSIMPLEAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3775,7 +3773,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispChaxunPage
 </UL>
 
-<P><STRONG><a name="[95]"></a>PCInitAPI</STRONG> (Thumb, 110 bytes, Stack size 8 bytes, pccomapi.o(.text))
+<P><STRONG><a name="[95]"></a>PCInitAPI</STRONG> (Thumb, 340 bytes, Stack size 8 bytes, pccomapi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 416 + Unknown Stack Size
 <LI>Call Chain = PCInitAPI &rArr; TracePC &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -6954,7 +6952,7 @@ Global Symbols
 <LI><a href="#[29c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Act_RPT
 </UL>
 
-<P><STRONG><a name="[2d5]"></a>VPMsgPackSend</STRONG> (Thumb, 12978 bytes, Stack size 120 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2d5]"></a>VPMsgPackSend</STRONG> (Thumb, 13004 bytes, Stack size 120 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 704 + Unknown Stack Size
 <LI>Call Chain = VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -6981,6 +6979,7 @@ Global Symbols
 <LI><a href="#[2e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_GetInfo
 <LI><a href="#[2e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_GetStatus
 <LI><a href="#[2e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_SetHuodao
+<LI><a href="#[2e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_GetColumnSta
 <LI><a href="#[2e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_ColumnSta_RPT
 <LI><a href="#[2e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_Position
 <LI><a href="#[2de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_GoodsPar
@@ -7035,7 +7034,7 @@ Global Symbols
 <LI><a href="#[29c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Act_RPT
 </UL>
 
-<P><STRONG><a name="[2de]"></a>VP_CMD_GoodsPar</STRONG> (Thumb, 498 bytes, Stack size 16 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2de]"></a>VP_CMD_GoodsPar</STRONG> (Thumb, 500 bytes, Stack size 16 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
 <LI>Call Chain = VP_CMD_GoodsPar &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -7072,12 +7071,13 @@ Global Symbols
 <LI><a href="#[2b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Vendout_RPT
 </UL>
 
-<P><STRONG><a name="[2e2]"></a>VP_CMD_GetColumnSta</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2e2]"></a>VP_CMD_GetColumnSta</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 728 + Unknown Stack Size
 <LI>Call Chain = VP_CMD_GetColumnSta &rArr; VPMission_ColumnSta_RPT &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
 <BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[2e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_ColumnSta_RPT
+<LI><a href="#[2d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMsgPackSend
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 <LI><a href="#[29c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Act_RPT
@@ -7095,7 +7095,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[29c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Act_RPT
 </UL>
 
-<P><STRONG><a name="[29c]"></a>VPMission_Act_RPT</STRONG> (Thumb, 586 bytes, Stack size 72 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[29c]"></a>VPMission_Act_RPT</STRONG> (Thumb, 588 bytes, Stack size 72 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 808 + Unknown Stack Size
  + In Cycle
 <LI>Call Chain = VPMission_Act_RPT &rArr;  VPMission_Act_RPT (Cycle)
@@ -7126,7 +7126,7 @@ Global Symbols
 <LI><a href="#[29c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Act_RPT
 </UL>
 
-<P><STRONG><a name="[2b2]"></a>VPMission_Status_RPT</STRONG> (Thumb, 494 bytes, Stack size 72 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2b2]"></a>VPMission_Status_RPT</STRONG> (Thumb, 500 bytes, Stack size 72 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 880 + Unknown Stack Size
 <LI>Call Chain = VPMission_Status_RPT &rArr; VPMission_Act_RPT &rArr;  VPMission_Act_RPT (Cycle)
 </UL>
@@ -7138,7 +7138,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3TaskDevice
 </UL>
 
-<P><STRONG><a name="[2e4]"></a>VP_CMD_GetStatus</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2e4]"></a>VP_CMD_GetStatus</STRONG> (Thumb, 94 bytes, Stack size 8 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 712 + Unknown Stack Size
 <LI>Call Chain = VP_CMD_GetStatus &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -7150,7 +7150,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 </UL>
 
-<P><STRONG><a name="[2b4]"></a>VPMission_Info_RPT</STRONG> (Thumb, 292 bytes, Stack size 72 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2b4]"></a>VPMission_Info_RPT</STRONG> (Thumb, 338 bytes, Stack size 72 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 880 + Unknown Stack Size
 <LI>Call Chain = VPMission_Info_RPT &rArr; VPMission_Act_RPT &rArr;  VPMission_Act_RPT (Cycle)
 </UL>
@@ -7163,29 +7163,25 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3TaskDevice
 </UL>
 
-<P><STRONG><a name="[2e5]"></a>VP_CMD_GetInfo</STRONG> (Thumb, 378 bytes, Stack size 16 bytes, ubprotocol.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
+<P><STRONG><a name="[2e5]"></a>VP_CMD_GetInfo</STRONG> (Thumb, 240 bytes, Stack size 8 bytes, ubprotocol.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 712 + Unknown Stack Size
 <LI>Call Chain = VP_CMD_GetInfo &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateIndex
-<LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPend
 <LI><a href="#[2d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMsgPackSend
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 </UL>
 
-<P><STRONG><a name="[2e6]"></a>VP_CMD_GetInfoExp</STRONG> (Thumb, 330 bytes, Stack size 16 bytes, ubprotocol.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
+<P><STRONG><a name="[2e6]"></a>VP_CMD_GetInfoExp</STRONG> (Thumb, 288 bytes, Stack size 8 bytes, ubprotocol.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 712 + Unknown Stack Size
 <LI>Call Chain = VP_CMD_GetInfoExp &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateIndex
-<LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPend
 <LI><a href="#[2d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMsgPackSend
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
@@ -7204,22 +7200,21 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 </UL>
 
-<P><STRONG><a name="[2e8]"></a>VP_Payout_Ind</STRONG> (Thumb, 216 bytes, Stack size 16 bytes, ubprotocol.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
+<P><STRONG><a name="[2e8]"></a>VP_Payout_Ind</STRONG> (Thumb, 310 bytes, Stack size 8 bytes, ubprotocol.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 712 + Unknown Stack Size
 <LI>Call Chain = VP_Payout_Ind &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateIndex
-<LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPend
 <LI><a href="#[2d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMsgPackSend
 <LI><a href="#[2df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoneyRec
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 </UL>
 
-<P><STRONG><a name="[2e9]"></a>VP_Cost_Ind</STRONG> (Thumb, 288 bytes, Stack size 8 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2e9]"></a>VP_Cost_Ind</STRONG> (Thumb, 204 bytes, Stack size 8 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 712 + Unknown Stack Size
 <LI>Call Chain = VP_Cost_Ind &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -7233,8 +7228,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 </UL>
 
-<P><STRONG><a name="[2ea]"></a>VP_Vendout_Ind</STRONG> (Thumb, 354 bytes, Stack size 24 bytes, ubprotocol.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 728 + Unknown Stack Size
+<P><STRONG><a name="[2ea]"></a>VP_Vendout_Ind</STRONG> (Thumb, 330 bytes, Stack size 16 bytes, ubprotocol.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
 <LI>Call Chain = VP_Vendout_Ind &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
@@ -7242,7 +7237,6 @@ Global Symbols
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateIndex
-<LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPend
 <LI><a href="#[2eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeSet
 <LI><a href="#[2d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMsgPackSend
 <LI><a href="#[2df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoneyRec
@@ -7250,25 +7244,25 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 </UL>
 
-<P><STRONG><a name="[2ec]"></a>VP_Reset_Ind</STRONG> (Thumb, 150 bytes, Stack size 16 bytes, ubprotocol.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
+<P><STRONG><a name="[2ec]"></a>VP_Reset_Ind</STRONG> (Thumb, 134 bytes, Stack size 8 bytes, ubprotocol.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 712 + Unknown Stack Size
 <LI>Call Chain = VP_Reset_Ind &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateIndex
-<LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPend
 <LI><a href="#[2d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMsgPackSend
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 </UL>
 
-<P><STRONG><a name="[2ed]"></a>VP_Control_Ind</STRONG> (Thumb, 880 bytes, Stack size 8 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2ed]"></a>VP_Control_Ind</STRONG> (Thumb, 796 bytes, Stack size 8 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 712 + Unknown Stack Size
 <LI>Call Chain = VP_Control_Ind &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TracePC
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeGet
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
 <LI><a href="#[1d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateIndex
@@ -7278,7 +7272,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 </UL>
 
-<P><STRONG><a name="[2ac]"></a>VPMission_Poll</STRONG> (Thumb, 384 bytes, Stack size 32 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2ac]"></a>VPMission_Poll</STRONG> (Thumb, 820 bytes, Stack size 32 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 872 + Unknown Stack Size
 <LI>Call Chain = VPMission_Poll &rArr; VPMission_OfflineData_RPT &rArr; VPMission_Act_RPT &rArr;  VPMission_Act_RPT (Cycle)
 </UL>
@@ -7318,7 +7312,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3TaskDevice
 </UL>
 
-<P><STRONG><a name="[2ae]"></a>VPMission_Payout_RPT</STRONG> (Thumb, 442 bytes, Stack size 48 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2ae]"></a>VPMission_Payout_RPT</STRONG> (Thumb, 216 bytes, Stack size 48 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 856 + Unknown Stack Size
 <LI>Call Chain = VPMission_Payout_RPT &rArr; VPMission_Act_RPT &rArr;  VPMission_Act_RPT (Cycle)
 </UL>
@@ -7354,7 +7348,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3TaskDevice
 </UL>
 
-<P><STRONG><a name="[2b1]"></a>VPMission_Vendout_RPT</STRONG> (Thumb, 256 bytes, Stack size 56 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2b1]"></a>VPMission_Vendout_RPT</STRONG> (Thumb, 274 bytes, Stack size 56 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 864 + Unknown Stack Size
 <LI>Call Chain = VPMission_Vendout_RPT &rArr; VPMission_Act_RPT &rArr;  VPMission_Act_RPT (Cycle)
 </UL>
@@ -7368,7 +7362,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3TaskDevice
 </UL>
 
-<P><STRONG><a name="[2b3]"></a>VPMission_Admin_RPT</STRONG> (Thumb, 346 bytes, Stack size 40 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2b3]"></a>VPMission_Admin_RPT</STRONG> (Thumb, 302 bytes, Stack size 40 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 848 + Unknown Stack Size
 <LI>Call Chain = VPMission_Admin_RPT &rArr; VPMission_Act_RPT &rArr;  VPMission_Act_RPT (Cycle)
 </UL>
@@ -8000,10 +7994,10 @@ Global Symbols
 <LI>Call Chain = XMTMission_GetTemperature &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
-<LI><a href="#[31d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTBusUnpack
 <LI><a href="#[31b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTMsgPackSend
 <LI><a href="#[31e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTSerialInit
 <LI><a href="#[31f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay
+<LI><a href="#[31d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTBusUnpack
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1TaskDevice
 <LI><a href="#[316]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTMission_SetTemperatureS
@@ -8014,9 +8008,9 @@ Global Symbols
 <LI>Call Chain = XMTMission_SetTemperature &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
-<LI><a href="#[31d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTBusUnpack
 <LI><a href="#[31b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTMsgPackSend
 <LI><a href="#[31f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay
+<LI><a href="#[31d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTBusUnpack
 </UL>
 <BR>[Called By]<UL><LI><a href="#[316]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTMission_SetTemperatureS
 </UL>
@@ -8381,8 +8375,8 @@ Global Symbols
 <LI><a href="#[323]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1GetCh
 <LI><a href="#[322]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1BuffIsNotEmpty
 </UL>
-<BR>[Called By]<UL><LI><a href="#[31d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTBusUnpack
-<LI><a href="#[30d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectKey_Command
+<BR>[Called By]<UL><LI><a href="#[30d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectKey_Command
+<LI><a href="#[31d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTBusUnpack
 </UL>
 
 <P><STRONG><a name="[12]"></a>Uart3IsrHandler</STRONG> (Thumb, 156 bytes, Stack size 16 bytes, uart3.o(.text))
@@ -10257,6 +10251,7 @@ Global Symbols
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 <LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
 <LI><a href="#[307]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPSIMPLE_Vendout_Ind
+<LI><a href="#[2ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_Control_Ind
 <LI><a href="#[2ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_Vendout_Ind
 </UL>
 
@@ -10426,11 +10421,6 @@ Global Symbols
 <LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3TaskDevice
 <LI><a href="#[1bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadSerialPluseCoinAcceptor
 <LI><a href="#[1ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadParallelCoinAcceptor
-<LI><a href="#[2ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_Reset_Ind
-<LI><a href="#[2ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_Vendout_Ind
-<LI><a href="#[2e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_Payout_Ind
-<LI><a href="#[2e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_GetInfoExp
-<LI><a href="#[2e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VP_CMD_GetInfo
 <LI><a href="#[29e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;task3_zh_poll
 <LI><a href="#[2b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;task3_gprs_poll
 <LI><a href="#[3db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enterPCControl
@@ -11177,7 +11167,6 @@ Global Symbols
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitUart0
 <LI><a href="#[24c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;col_send
 <LI><a href="#[1e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hefanHuodaoInit
-<LI><a href="#[31d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTBusUnpack
 <LI><a href="#[317]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HeFanGuiDriver
 <LI><a href="#[30d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SelectKey_Command
 <LI><a href="#[30b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPSIMPLE_Result_Ind
@@ -11192,6 +11181,7 @@ Global Symbols
 <LI><a href="#[2b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMissionSIMPLESIMPLE_Poll
 <LI><a href="#[29d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SIMPLESIMPLEVPSerialInit
 <LI><a href="#[325]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1_ClrBuf
+<LI><a href="#[31d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMTBusUnpack
 <LI><a href="#[23a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncpy
 </UL>
 

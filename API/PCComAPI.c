@@ -563,7 +563,13 @@ void VendoutRPTAPI( unsigned char status, unsigned char Binnum,unsigned char col
 uint8_t ColumnCheckError(uint8_t method,uint8_t Binnum,uint8_t Column,uint16_t *columnNo)
 { 
 	uint8_t retcol=0;
-	if(method==1)
+	//这只是格子柜机，没有弹簧货道
+	if(SystemPara.GeziDeviceType==1)
+	{
+		*columnNo = 0;
+		retcol = 5;
+	}
+	else if(method==1)
 	{
 		*columnNo = 0;
 		*columnNo = ChannelGetSelectColumn(Binnum,2,Column);
@@ -855,16 +861,16 @@ void PollAPI(uint32_t payAllMoney)
 						//如果可以找零
                 	    if(ComReturn == 1)
                 	    {
-							MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_ACK;	
-							OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);
-							UpdateIndex();
+							//MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_ACK;	
+							//OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);
+							//UpdateIndex();
 							ChangeMoneyInd(AccepterUboxMsg->changeMoney,AccepterUboxMsg->Type,payAllMoney);
                 	    }
 						else
 						{
-							MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_NAK;
-							OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);
-							UpdateIndex();
+							//MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_NAK;
+							//OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);
+							//UpdateIndex();
                 	    }	
 						
 						break;		
@@ -872,9 +878,9 @@ void PollAPI(uint32_t payAllMoney)
 					case MBOX_PCTOVMC_COSTIND:
 						TracePC("\r\n MiddUbox costInd=%d,type=%d",AccepterUboxMsg->costMoney,AccepterUboxMsg->Type);
 						//ACK
-						MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_ACK;	
-						OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);
-						UpdateIndex();
+						//MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_ACK;	
+						//OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);
+						//UpdateIndex();
 							
 						//1.系统进入故障状态时，返回NAK_RPT  
 						if(IsErrorState())
@@ -949,9 +955,9 @@ void PollAPI(uint32_t payAllMoney)
 					case MBOX_PCTOVMC_VENDOUTIND:
 						TracePC("\r\n %dMiddUbox vendoutInd=%d,%d,%d,%ld",OSTimeGet(),AccepterUboxMsg->method,AccepterUboxMsg->Column,AccepterUboxMsg->Type,AccepterUboxMsg->costMoney);
 						//发送ACK
-						MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_ACK;	
-						OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);
-						UpdateIndex();
+						//MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_ACK;	
+						//OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);
+						//UpdateIndex();
 						
 						vendrpt=ColumnCheckError(AccepterUboxMsg->method,AccepterUboxMsg->device,AccepterUboxMsg->Column,&columnNo);
 						//1.下发的货道或者商品id对应的货道无法出货时，返回NAK_RPT  
@@ -1082,6 +1088,7 @@ void PollAPI(uint32_t payAllMoney)
 						TracePC("\r\n MiddUbox resetInd");
 						ResetInd();
 						ComReturn = 1;
+						/*
 						//3如果可以出货
                 	    if(ComReturn == 1)
                 	    {
@@ -1095,7 +1102,7 @@ void PollAPI(uint32_t payAllMoney)
 							OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);
 							UpdateIndex();
                 	    }
-							
+						*/	
 						break;
 					//status_ind得到设备状态
 					case MBOX_PCTOVMC_STATUSIND:
@@ -1260,10 +1267,10 @@ void PollAPI(uint32_t payAllMoney)
 						 25:非普通柜查询状态上报
 						*/
 						ComReturn = 1;
-						MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_ACK;	
-						OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);	
-						UpdateIndex();
-						OSTimeDly(OS_TICKS_PER_SEC/100);
+						//MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_ACK;	
+						//OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);	
+						//UpdateIndex();
+						//OSTimeDly(OS_TICKS_PER_SEC/100);
 						
 						MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;		
 						MsgUboxPack[g_Ubox_Index].Type = AccepterUboxMsg->Type;
@@ -1287,12 +1294,12 @@ void PollAPI(uint32_t payAllMoney)
 						
 						//ComReturn = 1;
 						//3如果不可以操作
-                	    if(ComReturn != 1)                	    
+                	    /*if(ComReturn != 1)                	    
 						{
 							MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_NAK;
 							OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);
 							UpdateIndex();
-                	    }
+                	    }*/
 							
 						break;		
 				}
