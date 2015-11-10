@@ -2085,7 +2085,7 @@ uint32_t ChangerMoney(void)
 		{		
 			TracePC("\r\n Appchange Fail");
 			LogChangeAPI(GetAmountMoney()-backmoney,backmoney);//记录日志
-			PayoutRPTAPI(0,0,GetAmountMoney()-backmoney,backmoney);
+			PayoutRPTAPI(0,0,backmoney,0);
 			//OSTimeDly(OS_TICKS_PER_SEC);
 			//PayinRPTAPI(2,0,0);//上报PC端
 			g_coinAmount = 0;
