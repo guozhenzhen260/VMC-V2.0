@@ -46,171 +46,196 @@ const LOGOLIFTTABLEDISP LogoLiftTable=
 		" elevator Test",
 		" Lift Table Test",
 		" Lift Table Test",
-		" texte do elevador"
+		" texte do elevador",
+		" elevator Test"
 	},
 	{
 		" 无%d货道",
 		" Column %d N/A!",
 		" Column %d N/A!",
 		" Column %d N/A!",
-		" COLUNA N\x82\O DISPONIVEL!"
+		" COLUNA N\x82\O DISPONIVEL!",
+		" Colonne %d N/A!"
 	},
 	{
 		" 请取货...",
 		" Pls Take Goods",
 		" Pls Take Goods",
 		" Pls Take Goods",
-		" PEGAR PRODUTOS"
+		" PEGAR PRODUTOS",
+		" Pls Take Goods"
 	},
 	{
 		" 取货门:打开",
 		" Door: Open",
 		" Door: Open",
 		" Door: Open",
-		" COLETOR DE PORTA COM:ATIVAR"
+		" COLETOR DE PORTA COM:ATIVAR",
+		" Door: Open"
 	},
 	{
 		" 取货门  关闭",
 		" Door: Close",
 		" Door: Close",
 		" Door: Close",
-		" COLETOR DE PORTA COM:DESATIVAR"
+		" COLETOR DE PORTA COM:DESATIVAR",
+		" Door: Close"
 	},
 	{
 		" 正在检测%d货道,请稍等...",
 		" Self-testing %d,pls wait...",
 		" Self-testing %d,pls wait...",
 		" Self-testing %d,pls wait...",
-		" %d FAVOR AGUARDAR..."
+		" %d FAVOR AGUARDAR...",
+		" Self-testing %d,pls wait..."
 	},
 	{
 		" 取货电机故障",
 		" Tack Goods Motor Error",
 		" Tack Goods Motor Error",
 		" Tack Goods Motor Error",
-		" COLETAR ERRO MOTOR"
+		" COLETAR ERRO MOTOR",
+		" Defaut sur Moteur d entrainement"
 	},
 	{
 		" 升降台电机故障",
 		" Lift Table Motor Error",
 		" Lift Table Motor Error",
 		" Lift Table Motor Error",
-		" MOTOR DO ELEVADOR COM ERRO"
+		" MOTOR DO ELEVADOR COM ERRO",
+		" Defaut sur Moteur de l ascenseur"
 	},
 	{
 		" 出货确认对射板故障",
 		" GOC Error",
 		" GOC Error",
 		" GOC Error",
-		" ERRO DE PLACA GOC"
+		" ERRO DE PLACA GOC",
+		" GOC Error"
 	},
 	{
 		" 层架传感器故障",
 		" Level Sensor Error",
 		" Level Sensor Error",
 		" Level Sensor Error",
-		" SENSOR DA BANDEIJA COM ERRO"
+		" SENSOR DA BANDEIJA COM ERRO",
+		" Level Sensor Error"
 	},
 	{
 		" 起始位置传感器故障",
 		" Base Point Sensor Error",
 		" Base Point Sensor Error",
 		" Base Point Sensor Error",
-		" SENSOR DE INICIALIZAR COM ERRO"
+		" SENSOR DE INICIALIZAR COM ERRO",
+		" Base Point Sensor Error"
 	},
 	{
 		" 取货门故障",
 		" Tack Goods Door Error",
 		" Tack Goods Door Error",
 		" Tack Goods Door Error",
-		" COLETOR DE PORTA COM ERRO"
+		" COLETOR DE PORTA COM ERRO",
+		" Defaut sur Boite de service"
 	},
 	{
 		" 货道驱动板故障",
 		" Column Drive Error",
 		" Column Drive Error",
 		" Column Drive Error",
-		" ERRO DA PLACA DE DISTRIBUI\x83\x82\O"
+		" ERRO DA PLACA DE DISTRIBUI\x83\x82\O",
+		" Defaut sur Tableau de bord des colonnes"
 	},
 	{
 		" 出货机构忙",
 		" Vending Busy",
 		" Vending Busy",
 		" Vending Busy",
-		" APLICADORA MECH OCUPADO"
+		" APLICADORA MECH OCUPADO",
+		" Vending Busy"
 	},
 	{
 		" 售货机大门没关",
 		" Vending Door Is Open",
 		" Vending Door Is Open",
 		" Vending Door Is Open",
-		" SITUA\x83x82\O DAS PORTS DA MAQUINA"
+		" SITUA\x83x82\O DAS PORTS DA MAQUINA",
+		" Vending Door Is Open"
 	},
 	{
 		" 收到错误数据包",
 		" Recve Error Pack",
 		" Recve Error Pack",
 		" Recve Error Pack",
-		" DADOS INCORRETOS RECEBIDOS"
+		" DADOS INCORRETOS RECEBIDOS",
+		" Recve Error Pack"
 	},
 	{
 		" 升降台未取到货",
 		" Lift Table Not Get Goods",
 		" Lift Table Not Get Goods",
 		" Lift Table Not Get Goods",
-		" ELEVADOR NO COLETA"
+		" ELEVADOR NO COLETA",
+		" Lift Table Not Get Goods"
 	},
 	{
 		" 升降机不在原点",
 		" Lift Table Not At Base",
 		" Lift Table Not At Base",
 		" Lift Table Not At Base",
-		" ELEVADOR NO PONTO INICIAL"
+		" ELEVADOR NO PONTO INICIAL",
+		" Lift Table Not At Base"
 	},
 	{
 		" 取货门未关闭",
 		" Goods Door Is Open",
 		" Goods Door Is Open",
 		" Goods Door Is Open",
-		" PORTA ABERTA"
+		" PORTA ABERTA",
+		" Goods Door Is Open"
 	},
 	{
 		" 请输入货道号:",
 		" Input column code:",
 		" Input column code:",
 		" Input column code:",
-		" C\x80\DIGO DA BANDEJA:"
+		" C\x80\DIGO DA BANDEJA:",
+		" Entrer le code colonne:"
 	},
 	{
 		" 出货失败!",
 		" Out Goods Fail!",
 		" Out Goods Fail!",
 		" Out Goods Fail!",
-		" FALHA!"
+		" FALHA!",
+		" Out Goods Fail!"
 	},
 	{
 		"请选择箱柜: ",
 		"Please Enter Bin Num:",
 		"Please Enter Bin Num:",
 		"Please Enter Bin Num:",
-		"CODIGO DO ARMARIO:"
+		"CODIGO DO ARMARIO:",
+		"Please Enter Bin Num:"
 	},
 	{
 		"① A 柜",
 		"1.A cabinet",
 		"1.A cabinet",
 		"1.A cabinet",
-		"1.A ARMARIO"
+		"1.A ARMARIO",
+		"1.Cabine A"
 	},
 	{
 		"② B 柜",
 		"2.B cabinet",
 		"2.B cabinet",
 		"2.B cabinet",
-		"2.B ARMARIO"
+		"2.B ARMARIO",
+		"1.Cabine B"
 	},
 	{
 		" 货未取走",
+		" Goods Not Take",
 		" Goods Not Take",
 		" Goods Not Take",
 		" Goods Not Take",
@@ -221,6 +246,7 @@ const LOGOLIFTTABLEDISP LogoLiftTable=
 		" Data Error",
 		" Data Error",
 		" Data Error",
+		" Data Error",
 		" Data Error"
 	},
 	{
@@ -228,10 +254,12 @@ const LOGOLIFTTABLEDISP LogoLiftTable=
 		" Empty",
 		" Empty",
 		" Empty",
-		" Empty"
+		" Empty",
+		" vide"
 	},
 	{
 		" 卡货",
+		" Goods Hang",
 		" Goods Hang",
 		" Goods Hang",
 		" Goods Hang",
@@ -242,6 +270,7 @@ const LOGOLIFTTABLEDISP LogoLiftTable=
 		" Door Not Open",
 		" Door Not Open",
 		" Door Not Open",
+		" Door Not Open",
 		" Door Not Open"
 	},
 	{
@@ -249,14 +278,16 @@ const LOGOLIFTTABLEDISP LogoLiftTable=
 		" LiftTable Error",
 		" LiftTable Error",
 		" LiftTable Error",
-		" LiftTable Error"	
+		" LiftTable Error",
+		" LiftTable Error"
 	},
 	{
 		" 其他故障",
 		" Other Error",
 		" Other Error",
 		" Other Error",
-		" Other Error"	
+		" Other Error",
+		" Other Error"
 	}
 }; 
 

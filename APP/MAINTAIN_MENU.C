@@ -131,6 +131,7 @@ const SYSMAINMENULIST SysMenuList =
 		"1.Language:",
 		"1.Language:",
 		"1.Language:",
+		"1.Language:",
 		"1.Language:"
 	},
 	{
@@ -138,10 +139,12 @@ const SYSMAINMENULIST SysMenuList =
 		"2.CoinAcceptorType:",	
 		"2.CoinAcceptorType:",
 		"2.CoinAcceptorType:",
+		"2.CoinAcceptorType:",
 		"2.CoinAcceptorType:"
 	},
 	{
 		"③ 找零器类型:",
+		"3.CoinChangerType:",
 		"3.CoinChangerType:",
 		"3.CoinChangerType:",
 		"3.CoinChangerType:",
@@ -152,6 +155,7 @@ const SYSMAINMENULIST SysMenuList =
 		"4.BillValidatorType:",	
 		"4.BillValidatorType:",
 		"4.BillValidatorType:",
+		"4.BillValidatorType:",
 		"4.BillValidatorType:"
 	},
 	{
@@ -159,10 +163,12 @@ const SYSMAINMENULIST SysMenuList =
 		"5.BillRecyclerType:",	
 		"5.BillRecyclerType:",
 		"5.BillRecyclerType:",
+		"5.BillRecyclerType:",
 		"5.BillRecyclerType:"
 	},
 	{
 		"⑥ 读卡器类型:",
+		"6.CashlessDeviceType:",
 		"6.CashlessDeviceType:",
 		"6.CashlessDeviceType:",
 		"6.CashlessDeviceType:",
@@ -173,10 +179,12 @@ const SYSMAINMENULIST SysMenuList =
 		"7.DecimalNum:",	
 		"7.DecimalNum:",
 		"7.DecimalNum:",
+		"7.DecimalNum:",
 		"7.DecimalNum:"
 	},
 	{
 		"⑧ 商标:",
+		"8.Logo:",
 		"8.Logo:",
 		"8.Logo:",
 		"8.Logo:",
@@ -187,6 +195,7 @@ const SYSMAINMENULIST SysMenuList =
 		"1.UserSelectKeyBoard:",
 		"1.UserSelectKeyBoard:",
 		"1.UserSelectKeyBoard:",
+		"1.UserSelectKeyBoard:",
 		"1.UserSelectKeyBoard:"
 	},
 	{
@@ -194,10 +203,12 @@ const SYSMAINMENULIST SysMenuList =
 		"2.ChannelType:",	
 		"2.ChannelType:",
 		"2.ChannelType:",
+		"2.ChannelType:",
 		"2.ChannelType:"
 	},
 	{
 		"③ 开启从柜:",
+		"3.SubBinOpen:",
 		"3.SubBinOpen:",
 		"3.SubBinOpen:",
 		"3.SubBinOpen:",
@@ -208,6 +219,7 @@ const SYSMAINMENULIST SysMenuList =
 		"4.SubBinChannelType:",	
 		"4.SubBinChannelType:",
 		"4.SubBinChannelType:",
+		"4.SubBinChannelType:",
 		"4.SubBinChannelType:"
 	},
 	{
@@ -215,10 +227,12 @@ const SYSMAINMENULIST SysMenuList =
 		"5.GOCIsOpen:",	
 		"5.GOCIsOpen:",
 		"5.GOCIsOpen:",
+		"5.GOCIsOpen:",
 		"5.GOCIsOpen:"
 	},
 	{
 		"⑥ ITL纸币器:",
+		"6.BillITLValidator:",
 		"6.BillITLValidator:",
 		"6.BillITLValidator:",
 		"6.BillITLValidator:",
@@ -229,10 +243,12 @@ const SYSMAINMENULIST SysMenuList =
 		"7.SaleTime:",	
 		"7.SaleTime:",
 		"7.SaleTime:",
+		"7.SaleTime:",
 		"7.SaleTime:"
 	},
 	{
 		"⑧ PC类型:",
+		"8.PcEnable:",
 		"8.PcEnable:",
 		"8.PcEnable:",
 		"8.PcEnable:",
@@ -243,6 +259,7 @@ const SYSMAINMENULIST SysMenuList =
 		"1.coin1:",
 		"1.coin1:",
 		"1.coin1:",
+		"1.coin1:",
 		"1.coin1:"
 	},
 	{
@@ -250,10 +267,12 @@ const SYSMAINMENULIST SysMenuList =
 		"2.coin2:",	
 		"2.coin2:",
 		"2.coin2:",
+		"2.coin2:",
 		"2.coin2:"
 	},
 	{
 		"③ 硬币3:",
+		"3.coin3:",
 		"3.coin3:",
 		"3.coin3:",
 		"3.coin3:",
@@ -264,6 +283,7 @@ const SYSMAINMENULIST SysMenuList =
 		"4.coin4:",	
 		"4.coin4:",
 		"4.coin4:",
+		"4.coin4:",
 		"4.coin4:"
 	},
 	{
@@ -271,10 +291,12 @@ const SYSMAINMENULIST SysMenuList =
 		"5.coin5:",	
 		"5.coin5:",
 		"5.coin5:",
+		"5.coin5:",
 		"5.coin5:"
 	},
 	{
 		"⑥ 硬币6:",
+		"6.coin6:",
 		"6.coin6:",
 		"6.coin6:",
 		"6.coin6:",
@@ -285,10 +307,12 @@ const SYSMAINMENULIST SysMenuList =
 		"7.coin7:",	
 		"7.coin7:",
 		"7.coin7:",
+		"7.coin7:",
 		"7.coin7:"
 	},
 	{
 		"⑧ 硬币8:",
+		"8.coin8:",
 		"8.coin8:",
 		"8.coin8:",
 		"8.coin8:",
@@ -299,6 +323,7 @@ const SYSMAINMENULIST SysMenuList =
 		"1.hopper1:",
 		"1.hopper1:",
 		"1.hopper1:",
+		"1.hopper1:",
 		"1.hopper1:"
 	},
 	{
@@ -306,10 +331,12 @@ const SYSMAINMENULIST SysMenuList =
 		"2.hopper2:",	
 		"2.hopper2:",
 		"2.hopper2:",
+		"2.hopper2:",
 		"2.hopper2:"
 	},
 	{
 		"③ hopper3:",
+		"3.hopper3:",
 		"3.hopper3:",
 		"3.hopper3:",
 		"3.hopper3:",
@@ -320,10 +347,12 @@ const SYSMAINMENULIST SysMenuList =
 		"4.HpEmpCoin:",
 		"4.HpEmpCoin:",
 		"4.HpEmpCoin:",
+		"4.HpEmpCoin:",
 		"4.HpEmpCoin:"
 	},
 	{
 		"① 纸币1:",
+		"1.bill1:",
 		"1.bill1:",
 		"1.bill1:",
 		"1.bill1:",
@@ -334,10 +363,12 @@ const SYSMAINMENULIST SysMenuList =
 		"2.bill2:",	
 		"2.bill2:",
 		"2.bill2:",
+		"2.bill2:",
 		"2.bill2:"
 	},
 	{
 		"③ 纸币3:",
+		"3.bill3:",
 		"3.bill3:",
 		"3.bill3:",
 		"3.bill3:",
@@ -348,6 +379,7 @@ const SYSMAINMENULIST SysMenuList =
 		"4.bill4:",	
 		"4.bill4:",
 		"4.bill4:",
+		"4.bill4:",
 		"4.bill4:"
 	},
 	{
@@ -355,10 +387,12 @@ const SYSMAINMENULIST SysMenuList =
 		"5.bill5:",	
 		"5.bill5:",
 		"5.bill5:",
+		"5.bill5:",
 		"5.bill5:"
 	},
 	{
 		"⑥ 纸币6:",
+		"6.bill6:",
 		"6.bill6:",
 		"6.bill6:",
 		"6.bill6:",
@@ -369,10 +403,12 @@ const SYSMAINMENULIST SysMenuList =
 		"7.bill7:",	
 		"7.bill7:",
 		"7.bill7:",
+		"7.bill7:",
 		"7.bill7:"
 	},
 	{
 		"⑧ 纸币8:",
+		"8.bill8:",
 		"8.bill8:",
 		"8.bill8:",
 		"8.bill8:",
@@ -383,6 +419,7 @@ const SYSMAINMENULIST SysMenuList =
 		"1.CunhuoKou:",
 		"1.CunhuoKou:",
 		"1.CunhuoKou:",
+		"1.CunhuoKou:",
 		"1.CunhuoKou:"
 	},
 	{
@@ -390,10 +427,12 @@ const SYSMAINMENULIST SysMenuList =
 		"2.easivendPC:",	
 		"2.easivendPC:",
 		"2.easivendPC:",
+		"2.easivendPC:",
 		"2.easivendPC:"
 	},
 	{
 		"③ 纸币上限:",
+		"3.MaxValue:",
 		"3.MaxValue:",
 		"3.MaxValue:",
 		"3.MaxValue:",
@@ -404,6 +443,7 @@ const SYSMAINMENULIST SysMenuList =
 		"4.Channel:",	
 		"4.Channel:",
 		"4.Channel:",
+		"4.Channel:",
 		"4.Channel:"
 	},
 	{
@@ -411,10 +451,12 @@ const SYSMAINMENULIST SysMenuList =
 		"5.SubChannel:",	
 		"5.SubChannel:",
 		"5.SubChannel:",
+		"5.SubChannel:",
 		"5.SubChannel:"
 	},
 	{
 		"⑥ 三条按键板:",
+		"6.three SelectKeyBoard:",
 		"6.three SelectKeyBoard:",
 		"6.three SelectKeyBoard:",
 		"6.three SelectKeyBoard:",
@@ -425,10 +467,12 @@ const SYSMAINMENULIST SysMenuList =
 		"7.hefangGui:",	
 		"7.hefangGui:",
 		"7.hefangGui:",
+		"7.hefangGui:",
 		"7.hefangGui:"
 	},
 	{
 		"⑧ 盒饭柜手动补货:",
+		"8.Box CunhuoKou:",
 		"8.Box CunhuoKou:",
 		"8.Box CunhuoKou:",
 		"8.Box CunhuoKou:",
@@ -439,6 +483,7 @@ const SYSMAINMENULIST SysMenuList =
 		"1.Recycler1:",
 		"1.Recycler1:",
 		"1.Recycler1:",
+		"1.Recycler1:",
 		"1.Recycler1:"
 	},
 	{
@@ -446,10 +491,12 @@ const SYSMAINMENULIST SysMenuList =
 		"2.Recycler2:",	
 		"2.Recycler2:",
 		"2.Recycler2:",
+		"2.Recycler2:",
 		"2.Recycler2:"
 	},
 	{
 		"③ 循环3:",
+		"3.Recycler3:",
 		"3.Recycler3:",
 		"3.Recycler3:",
 		"3.Recycler3:",
@@ -460,6 +507,7 @@ const SYSMAINMENULIST SysMenuList =
 		"4.Recycler4:",	
 		"4.Recycler4:",
 		"4.Recycler4:",
+		"4.Recycler4:",
 		"4.Recycler4:"
 	},
 	{
@@ -467,10 +515,12 @@ const SYSMAINMENULIST SysMenuList =
 		"5.Recycler5:",	
 		"5.Recycler5:",
 		"5.Recycler5:",
+		"5.Recycler5:",
 		"5.Recycler5:"
 	},
 	{
 		"⑥ 循环6:",
+		"6.Recycler6:",
 		"6.Recycler6:",
 		"6.Recycler6:",
 		"6.Recycler6:",
@@ -481,10 +531,12 @@ const SYSMAINMENULIST SysMenuList =
 		"7.Recycler7:",	
 		"7.Recycler7:",
 		"7.Recycler7:",
+		"7.Recycler7:",
 		"7.Recycler7:"
 	},
 	{
 		"⑧ 循环面值:",
+		"8.RecyclerMoney:",
 		"8.RecyclerMoney:",
 		"8.RecyclerMoney:",
 		"8.RecyclerMoney:",
@@ -495,6 +547,7 @@ const SYSMAINMENULIST SysMenuList =
 		"1.Temprature:",
 		"1.Temprature:",
 		"1.Temprature:",
+		"1.Temprature:",
 		"1.Temprature:"
 	},
 	{
@@ -502,10 +555,12 @@ const SYSMAINMENULIST SysMenuList =
 		"2.DecimalNumExt:",	
 		"2.DecimalNumExt:",
 		"2.DecimalNumExt:",
+		"2.DecimalNumExt:",
 		"2.DecimalNumExt:"
 	},
 	{
 		"③ 盒饭柜机:",
+		"3.hefangType:",
 		"3.hefangType:",
 		"3.hefangType:",
 		"3.hefangType:",
@@ -516,10 +571,12 @@ const SYSMAINMENULIST SysMenuList =
 		"4.BillEnableValue:",
 		"4.BillEnableValue:",
 		"4.BillEnableValue:",
+		"4.BillEnableValue:",
 		"4.BillEnableValue:"
 	},
 	{
 		"⑤ 出货时间:",
+		"5.ColumnTime:",
 		"5.ColumnTime:",
 		"5.ColumnTime:",
 		"5.ColumnTime:",

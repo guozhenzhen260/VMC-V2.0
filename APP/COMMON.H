@@ -15,7 +15,7 @@
 #ifndef __COMMON_H 
 #define __COMMON_H
 
-#define MAXLANGUAGETYPE 5 //系统支持最大的语言种类，目前暂定5种，中文，英文，土耳其，俄罗斯，葡萄牙
+#define MAXLANGUAGETYPE 6 //系统支持最大的语言种类，目前暂定5种，0中文，1英文，2土耳其，3俄罗斯，4葡萄牙,5法语
 
 #define OFF_COINACCEPTER         0//关硬币器
 #define PARALLEL_COINACCEPTER    1//并行脉冲硬币器

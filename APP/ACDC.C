@@ -50,6 +50,7 @@ const UI_ACDC_MAN ui_acdc_man ={
 		"ACDC Manage",
 		"ACDC Manage",
 		"ACDC Manage",
+		"ACDC Manage",
 		"ACDC Manage"
 	},
 	{
@@ -57,56 +58,64 @@ const UI_ACDC_MAN ui_acdc_man ={
 		"Light Handle",
 		"Light Handle",
 		"ISIK",
-		"LUZ"
+		"LUZ",
+		"Light Handle"
 	},
 	{
 		"压缩机操作",
 		"Compressor Handle",
 		"Compressor Handle",
 		"SOGUTUCU",
-		"REFRIGERA\x83\x82\O"
+		"REFRIGERA\x83\x82\O",
+		"Compressor Handle"
 	},
 	{
 		"加热操作",
 		"Hot Handle",
 		"Hot Handle",
 		"ISIK",
-		"LUZ"
+		"LUZ",
+		"Hot Handle"
 	},
 	{
 		"除臭操作 ",
 		"Chuchou Handle",
 		"Handle",
 		"SOGUTUCU",
-		"REFRIGERA\x83\x82\O"
+		"REFRIGERA\x83\x82\O",
+		"Chuchou Handle"
 	},
 	{
 		"定时功能",
 		"Timing operation",
 		"Timing Manage",
 		"ZAMANLAMA AYARI",
-		"TEMPO DE OPERA\x83\x82\O"
+		"TEMPO DE OPERA\x83\x82\O",
+		"Timing operation"
 	},
 	{
 		"开启时间: ",
 		"Start Time:",
 		"Start Time:",
 		"ACILIS ZAMANI:",
-		"HORA DE ABERTURA:"
+		"HORA DE ABERTURA:",
+		"Start Time:"
 	},
 	{
 		"关闭时间: ",
 		"Close Time:",
 		"Close Time:",
 		"KAPANIS ZAMANI:",
-		"HORA DE FECHAMENTO:"
+		"HORA DE FECHAMENTO:",
+		"Close Time:"
 	},
 	{
 		"错误: 开启时间大于关闭时间! ",
 		"Error:Start Time Large than End!",
 		"Error:Start Time Large than End!",
 		"HATALI GIRIS!",
-		"ERRO HORA ABERT.+TARDE HORA FECHA"
+		"ERRO HORA ABERT.+TARDE HORA FECHA",
+		"Error:Start Time Large than End!"
 	},
 	{
 		" 定时设定",
@@ -114,6 +123,7 @@ const UI_ACDC_MAN ui_acdc_man ={
 		" Time Set",
 		" Time Set",
 		" Time Set",
+		" Time Set"
 	},
 	{
 		"定时",
@@ -121,6 +131,7 @@ const UI_ACDC_MAN ui_acdc_man ={
 		"Timing",
 		"Timing",
 		"Timing",
+		"Timing"
 	},
 	{
 		"正在操作。。",
@@ -128,6 +139,7 @@ const UI_ACDC_MAN ui_acdc_man ={
 		"operating..",
 		"operating..",
 		"operating..",
+		"operating.."
 	},
 	{
 		"操作成功",
@@ -135,6 +147,7 @@ const UI_ACDC_MAN ui_acdc_man ={
 		"operating..",
 		"operating..",
 		"operating..",
+		"operating.."
 	},
 	{
 		"操作失败",
@@ -142,6 +155,7 @@ const UI_ACDC_MAN ui_acdc_man ={
 		"operating..",
 		"operating..",
 		"operating..",
+		"operating.."
 	}
 	,
 	{
@@ -150,6 +164,7 @@ const UI_ACDC_MAN ui_acdc_man ={
 		"operating..",
 		"operating..",
 		"operating..",
+		"operating.."
 	},
 	{
 		"当前温度",
@@ -157,6 +172,7 @@ const UI_ACDC_MAN ui_acdc_man ={
 		"operating..",
 		"operating..",
 		"operating..",
+		"operating.."
 	},
 	{
 		"时间段",
@@ -164,6 +180,7 @@ const UI_ACDC_MAN ui_acdc_man ={
 		"operating..",
 		"operating..",
 		"operating..",
+		"operating.."
 	}
 
 

@@ -1,7 +1,7 @@
 #ifndef __LANGUAGE_H 
 #define __LANGUAGE_H
 
-#define LANGUAGENO 5
+#define LANGUAGENO 6
 
 extern   const char *     Menu_Channel[LANGUAGENO][5];
 

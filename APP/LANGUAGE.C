@@ -122,6 +122,18 @@ const char *     BUSINESS[MAXLANGUAGETYPE][10]=
 	 "BANDEJA",
 	 "Welcome",
 	 "§¬§Ñ§ß§Ñ§Ý"
+	 },
+	 {
+	 "produit:",
+	 "Choix invalide",
+	 "Hors service",
+	 "Montant:",
+	 "Erreur",
+	 "Vide",
+	 "  Bienvenue",
+	 "Colonne",
+	 "Empty",
+	 "Inserez un billet plus petit SVP"
 	 }
 };
 
@@ -255,6 +267,32 @@ const char  *BUSINESSERROR[MAXLANGUAGETYPE][23] =
 	  "Sorry",
 	  "Sorry",
 	  "Sorry"
+   },
+   {
+	  "Desole, hors service",   
+	  "Erreur:	",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Erreur",
+	  "Desole",
+	  "Desole",
+	  "Monnaie insuffisante",
+	  "Monnaie insuffisante"
+	  
    }
 };
 
@@ -378,6 +416,29 @@ const char  *BUSINESSDEAL[MAXLANGUAGETYPE][20] =
 	  "Input Bin No.:",
 	  ",Input Box No.:" 
 	  
+   },
+   {	  
+	  "Comparaison",
+	  "Comparaison",
+	  "Inserez un billet plus petit SVP",
+	  "Fonds insuffisant,",
+	  "Choisissez le produit SVP",
+	  "Continuez",
+	  "Retour",
+	  "produit:",
+	  "Choix invalide",
+	  "Erreur",
+	  "Vide",
+	  "Distribution en cours..",
+	  "Prenez votre marchandise SVP",
+	  "Finalisation",
+	  "Fonds insuffisan",
+	  "Distribution en cours..",
+	  "fail",
+	  "Time:",
+	  "Choisissez le produit SVP:",
+	  "Choisissez le produit SVP:"
+	  
    }
 };
 
@@ -421,6 +482,13 @@ const char  *BUSINESSCHANGE[MAXLANGUAGETYPE][5] =
 	  "POR FAVOR PEGUE O TROCO",
 	  "OBRIGADO",
 	  "   OBRIGADO"
+   },
+   {
+      "Changement en cours",	  
+	  "Appelez le service technique SVP:",
+	  "Prenez votre monnaie SVP",
+	  "Merci",
+	  "   Merci!"
    }
 };
 

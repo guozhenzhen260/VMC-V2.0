@@ -1,4 +1,6 @@
----- SaleTime 匹配 (3 在 1 文件 ) ----
-Business.c (app):2389:** Function name:     	IsSaleTimeOver
-Business.c (app):2411:** Function name:     	IsSaleTimeOver
-Business.c (app):2433:** Function name:     	DispSaleTime
+---- HopperIsEmpty 匹配 (5 在 5 文件 ) ----
+Business.c (app):1664:		coinMoney =( !HopperIsEmpty() )? SystemPara.MaxValue:0;
+CheckDeviceState.c (api):223:uint8_t HopperIsEmpty()
+CheckDeviceState.h (api):15:extern uint8_t HopperIsEmpty(void);
+Maintain.c (app):198:		state =HopperIsEmpty();		
+PCComAPI.c (api):267:				coinMoney =( !HopperIsEmpty() )? SystemPara.MaxValue:0;

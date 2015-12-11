@@ -2083,9 +2083,9 @@ uint32_t ChangerMoney(void)
 		//找零失败
 		if(!ComStatus)
 		{		
-			TracePC("\r\n Appchange Fail");
+			TracePC("\r\n Appchange Fail=%ld,%ld",GetAmountMoney(),backmoney);
 			LogChangeAPI(GetAmountMoney()-backmoney,backmoney);//记录日志
-			PayoutRPTAPI(0,0,backmoney,0);
+			PayoutRPTAPI(0,0,GetAmountMoney()-backmoney,0);
 			//OSTimeDly(OS_TICKS_PER_SEC);
 			//PayinRPTAPI(2,0,0);//上报PC端
 			g_coinAmount = 0;
@@ -2095,7 +2095,7 @@ uint32_t ChangerMoney(void)
 		//找零成功
 		else
 		{
-			TracePC("\r\n Appchange succ%d",OSTimeGet());
+			TracePC("\r\n Appchange succ=%ld",GetAmountMoney());
 			LogChangeAPI(GetAmountMoney(),0);//记录日志
 			PayoutRPTAPI(0,0,GetAmountMoney(),0);
 			g_coinAmount = 0;

@@ -224,7 +224,8 @@ uint8_t HopperIsEmpty()
 { 
 	if(SystemPara.CoinChangerType == HOPPER_CHANGER)
 	{
-		if((DeviceStateBusiness.Hopper1State == 1)&&(DeviceStateBusiness.Hopper2State != 0)&&(DeviceStateBusiness.Hopper3State != 0))
+		//if((DeviceStateBusiness.Hopper1State == 1)&&(DeviceStateBusiness.Hopper2State != 0)&&(DeviceStateBusiness.Hopper3State != 0))
+        if(DeviceStateBusiness.Hopper1State == 1)
 		{
 			return 1;
 		}

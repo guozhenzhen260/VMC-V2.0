@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Hex\VMC_V2_15_2015_x_x.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Hex\VMC_V2_15_2015_x_x.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Tue Nov 03 15:27:36 2015
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Fri Dec 11 15:38:48 2015
 <BR><P>
 <H3>Maximum Stack Usage =       1960 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -70,8 +70,8 @@ Function Pointers
  <LI><a href="#[2e]">TraceMaintainProcess</a> from maintain.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[9]">__s_OSCtxSw</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
- <LI><a href="#[2f]">taskEntry</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from target.o(.text)
+ <LI><a href="#[2f]">taskEntry</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[30]">ClrUart0Buff</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
  <LI><a href="#[31]">Uart0GetCh</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
  <LI><a href="#[32]">Uart0BuffIsNotEmpty</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
@@ -1026,7 +1026,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangerMoney
 </UL>
 
-<P><STRONG><a name="[e7]"></a>ChangerMoney</STRONG> (Thumb, 322 bytes, Stack size 24 bytes, business.o(.text))
+<P><STRONG><a name="[e7]"></a>ChangerMoney</STRONG> (Thumb, 340 bytes, Stack size 24 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 592 + Unknown Stack Size
 <LI>Call Chain = ChangerMoney &rArr; ChangerDevPayoutAPI &rArr; ChangePayoutProcessLevel2API &rArr; MDBchange &rArr; TraceChange &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1061,7 +1061,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[ed]"></a>SaleCostMoney</STRONG> (Thumb, 304 bytes, Stack size 8 bytes, business.o(.text))
+<P><STRONG><a name="[ed]"></a>SaleCostMoney</STRONG> (Thumb, 360 bytes, Stack size 8 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = SaleCostMoney &rArr; ReaderDevVendoutResultAPI &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1140,7 +1140,7 @@ Global Symbols
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VendoutInd
 </UL>
 
-<P><STRONG><a name="[f4]"></a>VendoutInd</STRONG> (Thumb, 1084 bytes, Stack size 64 bytes, business.o(.text))
+<P><STRONG><a name="[f4]"></a>VendoutInd</STRONG> (Thumb, 1020 bytes, Stack size 64 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 732 + Unknown Stack Size
 <LI>Call Chain = VendoutInd &rArr; ChannelAPIProcess &rArr; ChannelSaveParam &rArr; hd_save_param &rArr; AT45DBWritePage &rArr; AT45DBWriteNByte &rArr; AT45DBWriteBuffer &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -1198,7 +1198,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
 </UL>
 
-<P><STRONG><a name="[fd]"></a>TuiMoneyInd</STRONG> (Thumb, 168 bytes, Stack size 32 bytes, business.o(.text))
+<P><STRONG><a name="[fd]"></a>TuiMoneyInd</STRONG> (Thumb, 306 bytes, Stack size 32 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 624 + Unknown Stack Size
 <LI>Call Chain = TuiMoneyInd &rArr; ChangerMoney &rArr; ChangerDevPayoutAPI &rArr; ChangePayoutProcessLevel2API &rArr; MDBchange &rArr; TraceChange &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1218,7 +1218,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
 </UL>
 
-<P><STRONG><a name="[100]"></a>VendoutSIMPLEInd</STRONG> (Thumb, 296 bytes, Stack size 24 bytes, business.o(.text))
+<P><STRONG><a name="[100]"></a>VendoutSIMPLEInd</STRONG> (Thumb, 226 bytes, Stack size 24 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 692 + Unknown Stack Size
 <LI>Call Chain = VendoutSIMPLEInd &rArr; ChannelAPIProcess &rArr; ChannelSaveParam &rArr; hd_save_param &rArr; AT45DBWritePage &rArr; AT45DBWriteNByte &rArr; AT45DBWriteBuffer &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -1285,7 +1285,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
 </UL>
 
-<P><STRONG><a name="[96]"></a>BusinessProcess</STRONG> (Thumb, 2776 bytes, Stack size 32 bytes, business.o(.text))
+<P><STRONG><a name="[96]"></a>BusinessProcess</STRONG> (Thumb, 2774 bytes, Stack size 32 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 984 + Unknown Stack Size
 <LI>Call Chain = BusinessProcess &rArr; LogEndTransAPI &rArr; WriteLogDetailAPI &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1416,7 +1416,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ErrorCheck
 </UL>
 
-<P><STRONG><a name="[2b]"></a>ErrorCheck</STRONG> (Thumb, 4016 bytes, Stack size 48 bytes, maintain.o(.text))
+<P><STRONG><a name="[2b]"></a>ErrorCheck</STRONG> (Thumb, 4020 bytes, Stack size 48 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 472 + Unknown Stack Size
 <LI>Call Chain = ErrorCheck &rArr; ReadKeyValue &rArr; TraceSelection &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1630,7 +1630,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
-<P><STRONG><a name="[2c]"></a>UserTradeMaintainProcess</STRONG> (Thumb, 4540 bytes, Stack size 288 bytes, maintain.o(.text))
+<P><STRONG><a name="[2c]"></a>UserTradeMaintainProcess</STRONG> (Thumb, 4536 bytes, Stack size 288 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1248 + Unknown Stack Size
 <LI>Call Chain = UserTradeMaintainProcess &rArr; WriteUserSystemPara &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1658,7 +1658,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceMaintainProcess
 </UL>
 
-<P><STRONG><a name="[2e]"></a>TraceMaintainProcess</STRONG> (Thumb, 1838 bytes, Stack size 280 bytes, maintain.o(.text))
+<P><STRONG><a name="[2e]"></a>TraceMaintainProcess</STRONG> (Thumb, 1844 bytes, Stack size 280 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1240 + Unknown Stack Size
 <LI>Call Chain = TraceMaintainProcess &rArr; WriteUserSystemPara &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1677,7 +1677,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
-<P><STRONG><a name="[142]"></a>IsAdminSet</STRONG> (Thumb, 360 bytes, Stack size 8 bytes, maintain.o(.text))
+<P><STRONG><a name="[142]"></a>IsAdminSet</STRONG> (Thumb, 358 bytes, Stack size 8 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 416 + Unknown Stack Size
 <LI>Call Chain = IsAdminSet &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -2261,7 +2261,7 @@ Global Symbols
 <LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 
-<P><STRONG><a name="[17a]"></a>ChannelReadChannelParam</STRONG> (Thumb, 2034 bytes, Stack size 184 bytes, channel.o(.text))
+<P><STRONG><a name="[17a]"></a>ChannelReadChannelParam</STRONG> (Thumb, 2056 bytes, Stack size 184 bytes, channel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 608 + Unknown Stack Size
 <LI>Call Chain = ChannelReadChannelParam &rArr; ReadKeyValue &rArr; TraceSelection &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -2279,7 +2279,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelParamSet
 </UL>
 
-<P><STRONG><a name="[17c]"></a>ChannelParamSet</STRONG> (Thumb, 400 bytes, Stack size 48 bytes, channel.o(.text))
+<P><STRONG><a name="[17c]"></a>ChannelParamSet</STRONG> (Thumb, 398 bytes, Stack size 48 bytes, channel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 656 + Unknown Stack Size
 <LI>Call Chain = ChannelParamSet &rArr; ChannelReadChannelParam &rArr; ReadKeyValue &rArr; TraceSelection &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -2294,7 +2294,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelManage
 </UL>
 
-<P><STRONG><a name="[1c]"></a>ChannelLookUpSuccessCount</STRONG> (Thumb, 816 bytes, Stack size 56 bytes, channel.o(.text))
+<P><STRONG><a name="[1c]"></a>ChannelLookUpSuccessCount</STRONG> (Thumb, 812 bytes, Stack size 56 bytes, channel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 812 + Unknown Stack Size
 <LI>Call Chain = ChannelLookUpSuccessCount &rArr; hefanMannage &rArr; hefanControl &rArr; hefanCabinetControl &rArr; save_hefan_huodao_info &rArr; AT45DBWritePage &rArr; AT45DBWriteNByte &rArr; AT45DBWriteBuffer &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -2310,7 +2310,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
-<P><STRONG><a name="[12c]"></a>ChannelClearSuccesCount</STRONG> (Thumb, 122 bytes, Stack size 16 bytes, channel.o(.text))
+<P><STRONG><a name="[12c]"></a>ChannelClearSuccesCount</STRONG> (Thumb, 154 bytes, Stack size 16 bytes, channel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 644<LI>Call Chain = ChannelClearSuccesCount &rArr; ChannelSaveParam &rArr; hd_save_param &rArr; AT45DBWritePage &rArr; AT45DBWriteNByte &rArr; AT45DBWriteBuffer &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
 <BR>[Calls]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelSaveParam
@@ -2319,7 +2319,7 @@ Global Symbols
 <LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LogClearRecord
 </UL>
 
-<P><STRONG><a name="[17e]"></a>hd_enterNumber</STRONG> (Thumb, 404 bytes, Stack size 48 bytes, channel.o(.text))
+<P><STRONG><a name="[17e]"></a>hd_enterNumber</STRONG> (Thumb, 366 bytes, Stack size 48 bytes, channel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 472 + Unknown Stack Size
 <LI>Call Chain = hd_enterNumber &rArr; ReadKeyValue &rArr; TraceSelection &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -2333,7 +2333,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelOneAddGoods
 </UL>
 
-<P><STRONG><a name="[17f]"></a>ChannelOneAddGoods</STRONG> (Thumb, 822 bytes, Stack size 64 bytes, channel.o(.text))
+<P><STRONG><a name="[17f]"></a>ChannelOneAddGoods</STRONG> (Thumb, 816 bytes, Stack size 64 bytes, channel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 648 + Unknown Stack Size
 <LI>Call Chain = ChannelOneAddGoods &rArr; AdminRPTWeihu &rArr; AdminRPTAPI &rArr; StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -2391,7 +2391,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAddGoods
 </UL>
 
-<P><STRONG><a name="[184]"></a>ChannelAddGoods</STRONG> (Thumb, 296 bytes, Stack size 40 bytes, channel.o(.text))
+<P><STRONG><a name="[184]"></a>ChannelAddGoods</STRONG> (Thumb, 308 bytes, Stack size 40 bytes, channel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 688 + Unknown Stack Size
 <LI>Call Chain = ChannelAddGoods &rArr; ChannelOneAddGoods &rArr; AdminRPTWeihu &rArr; AdminRPTAPI &rArr; StatusRPTAPI &rArr; ErrorStatus &rArr; IsErrorState &rArr; BillCoinCtr &rArr; BillDevDisableAPI &rArr; TraceBill &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -2445,7 +2445,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[28]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAttributeManage
 </UL>
 
-<P><STRONG><a name="[188]"></a>nt_huodao_level_managment</STRONG> (Thumb, 660 bytes, Stack size 64 bytes, channel.o(.text))
+<P><STRONG><a name="[188]"></a>nt_huodao_level_managment</STRONG> (Thumb, 656 bytes, Stack size 64 bytes, channel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 692 + Unknown Stack Size
 <LI>Call Chain = nt_huodao_level_managment &rArr; ChannelSaveParam &rArr; hd_save_param &rArr; AT45DBWritePage &rArr; AT45DBWriteNByte &rArr; AT45DBWriteBuffer &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -2462,7 +2462,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[28]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAttributeManage
 </UL>
 
-<P><STRONG><a name="[18b]"></a>nt_huodao_set_page</STRONG> (Thumb, 1206 bytes, Stack size 80 bytes, channel.o(.text))
+<P><STRONG><a name="[18b]"></a>nt_huodao_set_page</STRONG> (Thumb, 1208 bytes, Stack size 80 bytes, channel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 708 + Unknown Stack Size
 <LI>Call Chain = nt_huodao_set_page &rArr; ChannelSaveParam &rArr; hd_save_param &rArr; AT45DBWritePage &rArr; AT45DBWriteNByte &rArr; AT45DBWriteBuffer &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -2482,7 +2482,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[28]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAttributeManage
 </UL>
 
-<P><STRONG><a name="[28]"></a>ChannelAttributeManage</STRONG> (Thumb, 568 bytes, Stack size 40 bytes, channel.o(.text))
+<P><STRONG><a name="[28]"></a>ChannelAttributeManage</STRONG> (Thumb, 572 bytes, Stack size 40 bytes, channel.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 748 + Unknown Stack Size
 <LI>Call Chain = ChannelAttributeManage &rArr; nt_huodao_set_page &rArr; ChannelSaveParam &rArr; hd_save_param &rArr; AT45DBWritePage &rArr; AT45DBWriteNByte &rArr; AT45DBWriteBuffer &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -2519,7 +2519,7 @@ Global Symbols
 <LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestColumnPost
 </UL>
 
-<P><STRONG><a name="[194]"></a>ColumnTestByPcPend</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, channel.o(.text), UNUSED)
+<P><STRONG><a name="[194]"></a>ColumnTestByPcPend</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, channel.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestColumnPend
 </UL>
 
@@ -2579,7 +2579,7 @@ Global Symbols
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChannelAPIProcess
 </UL>
 
-<P><STRONG><a name="[185]"></a>LiftTableTest</STRONG> (Thumb, 1852 bytes, Stack size 144 bytes, lifttable.o(.text))
+<P><STRONG><a name="[185]"></a>LiftTableTest</STRONG> (Thumb, 1850 bytes, Stack size 144 bytes, lifttable.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 696 + Unknown Stack Size
 <LI>Call Chain = LiftTableTest &rArr; LiftTableProcess &rArr; LiftTable3Process &rArr; LiftTableHandle &rArr; TraceChannel &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -2658,7 +2658,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;acdc_manage
 </UL>
 
-<P><STRONG><a name="[1a9]"></a>acdc_manage</STRONG> (Thumb, 1186 bytes, Stack size 64 bytes, acdc.o(.text))
+<P><STRONG><a name="[1a9]"></a>acdc_manage</STRONG> (Thumb, 1184 bytes, Stack size 64 bytes, acdc.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 712 + Unknown Stack Size
 <LI>Call Chain = acdc_manage &rArr; acdc_timerHandlePage &rArr; acdc_chuchou_API &rArr; ACDCHandle &rArr; EvbConversation &rArr; TraceChannel &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -2702,7 +2702,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
-<P><STRONG><a name="[1e]"></a>acdc_controlHot</STRONG> (Thumb, 1496 bytes, Stack size 80 bytes, acdc.o(.text))
+<P><STRONG><a name="[1e]"></a>acdc_controlHot</STRONG> (Thumb, 1502 bytes, Stack size 80 bytes, acdc.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
 <LI>Call Chain = acdc_controlHot &rArr; acdc_hotTimerHandlePage &rArr; acdc_hotTimerSetPage &rArr; ReadKeyValue &rArr; TraceSelection &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3051,7 +3051,7 @@ Global Symbols
 <LI><a href="#[1c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ErrorStatus
 </UL>
 
-<P><STRONG><a name="[d9]"></a>HopperIsEmpty</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, checkdevicestate.o(.text))
+<P><STRONG><a name="[d9]"></a>HopperIsEmpty</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, checkdevicestate.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TubeMoneyEnough
 <LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StatusRPTAPI
 <LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UnpdateTubeMoney

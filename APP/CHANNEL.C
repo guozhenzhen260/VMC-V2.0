@@ -36,148 +36,167 @@ const UI_AISLE_ADMIN ui_aisle_admin = {
 		"Cabinet setting",
 		"Cabinet setting",
 		"Cabinet setting",
-		"CONFIGURA\x83\x82\O DE ATRIBUTO DE ARMARIO"
+		"CONFIGURA\x83\x82\O DE ATRIBUTO DE ARMARIO",
+		"Parametrage Colonne"
 	},
 	{
 		"请输入箱柜编号:",
 		"Input cabinet code:",
 		"Input cabinet code:",
 		"Input cabinet code:",
-		"CODIGO DO ARMARIO:"
+		"CODIGO DO ARMARIO:",
+		"Entrez Code de colonne:"
 	},
 	{
 		"A 柜",
 		"A cabinet",
 		"A cabinet",
 		"A cabinet",
-		"A ARMARIO"
+		"A ARMARIO",
+		"Cabine A"
 	},
 	{
 		"B 柜",
 		"B cabinet",
 		"B cabinet",
 		"B cabinet",
-		"B ARMARIO"
+		"B ARMARIO",
+		"Cabine B"
 	},
 	{
 		"盒饭柜",
 		"CVS Cabinet",
 		"CVS Cabinet",
 		"CVS Cabinet",
-		"CVS Cabinet"
+		"CVS Cabinet",
+		"Cabinet CVS"
 	},
 	{
 		"货道初始化",
 		"Column initialize",
 		"Column initialize",
 		"Column initialize",
-		"COLUNA INICIALIZAR"
+		"COLUNA INICIALIZAR",
+		"Reinitialisez les colonnes"
 	},
 	{
 		"初始化成功",
 		"Initialization Succeed",
 		"Column initialize",
 		"Column initialize",
-		"COLUNA INICIALIZAR"
+		"COLUNA INICIALIZAR",
+		"Initialization Succeed"
 	},
 	{
 		"层架管理",
 		"Tray Manage",
 		"Tray Manage",
 		"Tray Manage",
-		"GERENCIADOR DE BANDEIJA"
+		"GERENCIADOR DE BANDEIJA",
+		"systeme de gestion des Plateaux "
 	},
 	{
 		"请输入层编号:",
 		"Input tray code:",
 		"Input tray code:",
 		"RAF KODUNU GIR:",
-		"INSIRA C\x80\DIGO DA BANDEJA:"
+		"INSIRA C\x80\DIGO DA BANDEJA:",
+		"Entrer le code du plateau:"
 	},
 	{
 		"货道管理",
 		"Column Manage",
 		"Column Manage",
 		"SUTUN",
-		"COLUNA DE BANDEIJA"
+		"COLUNA DE BANDEIJA",
+		"Parametrage Colonne"
 	},
 	{
 		"请输入货道号:",
 		"Input column code:",
 		"Input column code:",
 		"SUTUN KODUNU GIR:",
-		"C\x80\DIGO DA BANDEJA:"
+		"C\x80\DIGO DA BANDEJA:",
+		"Entrer le code colonne:"
 	},
 	{
 		"货道不存在! ",
 		"Column N/A!",
 		"Column N/A!",
 		"NUMARA!",
-		"COLUNA N\x82\O DISPONIVEL!"
+		"COLUNA N\x82\O DISPONIVEL!",
+		"Colonne N/A!"
 	},
 	{
 		"货道当前状态 :",
 		"Column status:",
 		"Column status:",
 		"SUTUN STATUS:",
-		"SITUA\x83\x82\O DA BANDEJA:"
+		"SITUA\x83\x82\O DA BANDEJA:",
+		"Statut de la colonne:"
 	},
 	{
 		"最大存货量:",
 		"Capacity:",
 		"Capacity: %s ",
 		"Capacity: %s ",
-		"CAPACIDADE: %s "
+		"CAPACIDADE: %s ",
+		"Capacite:"
 	},
 	{
 		"层状态:",
 		"Tray Status:",
 		"Tray Status:",
 		"Tray Status:",
-		"BENDEIJA SITUA\x83\x82\O:"
+		"BENDEIJA SITUA\x83\x82\O:",
+		"Tray Status:"
 	},
 	{
 		"开启",
 		"ON",
 		"ON",
 		"ON",
-		"ATIVAR"
+		"ATIVAR",
+		"ON"
 	},
 	{
 		"关闭",
 		"OFF",
 		"OFF",
 		"OFF",
-		"DESLIGADO"
+		"DESLIGADO",
+		"OFF"
 	},
 	{
 		"确定",
 		"YES",
 		"YES",
 		"GIRIS",
-		"ENTER"
+		"ENTER",
+		"Entrez"
 	},
 	{
 		"取消",
 		"CANCEL",
 		"CANCEL",
 		"IPTAL",
-		"CANCELAR"
+		"CANCELAR",
+		"Cancel"
 	},
 	{
-		"①","1.","1.","1.","1."	
+		"①","1.","1.","1.","1.","1."	
 	},
 	{
-		"②","2.","2.","2.","2."	
+		"②","2.","2.","2.","2.","2."	
 	},
 	{
-		"③","3.","3.","3.","3."
+		"③","3.","3.","3.","3.","3."
 	},
 	{
-		"④","4.","4.","4.","4."		
+		"④","4.","4.","4.","4.","4."		
 	},
 	{
-		"⑤","5.","5.","5.","5."
+		"⑤","5.","5.","5.","5.","5."
 	}
 
 
@@ -187,35 +206,40 @@ const UI_AISLE_ADMIN ui_aisle_admin = {
 		"Column Param Set",
 		"Column Param Set",
 		"SUTUN DEGER",
-		"ATRIBUTO DA BANDEJA"
+		"ATRIBUTO DA BANDEJA",
+		"Parametrage Colonne"
 	},
 	{
 		"货道属性 ",
 		"Column attribute",
 		"Column attribute",
 		"SUTUN DEGER",
-		"ATRIBUTO DA BANDEJA"
+		"ATRIBUTO DA BANDEJA",
+		"Parametrage Colonne"
 	},
 	{
 		"添货",
 		"Load products",
 		"Load products",
 		"URUN YUKLE",
-		"CARREGANDO PRODUTOS"
+		"CARREGANDO PRODUTOS",
+		"Charge pour"
 	},
 	{
 		"查看货道状态",
 		"Check column status",
 		"Check column status",
 		"SUTUN KONTROL",
-		"SITUA\x83\x82\O DAS BANDEJAS"
+		"SITUA\x83\x82\O DAS BANDEJAS",
+		"Statut de la colonne"
 	},
 	{
 		"货道检测",
 		"Column self-test",
 		"Column self-test",
 		"SUTUN TEST ",
-		"TESTE DE BANDEJA"
+		"TESTE DE BANDEJA",
+		"Test du colonne"
 	}
 	,
 	{
@@ -223,7 +247,8 @@ const UI_AISLE_ADMIN ui_aisle_admin = {
 		"Kaoji Check",
 		"Column self-test",
 		"SUTUN TEST ",
-		"TESTE DE BANDEJA"
+		"TESTE DE BANDEJA",
+		"Column self-test"
 	}
 	,
 	{
@@ -231,24 +256,28 @@ const UI_AISLE_ADMIN ui_aisle_admin = {
 		"Unit price:",
 		"Unit price:",
 		"BIRIM FIYAT:",
-		"PRE\x83\O UNIT\x81\RIO:"
+		"PRE\x83\O UNIT\x81\RIO:",
+		"Prix Unitaire:"
 	},
 	{
 		"货道储货数量 :",
 		"Column capacity:",
 		"Column capacity:",
 		"SUTUN KAPASITESI:",
-		"CAPACIDADE DA BANDEJA:"
+		"CAPACIDADE DA BANDEJA:",
+		"Capacite de la colonne:"
 	},
 	{
 		"成功交易次数:",
 		"Success deal qty:",
 		"Success deal qty:",
 		"BASARILI SATIS:",
-		"%d SUCESSO :"
+		"%d SUCESSO :",
+		"Success deal qty:"
 	},
 	{
 		"货道选货按键:",
+		"Column SelectNum:",
 		"Column SelectNum:",
 		"Column SelectNum:",
 		"Column SelectNum:",
@@ -259,6 +288,7 @@ const UI_AISLE_ADMIN ui_aisle_admin = {
 		"Column Goods Num:",
 		"Column Goods Num:",
 		"Column Goods Num:",
+		"Column Goods Num:",
 		"Column Goods Num:"
 	},
 	{
@@ -266,142 +296,159 @@ const UI_AISLE_ADMIN ui_aisle_admin = {
 		"Load for column",
 		"Load for column",
 		"SUTUN DOLDUR",
-		"CARREGANDO A BANDEJA"
+		"CARREGANDO A BANDEJA",
+		"Parametre des colonnes"
 	},
 	{
 		"层货道添货",
 		"Load for tray",
 		"Load for tray",
 		"RAF DOLDUR",
-		"CARREGANDO A BANDEJA"
+		"CARREGANDO A BANDEJA",
+		"Charge pour plateaux"
 	},
 	{
 		"全货道添货",
 		"Load for all columns",
 		"Load for all columns",
 		"TUM SUTUNLARI DOLDUR",
-		"CARREGANDO TODAS AS BANDEJAS"
+		"CARREGANDO TODAS AS BANDEJAS",
+		"Charge pour toutes les"
 	},
 	{
 		"请选择操作:",
 		"Pls choose:",
 		"Pls choose:",
 		"LUTFEN SECIN:",
-		"POR FAVOR ESCOLHA:"
+		"POR FAVOR ESCOLHA:",
+		"Pls choose:"
 	},
 	{
 		"确定层添货?",
 		"Load for the tray?",
 		"Load for the tray?",
 		"DOLDUR?",
-		"CARREGANDO PARA %d BANDEIJA?"
+		"CARREGANDO PARA %d BANDEIJA?",
+		"Charge pour plateaux"
 	},
 	{
 		"查看货道状态",
 		"Check column status",
 		"Check column status",
 		"SUTUN KONTROL",
-		"SITUA\x83\x82\O DAS BANDEJAS"
+		"SITUA\x83\x82\O DAS BANDEJAS",
+		"Demandez le statut de colonne"
 	},
 	{
 		"故障货道:",
 		"Errory column",
 		"Errory column",
 		"HATALI SUTUN",
-		"ERRO BANDEJA"
+		"ERRO BANDEJA",
+		"Erreur colonne"
 	},
 	{
 		"缺货货道:",
 		"Empty column",
 		"Empty column",
 		"BOS SUTUN",
-		"BANDEJA VAZIA"
+		"BANDEJA VAZIA",
+		"Colonne vide"
 	},
 	{
 		"单价为0的货道:",
 		"Price in 0 column",
 		"Price in 0 column",
 		"FIYATSIZ SUTUN",
-		"PRE\x83\O NA BANDEJA 0"
+		"PRE\x83\O NA BANDEJA 0",
+		"Prix dans 0 colonne"
 	},
 	{
 		"正常货道:",
 		"Normal Column",
 		"Normal Column",
 		"NORMAL SUTUN",
-		"BANDEJA NORMAL"
+		"BANDEJA NORMAL",
+		"Colonne Normale"
 	},
 	{
 		"全货道测试页面",
 		"Self-testing",
 		"Self-testing",
 		"TEST EDILIYOR LUTFEN BEKLEYIN",
-		"FAVOR AGUARDAR"
+		"FAVOR AGUARDAR",
+		"Self-testing"
 	},
 	{
 		"多层货道测试页面",
 		"Self-testing",
 		"Self-testing",
 		"TEST EDILIYOR LUTFEN BEKLEYIN",
-		"FAVOR AGUARDAR"
+		"FAVOR AGUARDAR",
+		"Self-testing"
 	},
 	{
 		"多货道测试页面",
 		"Self-testing",
 		"Self-testing",
 		"TEST EDILIYOR LUTFEN BEKLEYIN",
-		"FAVOR AGUARDAR"
+		"FAVOR AGUARDAR",
+		"Self-testing"
 	},
 	{
 		"单货道测试页面",
 		"Self-testing",
 		"Self-testing",
 		"TEST EDILIYOR LUTFEN BEKLEYIN",
-		"FAVOR AGUARDAR"
-	}
-
-		
-		,
+		"FAVOR AGUARDAR",
+		"Self-testing"
+	},
 	{
 		" 正在检测%d货道, 请稍等...",
 		" Self-testing %d,pls wait...",
 		" Self-testing %d,pls wait...",
 		" TEST EDILIYOR LUTFEN BEKLEYIN",
-		" EM TESTE %d,AGUARDE..."
+		" EM TESTE %d,AGUARDE...",
+		" Auto-test %d, Patientez svp"
 	},
 	{
 		" 货道%d检测: 无货! ",
 		" Column %d: Empty!",
 		" Column %d: Empty!",
 		" SUTUN BOS!",
-		" BANDEJA %d: VAZIA!"
+		" BANDEJA %d: VAZIA!",
+		" Colonne %d: Vide!"
 	},
 	{
 		" 货道%d检测: 正常! ",
 		" Column %d: Normal!",
 		" Column %d: Normal!",
 		" SUTUN NORMAL!",
-		" BANDEJA %d: NORMAL!"
+		" BANDEJA %d: NORMAL!",
+		" Colonne %d: Normal!"
 	},
 	{
 		" 货道%d检测: 故障! ",
 		" Column %d: Error!",
 		" Column %d: Error!",
 		" SUTUN HATALI!",
-		" BANDEJA %d: ERRO!"
+		" BANDEJA %d: ERRO!",
+		" Colonne %d: Erreur!"
 	},
 	{
 		" 货道%d检测: 电机未到位! ",
 		" Column %d: MOTO ERR!",
 		" Column %d: MOTO ERR!",
 		" SUTUN HATALI!",
-		" BANDEJA %d: ERRO!"
+		" BANDEJA %d: ERRO!",
+		" Column %d: MOTO ERR!"
 	},
 	{
 		" 货道%d不存在! ",
 		" Column: nonentity!",
 		" Column: nonentity!",
 		" NUMARA!",
+		" Column: nonentity!",
 		" Column: nonentity!"
 	},
 	{
@@ -409,7 +456,8 @@ const UI_AISLE_ADMIN ui_aisle_admin = {
 		" Column %d:Communication failure!",
 		" Column %d:Communication failure!",
 		" SUTUN BAGLANTI HATASI!",
-		" BANDEJA %d:ERRO COMUNICA\x83\x82O!"
+		" BANDEJA %d:ERRO COMUNICA\x83\x82O!",
+		" Column %d:Communication failure!"
 	},
 	{
 			" 请输入数量: ",
@@ -417,6 +465,7 @@ const UI_AISLE_ADMIN ui_aisle_admin = {
 			" sum:",
 			" sum:",
 			" sum:",
+			" sum:"
 		}
 };
 
