@@ -1,6 +1,2 @@
----- HopperIsEmpty 匹配 (5 在 5 文件 ) ----
-Business.c (app):1664:		coinMoney =( !HopperIsEmpty() )? SystemPara.MaxValue:0;
-CheckDeviceState.c (api):223:uint8_t HopperIsEmpty()
-CheckDeviceState.h (api):15:extern uint8_t HopperIsEmpty(void);
-Maintain.c (app):198:		state =HopperIsEmpty();		
-PCComAPI.c (api):267:				coinMoney =( !HopperIsEmpty() )? SystemPara.MaxValue:0;
+---- 1_EvbAckMsg 匹配 (1 在 1 文件 ) ----
+HopperDriver.c (drivers):86:				TraceChange("1_EvbAckMsg=%x state=%d\r\n",EvbAckMsg[3],stEvbHp[DevNum].State);

@@ -1,1 +1,0 @@
--c --cpu Cortex-M3 -g -O0 --apcs=interwork -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\NXP\LPC17xx" -o ".\Hex\zhihuipc.o" --omf_browse ".\Hex\zhihuipc.crf" --depend ".\Hex\zhihuipc.d" "Uart3Driver\ZHIHUIPC.c"

@@ -2348,14 +2348,22 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 		}
 	}
 
-	if(issnup==0)
+	if(SystemPara.EasiveEnable == 1)
 	{
 		//更新SN流水号			
 		PackSNUpdate();
 	}
 	else
 	{
-		sysVPMission.send.sn=GoodsSN;
+		if(issnup==0)
+		{
+			//更新SN流水号			
+			PackSNUpdate();
+		}
+		else
+		{
+			sysVPMission.send.sn=GoodsSN;
+		}
 	}
 	
     VPBusTxMsg();    

@@ -4218,6 +4218,12 @@ void TestChanger(void)
 		case HOPPER_CHANGER:
 			LCDPrintf(0,LINE1,0,0,"TestChanger=HOPPER");
 			LCDPrintf(0,LINE5,0,0,"value=%ld,%ld,%ld",SystemPara.HopperValue[0],SystemPara.HopperValue[1],SystemPara.HopperValue[2]);
+		    if(DeviceStateBusiness.Hopper1State)
+				LCDPrintf(0,LINE7,0,SystemPara.Language,"%s%s[%#02x]",UserMaintainErrorMenuList.Hopper1State[SystemPara.Language],ErrorState(DeviceStateBusiness.Hopper1State),DeviceStatePack.Hopper1StateChk);
+			if(DeviceStateBusiness.Hopper2State)
+				LCDPrintf(0,LINE9,0,SystemPara.Language,"%s%s[%#02x]",UserMaintainErrorMenuList.Hopper2State[SystemPara.Language],ErrorState(DeviceStateBusiness.Hopper2State),DeviceStatePack.Hopper2StateChk);
+			if(DeviceStateBusiness.Hopper3State)
+				LCDPrintf(0,LINE11,0,SystemPara.Language,"%s%s[%#02x]",UserMaintainErrorMenuList.Hopper3State[SystemPara.Language],ErrorState(DeviceStateBusiness.Hopper3State),DeviceStatePack.Hopper3StateChk);
 			scaleMoney = SystemPara.HopperValue[0];
 			break;
 		case MDB_CHANGER:

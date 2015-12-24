@@ -60,10 +60,14 @@ void ChangeGetTubes(void)
 				 stDevValue.CoinNum[j] =  ChangerRdBuff[2+j];				 
 				 //TraceChange("\r\n**DrvChangebuf[%d] = %d,%d", j, ChangerRdBuff[j+2],stDevValue.CoinNum[j]);
 	         }
-			 for(j = 0; j < 16; j++) 
+			 if(SystemPara.CoinChangerType == MDB_CHANGER)
 			 {
-				 TraceChange("\r\n%dDrvChangebuf[%d] = %d", ChangerRdLen,j,stDevValue.CoinNum[j]);
-	         }
+				 TraceChange("\r\n");
+				 for(j = 0; j < 16; j++) 
+				 {
+					 TraceChange("%dDrvChangebuf[%d] = %d", ChangerRdLen,j,stDevValue.CoinNum[j]);
+		         }
+			}
 		}
 	}
 }

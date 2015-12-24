@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Hex\VMC_V2_15_2015_x_x.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Hex\VMC_V2_15_2015_x_x.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Fri Dec 11 15:38:48 2015
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Thu Dec 24 14:20:47 2015
 <BR><P>
 <H3>Maximum Stack Usage =       1960 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -59,8 +59,8 @@ Function Pointers
  <LI><a href="#[23]">TestChanger</a> from maintain.o(.text) referenced 2 times from maintain.o(.text)
  <LI><a href="#[24]">TestBillValidator</a> from maintain.o(.text) referenced 2 times from maintain.o(.text)
  <LI><a href="#[25]">ChannelTest</a> from channel.o(.text) referenced from maintain.o(.text)
- <LI><a href="#[26]">EnterSelfCheckFuction</a> from maintain.o(.text) referenced 2 times from maintain.o(.text)
- <LI><a href="#[27]">DefaultSystemParaMenu</a> from maintain.o(.text) referenced 2 times from maintain.o(.text)
+ <LI><a href="#[26]">EnterSelfCheckFuction</a> from maintain.o(.text) referenced from maintain.o(.text)
+ <LI><a href="#[27]">DefaultSystemParaMenu</a> from maintain.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[28]">ChannelAttributeManage</a> from channel.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[29]">FactorySetting</a> from maintain.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[2a]">LogMaintainProcess</a> from maintain.o(.text) referenced from maintain.o(.text)
@@ -1413,7 +1413,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[126]"></a>ErrorState</STRONG> (Thumb, 172 bytes, Stack size 0 bytes, maintain.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ErrorCheck
+<BR><BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestChanger
+<LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ErrorCheck
 </UL>
 
 <P><STRONG><a name="[2b]"></a>ErrorCheck</STRONG> (Thumb, 4020 bytes, Stack size 48 bytes, maintain.o(.text))
@@ -1577,7 +1578,7 @@ Global Symbols
 <LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestChanger
 </UL>
 
-<P><STRONG><a name="[23]"></a>TestChanger</STRONG> (Thumb, 2724 bytes, Stack size 56 bytes, maintain.o(.text))
+<P><STRONG><a name="[23]"></a>TestChanger</STRONG> (Thumb, 2922 bytes, Stack size 56 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 624 + Unknown Stack Size
 <LI>Call Chain = TestChanger &rArr; ChangerDevPayoutAPI &rArr; ChangePayoutProcessLevel2API &rArr; MDBchange &rArr; TraceChange &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1585,6 +1586,7 @@ Global Symbols
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadKeyValue
 <LI><a href="#[137]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintfMoney
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetTubeMoney
+<LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ErrorState
 <LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trace
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPrintf
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClrScreen
@@ -1594,7 +1596,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
-<P><STRONG><a name="[20]"></a>TestCoinAcceptor</STRONG> (Thumb, 738 bytes, Stack size 48 bytes, maintain.o(.text))
+<P><STRONG><a name="[20]"></a>TestCoinAcceptor</STRONG> (Thumb, 848 bytes, Stack size 48 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 496 + Unknown Stack Size
 <LI>Call Chain = TestCoinAcceptor &rArr; GetCoinDevMoneyInAPI &rArr; ReadParallelCoinAcceptor &rArr; TraceCoin &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1612,7 +1614,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
-<P><STRONG><a name="[24]"></a>TestBillValidator</STRONG> (Thumb, 796 bytes, Stack size 72 bytes, maintain.o(.text))
+<P><STRONG><a name="[24]"></a>TestBillValidator</STRONG> (Thumb, 610 bytes, Stack size 72 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 504 + Unknown Stack Size
 <LI>Call Chain = TestBillValidator &rArr; GetKeyInValue &rArr; ReadKeyValue &rArr; TraceSelection &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1630,7 +1632,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
-<P><STRONG><a name="[2c]"></a>UserTradeMaintainProcess</STRONG> (Thumb, 4536 bytes, Stack size 288 bytes, maintain.o(.text))
+<P><STRONG><a name="[2c]"></a>UserTradeMaintainProcess</STRONG> (Thumb, 4742 bytes, Stack size 288 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1248 + Unknown Stack Size
 <LI>Call Chain = UserTradeMaintainProcess &rArr; WriteUserSystemPara &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1658,7 +1660,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TraceMaintainProcess
 </UL>
 
-<P><STRONG><a name="[2e]"></a>TraceMaintainProcess</STRONG> (Thumb, 1844 bytes, Stack size 280 bytes, maintain.o(.text))
+<P><STRONG><a name="[2e]"></a>TraceMaintainProcess</STRONG> (Thumb, 1834 bytes, Stack size 280 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1240 + Unknown Stack Size
 <LI>Call Chain = TraceMaintainProcess &rArr; WriteUserSystemPara &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1677,7 +1679,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
-<P><STRONG><a name="[142]"></a>IsAdminSet</STRONG> (Thumb, 358 bytes, Stack size 8 bytes, maintain.o(.text))
+<P><STRONG><a name="[142]"></a>IsAdminSet</STRONG> (Thumb, 282 bytes, Stack size 8 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 416 + Unknown Stack Size
 <LI>Call Chain = IsAdminSet &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1686,7 +1688,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MaintainUserProcess
 </UL>
 
-<P><STRONG><a name="[143]"></a>IsFactorySet</STRONG> (Thumb, 294 bytes, Stack size 8 bytes, maintain.o(.text))
+<P><STRONG><a name="[143]"></a>IsFactorySet</STRONG> (Thumb, 282 bytes, Stack size 8 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 416 + Unknown Stack Size
 <LI>Call Chain = IsFactorySet &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1747,7 +1749,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
-<P><STRONG><a name="[149]"></a>TestCashless</STRONG> (Thumb, 916 bytes, Stack size 32 bytes, maintain.o(.text))
+<P><STRONG><a name="[149]"></a>TestCashless</STRONG> (Thumb, 822 bytes, Stack size 32 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 472 + Unknown Stack Size
 <LI>Call Chain = TestCashless &rArr; ReaderDevVendoutTestAPI &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1764,7 +1766,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
-<P><STRONG><a name="[26]"></a>EnterSelfCheckFuction</STRONG> (Thumb, 1400 bytes, Stack size 24 bytes, maintain.o(.text))
+<P><STRONG><a name="[26]"></a>EnterSelfCheckFuction</STRONG> (Thumb, 1566 bytes, Stack size 24 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 448 + Unknown Stack Size
 <LI>Call Chain = EnterSelfCheckFuction &rArr; ReadKeyValue &rArr; TraceSelection &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1790,13 +1792,13 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
-<P><STRONG><a name="[14d]"></a>RstSystemPara</STRONG> (Thumb, 732 bytes, Stack size 12 bytes, maintain.o(.text))
+<P><STRONG><a name="[14d]"></a>RstSystemPara</STRONG> (Thumb, 736 bytes, Stack size 12 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = RstSystemPara
 </UL>
 <BR>[Called By]<UL><LI><a href="#[27]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DefaultSystemParaMenu
 </UL>
 
-<P><STRONG><a name="[27]"></a>DefaultSystemParaMenu</STRONG> (Thumb, 5834 bytes, Stack size 216 bytes, maintain.o(.text))
+<P><STRONG><a name="[27]"></a>DefaultSystemParaMenu</STRONG> (Thumb, 5850 bytes, Stack size 216 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1168 + Unknown Stack Size
 <LI>Call Chain = DefaultSystemParaMenu &rArr; WriteDefaultSystemPara &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1822,7 +1824,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> maintain.o(.text)
 </UL>
-<P><STRONG><a name="[150]"></a>MaintainProcess</STRONG> (Thumb, 2160 bytes, Stack size 40 bytes, maintain.o(.text))
+<P><STRONG><a name="[150]"></a>MaintainProcess</STRONG> (Thumb, 2116 bytes, Stack size 40 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 464 + Unknown Stack Size
 <LI>Call Chain = MaintainProcess &rArr; ReadKeyValue &rArr; TraceSelection &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1839,7 +1841,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MaintainUserProcess
 </UL>
 
-<P><STRONG><a name="[11c]"></a>MaintainUserProcess</STRONG> (Thumb, 736 bytes, Stack size 32 bytes, maintain.o(.text))
+<P><STRONG><a name="[11c]"></a>MaintainUserProcess</STRONG> (Thumb, 714 bytes, Stack size 32 bytes, maintain.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 496 + Unknown Stack Size
 <LI>Call Chain = MaintainUserProcess &rArr; MaintainProcess &rArr; ReadKeyValue &rArr; TraceSelection &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -6415,7 +6417,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 </UL>
 
-<P><STRONG><a name="[296]"></a>HopperAccepter_Handle</STRONG> (Thumb, 464 bytes, Stack size 96 bytes, hopperdriver.o(.text))
+<P><STRONG><a name="[296]"></a>HopperAccepter_Handle</STRONG> (Thumb, 472 bytes, Stack size 96 bytes, hopperdriver.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 568 + Unknown Stack Size
 <LI>Call Chain = HopperAccepter_Handle &rArr; EvbConversation &rArr; TraceChannel &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -6456,7 +6458,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 </UL>
 
-<P><STRONG><a name="[25f]"></a>ChangeGetTubes</STRONG> (Thumb, 118 bytes, Stack size 56 bytes, mdbchanger.o(.text))
+<P><STRONG><a name="[25f]"></a>ChangeGetTubes</STRONG> (Thumb, 134 bytes, Stack size 56 bytes, mdbchanger.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 464 + Unknown Stack Size
 <LI>Call Chain = ChangeGetTubes &rArr; TraceChange &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -6952,7 +6954,7 @@ Global Symbols
 <LI><a href="#[29c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Act_RPT
 </UL>
 
-<P><STRONG><a name="[2d5]"></a>VPMsgPackSend</STRONG> (Thumb, 13004 bytes, Stack size 120 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2d5]"></a>VPMsgPackSend</STRONG> (Thumb, 13024 bytes, Stack size 120 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 704 + Unknown Stack Size
 <LI>Call Chain = VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -7034,7 +7036,7 @@ Global Symbols
 <LI><a href="#[29c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Act_RPT
 </UL>
 
-<P><STRONG><a name="[2de]"></a>VP_CMD_GoodsPar</STRONG> (Thumb, 500 bytes, Stack size 16 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2de]"></a>VP_CMD_GoodsPar</STRONG> (Thumb, 502 bytes, Stack size 16 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
 <LI>Call Chain = VP_CMD_GoodsPar &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -7095,7 +7097,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[29c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Act_RPT
 </UL>
 
-<P><STRONG><a name="[29c]"></a>VPMission_Act_RPT</STRONG> (Thumb, 588 bytes, Stack size 72 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[29c]"></a>VPMission_Act_RPT</STRONG> (Thumb, 584 bytes, Stack size 72 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 808 + Unknown Stack Size
  + In Cycle
 <LI>Call Chain = VPMission_Act_RPT &rArr;  VPMission_Act_RPT (Cycle)
@@ -7150,7 +7152,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 </UL>
 
-<P><STRONG><a name="[2b4]"></a>VPMission_Info_RPT</STRONG> (Thumb, 338 bytes, Stack size 72 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2b4]"></a>VPMission_Info_RPT</STRONG> (Thumb, 336 bytes, Stack size 72 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 880 + Unknown Stack Size
 <LI>Call Chain = VPMission_Info_RPT &rArr; VPMission_Act_RPT &rArr;  VPMission_Act_RPT (Cycle)
 </UL>
@@ -7187,7 +7189,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 </UL>
 
-<P><STRONG><a name="[2e7]"></a>VPMission_OfflineData_RPT</STRONG> (Thumb, 380 bytes, Stack size 32 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2e7]"></a>VPMission_OfflineData_RPT</STRONG> (Thumb, 486 bytes, Stack size 32 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 840 + Unknown Stack Size
 <LI>Call Chain = VPMission_OfflineData_RPT &rArr; VPMission_Act_RPT &rArr;  VPMission_Act_RPT (Cycle)
 </UL>
@@ -7200,7 +7202,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 </UL>
 
-<P><STRONG><a name="[2e8]"></a>VP_Payout_Ind</STRONG> (Thumb, 310 bytes, Stack size 8 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2e8]"></a>VP_Payout_Ind</STRONG> (Thumb, 204 bytes, Stack size 8 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 712 + Unknown Stack Size
 <LI>Call Chain = VP_Payout_Ind &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -7257,7 +7259,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 </UL>
 
-<P><STRONG><a name="[2ed]"></a>VP_Control_Ind</STRONG> (Thumb, 796 bytes, Stack size 8 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2ed]"></a>VP_Control_Ind</STRONG> (Thumb, 780 bytes, Stack size 8 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 712 + Unknown Stack Size
 <LI>Call Chain = VP_Control_Ind &rArr; VPMsgPackSend &rArr; ReadLogDetailAPI &rArr; AT45DBReadPage &rArr; AT45DBReadNByte &rArr; AT45DBWaitOK &rArr; AT45DBReadStatus
 </UL>
@@ -7272,7 +7274,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VPMission_Poll
 </UL>
 
-<P><STRONG><a name="[2ac]"></a>VPMission_Poll</STRONG> (Thumb, 820 bytes, Stack size 32 bytes, ubprotocol.o(.text))
+<P><STRONG><a name="[2ac]"></a>VPMission_Poll</STRONG> (Thumb, 840 bytes, Stack size 32 bytes, ubprotocol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 872 + Unknown Stack Size
 <LI>Call Chain = VPMission_Poll &rArr; VPMission_OfflineData_RPT &rArr; VPMission_Act_RPT &rArr;  VPMission_Act_RPT (Cycle)
 </UL>

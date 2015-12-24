@@ -84,7 +84,7 @@ unsigned char HopperAccepter_Handle(unsigned char DeviceCmdType,unsigned char Ad
 				if(i>=3)
 					return 0;
 				TraceChange("1_EvbAckMsg=%x state=%d\r\n",EvbAckMsg[3],stEvbHp[DevNum].State);
-				if(EvbAckMsg[3]==0x00)
+				if((EvbAckMsg[3]==0x00)||(EvbAckMsg[3]==0x01))
 					stEvbHp[DevNum].State = 0x00;
 				else
 				if((EvbAckMsg[3]==0x20)||(EvbAckMsg[3]==0x29))
