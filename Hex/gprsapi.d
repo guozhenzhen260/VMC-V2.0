@@ -41,6 +41,7 @@
 .\Hex\gprsapi.o: API\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\gprsapi.o: API\..\.\Uart1Driver\Xmt.h
 .\Hex\gprsapi.o: API\..\.\Uart1Driver\HeFanGui.h
+.\Hex\gprsapi.o: API\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\gprsapi.o: API\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\gprsapi.o: API\..\.\API\BillAccepterAPI.h
 .\Hex\gprsapi.o: API\..\.\API\CoinAccepterAPI.h

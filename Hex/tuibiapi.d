@@ -41,6 +41,7 @@
 .\Hex\tuibiapi.o: API\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\tuibiapi.o: API\..\.\Uart1Driver\Xmt.h
 .\Hex\tuibiapi.o: API\..\.\Uart1Driver\HeFanGui.h
+.\Hex\tuibiapi.o: API\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\tuibiapi.o: API\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\tuibiapi.o: API\..\.\API\BillAccepterAPI.h
 .\Hex\tuibiapi.o: API\..\.\API\CoinAccepterAPI.h

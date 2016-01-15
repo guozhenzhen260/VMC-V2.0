@@ -741,10 +741,32 @@ void Uart2TaskDevice(void *pvData)
 
 			//≈–∂œªıµ¿ «∑Ò»´≤ø≤ªø…”√
 			DeviceStatePack.Emp_Gol = hd_all_check();
-			
-			
+
+			//÷Ω±“’“¡„∆˜			
+			FS_mainTask();//∂¡»°÷Ω±“∆˜◊¥Ã¨
+			DeviceStatePack.fsstatus=FS_getStatus();
+			print_fs("\r\n fs status=%d,errCode=%d,box[0]=%d,,box[1]=%d,,box[2]=%d,,box[3]=%d",DeviceStatePack.fsstatus->status,DeviceStatePack.fsstatus->errCode,DeviceStatePack.fsstatus->box[0]
+				,DeviceStatePack.fsstatus->box[1],DeviceStatePack.fsstatus->box[2],DeviceStatePack.fsstatus->box[3]);
+			if(DeviceStatePack.fsstatus->status!=0)//π ’œ
+			{
+				stDevValue.RecyclerNum[0]=0;
+			}
+			else 
+			{
+				//’˝≥£
+				if((DeviceStatePack.fsstatus->box[0]==0))
+				{
+					stDevValue.RecyclerNum[0]=20;
+				}
+				//π ’œªÚ»±±“
+				else
+				{
+					stDevValue.RecyclerNum[0]=0;
+				}	
+			}
 			//Trace("\r\n Em2=%d",DeviceStatePack.Emp_Gol);
-			OSMboxPost(g_DeviceStateBackMail,&DeviceStatePack);			
+			OSMboxPost(g_DeviceStateBackMail,&DeviceStatePack);		
+			
 		}
 	
 		

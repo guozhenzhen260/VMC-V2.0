@@ -18,4 +18,6 @@ extern  void TraceSelection(unsigned char *format,...);
 
 extern  void TracePC(unsigned char *format,...);
 
+extern  void print_fs(unsigned char *format,...);
+
 #endif

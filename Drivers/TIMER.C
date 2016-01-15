@@ -108,7 +108,7 @@ void TIMER0_IRQHandler (void)
 		LIFTTABLETIMER--;
 	if(sysXMTMission.msTimer)
 		sysXMTMission.msTimer--;
-	
+	 FS_TIMER();
 	GOCCHECKTIMEOUT++;
 	Tick++;
 	if(Tick >= 100)

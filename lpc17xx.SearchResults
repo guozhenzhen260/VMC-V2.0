@@ -1,2 +1,9 @@
----- 1_EvbAckMsg 匹配 (1 在 1 文件 ) ----
-HopperDriver.c (drivers):86:				TraceChange("1_EvbAckMsg=%x state=%d\r\n",EvbAckMsg[3],stEvbHp[DevNum].State);
+---- vmcChangeLow 匹配 (8 in 1 文件) ----
+Business.c (app):uint8_t	 	vmcChangeLow = 0;//零钱是否不够找1不够找,0够找
+Business.c (app):	if(vmcChangeLow)
+Business.c (app):	if( (GetAmountMoney()==0)&&(vmcChangeLow==0)&&(DeviceStateBusiness.Billdisable==1) )
+Business.c (app):		TraceBill("\r\n ErrBill=%d,%d,%d",GetAmountMoney(),vmcChangeLow,DeviceStateBusiness.Billdisable);
+Business.c (app):			vmcChangeLow = 0;
+Business.c (app):			vmcChangeLow = 1;
+Business.c (app):				vmcChangeLow = 0;
+Business.c (app):				vmcChangeLow = 0;

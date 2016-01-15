@@ -41,6 +41,7 @@
 .\Hex\mdbreader.o: Drivers\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\mdbreader.o: Drivers\..\.\Uart1Driver\Xmt.h
 .\Hex\mdbreader.o: Drivers\..\.\Uart1Driver\HeFanGui.h
+.\Hex\mdbreader.o: Drivers\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\mdbreader.o: Drivers\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\mdbreader.o: Drivers\..\.\API\BillAccepterAPI.h
 .\Hex\mdbreader.o: Drivers\..\.\API\CoinAccepterAPI.h

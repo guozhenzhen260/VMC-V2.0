@@ -41,6 +41,7 @@
 .\Hex\zy_if.o: Firmware\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\zy_if.o: Firmware\..\.\Uart1Driver\Xmt.h
 .\Hex\zy_if.o: Firmware\..\.\Uart1Driver\HeFanGui.h
+.\Hex\zy_if.o: Firmware\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\zy_if.o: Firmware\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\zy_if.o: Firmware\..\.\API\BillAccepterAPI.h
 .\Hex\zy_if.o: Firmware\..\.\API\CoinAccepterAPI.h

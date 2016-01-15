@@ -42,6 +42,7 @@
 .\Hex\zhihuipc.o: Uart3Driver\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\zhihuipc.o: Uart3Driver\..\.\Uart1Driver\Xmt.h
 .\Hex\zhihuipc.o: Uart3Driver\..\.\Uart1Driver\HeFanGui.h
+.\Hex\zhihuipc.o: Uart3Driver\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\zhihuipc.o: Uart3Driver\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\zhihuipc.o: Uart3Driver\..\.\API\BillAccepterAPI.h
 .\Hex\zhihuipc.o: Uart3Driver\..\.\API\CoinAccepterAPI.h

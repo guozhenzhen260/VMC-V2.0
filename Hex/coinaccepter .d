@@ -41,6 +41,7 @@
 .\Hex\coinaccepter .o: Drivers\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\coinaccepter .o: Drivers\..\.\Uart1Driver\Xmt.h
 .\Hex\coinaccepter .o: Drivers\..\.\Uart1Driver\HeFanGui.h
+.\Hex\coinaccepter .o: Drivers\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\coinaccepter .o: Drivers\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\coinaccepter .o: Drivers\..\.\API\BillAccepterAPI.h
 .\Hex\coinaccepter .o: Drivers\..\.\API\CoinAccepterAPI.h

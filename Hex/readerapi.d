@@ -41,6 +41,7 @@
 .\Hex\readerapi.o: API\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\readerapi.o: API\..\.\Uart1Driver\Xmt.h
 .\Hex\readerapi.o: API\..\.\Uart1Driver\HeFanGui.h
+.\Hex\readerapi.o: API\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\readerapi.o: API\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\readerapi.o: API\..\.\API\BillAccepterAPI.h
 .\Hex\readerapi.o: API\..\.\API\CoinAccepterAPI.h

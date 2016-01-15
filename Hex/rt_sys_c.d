@@ -41,6 +41,7 @@
 .\Hex\rt_sys_c.o: Startup\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\rt_sys_c.o: Startup\..\.\Uart1Driver\Xmt.h
 .\Hex\rt_sys_c.o: Startup\..\.\Uart1Driver\HeFanGui.h
+.\Hex\rt_sys_c.o: Startup\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\rt_sys_c.o: Startup\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\rt_sys_c.o: Startup\..\.\API\BillAccepterAPI.h
 .\Hex\rt_sys_c.o: Startup\..\.\API\CoinAccepterAPI.h

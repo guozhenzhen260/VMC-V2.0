@@ -41,6 +41,7 @@
 .\Hex\lpc1700pincfg.o: Firmware\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\lpc1700pincfg.o: Firmware\..\.\Uart1Driver\Xmt.h
 .\Hex\lpc1700pincfg.o: Firmware\..\.\Uart1Driver\HeFanGui.h
+.\Hex\lpc1700pincfg.o: Firmware\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\lpc1700pincfg.o: Firmware\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\lpc1700pincfg.o: Firmware\..\.\API\BillAccepterAPI.h
 .\Hex\lpc1700pincfg.o: Firmware\..\.\API\CoinAccepterAPI.h

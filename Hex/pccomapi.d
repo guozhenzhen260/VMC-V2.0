@@ -41,6 +41,7 @@
 .\Hex\pccomapi.o: API\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\pccomapi.o: API\..\.\Uart1Driver\Xmt.h
 .\Hex\pccomapi.o: API\..\.\Uart1Driver\HeFanGui.h
+.\Hex\pccomapi.o: API\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\pccomapi.o: API\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\pccomapi.o: API\..\.\API\BillAccepterAPI.h
 .\Hex\pccomapi.o: API\..\.\API\CoinAccepterAPI.h

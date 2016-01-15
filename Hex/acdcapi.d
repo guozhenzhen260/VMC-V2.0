@@ -41,6 +41,7 @@
 .\Hex\acdcapi.o: API\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\acdcapi.o: API\..\.\Uart1Driver\Xmt.h
 .\Hex\acdcapi.o: API\..\.\Uart1Driver\HeFanGui.h
+.\Hex\acdcapi.o: API\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\acdcapi.o: API\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\acdcapi.o: API\..\.\API\BillAccepterAPI.h
 .\Hex\acdcapi.o: API\..\.\API\CoinAccepterAPI.h

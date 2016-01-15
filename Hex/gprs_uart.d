@@ -41,6 +41,7 @@
 .\Hex\gprs_uart.o: Drivers\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\gprs_uart.o: Drivers\..\.\Uart1Driver\Xmt.h
 .\Hex\gprs_uart.o: Drivers\..\.\Uart1Driver\HeFanGui.h
+.\Hex\gprs_uart.o: Drivers\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\gprs_uart.o: Drivers\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\gprs_uart.o: Drivers\..\.\API\BillAccepterAPI.h
 .\Hex\gprs_uart.o: Drivers\..\.\API\CoinAccepterAPI.h

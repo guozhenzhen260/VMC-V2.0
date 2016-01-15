@@ -17,9 +17,16 @@
 #define	UART1_BPS96			9600
 #define UART1_BPS576		57600
 
-#define	UART1BUFFERLEN		64
+#define	UART1BUFFERLEN		256
 
+
+#pragma arm section zidata = "RAM2" rwdata = "RAM2"
 unsigned char Uart1RevBuff[UART1BUFFERLEN];
+#pragma arm section
+
+
+
+
 volatile unsigned char Uart1RxdHead;
 volatile unsigned char Uart1RxdTail;
 
@@ -37,10 +44,16 @@ void InitUart1 (void)
 	
 	PCONP = PCONP | (1<<4);   
     U1LCR  = 0x83;                                                  //允许设置波特率
-    if( (SystemPara.threeSelectKey==1)||(SystemPara.XMTTemp==1)||(SystemPara.hefangGui==1) )
-		ulFdiv = (FPCLK / 16) / UART1_BPS96;
-	else
+    //为了SystemPara.threeSelectKey的判断
+   // if( (SystemPara.threeSelectKey==1)||(SystemPara.XMTTemp==1)||(SystemPara.hefangGui==1)||(SystemPara.BillRecyclerType == FS_BILLRECYCLER) )
+//		ulFdiv = (FPCLK / 16) / UART1_BPS96;
+	//else
+//		ulFdiv = (FPCLK / 16) / UART1_BPS576;                              //设置波特率
+      //为了SystemPara.threeSelectKey的判断
+    if( (SystemPara.UserSelectKeyBoard==SELECT_KEY)&&(SystemPara.threeSelectKey==0))	
 		ulFdiv = (FPCLK / 16) / UART1_BPS576;                              //设置波特率
+    else	
+		ulFdiv = (FPCLK / 16) / UART1_BPS96;
     U1DLM  = ulFdiv / 256;
     U1DLL  = ulFdiv % 256; 
     U1LCR  = 0x03;                                                  //锁定波特率
@@ -220,4 +233,31 @@ uint8_t Uart1_Read(uint8_t *buf, uint8_t len)
 	
 }
 
+
+
+
+
+	/*********************************************************************************************************
+** Function name:     	SetUart3ParityMode
+** Descriptions:	    设置串口奇偶校验位
+** input parameters:    mode:奇偶校验设置,即设置MDB协议的标志位
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void SetUart1ParityMode(unsigned char mode) 
+{
+	switch(mode) 
+	{		
+		case PARITY_ODD	: 	U1LCR = UART_LCR_PARITY_ODD|UART_LCR_PARITY_EN|UART_LCR_WLEN8;
+						 	break;
+		case PARITY_EVEN:	U1LCR = UART_LCR_PARITY_EVEN|UART_LCR_PARITY_EN|UART_LCR_WLEN8;
+						 	break;
+		case PARITY_F_1	:	U1LCR = UART_LCR_PARITY_F_1|UART_LCR_PARITY_EN|UART_LCR_WLEN8;
+						 	break;
+		case PARITY_F_0	:	U1LCR = UART_LCR_PARITY_F_0|UART_LCR_PARITY_EN|UART_LCR_WLEN8;
+						 	break;
+		default:		 	U1LCR = UART_LCR_WLEN8;
+						 	break;
+	}
+}
 /**************************************End Of File*******************************************************/

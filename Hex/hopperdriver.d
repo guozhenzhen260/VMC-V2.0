@@ -41,6 +41,7 @@
 .\Hex\hopperdriver.o: Drivers\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\hopperdriver.o: Drivers\..\.\Uart1Driver\Xmt.h
 .\Hex\hopperdriver.o: Drivers\..\.\Uart1Driver\HeFanGui.h
+.\Hex\hopperdriver.o: Drivers\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\hopperdriver.o: Drivers\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\hopperdriver.o: Drivers\..\.\API\BillAccepterAPI.h
 .\Hex\hopperdriver.o: Drivers\..\.\API\CoinAccepterAPI.h

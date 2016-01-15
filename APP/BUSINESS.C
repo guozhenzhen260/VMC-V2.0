@@ -2035,6 +2035,32 @@ void ChangerRecycler(void)
 			}
 		}
 	}
+	else if(SystemPara.BillRecyclerType==FS_BILLRECYCLER)
+	{
+		paymoney=GetAmountMoney();
+		if(paymoney)
+		{
+			print_fs("\r\n AppNeedpay=%ld",paymoney);				
+			num=paymoney/SystemPara.RecyclerMoney;
+			print_fs("\r\n AppNeednum=%d",num);
+			num=(stDevValue.RecyclerNum[0]>=num)?num:stDevValue.RecyclerNum[0];
+			print_fs("\r\n AppRealnum=%d",num);
+			status=BillRecyclerPayoutValueExpanseAPI(SystemPara.RecyclerMoney*num,&RecyPayoutMoneyBack);
+			print_fs("\r\n AppRecback st=%d,pay=%ld",status,RecyPayoutMoneyBack);
+			if(status==1)
+			{
+				paymoney = (g_coinAmount + g_billAmount)-RecyPayoutMoneyBack;
+				g_billAmount=0;
+				g_coinAmount = paymoney;
+				print_fs("\r\n Apppay=%ld",paymoney);
+				if(SystemPara.EasiveEnable == 1)
+				{
+					PayoutRPTAPI(1,0,RecyPayoutMoneyBack,paymoney);
+				}
+			}				
+			
+		}
+	}
 }
 
 /*********************************************************************************************************

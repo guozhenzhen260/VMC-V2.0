@@ -49,7 +49,7 @@ static OS_STK Uart1DeviceTaskStk[256];
 void DispVersionText()
 {	
 	LCDPutLOGOBmp(24,LINE2,SystemPara.Logo);
-	LCDNumberFontPrintf(40,LINE15,2,"version%d.%02d",2,15);	
+	LCDNumberFontPrintf(40,LINE15,2,"version%d.%02d",2,16);	
 }
 
 /*********************************************************************************************************
@@ -68,11 +68,11 @@ void MainTask(void *pvData)
 	pvData = pvData;
 	InitKeyboard();//初始化拨码(不在这里做的话，硬币器拨码就需要拨了，不然机器蓝屏)
 	InitUart0();
-	InitUart1();
+	//InitUart1();
 	InitUart2();
 	InitUart3();
-    InitBuzzer();
-    LCDInit();
+      InitBuzzer();
+      LCDInit();
 	InitTimer(0,240000);
 	InitRtc();
 	//RTCStartOrStop(1);	
@@ -86,7 +86,7 @@ void MainTask(void *pvData)
 	LoadDefaultSystemPara(0);
 	LoadUserSystemPara(0);
 	DispVersionText();//显示版本号，等待设备初始化
-	InitUart1();//为了SystemPara.threeSelectKey的判断
+	InitUart1();	
 	CreateMBox();
 	OSTaskCreate(Uart2TaskDevice,(void *)0,&Uart2DeviceTaskStk[sizeof(Uart2DeviceTaskStk)/4 - 1],6);	
 	OSTimeDly(OS_TICKS_PER_SEC / 100);

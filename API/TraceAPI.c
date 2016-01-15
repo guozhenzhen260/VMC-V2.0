@@ -268,4 +268,30 @@ void TracePC(unsigned char *format,...)
 	}
 }
 
+/*********************************************************************************************************
+** Function name:       print_fs
+** Descriptions:        纸币找零器调试信息
+** input parameters:    无
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+void print_fs(unsigned char *format,...)
+{
+	va_list arg_ptr;
+	unsigned char StringTemp[256];
+	unsigned int i;
+	unsigned int len;
+	
+	if( (UserPara.TraceFlag == 1)&&(UserPara.BillRecyclerTrace==1) )
+	{		
+		va_start(arg_ptr, format);
+		len = vsprintf((char *)StringTemp,(const char *)format,arg_ptr);
+		va_end(arg_ptr);
+		for(i=0;i<len;i++)
+		{
+			Uart0PutChar(StringTemp[i]);
+		}
+	}
+}
+
 

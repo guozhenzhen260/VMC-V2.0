@@ -41,6 +41,7 @@
 .\Hex\xmt.o: Uart1Driver\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\xmt.o: Uart1Driver\..\.\Uart1Driver\Xmt.h
 .\Hex\xmt.o: Uart1Driver\..\.\Uart1Driver\HeFanGui.h
+.\Hex\xmt.o: Uart1Driver\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\xmt.o: Uart1Driver\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\xmt.o: Uart1Driver\..\.\API\BillAccepterAPI.h
 .\Hex\xmt.o: Uart1Driver\..\.\API\CoinAccepterAPI.h

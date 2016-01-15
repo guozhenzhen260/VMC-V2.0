@@ -41,6 +41,7 @@
 .\Hex\ubprotocol_simple.o: Uart3Driver\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\ubprotocol_simple.o: Uart3Driver\..\.\Uart1Driver\Xmt.h
 .\Hex\ubprotocol_simple.o: Uart3Driver\..\.\Uart1Driver\HeFanGui.h
+.\Hex\ubprotocol_simple.o: Uart3Driver\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\ubprotocol_simple.o: Uart3Driver\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\ubprotocol_simple.o: Uart3Driver\..\.\API\BillAccepterAPI.h
 .\Hex\ubprotocol_simple.o: Uart3Driver\..\.\API\CoinAccepterAPI.h

@@ -41,6 +41,7 @@
 .\Hex\buzzer.o: Drivers\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\buzzer.o: Drivers\..\.\Uart1Driver\Xmt.h
 .\Hex\buzzer.o: Drivers\..\.\Uart1Driver\HeFanGui.h
+.\Hex\buzzer.o: Drivers\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\buzzer.o: Drivers\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\buzzer.o: Drivers\..\.\API\BillAccepterAPI.h
 .\Hex\buzzer.o: Drivers\..\.\API\CoinAccepterAPI.h

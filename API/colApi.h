@@ -1,7 +1,7 @@
 
 #ifndef _COL_API_H_
 #define _COL_API_H_
-
+#include "..\Uart1Driver\FS_billChanger.h"
 
 #define COL_POLL_IDLE		0x00
 #define COL_POLL_BUSY		0x01
@@ -15,8 +15,7 @@
 #define COL_BIT_LIGHT	(0x01U << 1)
 #define COL_BIT_HOT		(0x01U << 3)
 
-typedef unsigned char uint8;
-typedef unsigned char uint16;
+
 
 typedef struct _st_column_{
 	uint8 empty;

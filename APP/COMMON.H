@@ -30,6 +30,7 @@
 
 #define OFF_BILLRECYCLER         0//关循环纸币找零器
 #define MDB_BILLRECYCLER         2//MDB循环纸币找零器
+#define FS_BILLRECYCLER            3//富士纸币找零器
 
 #define OFF_CHANGER       		 0//关找零器
 #define HOPPER_CHANGER           1//Hopper找零器
@@ -217,6 +218,7 @@ typedef struct
 	uint8_t     		selectTrace;
 	uint8_t     		PC;
 	uint8_t     		TraceFlag;		//add by yoc 2013.10.16
+	uint8_t     		BillRecyclerTrace;
 	//CRCCheck
 	uint8_t		CrcCheck[2];					//CRC校验
 	
@@ -658,6 +660,9 @@ typedef struct
 	unsigned char Error_SOMD2;
 	//主箱体是否已经全部都不可用
 	unsigned char Emp_Gol;//1不可用,0可用
+
+	//纸币找零器
+	FS_STATUS  *fsstatus;
 }DEVICESTATEPACK;
 extern DEVICESTATEPACK DeviceStatePack;
 extern DEVICESTATEPACK DeviceStateBusiness;
@@ -1043,6 +1048,30 @@ extern MessageXMTPack MsgXMTPack;
 
 extern OS_EVENT *g_XMTMail;
 extern OS_EVENT *g_XMTBackMail;
+
+/******************************************纸币找零通讯结构体*****************************************************/
+//纸币器按张数找币
+#define MBOX_FSBILLRECYPAYOUTNUM			0x01
+//纸币器按金额找币
+#define MBOX_FSBILLRECYPAYOUTVALUE		0x02
+//返回纸币器找零成功命令
+#define MBOX_FSBILLRECYPAYOUTSUCC			0x03
+//返回纸币器找零失败命令
+#define MBOX_FSBILLRECYPAYOUTFAIL			0x04
+
+typedef struct	
+{
+	uint8_t	BillBack;						//vmc下发温度命令
+	uint8_t   BillBackCmd;					//纸币器上传给vmc命令控制的返回类型
+	uint32_t  RecyPayoutMoney;			    //找零金额
+	uint8_t   RecyPayoutNum;				//找零数量
+	uint32_t  RecyPayoutMoneyBack;			//实际找零金额
+}MessageFSBillRecyclerPack;
+extern MessageFSBillRecyclerPack MsgFSBillRecyclerPack;
+
+extern OS_EVENT *g_FSBillRecyclerMail;
+extern OS_EVENT *g_FSBillRecyclerBackMail;
+
 
 
 

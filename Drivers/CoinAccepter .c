@@ -524,11 +524,18 @@ void CoinDevProcessExpanse(void)
 					MdbCoinErr.disable = 1;
 					MdbCoinErr.unknowError = 0;
 				}
-				else//其他各种故障
+				else if(CoinRdBuff[i] <= 0x15)//其他各种故障
 				{
 					TraceCoin("\r\nDrvCoin unknow=%#02x",CoinRdBuff[i]);
 					MdbCoinErr.unknowError = CoinRdBuff[i];
 					MdbCoinErr.unknowErrorLow = CoinRdBuff[i+1];
+				}
+				//其他情况正常
+				else
+				{
+					TraceCoin("\r\nDrvCoin ok");
+					MdbCoinErr.disable = 0;
+					MdbCoinErr.unknowError = 0;
 				}
 			}
 	    }

@@ -118,6 +118,11 @@ OS_EVENT *g_XMTBackMail;
 
 MessageXMTPack MsgXMTPack;
 
+//÷Ω±“’“¡„∆˜
+OS_EVENT *g_FSBillRecyclerMail;//÷Ω±“øÿ÷∆” œ‰
+OS_EVENT *g_FSBillRecyclerBackMail;//÷Ω±“∑µªÿ∏¯vmcøÿ÷∆Ω·π˚µƒ” œ‰
+MessageFSBillRecyclerPack MsgFSBillRecyclerPack;
+
 //**********************************
 
 
@@ -197,6 +202,10 @@ void CreateMBox(void)
 	//Œ¬øÿ∆˜” œ‰
 	g_XMTMail = OSMboxCreate(NULL);
 	g_XMTBackMail = OSMboxCreate(NULL);
+	//÷Ω±“’“¡„∆˜
+	g_FSBillRecyclerMail = OSMboxCreate(NULL);
+	g_FSBillRecyclerBackMail = OSMboxCreate(NULL);
+	
 }
 
 
@@ -768,6 +777,7 @@ uint8_t LoadUserSystemPara(uint8_t backup)
 	UserPara.selectTrace = RdBuf[num++];
 	UserPara.PC = RdBuf[num++];
 	UserPara.TraceFlag = RdBuf[num++];
+	UserPara.BillRecyclerTrace = RdBuf[num++];
 	crc = CrcCheck(RdBuf,num);
 	//Trace("\r\n defaultsys=%d,%x,%x",num,crc/256,crc%256);
 	UserPara.CrcCheck[0] = RdBuf[num++];
@@ -902,6 +912,7 @@ void WriteUserSystemPara(SYSUSERPARAMETER UPara,uint8_t backup)
 	Wrbuf[num++] = UPara.selectTrace;
 	Wrbuf[num++] = UPara.PC;
 	Wrbuf[num++] = UPara.TraceFlag;
+	Wrbuf[num++] = UPara.BillRecyclerTrace;
 	
 	crc = CrcCheck(Wrbuf,num);	
 	//Trace("\r\n defaultsys=%d,%x,%x",num,crc/256,crc%256);

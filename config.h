@@ -80,7 +80,7 @@ extern "C" {
 #include ".\Uart1Driver\TASKUART1DEVICE.H"
 #include ".\Uart1Driver\Xmt.h"
 #include ".\Uart1Driver\HeFanGui.h"
-
+#include ".\Uart1Driver\FS_billChanger.h"
 
 /*********************************************************************************************************
   外设驱动高层件头文件-串口0任务  by yoc newAisle

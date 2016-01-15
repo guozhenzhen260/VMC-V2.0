@@ -41,6 +41,7 @@
 .\Hex\traceapi.o: API\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\traceapi.o: API\..\.\Uart1Driver\Xmt.h
 .\Hex\traceapi.o: API\..\.\Uart1Driver\HeFanGui.h
+.\Hex\traceapi.o: API\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\traceapi.o: API\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\traceapi.o: API\..\.\API\BillAccepterAPI.h
 .\Hex\traceapi.o: API\..\.\API\CoinAccepterAPI.h

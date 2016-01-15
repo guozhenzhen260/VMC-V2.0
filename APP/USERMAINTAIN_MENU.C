@@ -263,6 +263,8 @@ typedef struct
 	char *PCCapion[MAXLANGUAGETYPE];
 	char *scaleError[MAXLANGUAGETYPE];		//小数点位数
 	char *offLineError[MAXLANGUAGETYPE];	//PC离线
+	//PC故障提示
+	char *FSBillRecycler[MAXLANGUAGETYPE];
 	//设备正常
 	char *DeviceOK[MAXLANGUAGETYPE];	//设备正常
 } USERMAINTAINERRORMENULIST;
@@ -652,6 +654,14 @@ const USERMAINTAINERRORMENULIST UserMaintainErrorMenuList =
 		"2.PC Communication Failed",
 		"2.PC Communication Failed",
 		"2.PC Communication Failed"
+	},
+	{
+		"纸币找零器",
+		"FSBillRecycler list",
+		"FSBillRecycler",
+		"FSBillRecycler",
+		"FSBillRecycler",
+		"FSBillRecycler list"
 	},
 	{
 		"正常",
@@ -1499,6 +1509,7 @@ typedef struct
 	char *selectTrace[MAXLANGUAGETYPE];
 	char *PCTrace[MAXLANGUAGETYPE];
 	char *TraceFlag[MAXLANGUAGETYPE];
+	char *BillRecyclerTrace[MAXLANGUAGETYPE];
 } USERTRACEMAINMENULIST;
 
 const USERTRACEMAINMENULIST UserTraceMenuList = 
@@ -1606,6 +1617,14 @@ const USERTRACEMAINMENULIST UserTraceMenuList =
 		"5.ACIK:",
 		"5.BANDEJA:",
 		"5.TraceFlag:"
+	},
+	{
+		"① 纸币找零器监控:",
+		"1.BillRecycler:",
+		"1.Изменение:",
+		"1.BOZUK P ACIK:",
+		"1.TROCA:",
+		"1.BillRecycler:"
 	}
 };
 

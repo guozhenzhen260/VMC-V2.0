@@ -1,5 +1,6 @@
 .\Hex\colapi.o: API\colApi.c
 .\Hex\colapi.o: API\colApi.h
+.\Hex\colapi.o: API\..\Uart1Driver\FS_billChanger.h
 .\Hex\colapi.o: API\..\config.h
 .\Hex\colapi.o: C:\Keil\ARM\RV31\INC\stdint.h
 .\Hex\colapi.o: C:\Keil\ARM\RV31\INC\stdio.h

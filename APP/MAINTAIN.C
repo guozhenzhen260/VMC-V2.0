@@ -497,8 +497,29 @@ void ErrorCheck(void)
 					LCDPrintf(5,lineNum+=2,0,SystemPara.Language,UserMaintainErrorMenuList.DeviceOK[SystemPara.Language]);
 				}				
 				LCDPrintf(231-8*strlen(UserMaintainErrorMenuList.PageUp[SystemPara.Language]),13,0,SystemPara.Language,UserMaintainErrorMenuList.PageUp[SystemPara.Language]);//翻页提示
-				break;	
+				break;			
 			case 9:
+				//纸币找零故障
+				LCDPrintf(8,1,0,SystemPara.Language,"%s",UserMaintainErrorMenuList.FSBillRecycler[SystemPara.Language]);
+				if(DeviceStateBusiness.fsstatus->status!=0)
+				{
+					LCDPrintf(5,lineNum+=2,0,SystemPara.Language,"status:%d",DeviceStateBusiness.fsstatus->status);
+					LCDPrintf(5,lineNum+=2,0,SystemPara.Language,"errCode:%ld",DeviceStateBusiness.fsstatus->errCode);
+				}
+				else
+				{
+					LCDPrintf(5,lineNum+=2,0,SystemPara.Language,"status:%s",UserMaintainErrorMenuList.DeviceOK[SystemPara.Language]);
+				      if(DeviceStateBusiness.fsstatus->box[0]==0)
+					  	LCDPrintf(5,lineNum+=2,0,SystemPara.Language,"box1:%s",UserMaintainErrorMenuList.DeviceOK[SystemPara.Language]);
+				      else
+						LCDPrintf(5,lineNum+=2,0,SystemPara.Language,"box1:%d",DeviceStateBusiness.fsstatus->box[0]);
+					LCDPrintf(5,lineNum+=2,0,SystemPara.Language,"box2:%d",DeviceStateBusiness.fsstatus->box[1]);
+					LCDPrintf(5,lineNum+=2,0,SystemPara.Language,"box3:%d",DeviceStateBusiness.fsstatus->box[2]);
+					LCDPrintf(5,lineNum+=2,0,SystemPara.Language,"box4:%d",DeviceStateBusiness.fsstatus->box[3]);
+				}				
+				LCDPrintf(231-8*strlen(UserMaintainErrorMenuList.PageUp[SystemPara.Language]),13,0,SystemPara.Language,UserMaintainErrorMenuList.PageUp[SystemPara.Language]);//翻页提示
+				break;
+			case 10:
 				//PC故障
 				LCDPrintf(8,1,0,SystemPara.Language,"%s",UserMaintainErrorMenuList.PCCapion[SystemPara.Language]);
 				if(PCError(1))
@@ -529,7 +550,7 @@ void ErrorCheck(void)
 			}
 			else if(Key == '>')
 			{				
-				if(pageNum < 9)
+				if(pageNum < 10)
 					pageNum++;
 				break;
 			}
@@ -2113,6 +2134,7 @@ void RstTracePara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					UserPara.compressorTrace = keyValue;	
 					break;
 				case 2: 
+					UserPara.BillRecyclerTrace = keyValue;	
 					break;
 				case 3:						
 					break;	
@@ -2272,7 +2294,10 @@ void TraceMaintainProcess(void)
 					LCDPrintf(5,13,0,SystemPara.Language,"%s%s",UserTraceMenuList.TraceFlag[SystemPara.Language],ChooseSet(UserPara.TraceFlag));
 					LCDPrintf(231-8*strlen(UserTraceMenuList.PageUp[SystemPara.Language]),13,0,SystemPara.Language,UserTraceMenuList.PageUp[SystemPara.Language]);//翻页提示
 					break;
-				case 2: 					
+				case 2: 	
+					LCDPrintf(5,5,0,SystemPara.Language,"%s%s",UserTraceMenuList.BillRecyclerTrace[SystemPara.Language],ChooseSet(UserPara.BillRecyclerTrace));
+				      LCDPrintf(231-8*strlen(UserTraceMenuList.PageUp[SystemPara.Language]),13,0,SystemPara.Language,UserTraceMenuList.PageUp[SystemPara.Language]);//翻页提示
+					
 					break;
 				case 3:								
 					break;	
@@ -2302,7 +2327,7 @@ void TraceMaintainProcess(void)
 					return;
 				}
 			case '>':
-				if(pageNum < 1)
+				if(pageNum < 2)
 					pageNum++;
 				break;				
 			case '<':
@@ -2354,6 +2379,7 @@ void TraceMaintainProcess(void)
 							LCDPrintf(5,5,1,SystemPara.Language,"%s%s",UserTraceMenuList.compressorTrace[SystemPara.Language],ChooseSet(50));
 							break;
 						case 2: 
+							LCDPrintf(5,5,1,SystemPara.Language,"%s%s",UserTraceMenuList.BillRecyclerTrace[SystemPara.Language],ChooseSet(50));
 							break;
 						case 3:
 							break;	
@@ -3525,11 +3551,21 @@ void RstSystemPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;
 				case 6:		
 					SystemPara.RecyclerMoney = 0;
-					//只有原先存在的循环纸币面值才能设置
-					for(i=0;i<7;i++)
+					//富士找零器
+					if(SystemPara.BillRecyclerType == FS_BILLRECYCLER)
 					{
-						if(keyValue==SystemPara.RecyclerValue[i])
-							SystemPara.RecyclerMoney = keyValue;	
+						SystemPara.RecyclerMoney = keyValue;	
+						FS_init();//重置面值
+					}
+					//MDB循环纸币器
+					else
+					{
+						//只有原先存在的循环纸币面值才能设置
+						for(i=0;i<7;i++)
+						{
+							if(keyValue==SystemPara.RecyclerValue[i])
+								SystemPara.RecyclerMoney = keyValue;	
+						}
 					}
 					break;		
 				
@@ -4089,6 +4125,14 @@ void TestBillValidator(void)
 		LCDPrintf(0,LINE11,0,0,"recva =%ld,%ld,%ld,%ld,%ld,%ld,%ld",stDevValue.RecyclerValue[0],stDevValue.RecyclerValue[1],stDevValue.RecyclerValue[2],stDevValue.RecyclerValue[3],stDevValue.RecyclerValue[4],stDevValue.RecyclerValue[5],stDevValue.RecyclerValue[6]);
 		LCDPrintf(0,LINE13,0,0,"recNum=%ld,%ld,%ld,%ld,%ld,%ld,%ld",stDevValue.RecyclerNum[0],stDevValue.RecyclerNum[1],stDevValue.RecyclerNum[2],stDevValue.RecyclerNum[3],stDevValue.RecyclerNum[4],stDevValue.RecyclerNum[5],stDevValue.RecyclerNum[6]);
 	}
+	else if(SystemPara.BillRecyclerType == FS_BILLRECYCLER)
+	{
+		pstr = PrintfMoney(SystemPara.RecyclerMoney);
+		strcpy(strMoney, pstr);
+		LCDPrintf(0,LINE11,0,0,"RecyclerMoney=%s",strMoney);
+		LCDPrintf(0,LINE13,0,0,"recNum=%ld,%ld,%ld,%ld,%ld,%ld,%ld",stDevValue.RecyclerNum[0],stDevValue.RecyclerNum[1],stDevValue.RecyclerNum[2],stDevValue.RecyclerNum[3],stDevValue.RecyclerNum[4],stDevValue.RecyclerNum[5],stDevValue.RecyclerNum[6]);
+		
+	}
 	Trace("TestBillValidator\r\n");
 	BillDevEnableAPI();
 	while(1)
@@ -4129,6 +4173,14 @@ void TestBillValidator(void)
 							break;
 						}
 					}
+				}
+				else if(SystemPara.BillRecyclerType == FS_BILLRECYCLER)
+				{
+					pstr = PrintfMoney(SystemPara.RecyclerMoney*KeyValue);
+					strcpy(strMoney, pstr);
+					LCDPrintf(0,LINE15,0,SystemPara.Language,"%s%s",SelfCheckText.Change[SystemPara.Language],strMoney);
+					BillRecyclerPayoutNumExpanseAPI(SystemPara.RecyclerMoney,KeyValue);					
+					SumValue=0;
 				}
 			}
 			else if(KeyValue == 0x0e)//取消按键

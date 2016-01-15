@@ -337,7 +337,9 @@ void GetBillDevStateAPI()
 unsigned char BillRecyclerPayoutNumExpanseAPI(unsigned int RecyPayoutMoney,unsigned char RecyPayoutNum)
 {
 	MessagePack *BillMsg;
-	uint8_t err,ReturnBack = 1;
+	//MessageFSBillRecyclerPack *FSBillRecyclerMsg;
+	uint8_t err,ReturnBack = 1;	
+	uint32_t PayoutMoney=0,PayouBacktMoney=0;//找零金额，实际找零金额
 	
 	switch(SystemPara.BillValidatorType)
 	{		
@@ -368,6 +370,37 @@ unsigned char BillRecyclerPayoutNumExpanseAPI(unsigned int RecyPayoutMoney,unsig
 					//Trace("\r\n 2.=%d",ReturnBack);					
 				}				
 					
+			}
+			else if(SystemPara.BillRecyclerType == FS_BILLRECYCLER)
+			{
+				/*MsgFSBillRecyclerPack.BillBack = MBOX_FSBILLRECYPAYOUTNUM;	
+				MsgFSBillRecyclerPack.RecyPayoutMoney = RecyPayoutMoney;	
+				MsgFSBillRecyclerPack.RecyPayoutNum = RecyPayoutNum;	
+				OSMboxPost(g_FSBillRecyclerMail,&MsgFSBillRecyclerPack);
+				print_fs("\r\n MddFSPay=%ld,Num=%d",RecyPayoutMoney,RecyPayoutNum);
+				OSMboxAccept(g_FSBillRecyclerBackMail);
+				//3.等待是否找零成功
+				FSBillRecyclerMsg = OSMboxPend(g_FSBillRecyclerBackMail,OS_TICKS_PER_SEC*15*RecyPayoutNum,&err);//返回是否找零成功			
+				if(err == OS_NO_ERR) 
+				{					
+					//4.成功，发送压抄成功给纸币器
+					if(FSBillRecyclerMsg->BillBackCmd == MBOX_FSBILLRECYPAYOUTSUCC)
+					{
+						print_fs("\r\n MddFSPayREC=SUCC");
+						ReturnBack = 1;
+					}
+					//5.失败，发送压抄失败给纸币器
+					else if(FSBillRecyclerMsg->BillBackCmd == MBOX_FSBILLRECYPAYOUTFAIL)
+					{
+						print_fs("\r\n MddFSPayREC=FAIL");
+						ReturnBack = 0;
+					}
+					//Trace("\r\n 2.=%d",ReturnBack);					
+				}
+				*/
+				PayoutMoney=RecyPayoutMoney*RecyPayoutNum;
+				PayouBacktMoney=FS_dispense(PayoutMoney);		
+				print_fs("\r\n MddFSPay=%ld,MddFSBackPay=%ld",PayoutMoney,PayouBacktMoney);
 			}
 			break;					
 	}	
@@ -426,6 +459,40 @@ unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney,uin
 					}	
 				}
 					
+			}
+			else if(SystemPara.BillRecyclerType == FS_BILLRECYCLER)
+			{
+				if(RecyPayoutMoney)
+				{
+					/*MsgFSBillRecyclerPack.BillBack = MBOX_FSBILLRECYPAYOUTNUM;	
+					MsgFSBillRecyclerPack.RecyPayoutMoney = RecyPayoutMoney;	
+					MsgFSBillRecyclerPack.RecyPayoutNum = RecyPayoutNum;	
+					OSMboxPost(g_FSBillRecyclerMail,&MsgFSBillRecyclerPack);
+					print_fs("\r\n MddFSPay=%ld,Num=%d",RecyPayoutMoney,RecyPayoutNum);
+					OSMboxAccept(g_FSBillRecyclerBackMail);
+					//3.等待是否找零成功
+					FSBillRecyclerMsg = OSMboxPend(g_FSBillRecyclerBackMail,OS_TICKS_PER_SEC*15*RecyPayoutNum,&err);//返回是否找零成功			
+					if(err == OS_NO_ERR) 
+					{					
+						//4.成功，发送压抄成功给纸币器
+						if(FSBillRecyclerMsg->BillBackCmd == MBOX_FSBILLRECYPAYOUTSUCC)
+						{
+							print_fs("\r\n MddFSPayREC=SUCC");
+							ReturnBack = 1;
+						}
+						//5.失败，发送压抄失败给纸币器
+						else if(FSBillRecyclerMsg->BillBackCmd == MBOX_FSBILLRECYPAYOUTFAIL)
+						{
+							print_fs("\r\n MddFSPayREC=FAIL");
+							ReturnBack = 0;
+						}
+						//Trace("\r\n 2.=%d",ReturnBack);					
+					}
+					*/
+					*RecyPayoutMoneyBack=FS_dispense(RecyPayoutMoney);		
+					print_fs("\r\n MddFSPay=%ld,MddFSBackPay=%ld",RecyPayoutMoney,*RecyPayoutMoneyBack);
+					ReturnBack = 1;
+				}
 			}
 			break;					
 	}	

@@ -41,6 +41,7 @@
 .\Hex\mdbchanger.o: Drivers\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\mdbchanger.o: Drivers\..\.\Uart1Driver\Xmt.h
 .\Hex\mdbchanger.o: Drivers\..\.\Uart1Driver\HeFanGui.h
+.\Hex\mdbchanger.o: Drivers\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\mdbchanger.o: Drivers\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\mdbchanger.o: Drivers\..\.\API\BillAccepterAPI.h
 .\Hex\mdbchanger.o: Drivers\..\.\API\CoinAccepterAPI.h

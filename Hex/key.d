@@ -41,6 +41,7 @@
 .\Hex\key.o: Drivers\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\key.o: Drivers\..\.\Uart1Driver\Xmt.h
 .\Hex\key.o: Drivers\..\.\Uart1Driver\HeFanGui.h
+.\Hex\key.o: Drivers\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\key.o: Drivers\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\key.o: Drivers\..\.\API\BillAccepterAPI.h
 .\Hex\key.o: Drivers\..\.\API\CoinAccepterAPI.h

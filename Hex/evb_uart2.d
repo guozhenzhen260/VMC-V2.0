@@ -41,6 +41,7 @@
 .\Hex\evb_uart2.o: Drivers\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\evb_uart2.o: Drivers\..\.\Uart1Driver\Xmt.h
 .\Hex\evb_uart2.o: Drivers\..\.\Uart1Driver\HeFanGui.h
+.\Hex\evb_uart2.o: Drivers\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\evb_uart2.o: Drivers\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\evb_uart2.o: Drivers\..\.\API\BillAccepterAPI.h
 .\Hex\evb_uart2.o: Drivers\..\.\API\CoinAccepterAPI.h

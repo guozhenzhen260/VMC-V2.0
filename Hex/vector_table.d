@@ -41,6 +41,7 @@
 .\Hex\vector_table.o: Firmware\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\vector_table.o: Firmware\..\.\Uart1Driver\Xmt.h
 .\Hex\vector_table.o: Firmware\..\.\Uart1Driver\HeFanGui.h
+.\Hex\vector_table.o: Firmware\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\vector_table.o: Firmware\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\vector_table.o: Firmware\..\.\API\BillAccepterAPI.h
 .\Hex\vector_table.o: Firmware\..\.\API\CoinAccepterAPI.h

@@ -51,6 +51,7 @@ void Uart1TaskDevice(void *pvData)
 {
 	MessageKEYPack *AccepterMsg;
 	MessageXMTPack *XMTPack;
+	MessageFSBillRecyclerPack *FSBillRecyclerMsg;
 	unsigned char ComStatus;
 	MessagePack *GeziMsg;
 	uint8_t key=0xff;
@@ -92,6 +93,7 @@ void Uart1TaskDevice(void *pvData)
 	//¼ì²éÎÂ¿ØÆ÷¿ØÖÆ
 	if(SystemPara.XMTTemp==1)
 	{
+		LCDNumberFontPrintf(40,LINE15,2,"XMT-1");	
 		TempDev=TEMPERATURE;
 		Timer.getTempTimer = 10;
 		OSTimeDly(2);
@@ -99,13 +101,21 @@ void Uart1TaskDevice(void *pvData)
 	//¼ì²é¸ñ×Ó¹ñ¿ØÖÆ
 	if(SystemPara.hefangGui==SERIAL_GEZI)
 	{
+		LCDNumberFontPrintf(40,LINE15,2,"GEZI-1");	
 		GeziCtr = GEZIGUI;
 		OSTimeDly(2);
+	}
+	//¼ì²é¸»Ê¿ÕÒÁãÆ÷
+	if(SystemPara.BillRecyclerType == FS_BILLRECYCLER)
+	{
+		LCDNumberFontPrintf(40,LINE15,2,"FS-1");	
+		OSTimeDly(200*2);
+		FS_init();
 	}
 	
 	
 	while(1)
-	{
+	{		
 		if(NowSelectDev == SELECT_KEY)
 		{
 			//Trace("\r\n UART1TASK");
@@ -193,10 +203,32 @@ void Uart1TaskDevice(void *pvData)
 			}
 			OSTimeDly(2);	
 		}
+		//¼ì²é¸»Ê¿ÕÒÁãÆ÷
+		else if(SystemPara.BillRecyclerType == FS_BILLRECYCLER)
+		{
+			FS_poll();
+			msleep(10);
+		}
 		else	
 		{
 			OSTimeDly(2);
 		}
-		OSTimeDly(50/5);
+
+		//¼ì²éÖ½±ÒÆ÷¿ØÖÆ
+		/*FSBillRecyclerMsg = OSMboxPend(g_FSBillRecyclerMail,1,&ComStatus);
+		if(ComStatus == OS_NO_ERR)
+		{
+			//Ö½±ÒÆ÷°´ÕÅÊýÕÒ±Ò
+			if(FSBillRecyclerMsg->BillBack == MBOX_FSBILLRECYPAYOUTNUM)
+			{
+				print_fs("\r\n TaskFSPay=%ld,Num=%d",FSBillRecyclerMsg->RecyPayoutMoney,FSBillRecyclerMsg->RecyPayoutNum);
+                          PayoutMoney=(FSBillRecyclerMsg->RecyPayoutMoney)*(FSBillRecyclerMsg->RecyPayoutNum);
+				//PayouBacktMoney=FS_dispense(PayoutMoney);
+				MsgFSBillRecyclerPack.BillBackCmd = MBOX_FSBILLRECYPAYOUTSUCC;	
+				MsgFSBillRecyclerPack.RecyPayoutMoneyBack=PayouBacktMoney;
+				OSMboxPost(g_FSBillRecyclerBackMail,&MsgFSBillRecyclerPack);
+			}
+		}*/
+		//OSTimeDly(50/5);
 	}	
 }

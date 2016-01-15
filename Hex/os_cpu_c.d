@@ -41,6 +41,7 @@
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\Uart1Driver\Xmt.h
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\Uart1Driver\HeFanGui.h
+.\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\API\BillAccepterAPI.h
 .\Hex\os_cpu_c.o: uCOS_II\cpu\..\..\.\API\CoinAccepterAPI.h

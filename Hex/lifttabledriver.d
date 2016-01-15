@@ -41,6 +41,7 @@
 .\Hex\lifttabledriver.o: Drivers\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\lifttabledriver.o: Drivers\..\.\Uart1Driver\Xmt.h
 .\Hex\lifttabledriver.o: Drivers\..\.\Uart1Driver\HeFanGui.h
+.\Hex\lifttabledriver.o: Drivers\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\lifttabledriver.o: Drivers\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\lifttabledriver.o: Drivers\..\.\API\BillAccepterAPI.h
 .\Hex\lifttabledriver.o: Drivers\..\.\API\CoinAccepterAPI.h

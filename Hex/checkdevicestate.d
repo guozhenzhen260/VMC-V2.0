@@ -41,6 +41,7 @@
 .\Hex\checkdevicestate.o: API\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\checkdevicestate.o: API\..\.\Uart1Driver\Xmt.h
 .\Hex\checkdevicestate.o: API\..\.\Uart1Driver\HeFanGui.h
+.\Hex\checkdevicestate.o: API\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\checkdevicestate.o: API\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\checkdevicestate.o: API\..\.\API\BillAccepterAPI.h
 .\Hex\checkdevicestate.o: API\..\.\API\CoinAccepterAPI.h

@@ -41,6 +41,7 @@
 .\Hex\coinaccepterapi .o: API\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\coinaccepterapi .o: API\..\.\Uart1Driver\Xmt.h
 .\Hex\coinaccepterapi .o: API\..\.\Uart1Driver\HeFanGui.h
+.\Hex\coinaccepterapi .o: API\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\coinaccepterapi .o: API\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\coinaccepterapi .o: API\..\.\API\BillAccepterAPI.h
 .\Hex\coinaccepterapi .o: API\..\.\API\CoinAccepterAPI.h

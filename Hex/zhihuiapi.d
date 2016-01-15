@@ -41,6 +41,7 @@
 .\Hex\zhihuiapi.o: API\..\.\Uart1Driver\TASKUART1DEVICE.H
 .\Hex\zhihuiapi.o: API\..\.\Uart1Driver\Xmt.h
 .\Hex\zhihuiapi.o: API\..\.\Uart1Driver\HeFanGui.h
+.\Hex\zhihuiapi.o: API\..\.\Uart1Driver\FS_billChanger.h
 .\Hex\zhihuiapi.o: API\..\.\Uart0Driver\taskUart0Device.h
 .\Hex\zhihuiapi.o: API\..\.\API\BillAccepterAPI.h
 .\Hex\zhihuiapi.o: API\..\.\API\CoinAccepterAPI.h

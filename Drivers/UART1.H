@@ -28,7 +28,7 @@ unsigned char Uart1BuffIsNotEmpty(void);
 unsigned char Uart1GetCh(void);
 void Uart1_ClrBuf(void);
 uint8_t Uart1_Read(uint8_t *buf, uint8_t len);
-
+ void SetUart1ParityMode(unsigned char mode) ;
 
 #endif
 /**************************************End Of File*******************************************************/
