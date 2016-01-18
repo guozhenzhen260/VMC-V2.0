@@ -490,7 +490,7 @@ uint8_t CoinDevProcess(uint32_t *RecvMoney,unsigned char *CoinType,unsigned char
 *********************************************************************************************************/
 void CoinDevProcessExpanse(void)
 {
-    uint8_t CoinRdBuff[36],CoinRdLen,ComStatus,VMCdata[1]={0x05},i;
+    uint8_t CoinRdBuff[36],CoinRdLen,ComStatus,VMCdata[1]={0x05},i,j;
     
 	
     ComStatus = MdbConversation(0x0F,VMCdata,1,&CoinRdBuff[0],&CoinRdLen);
@@ -503,9 +503,9 @@ void CoinDevProcessExpanse(void)
 			{
 				//TraceCoin("\r\nDrvCoin=%#02x,%#02x",CoinRdBuff[i],CoinRdBuff[i+1]);
 				TraceCoin("\r\nDrvcoinRec<< [%02d]-",CoinRdLen);
-				for(i=0;i<CoinRdLen;i++)
+				for(j=0;j<CoinRdLen;j++)
 				{
-					TraceCoin(" %#02x ",CoinRdBuff[i]);
+					TraceCoin(" %#02x ",CoinRdBuff[j]);
 				}
 				TraceCoin("\r\n");
 				
