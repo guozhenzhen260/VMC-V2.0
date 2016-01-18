@@ -24,7 +24,7 @@
 //static unsigned char run_no = 0,err_no = 0;
 
 
-
+ST_MAC_SN stMacSn;
 /*********************************************************************************************************
 ** Function name:       LogGetMoneyAPI
 ** Descriptions:        开始交易时更新日志记录
@@ -396,6 +396,46 @@ void LogClearAPI(void)
 	WriteLogAPI();
 	
 }
+
+
+void LOG_writeId(ST_MAC_SN *macSn)
+{
+	uint8_t buf[512] = {0},len;
+	uint16_t crc;
+	unsigned char i;
+	len = sizeof(macSn->id);
+	for(i = 0;i < len;i++){
+		buf[i] = macSn->id[i];
+	}
+	crc = CrcCheck(buf,len);
+	buf[len] = HUINT16(crc);
+	buf[len + 1] = LUINT16(crc);
+	buf[len + 2] = 0xEA;//区域交易记录写入flash标志
+	AT45DBWritePage(PAGE_MAC_SN,buf);
+}
+
+unsigned char LOG_readId(ST_MAC_SN *macSn)
+{
+	uint8_t buf[512],i;
+	uint16_t crc,len;
+
+	AT45DBReadPage(PAGE_MAC_SN,buf);
+
+	len = sizeof(macSn->id);
+	
+	crc = CrcCheck(buf,len);
+
+	if((crc == INTEG16(buf[len],buf[len + 1])) && (buf[len + 2] == 0xEA))
+	{
+		for(i = 0;i < len;i++){
+			macSn->id[i] = buf[i]; 
+		}
+		return 1;
+	}
+	//Trace("LogPara read from flash fail....\r\n");
+	return 0;
+}
+
 
 
 /*********************************************************************************************************

@@ -52,7 +52,8 @@
 
 #define PAGE_BIN1_HUODAO_KAOJI		 3955
 #define PAGE_BIN2_HUODAO_KAOJI		 3953
-
+#define PAGE_MAC_SN				3952
+#define TRADE_PAGE_MAX			3900				//交易记录在flash中最大页数
 
 
 

@@ -1411,15 +1411,25 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 						sysVPMission.send.msg[31]  = ')';
 						break;
 					case VP_INFO_HARD:
-						sysVPMission.send.datLen  = 8;
+						sysVPMission.send.datLen  = 18;
 						sysVPMission.send.msg[0]  = VP_INFO_HARD;
-						sysVPMission.send.msg[1]  = 'l'; 	 
-						sysVPMission.send.msg[2]  = 'p'; 	 
-						sysVPMission.send.msg[3]  = 'c'; 	 
-						sysVPMission.send.msg[4]  = '1';
-						sysVPMission.send.msg[5]  = '7'; 	 
-						sysVPMission.send.msg[6]  = '6'; 	 
-						sysVPMission.send.msg[7]  = '8'; 	 
+						sysVPMission.send.msg[1]  = stMacSn.id[0]; 	 
+						sysVPMission.send.msg[2]  = stMacSn.id[1];	 
+						sysVPMission.send.msg[3]  = stMacSn.id[2];	 
+						sysVPMission.send.msg[4]  = stMacSn.id[3];
+						sysVPMission.send.msg[5]  = stMacSn.id[4];	 
+						sysVPMission.send.msg[6]  = stMacSn.id[5];	 
+						sysVPMission.send.msg[7]  = stMacSn.id[6]; 	
+						sysVPMission.send.msg[8]  = stMacSn.id[7];	 
+						sysVPMission.send.msg[9]  = stMacSn.id[8];	 
+						sysVPMission.send.msg[10]  = stMacSn.id[9];
+						sysVPMission.send.msg[11]  = stMacSn.id[10];	 
+						sysVPMission.send.msg[12]  = stMacSn.id[11];	 
+						sysVPMission.send.msg[13]  = stMacSn.id[12]; 
+						sysVPMission.send.msg[14]  = stMacSn.id[13];	 
+						sysVPMission.send.msg[15]  = stMacSn.id[14];	 
+						sysVPMission.send.msg[16]  = stMacSn.id[15];
+						sysVPMission.send.msg[17]  = stMacSn.id[16];	
 						break;
 					case VP_INFO_BILL:						
 						sysVPMission.send.datLen  = 19+33;

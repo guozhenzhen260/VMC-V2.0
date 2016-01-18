@@ -56,7 +56,8 @@ FUN_VOID_CHAR_INT_PTR	pcm_uartPutStr;
 #define STATUS_RPT 			0x89
 #define DEBUG_RPT 			0x8A
 #define FACTOR_SET_RPT 	    0x8B
-
+#define ID_WRITE_RPT				0x8C
+#define ID_READ_RPT				0x8D
 
 //PC指令
 #define ACK_PCCON  			0x80
@@ -71,7 +72,8 @@ FUN_VOID_CHAR_INT_PTR	pcm_uartPutStr;
 #define STATUS_REQ 			0x89
 #define DEBUG_REQ 			0x8A
 #define FACTOR_SET_REQ 	    0x8B
-
+#define ID_WRITE_REQ				0x8C
+#define ID_READ_REQ				0x8D
 
 static unsigned char mainTrace = 0;//总调试接口
 static unsigned char snNo = 0,comErr = 0,shcSN = 0;//序列号 和串口错误数
@@ -558,6 +560,7 @@ static unsigned char pcSeekUart0()
 		temp = Uart0GetCh();	
 		if((temp != PCM_HEAD) && (temp != PCM_SHC_HEAD))
 		{
+
 			ClrUart0Buff();
 			print_log("msg head is not 0xEF or 0xEC!\r\n");
 			return 0;
@@ -2223,6 +2226,43 @@ static void pcFactorSet(void)
 	pcReply(FACTOR_SET_RPT,1,&rst);
 }
 
+
+//烧写ID
+static void pcIdSetReq(unsigned char buflen,unsigned char *buf)
+{
+	unsigned char rst = 1;
+	unsigned char i,len;
+	len = sizeof(stMacSn.id);
+	
+	for(i = 0;i < len;i++){
+		stMacSn.id[i] = buf[i];
+	}
+	LOG_writeId(&stMacSn);
+	PC_DELAY_500MS;
+	pcReply(ID_WRITE_RPT,1,&rst);
+}
+
+
+static void pcIdReadReq(void)
+{
+	unsigned char rst = 1,buf[64] = {0},in = 0;
+	unsigned char i,len;
+
+	len = sizeof(stMacSn.id);
+	if(LOG_readId(&stMacSn) == 1){
+		for(i = 0,in = 0;i < len;i++){
+			buf[in++] = stMacSn.id[i]; 
+		}
+	}
+	else{
+		in = len;
+		memset(buf,0,sizeof(buf));
+	}
+	PC_DELAY_500MS;
+	pcReply(ID_WRITE_RPT,in,buf);
+}
+
+
 /*********************************************************************************************************
 ** Function name:     	pcDateTimeReq
 ** Descriptions:	    
@@ -2579,6 +2619,12 @@ static unsigned char vmcPoll(unsigned char busy)
 			break;
 		case FACTOR_SET_REQ:
 			pcFactorSet();
+			break;
+		case ID_WRITE_REQ:
+			pcIdSetReq(rlen,&pcUartMsg->recv_msg[head]);
+			break;
+		case ID_READ_REQ:
+			pcIdReadReq();
 			break;
 		default:
 			break;

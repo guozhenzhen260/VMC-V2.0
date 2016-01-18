@@ -3,7 +3,7 @@
 #define __ZHIHUIAPI_H__
 
 
-#define TRADE_PAGE_MAX			3990				//交易记录在flash中最大页数
+//#define TRADE_PAGE_MAX			3990				//交易记录在flash中最大页数
 
 
 #define print_pc(...)		TracePC(__VA_ARGS__)

@@ -1,1 +1,0 @@
--c --cpu Cortex-M3 -g -O0 --apcs=interwork -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\NXP\LPC17xx" -o ".\Hex\taskuart1device.o" --omf_browse ".\Hex\taskuart1device.crf" --depend ".\Hex\taskuart1device.d" "Uart1Driver\TASKUART1DEVICE.C"

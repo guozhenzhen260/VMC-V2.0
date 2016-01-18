@@ -13,6 +13,13 @@
 #define PAYMODE_OTHER	0xAA  //其他方式
 
 
+typedef struct {
+	unsigned char id[20];
+
+}ST_MAC_SN;
+
+extern ST_MAC_SN stMacSn;
+
 
 extern  void LogBeginTransAPI(void);
 
@@ -41,7 +48,7 @@ extern  uint8_t ReadLogDetailAPI(uint16_t	LogDetailPage);
 extern unsigned char PrintLogDetailAPI(uint16_t no) ;
 
 extern uint8_t ReadDetailTraceAPI(char * detailBuff,uint16_t	LogDetailPage);
-
-
+unsigned char LOG_readId(ST_MAC_SN *macSn);
+void LOG_writeId(ST_MAC_SN *macSn);
 
 #endif

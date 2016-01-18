@@ -1,1 +1,0 @@
--c --cpu Cortex-M3 -g -O0 --apcs=interwork -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\NXP\LPC17xx" -o ".\Hex\billaccepterapi.o" --omf_browse ".\Hex\billaccepterapi.crf" --depend ".\Hex\billaccepterapi.d" "API\BillAccepterAPI.c"
