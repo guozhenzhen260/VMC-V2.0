@@ -357,6 +357,14 @@ uint32_t   MoneyRec(uint8_t recMoneyH,uint8_t recMoneyL)
 	return tempMoney;
 }
 
+uint8_t   SNRec(uint8_t recSN)
+{
+	if(recSN>=0x30)
+		return recSN-'0';
+	else
+		return recSN;
+}
+
 
 unsigned char Uart3pcGetChWhile()
 {
@@ -616,7 +624,7 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 	uint8_t tempSend=0;
 	uint32_t tradeMoney=0;
 	uint8_t cabinet=0,cabno=0;
-	//u_char xdata len = 0;
+	
 
     GoodsSN=sysVPMission.receive.sn;
     
@@ -1412,7 +1420,7 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 						break;
 					case VP_INFO_HARD:
 						sysVPMission.send.datLen  = 18;
-						sysVPMission.send.msg[0]  = VP_INFO_HARD;
+						sysVPMission.send.msg[0]  = VP_INFO_HARD;						
 						sysVPMission.send.msg[1]  = stMacSn.id[0]; 	 
 						sysVPMission.send.msg[2]  = stMacSn.id[1];	 
 						sysVPMission.send.msg[3]  = stMacSn.id[2];	 
@@ -1429,7 +1437,9 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 						sysVPMission.send.msg[14]  = stMacSn.id[13];	 
 						sysVPMission.send.msg[15]  = stMacSn.id[14];	 
 						sysVPMission.send.msg[16]  = stMacSn.id[15];
-						sysVPMission.send.msg[17]  = stMacSn.id[16];	
+						sysVPMission.send.msg[17]  = stMacSn.id[16];
+						
+						
 						break;
 					case VP_INFO_BILL:						
 						sysVPMission.send.datLen  = 19+33;

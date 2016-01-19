@@ -1,9 +1,17 @@
----- TRADE_PAGE_MAX 匹配 (8 in 5 文件) ----
-AT45DB161D.h (drivers):#define TRADE_PAGE_MAX			3900				//交易记录在flash中最大页数
-LogAPI.c (api):	if(LogPara.LogDetailPage < TRADE_PAGE_MAX)
-taskUart0Device.c (uart0driver):	maxPage = TRADE_PAGE_MAX;
-VMC_GPRS_PC.c (uart3driver):	if((index > TRADE_PAGE_MAX) || (sub_index > 8))
-VMC_GPRS_PC.c (uart3driver):						if(MACData.read_index >= TRADE_PAGE_MAX)
-VMC_GPRS_PC.c (uart3driver):					if(MACData.read_index <= TRADE_PAGE_MAX)
-ZhiHuiAPI.h (api):#define TRADE_PAGE_MAX			3990				//交易记录在flash中最大页数
-ZhiHuiAPI.h (api):#define TRADE_PAGE_SUM			(TRADE_PAGE_MAX + 1)//交易记录最大笔数
+---- stMacSn.id 匹配 (44 in 3 文件) ----
+Maintain.c (app):	Trace("\r\n SN=%d,%d,%d,%d,%d,%d,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c",stMacSn.id[0],stMacSn.id[1],stMacSn.id[2]
+Maintain.c (app):		,stMacSn.id[3],stMacSn.id[4],stMacSn.id[5],stMacSn.id[6],stMacSn.id[7],stMacSn.id[8],stMacSn.id[9],stMacSn.id[10],stMacSn.id[11]
+Maintain.c (app):		,stMacSn.id[12],stMacSn.id[13],stMacSn.id[14],stMacSn.id[15],stMacSn.id[16]);
+Maintain.c (app):				stMacSn.id[0],stMacSn.id[1],stMacSn.id[2],stMacSn.id[3],stMacSn.id[4],stMacSn.id[5],stMacSn.id[6],
+Maintain.c (app):				stMacSn.id[7],stMacSn.id[8],stMacSn.id[9],stMacSn.id[10],stMacSn.id[11],stMacSn.id[12],stMacSn.id[13],
+Maintain.c (app):				stMacSn.id[14],stMacSn.id[15],stMacSn.id[16]);
+taskUart0Device.c (uart0driver):	len = sizeof(stMacSn.id);
+taskUart0Device.c (uart0driver):		stMacSn.id[i] = buf[i];
+taskUart0Device.c (uart0driver):	len = sizeof(stMacSn.id);
+taskUart0Device.c (uart0driver):			buf[in++] = stMacSn.id[i]; 
+UBProtocol.c (uart3driver):						sprintf( strlanguage, "%s", stMacSn.id);
+UBProtocol.c (uart3driver):						sysVPMission.send.msg[12]  = stMacSn.id[11]; 	 
+UBProtocol.c (uart3driver):						sysVPMission.send.msg[13]  = stMacSn.id[12]; 
+UBProtocol.c (uart3driver):						sysVPMission.send.msg[14]  = stMacSn.id[13];  
+UBProtocol.c (uart3driver):						sysVPMission.send.msg[15]  = stMacSn.id[14]; 	 
+UBProtocol.c (uart3driver):						sysVPMission.send.msg[16]  = stMacSn.id[15]; 

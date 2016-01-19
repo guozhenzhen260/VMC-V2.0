@@ -2680,9 +2680,14 @@ void MaintainUserProcess(void *pvData)
 	unsigned char Key;
 	unsigned char adminMode = 0;
 	unsigned char adminflag=0;
+	unsigned char *str;
 	
 	void (*TestFunctonPtr)(void);
 	pvData = pvData;
+
+	str=stMacSn.id;
+	Trace("\r\n SN=%s",str);
+	
 	while(1)
 	{
 		LCDClrScreen();
@@ -2697,7 +2702,10 @@ void MaintainUserProcess(void *pvData)
 		if(UserMaintainMainMenu.PageNumb == 0x00)
 		{
 			LCDClrArea(1,4,238,14);
-			LCDPrintf(8,1,0,SystemPara.Language,UserMaintainMenuList.ModeCapion[SystemPara.Language]);
+			LCDPrintf(8,1,0,SystemPara.Language,"%s[%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c]",UserMaintainMenuList.ModeCapion[SystemPara.Language],
+				stMacSn.id[0],stMacSn.id[1],stMacSn.id[2],stMacSn.id[3],stMacSn.id[4],stMacSn.id[5],stMacSn.id[6],
+				stMacSn.id[7],stMacSn.id[8],stMacSn.id[9],stMacSn.id[10],stMacSn.id[11],stMacSn.id[12],stMacSn.id[13],
+				stMacSn.id[14],stMacSn.id[15],stMacSn.id[16]);
 			LCDPrintf(5,5,0,SystemPara.Language,UserMaintainMenuList.Record[SystemPara.Language]);
 			LCDPrintf(5,7,0,SystemPara.Language,UserMaintainMenuList.Error[SystemPara.Language]);
 			LCDPrintf(5,9,0,SystemPara.Language,UserMaintainMenuList.System[SystemPara.Language]);

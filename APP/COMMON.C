@@ -332,7 +332,6 @@ uint8_t LoadDefaultSystemPara(uint8_t backup)
 	uint16_t crc;
 	uint8_t RdBuf[512]={0};
 	uint16_t num=0;
-	
 	/*
 	tp2 = (uint8_t *) &SystemPara;//交易数据记录		
 	AT45DBReadPage(4090,tp2);
@@ -452,6 +451,9 @@ uint8_t LoadDefaultSystemPara(uint8_t backup)
 	SystemPara.CrcCheck[0] = RdBuf[num++];
 	SystemPara.CrcCheck[1] = RdBuf[num++]; 
 	Trace("\r\n defaultsys=%d,%x,%x,%x,%x",num,crc/256,crc%256,SystemPara.CrcCheck[0],SystemPara.CrcCheck[1]);
+
+	//==========读取SN=====
+	LOG_readId(&stMacSn); 
 	if( (crc/256 == SystemPara.CrcCheck[0])&&(crc%256 == SystemPara.CrcCheck[1]) )
 	{
 		//Trace("\r\n1");

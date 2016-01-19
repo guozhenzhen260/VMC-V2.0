@@ -2259,7 +2259,7 @@ static void pcIdReadReq(void)
 		memset(buf,0,sizeof(buf));
 	}
 	PC_DELAY_500MS;
-	pcReply(ID_WRITE_RPT,in,buf);
+	pcReply(ID_READ_RPT,in,buf);
 }
 
 
