@@ -683,14 +683,7 @@ static FS_MSG *FS_waitResult(void)
 static FS_MSG *FS_userSendRequest(FS_MSG *msg,uint8 type)
 {
 	FS_MSG *rpt = NULL;
-	#if 0
-	if(fsBill.status != FS_NORMAL){
-		print_fs("\r\n----------------------------------------\r\n");
-		print_fs("\r\nFS_userSendRequest status=%x != FS_NORMAL\r\n",fsBill.status);
-		print_fs("\r\n----------------------------------------\r\n");
-		return NULL;
-	}
-	#endif
+
 	
 	userRequest = 1;
 	if(FS_sendRequest(msg,type) == 0){
@@ -939,11 +932,24 @@ uint8 FS_billDispense(FS_BILL *bill)
 		return 0;
 	}	
 
+	
+
 	if( recv->data[1] != 0x03 ||
 		recv->data[2] != 0x99){
 		print_fs("\r\nFS_REQ_DISPENSE:-----------bad recv---------------\r\n");
+		if(recv->data[3]  == 0xE1){ //参数需要重置
+			fsBill.status |= FS_RESET_ERR; //找币失败 初始化标志位置位
+		}
 		return 0;
 	}
+
+
+	if(recv->data[0] != 0xE0){
+		if(recv->data[3]  == 0xE1){ //参数需要重置
+			fsBill.status |= FS_RESET_ERR; //找币失败 初始化标志位置位
+		}
+	}
+
 
 	data = recv->data; in = 39;
 	for(i = 0;i < 4;i++){ //实际找币数

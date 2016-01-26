@@ -161,14 +161,16 @@ const SELFCHECKTEXT SelfCheckText =
 		"Amount:"	,
 		"ß¢ß—ß›ß—ßﬂß„:",
 		"para girin:",
-		"SALDO:"
+		"SALDO:",
+		"Comparaison:"
 	},
 	{
 		"’“¡„:",
 		"Change:"	,
 		"Change:",
 		"Change:",
-		"Change:"
+		"Change:",
+		"Comparaison:"
 	}
 };
 /**************************************End Of File*******************************************************/

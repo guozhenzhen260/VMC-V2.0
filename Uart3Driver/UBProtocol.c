@@ -357,13 +357,7 @@ uint32_t   MoneyRec(uint8_t recMoneyH,uint8_t recMoneyL)
 	return tempMoney;
 }
 
-uint8_t   SNRec(uint8_t recSN)
-{
-	if(recSN>=0x30)
-		return recSN-'0';
-	else
-		return recSN;
-}
+
 
 
 unsigned char Uart3pcGetChWhile()
