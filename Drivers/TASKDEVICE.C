@@ -55,7 +55,7 @@ void Uart2TaskDevice(void *pvData)
 	uint8_t ReaderType = 0, cmdOpt = 0, billOpt = 0,billOptBack = 0,coinOptBack = 0;
 	unsigned int RecyPayoutMoneyBack=0;
 	uint16_t  ReaderPrice;
-	unsigned char PayoutNum[8];
+	unsigned char PayoutNum[16];
 	unsigned char ComStatus;
 	uint8_t i,j;
 	MessagePack *AccepterMsg;

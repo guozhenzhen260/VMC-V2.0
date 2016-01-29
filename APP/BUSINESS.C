@@ -3474,6 +3474,8 @@ void BusinessProcess(void *pvData)
 						//Trace("\r\n 1money=%ld",GetAmountMoney());
 						if(g_billAmount< MoneyMaxin)						
 							BillCoinCtr(1,1,0);
+						else
+							BillCoinCtr(0,1,0);	
 						//Trace("\r\n 2money=%ld",GetAmountMoney());
 						channelInput = 0;
 						channelMode = 0;
@@ -3512,6 +3514,8 @@ void BusinessProcess(void *pvData)
 					{
 						if(g_billAmount< MoneyMaxin)							
 							BillCoinCtr(1,1,0);
+						else
+							BillCoinCtr(0,1,0);
 						channelInput = 0;
 						channelMode = 0;
 						memset(BinNum,0,sizeof(BinNum));

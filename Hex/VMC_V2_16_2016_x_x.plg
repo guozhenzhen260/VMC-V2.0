@@ -8,254 +8,63 @@ Project File Date:  01/12/2016
 
 <h2>Output:</h2>
 Build target 'VMC-V2.02'
-compiling MAINTAIN.C...
-APP\USERMAINTAIN_MENU.C(146): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                        ^
-APP\USERMAINTAIN_MENU.C(146): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                                   ^
-APP\USERMAINTAIN_MENU.C(154): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>",
-APP\USERMAINTAIN_MENU.C:                       ^
-APP\USERMAINTAIN_MENU.C(279): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                        ^
-APP\USERMAINTAIN_MENU.C(279): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                                   ^
-APP\USERMAINTAIN_MENU.C(287): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>",
-APP\USERMAINTAIN_MENU.C:                       ^
-APP\USERMAINTAIN_MENU.C(303): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "1.FALHA NA COMUNICA\x83\x82\O",
-APP\USERMAINTAIN_MENU.C:                                            ^
-APP\USERMAINTAIN_MENU.C(383): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "1.FALHA COMUNICA\x83\x82\O",
-APP\USERMAINTAIN_MENU.C:                                         ^
-APP\USERMAINTAIN_MENU.C(431): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "7.REMO\x83\x82\O DE MOEDA",
-APP\USERMAINTAIN_MENU.C:                               ^
-APP\USERMAINTAIN_MENU.C(495): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "1.ERRO GOC NO ARM\x81\RIO CENTRAL",
-APP\USERMAINTAIN_MENU.C:                                      ^
-APP\USERMAINTAIN_MENU.C(503): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "2.ERRO GOC NO SUB ARM\x81\RIO",
-APP\USERMAINTAIN_MENU.C:                                          ^
-APP\USERMAINTAIN_MENU.C(719): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                        ^
-APP\USERMAINTAIN_MENU.C(719): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                                   ^
-APP\USERMAINTAIN_MENU.C(727): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>",
-APP\USERMAINTAIN_MENU.C:                       ^
-APP\USERMAINTAIN_MENU.C(858): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                        ^
-APP\USERMAINTAIN_MENU.C(858): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                                   ^
-APP\USERMAINTAIN_MENU.C(866): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>",
-APP\USERMAINTAIN_MENU.C:                       ^
-APP\USERMAINTAIN_MENU.C(906): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "5.D\x84\VIDA NA QUANTIDADE:",
-APP\USERMAINTAIN_MENU.C:                        ^
-APP\USERMAINTAIN_MENU.C(1048): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "PROGRAMA\x83\x82\O DE COMPRA",
-APP\USERMAINTAIN_MENU.C:                                 ^
-APP\USERMAINTAIN_MENU.C(1056): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                        ^
-APP\USERMAINTAIN_MENU.C(1056): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                                   ^
-APP\USERMAINTAIN_MENU.C(1064): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>",
-APP\USERMAINTAIN_MENU.C:                       ^
-APP\USERMAINTAIN_MENU.C(1072): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "1.HOR\x81\RIO",
-APP\USERMAINTAIN_MENU.C:                          ^
-APP\USERMAINTAIN_MENU.C(1080): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "2.REFRIGERA\x83\x82\O",
-APP\USERMAINTAIN_MENU.C:                                    ^
-APP\USERMAINTAIN_MENU.C(1235): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "HOR\x81\RIO",
-APP\USERMAINTAIN_MENU.C:                        ^
-APP\USERMAINTAIN_MENU.C(1243): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                        ^
-APP\USERMAINTAIN_MENU.C(1243): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                                   ^
-APP\USERMAINTAIN_MENU.C(1251): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>",
-APP\USERMAINTAIN_MENU.C:                       ^
-APP\USERMAINTAIN_MENU.C(1267): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "2.M\x85\S:   ",
-APP\USERMAINTAIN_MENU.C:                        ^
-APP\USERMAINTAIN_MENU.C(1417): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                        ^
-APP\USERMAINTAIN_MENU.C(1417): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                                   ^
-APP\USERMAINTAIN_MENU.C(1425): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>",
-APP\USERMAINTAIN_MENU.C:                       ^
-APP\USERMAINTAIN_MENU.C(1530): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                        ^
-APP\USERMAINTAIN_MENU.C(1530): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<PR\x80\XIMA P\x81\GINA>",
-APP\USERMAINTAIN_MENU.C:                                   ^
-APP\USERMAINTAIN_MENU.C(1538): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "<P\x81\GINA ANTERIOR>",
-APP\USERMAINTAIN_MENU.C:                       ^
-APP\USERMAINTAIN_MENU.C(1570): warning:  #192-D: unrecognized character escape sequence
-APP\USERMAINTAIN_MENU.C:                "4.LEITURA CART\x82\O:",
-APP\USERMAINTAIN_MENU.C:                                   ^
-APP\USERMAINTAIN_MENU.C: APP\MAINTAIN.C: 36 warnings, 0 errors
+compiling LANGUAGE.C...
+APP\LANGUAGE.C(414): warning:  #192-D: unrecognized character escape sequence
+APP\LANGUAGE.C:           "FALHA NA COBRAN\x83\A",
+APP\LANGUAGE.C:                               ^
+APP\LANGUAGE.C: APP\LANGUAGE.C: 1 warning, 0 errors
 linking...
-Program Size: Code=274904 RO-data=79072 RW-data=2040 ZI-data=44716  
+Program Size: Code=275008 RO-data=79096 RW-data=2040 ZI-data=44716  
 FromELF: creating hex file...
-".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 36 Warning(s).
+".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 1 Warning(s).
 Build target 'VMC-V2.02'
-compiling FS_billChanger.c...
-Uart1Driver\FS_billChanger.c(998): warning:  #177-D: variable "box" was declared but never referenced
-Uart1Driver\FS_billChanger.c:           FS_BOX *box;
-Uart1Driver\FS_billChanger.c:                   ^
-Uart1Driver\FS_billChanger.c(1088): warning:  #177-D: variable "payAmount" was declared but never referenced
-Uart1Driver\FS_billChanger.c:           uint32 payAmount;
-Uart1Driver\FS_billChanger.c:                  ^
-Uart1Driver\FS_billChanger.c(266): warning:  #177-D: function "FS_getReqTimer" was declared but never referenced
-Uart1Driver\FS_billChanger.c:   static unsigned char FS_getReqTimer(void)
-Uart1Driver\FS_billChanger.c:                        ^
-Uart1Driver\FS_billChanger.c(986): warning:  #177-D: function "FS_dispenseReset" was declared but never referenced
-Uart1Driver\FS_billChanger.c:   static void FS_dispenseReset(void)
-Uart1Driver\FS_billChanger.c:               ^
-Uart1Driver\FS_billChanger.c: Uart1Driver\FS_billChanger.c: 4 warnings, 0 errors
+compiling LANGUAGE.C...
+APP\LANGUAGE.C(414): warning:  #192-D: unrecognized character escape sequence
+APP\LANGUAGE.C:           "FALHA NA COBRAN\x83\A",
+APP\LANGUAGE.C:                               ^
+APP\LANGUAGE.C: APP\LANGUAGE.C: 1 warning, 0 errors
 linking...
-Program Size: Code=274916 RO-data=79072 RW-data=2040 ZI-data=44716  
+Program Size: Code=275008 RO-data=79096 RW-data=2040 ZI-data=44716  
 FromELF: creating hex file...
-".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 4 Warning(s).
+".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 1 Warning(s).
 Build target 'VMC-V2.02'
-compiling FS_billChanger.c...
-Uart1Driver\FS_billChanger.c(991): warning:  #177-D: variable "box" was declared but never referenced
-Uart1Driver\FS_billChanger.c:           FS_BOX *box;
-Uart1Driver\FS_billChanger.c:                   ^
-Uart1Driver\FS_billChanger.c(1081): warning:  #177-D: variable "payAmount" was declared but never referenced
-Uart1Driver\FS_billChanger.c:           uint32 payAmount;
-Uart1Driver\FS_billChanger.c:                  ^
-Uart1Driver\FS_billChanger.c(266): warning:  #177-D: function "FS_getReqTimer" was declared but never referenced
-Uart1Driver\FS_billChanger.c:   static unsigned char FS_getReqTimer(void)
-Uart1Driver\FS_billChanger.c:                        ^
-Uart1Driver\FS_billChanger.c(979): warning:  #177-D: function "FS_dispenseReset" was declared but never referenced
-Uart1Driver\FS_billChanger.c:   static void FS_dispenseReset(void)
-Uart1Driver\FS_billChanger.c:               ^
-Uart1Driver\FS_billChanger.c: Uart1Driver\FS_billChanger.c: 4 warnings, 0 errors
+compiling MDBChanger.c...
 linking...
-Program Size: Code=274932 RO-data=79072 RW-data=2040 ZI-data=44716  
-FromELF: creating hex file...
-".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 4 Warning(s).
-Build target 'VMC-V2.02'
-linking...
-Program Size: Code=274932 RO-data=79072 RW-data=2040 ZI-data=44716  
+Program Size: Code=275008 RO-data=79096 RW-data=2040 ZI-data=44716  
 FromELF: creating hex file...
 ".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 0 Warning(s).
 Build target 'VMC-V2.02'
-compiling TASKDEVICE.C...
+compiling MDBChanger.c...
 linking...
-Program Size: Code=274944 RO-data=79072 RW-data=2040 ZI-data=44716  
+Program Size: Code=275008 RO-data=79096 RW-data=2040 ZI-data=44716  
 FromELF: creating hex file...
 ".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 0 Warning(s).
 Build target 'VMC-V2.02'
-compiling TASKDEVICE.C...
+compiling MDBChanger.c...
 linking...
-Program Size: Code=274944 RO-data=79072 RW-data=2040 ZI-data=44716  
+Program Size: Code=275008 RO-data=79096 RW-data=2040 ZI-data=44716  
 FromELF: creating hex file...
 ".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 0 Warning(s).
 Build target 'VMC-V2.02'
 linking...
-Program Size: Code=274944 RO-data=79072 RW-data=2040 ZI-data=44716  
+Program Size: Code=275008 RO-data=79096 RW-data=2040 ZI-data=44716  
 FromELF: creating hex file...
 ".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 0 Warning(s).
 Build target 'VMC-V2.02'
-compiling FS_billChanger.c...
-Uart1Driver\FS_billChanger.c(994): warning:  #177-D: variable "box" was declared but never referenced
-Uart1Driver\FS_billChanger.c:           FS_BOX *box;
-Uart1Driver\FS_billChanger.c:                   ^
-Uart1Driver\FS_billChanger.c(1084): warning:  #177-D: variable "payAmount" was declared but never referenced
-Uart1Driver\FS_billChanger.c:           uint32 payAmount;
-Uart1Driver\FS_billChanger.c:                  ^
-Uart1Driver\FS_billChanger.c(266): warning:  #177-D: function "FS_getReqTimer" was declared but never referenced
-Uart1Driver\FS_billChanger.c:   static unsigned char FS_getReqTimer(void)
-Uart1Driver\FS_billChanger.c:                        ^
-Uart1Driver\FS_billChanger.c(982): warning:  #177-D: function "FS_dispenseReset" was declared but never referenced
-Uart1Driver\FS_billChanger.c:   static void FS_dispenseReset(void)
-Uart1Driver\FS_billChanger.c:               ^
-Uart1Driver\FS_billChanger.c: Uart1Driver\FS_billChanger.c: 4 warnings, 0 errors
+compiling BUSINESS.C...
+compiling MDBChanger.c...
 linking...
-Program Size: Code=274948 RO-data=79072 RW-data=2040 ZI-data=44716  
+Program Size: Code=275040 RO-data=79096 RW-data=2040 ZI-data=44716  
 FromELF: creating hex file...
-".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 4 Warning(s).
+".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 0 Warning(s).
 Build target 'VMC-V2.02'
+compiling BUSINESS.C...
 linking...
-Program Size: Code=274948 RO-data=79072 RW-data=2040 ZI-data=44716  
+Program Size: Code=275040 RO-data=79096 RW-data=2040 ZI-data=44716  
 FromELF: creating hex file...
 ".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 0 Warning(s).
 Build target 'VMC-V2.02'
 linking...
-Program Size: Code=274948 RO-data=79072 RW-data=2040 ZI-data=44716  
-FromELF: creating hex file...
-".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 0 Warning(s).
-Build target 'VMC-V2.02'
-compiling FS_billChanger.c...
-Uart1Driver\FS_billChanger.c(1003): warning:  #177-D: variable "box" was declared but never referenced
-Uart1Driver\FS_billChanger.c:           FS_BOX *box;
-Uart1Driver\FS_billChanger.c:                   ^
-Uart1Driver\FS_billChanger.c(1093): warning:  #177-D: variable "payAmount" was declared but never referenced
-Uart1Driver\FS_billChanger.c:           uint32 payAmount;
-Uart1Driver\FS_billChanger.c:                  ^
-Uart1Driver\FS_billChanger.c(266): warning:  #177-D: function "FS_getReqTimer" was declared but never referenced
-Uart1Driver\FS_billChanger.c:   static unsigned char FS_getReqTimer(void)
-Uart1Driver\FS_billChanger.c:                        ^
-Uart1Driver\FS_billChanger.c(991): warning:  #177-D: function "FS_dispenseReset" was declared but never referenced
-Uart1Driver\FS_billChanger.c:   static void FS_dispenseReset(void)
-Uart1Driver\FS_billChanger.c:               ^
-Uart1Driver\FS_billChanger.c: Uart1Driver\FS_billChanger.c: 4 warnings, 0 errors
-linking...
-Program Size: Code=274940 RO-data=79072 RW-data=2040 ZI-data=44716  
-FromELF: creating hex file...
-".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 4 Warning(s).
-Build target 'VMC-V2.02'
-linking...
-Program Size: Code=274940 RO-data=79072 RW-data=2040 ZI-data=44716  
-FromELF: creating hex file...
-".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 0 Warning(s).
-Build target 'VMC-V2.02'
-compiling FS_billChanger.c...
-Uart1Driver\FS_billChanger.c(1003): warning:  #177-D: variable "box" was declared but never referenced
-Uart1Driver\FS_billChanger.c:           FS_BOX *box;
-Uart1Driver\FS_billChanger.c:                   ^
-Uart1Driver\FS_billChanger.c(1093): warning:  #177-D: variable "payAmount" was declared but never referenced
-Uart1Driver\FS_billChanger.c:           uint32 payAmount;
-Uart1Driver\FS_billChanger.c:                  ^
-Uart1Driver\FS_billChanger.c(266): warning:  #177-D: function "FS_getReqTimer" was declared but never referenced
-Uart1Driver\FS_billChanger.c:   static unsigned char FS_getReqTimer(void)
-Uart1Driver\FS_billChanger.c:                        ^
-Uart1Driver\FS_billChanger.c(991): warning:  #177-D: function "FS_dispenseReset" was declared but never referenced
-Uart1Driver\FS_billChanger.c:   static void FS_dispenseReset(void)
-Uart1Driver\FS_billChanger.c:               ^
-Uart1Driver\FS_billChanger.c: Uart1Driver\FS_billChanger.c: 4 warnings, 0 errors
-linking...
-Program Size: Code=274940 RO-data=79072 RW-data=2040 ZI-data=44716  
-FromELF: creating hex file...
-".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 4 Warning(s).
-Build target 'VMC-V2.02'
-linking...
-Program Size: Code=274940 RO-data=79072 RW-data=2040 ZI-data=44716  
+Program Size: Code=275040 RO-data=79096 RW-data=2040 ZI-data=44716  
 FromELF: creating hex file...
 ".\Hex\VMC_V2_16_2016_x_x.axf" - 0 Error(s), 0 Warning(s).

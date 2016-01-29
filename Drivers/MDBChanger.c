@@ -62,11 +62,12 @@ void ChangeGetTubes(void)
 	         }
 			 if(SystemPara.CoinChangerType == MDB_CHANGER)
 			 {
-				 TraceChange("\r\n");
-				 for(j = 0; j < 16; j++) 
+				 TraceChange("%dDrvChangebuf=",ChangerRdLen);
+				 for(j = 0; j < ChangerRdLen; j++) 
 				 {
-					 TraceChange("%dDrvChangebuf[%d] = %d", ChangerRdLen,j,stDevValue.CoinNum[j]);
+					 TraceChange("[%d]", stDevValue.CoinNum[j]);
 		         }
+				  TraceChange("\r\n");
 			}
 		}
 	}
@@ -85,6 +86,7 @@ unsigned char ChangePayoutProcessLevel3(uint32_t PayMoney,unsigned char PayoutNu
 	unsigned char CoinRdBuff[36],CoinRdLen,ComStatus,VMCValue[2]={0},VMCPoll[1]={0};
 	uint32_t coinscale,dispenseValue;
 	uint8_t  i;
+	uint8_t tempdispenseValue;
 	
 	memset(CoinRdBuff,0,sizeof(CoinRdBuff));
 	//NowChangerDev = SystemPara.CoinChangerType;
@@ -101,50 +103,56 @@ unsigned char ChangePayoutProcessLevel3(uint32_t PayMoney,unsigned char PayoutNu
 		coinscale = stDevValue.CoinScale;
 		dispenseValue = PayMoney / coinscale;//发送找零基准数量			
 		TraceChange("\r\nDrvChangescale = %d,%d", coinscale,dispenseValue);
-		VMCValue[0] = 0x02;
-		VMCValue[1] = dispenseValue;
-		//1发送找币指令
-		ComStatus = MdbConversation(0x0F,VMCValue,2,&CoinRdBuff[0],&CoinRdLen);
-		if(ComStatus == 1)
+		while(dispenseValue>0)
 		{
-			Timer.PayoutTimer = dispenseValue/2 + 20;
-			while(Timer.PayoutTimer)
-			{					
-				//2发送扩展poll指令，检测找币是否完成
-				VMCPoll[0] = 0x04;
-				ComStatus = MdbConversation(0x0F,VMCPoll,1,&CoinRdBuff[0],&CoinRdLen);
-				TraceChange("\r\nDrvChangesend = %d,%d,%d,%d\r\n",ComStatus,CoinRdBuff[0],CoinRdBuff[1],CoinRdLen);
-				//找零进行时，CoinRdLen=1 找零完成后，CoinRdLen = 0
-				if( CoinRdLen == 0 )
-				{
-					memset(CoinRdBuff,0,sizeof(CoinRdBuff));
-					//CoinRdLen = 0;
-					//3发送扩展指令，检测本次找币各通道找多少枚
-					VMCPoll[0] = 0x03;
+			tempdispenseValue=(dispenseValue>200)?200:dispenseValue;
+			dispenseValue-=tempdispenseValue;
+			TraceChange("\r\nDrvChangedispense = %d,%d", dispenseValue,tempdispenseValue);
+			VMCValue[0] = 0x02;
+			VMCValue[1] = tempdispenseValue;
+			//1发送找币指令
+			ComStatus = MdbConversation(0x0F,VMCValue,2,&CoinRdBuff[0],&CoinRdLen);
+			if(ComStatus == 1)
+			{
+				Timer.PayoutTimer = tempdispenseValue/2 + 20;
+				while(Timer.PayoutTimer)
+				{					
+					//2发送扩展poll指令，检测找币是否完成
+					VMCPoll[0] = 0x04;
 					ComStatus = MdbConversation(0x0F,VMCPoll,1,&CoinRdBuff[0],&CoinRdLen);
-					TraceChange("\r\nDrvChange s = %d,%d,%d,%d\r\n",ComStatus,CoinRdBuff[0],CoinRdBuff[1],CoinRdLen);
-					if( CoinRdLen > 0 )
+					TraceChange("\r\nDrvChangesend = %d,%d,%d,%d\r\n",ComStatus,CoinRdBuff[0],CoinRdBuff[1],CoinRdLen);
+					//找零进行时，CoinRdLen=1 找零完成后，CoinRdLen = 0
+					if( CoinRdLen == 0 )
 					{
-						TraceChange("\r\nDrvChangeOut=%d,%d,%d,%d",CoinRdBuff[0],CoinRdBuff[1],CoinRdBuff[2],CoinRdBuff[3]);
-						for(i = 0;i < CoinRdLen;i++)
+						memset(CoinRdBuff,0,sizeof(CoinRdBuff));
+						//CoinRdLen = 0;
+						//3发送扩展指令，检测本次找币各通道找多少枚
+						VMCPoll[0] = 0x03;
+						ComStatus = MdbConversation(0x0F,VMCPoll,1,&CoinRdBuff[0],&CoinRdLen);
+						TraceChange("\r\nDrvChange s = %d,%d,%d,%d\r\n",ComStatus,CoinRdBuff[0],CoinRdBuff[1],CoinRdLen);
+						if( CoinRdLen > 0 )
 						{
-							PayoutNum[i] = CoinRdBuff[i];
+							TraceChange("\r\nDrvChangeOut=%d,%d,%d,%d",CoinRdBuff[0],CoinRdBuff[1],CoinRdBuff[2],CoinRdBuff[3]);
+							for(i = 0;i < CoinRdLen;i++)
+							{
+								PayoutNum[i] += CoinRdBuff[i];
+							}
+							for(i = 0; i < 16; i++) 
+							{
+								 TraceChange("\r\n%dDrvPayoutNum[%d] = %d", CoinRdLen,i,PayoutNum[i]);
+							}
+							
+							
+							break;
 						}
-						for(i = 0; i < 16; i++) 
-						{
-							 TraceChange("\r\n%dDrvPayoutNum[%d] = %d", CoinRdLen,i,PayoutNum[i]);
-						}
-						
-						
-						break;
 					}
+					OSTimeDly(OS_TICKS_PER_SEC / 100);
 				}
-				OSTimeDly(OS_TICKS_PER_SEC / 100);
+			}	
+			else
+			{
+				TraceChange("\r\nDrvChangesendFail");
 			}
-		}	
-		else
-		{
-			TraceChange("\r\nDrvChangesendFail");
 		}
 	}		
 	return 0;

@@ -420,7 +420,7 @@ const char  *BUSINESSDEAL[MAXLANGUAGETYPE][20] =
    {	  
 	  "Comparaison",
 	  "Comparaison",
-	  "Inserez un billet plus petit SVP",
+	  "Inserez un billet plu SVP",
 	  "Fonds insuffisant,",
 	  "Choisissez le produit SVP",
 	  "Continuez",

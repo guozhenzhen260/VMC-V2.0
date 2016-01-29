@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Hex\VMC_V2_16_2016_x_x.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Hex\VMC_V2_16_2016_x_x.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Mon Jan 25 14:27:26 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Wed Jan 27 14:44:55 2016
 <BR><P>
 <H3>Maximum Stack Usage =       1960 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -62,13 +62,13 @@ Function Pointers
  <LI><a href="#[26]">EnterSelfCheckFuction</a> from maintain.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[27]">DefaultSystemParaMenu</a> from maintain.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[28]">ChannelAttributeManage</a> from channel.o(.text) referenced from maintain.o(.text)
- <LI><a href="#[9]">__s_OSCtxSw</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[29]">FactorySetting</a> from maintain.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[2a]">LogMaintainProcess</a> from maintain.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[2b]">ErrorCheck</a> from maintain.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[2c]">UserTradeMaintainProcess</a> from maintain.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[2d]">ChannelManage</a> from channel.o(.text) referenced from maintain.o(.text)
  <LI><a href="#[2e]">TraceMaintainProcess</a> from maintain.o(.text) referenced from maintain.o(.text)
+ <LI><a href="#[9]">__s_OSCtxSw</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[2f]">taskEntry</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from target.o(.text)
@@ -1286,7 +1286,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PollAPI
 </UL>
 
-<P><STRONG><a name="[96]"></a>BusinessProcess</STRONG> (Thumb, 2710 bytes, Stack size 32 bytes, business.o(.text))
+<P><STRONG><a name="[96]"></a>BusinessProcess</STRONG> (Thumb, 2732 bytes, Stack size 32 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 984 + Unknown Stack Size
 <LI>Call Chain = BusinessProcess &rArr; LogEndTransAPI &rArr; WriteLogDetailAPI &rArr; Trace &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -5915,8 +5915,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 </UL>
 
-<P><STRONG><a name="[19]"></a>Uart2TaskDevice</STRONG> (Thumb, 3782 bytes, Stack size 120 bytes, taskdevice.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1200 + Unknown Stack Size
+<P><STRONG><a name="[19]"></a>Uart2TaskDevice</STRONG> (Thumb, 3786 bytes, Stack size 128 bytes, taskdevice.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1208 + Unknown Stack Size
 <LI>Call Chain = Uart2TaskDevice &rArr; LiftTableDriver &rArr; LiftTableUart &rArr; TraceChannel &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPost
@@ -6521,7 +6521,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart2TaskDevice
 </UL>
 
-<P><STRONG><a name="[264]"></a>ChangeGetTubes</STRONG> (Thumb, 134 bytes, Stack size 56 bytes, mdbchanger.o(.text))
+<P><STRONG><a name="[264]"></a>ChangeGetTubes</STRONG> (Thumb, 142 bytes, Stack size 56 bytes, mdbchanger.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 464 + Unknown Stack Size
 <LI>Call Chain = ChangeGetTubes &rArr; TraceChange &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -6533,8 +6533,8 @@ Global Symbols
 <LI><a href="#[26c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChangePayoutProcessLevel3
 </UL>
 
-<P><STRONG><a name="[26c]"></a>ChangePayoutProcessLevel3</STRONG> (Thumb, 320 bytes, Stack size 80 bytes, mdbchanger.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 544 + Unknown Stack Size
+<P><STRONG><a name="[26c]"></a>ChangePayoutProcessLevel3</STRONG> (Thumb, 358 bytes, Stack size 88 bytes, mdbchanger.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = ChangePayoutProcessLevel3 &rArr; ChangeGetTubes &rArr; TraceChange &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDly
