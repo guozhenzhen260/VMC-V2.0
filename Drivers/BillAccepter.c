@@ -408,7 +408,18 @@ uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char
 				*billOptBack = 6;	
 			else
 				*billOptBack = 5;		
-			break;	
+			break;
+		case MBOX_BILLRESETDEV:
+			TraceBill("reset bill\r\n");
+			if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
+			{
+				RecyclerDevInit();
+			}
+			else
+			{
+				BillDevEnable();
+			}
+			break;
 	}
 	OSTimeDly(OS_TICKS_PER_SEC / 100);
 	//Trace("6\r\n");

@@ -1,22 +1,4 @@
----- LiftTableUart 匹配 (21 in 2 文件) ----
-LiftTableDriver.c (drivers):				res = LiftTableUart(1,DevAdd,VMC_VENDING_REQ,Mdata,len,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(2,DevAdd,VMC_VENDING_REQ,Mdata,len,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(1,DevAdd,VMC_STATUS_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(2,DevAdd,VMC_STATUS_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(1,DevAdd,VMC_VENDINGRESULT_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(2,DevAdd,VMC_VENDINGRESULT_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(1,DevAdd,VMC_RESET_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(2,DevAdd,VMC_RESET_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(1,DevAdd,VMC_OPENLIGHT_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(2,DevAdd,VMC_OPENLIGHT_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(1,DevAdd,VMC_CLOSELIGHT_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(2,DevAdd,VMC_CLOSELIGHT_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(1,DevAdd,VMC_OPENDOOR_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(2,DevAdd,VMC_OPENDOOR_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(1,DevAdd,VMC_CLOSEDOOR_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(2,DevAdd,VMC_CLOSEDOOR_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(1,DevAdd,VMC_GETINFO_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):				res = LiftTableUart(2,DevAdd,VMC_GETINFO_REQ,0,0,ackdata);
-LiftTableDriver.c (drivers):			LiftTableUart(Binnum,DevAdd,VMC_CHUCHOU_REQ,Mdata,len,ackdata);
-LiftTableDriver.c (drivers):unsigned char LiftTableUart(unsigned char Binnum,unsigned char BinAdd,unsigned char Cmd,
-LiftTableDriver.h (drivers):unsigned char LiftTableUart(unsigned char Binnum,unsigned char BinAdd,unsigned char Cmd,
+---- MBOX_BILLENABLEDEV 匹配 (3 in 3 文件) ----
+BillAccepter.c (drivers):		case MBOX_BILLENABLEDEV:
+BillAccepterAPI.c (api):			MsgAccepterPack.BillBack = MBOX_BILLENABLEDEV;			
+Common.h (app):#define MBOX_BILLENABLEDEV				0x03
