@@ -51,7 +51,7 @@ void Uart1TaskDevice(void *pvData)
 {
 	MessageKEYPack *AccepterMsg;
 	MessageXMTPack *XMTPack;
-	MessageFSBillRecyclerPack *FSBillRecyclerMsg;
+	//MessageFSBillRecyclerPack *FSBillRecyclerMsg;
 	unsigned char ComStatus;
 	MessagePack *GeziMsg;
 	uint8_t key=0xff;

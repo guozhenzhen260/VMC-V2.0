@@ -206,7 +206,7 @@ uint8_t IsErrorState()
 		if(billError == 2)
 		{
 			billError = 0;
-			BillCoinCtr(1,0,0);
+			ResetBill();
 			TraceBill("\r\n MiddBillState2=%d",billError);
 		}
 		return 0;

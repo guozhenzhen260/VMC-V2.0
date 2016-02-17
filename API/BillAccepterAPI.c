@@ -314,6 +314,25 @@ void BillDevEnableAPI(void)
 	return;
 }
 
+/*********************************************************************************************************
+** Function name:       BillDevResetAPI
+** Descriptions:        重启纸币器
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void BillDevResetAPI(void)
+{
+	switch(SystemPara.BillValidatorType)
+	{		
+		case MDB_BILLACCEPTER:			
+			MsgAccepterPack.BillBack = MBOX_BILLRESETDEV;			
+			OSMboxPost(g_BillMoneyMail,&MsgAccepterPack);
+			break;					
+	}
+	return;
+}
+
 
 /*********************************************************************************************************
 ** Function name:       GetBillDevState

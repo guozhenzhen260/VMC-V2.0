@@ -406,98 +406,100 @@ extern SELECTKEYAPI selectKey;
 #define MBOX_BILLDISABLEDEV				0x02
 //使能纸币器命令
 #define MBOX_BILLENABLEDEV				0x03
+//重置纸币器命令
+#define MBOX_BILLRESETDEV				0x04
 //启动纸币器命令
-#define MBOX_BILLINITDEV				0x04
+#define MBOX_BILLINITDEV				0x05
 //纸币器压抄命令
-#define MBOX_BILLESCROW					0x05
+#define MBOX_BILLESCROW					0x06
 //返回纸币器压抄成功命令
-#define MBOX_BILLESCROWSUCC				0x06
+#define MBOX_BILLESCROWSUCC				0x07
 //返回纸币器压抄失败命令
-#define MBOX_BILLESCROWFAIL				0x07
+#define MBOX_BILLESCROWFAIL				0x08
 //纸币器退币命令
-#define MBOX_BILLRETURN					0x08
+#define MBOX_BILLRETURN					0x09
 //返回纸币器退币成功命令
-#define MBOX_BILLRETURNSUCC				0x09
+#define MBOX_BILLRETURNSUCC				0x0A
 //返回纸币器退币失败命令
-#define MBOX_BILLRETURNFAIL				0x0A
+#define MBOX_BILLRETURNFAIL				0x0B
 
 //返回纸币器参数命令
-#define MBOX_BILLSETUPDEV				0x0B
+#define MBOX_BILLSETUPDEV				0x0C
 
 
 //硬币器收到硬币返回面值
-#define MBOX_COINMONEY					0x0C
+#define MBOX_COINMONEY					0x0D
 //禁能硬币器命令
-#define MBOX_COINDISABLEDEV				0x0D
+#define MBOX_COINDISABLEDEV				0x0E
 //使能硬币器命令
-#define MBOX_COINENABLEDEV				0x0E
+#define MBOX_COINENABLEDEV				0x0F
 //启动硬币器命令
-#define MBOX_COININITDEV				0x0F
+#define MBOX_COININITDEV				0x10
 //返回硬币器按下退币键退币请求命令
-#define MBOX_COINRETURN					0x10
+#define MBOX_COINRETURN					0x11
 //返回硬币器参数命令
-#define MBOX_COINSETUPDEV				0x11
+#define MBOX_COINSETUPDEV				0x12
 
 
 //对于level3的mdb找零器找零命令
-#define MBOX_MDBCHANGELEVEL3			0x12
+#define MBOX_MDBCHANGELEVEL3			0x13
 //对于level2的mdb找零器找零命令
-#define MBOX_MDBCHANGELEVEL2			0x13
+#define MBOX_MDBCHANGELEVEL2			0x14
 //对于得到找零器余币量
-#define MBOX_MDBCHANGETUBE				0x14
+#define MBOX_MDBCHANGETUBE				0x15
 //对于hopper的找零器找零命令
-#define MBOX_MDBCHANGEHOPPER			0x15
+#define MBOX_MDBCHANGEHOPPER			0x16
 //找零器找零返回命令
-#define MBOX_CHANGERBACKMONEY			0x16
+#define MBOX_CHANGERBACKMONEY			0x17
 
 //对于Hopper的找零命令
-#define MBOX_HOPPEROUT              	0x17
+#define MBOX_HOPPEROUT              	0x18
 //对于Hopper的找零器找零返回命令
-#define MBOX_HOPPERBACKMONEY			0x18
+#define MBOX_HOPPERBACKMONEY			0x19
 //启动时监测Hopper状态
-#define MBOX_HOPPERINITSTATE            0x19
+#define MBOX_HOPPERINITSTATE            0x1A
 
 
 //读卡器上传给vmc
 //读卡器收到金额返回面值
-#define MBOX_READERMONEY				0x1A
+#define MBOX_READERMONEY				0x1B
 //读卡器允许出货
-#define MBOX_READERVENDOUT  			0x1B
+#define MBOX_READERVENDOUT  			0x1C
 //读卡器拒绝出货
-#define MBOX_READERVENDDENY  			0x1C
+#define MBOX_READERVENDDENY  			0x1D
 //读卡器拔卡
-#define MBOX_READERMONEYOUT				0x1D
+#define MBOX_READERMONEYOUT				0x1E
 
 
 //vmc下发给读卡器
 //禁能读卡器命令
-#define MBOX_READERDISABLEDEV			0x1E
+#define MBOX_READERDISABLEDEV			0x1F
 //使能读卡器命令
-#define MBOX_READERENABLEDEV			0x1F
+#define MBOX_READERENABLEDEV			0x20
 //启动读卡器命令
-#define MBOX_READERINITDEV				0x20
+#define MBOX_READERINITDEV				0x21
 //读卡器扣钱命令
-#define MBOX_READERVENDREQUEST			0x21
+#define MBOX_READERVENDREQUEST			0x22
 //交易成功命令
-#define MBOX_READERVENDSUCCESS			0x22
+#define MBOX_READERVENDSUCCESS			0x23
 //交易失败命令
-#define MBOX_READERVENDFAIL 			0x23
+#define MBOX_READERVENDFAIL 			0x24
 //结束交易流程命令
-#define MBOX_READERVENDCOMP 			0x24
+#define MBOX_READERVENDCOMP 			0x25
 //读卡器记录现金详细交易记录命令
-#define MBOX_READERCASHSALE 			0x25
+#define MBOX_READERCASHSALE 			0x26
 
 
 //启动纸币循环找零器命令
-#define MBOX_BILLRECYCLERDEV			0x26
+#define MBOX_BILLRECYCLERDEV			0x27
 //纸币器按张数找币
-#define MBOX_BILLRECYPAYOUTNUM			0x27
+#define MBOX_BILLRECYPAYOUTNUM			0x28
 //纸币器按金额找币
-#define MBOX_BILLRECYPAYOUTVALUE		0x28
+#define MBOX_BILLRECYPAYOUTVALUE		0x29
 //返回纸币器找零成功命令
-#define MBOX_BILLRECYPAYOUTSUCC			0x29
+#define MBOX_BILLRECYPAYOUTSUCC			0x2A
 //返回纸币器找零失败命令
-#define MBOX_BILLRECYPAYOUTFAIL			0x2A
+#define MBOX_BILLRECYPAYOUTFAIL			0x2B
 
 
 

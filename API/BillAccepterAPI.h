@@ -7,6 +7,8 @@ extern void BillDevDisableAPI(void);
 
 extern void BillDevEnableAPI(void);
 
+extern void BillDevResetAPI(void);
+
 extern uint32_t GetBillDevMoneyInAPI(void);
 
 extern uint32_t GetBillDevMoneyUnStackInAPI(void);

@@ -2237,6 +2237,25 @@ void BillCoinCtr(uint8_t billCtr,uint8_t coinCtr,uint8_t readerCtr)
 }
 
 /*********************************************************************************************************
+** Function name:     	ResetBill
+** Descriptions:	    重启纸币器
+** input parameters:    
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void ResetBill()
+{
+	//1.纸币器控制
+	if(SystemPara.BillValidatorType != OFF_BILLACCEPTER)
+	{
+		TraceBill("\r\n AppresetBill");
+		BillDevResetAPI();
+		SetBillCoinStatus(1,1);
+	}	
+	OSTimeDly(OS_TICKS_PER_SEC / 10);
+}
+
+/*********************************************************************************************************
 ** Function name:     	IsCanSale
 ** Descriptions:	    判断是否可以出货
 ** input parameters:    
