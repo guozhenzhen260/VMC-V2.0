@@ -2982,7 +2982,7 @@ unsigned char VPMission_Status_RPT( uint8_t check_st,uint8_t bv_st,uint8_t cc_st
 	{
 		sysVPMission.check_st = 0;
 		sysVPMission.bv_st = bv_st;
-		sysVPMission.cc_st = cc_st;
+		sysVPMission.cc_st = 0; 
 		sysVPMission.vmc_st = vmc_st;
 		if(change>0)
 			sysVPMission.change = 50000;
