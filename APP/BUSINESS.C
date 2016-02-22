@@ -1207,10 +1207,19 @@ void DispSalePage(uint8_t haveSale,uint8_t hefangMode)
 		//普通货道输入提示
 		else
 		{
-			strcpy(strlanguage,BUSINESSDEAL[SystemPara.Language][5]); 
-			strcpy(streng,BUSINESSDEAL[1][5]);	
-			strcpy(rightstrlanguage,BUSINESSDEAL[SystemPara.Language][6]); 
-			strcpy(rightstreng,BUSINESSDEAL[1][6]);
+			//强制购买	
+			if(UserPara.TransEscape == 1)
+			{
+				strcpy(strlanguage,BUSINESSDEAL[SystemPara.Language][4]); 
+				strcpy(streng,BUSINESSDEAL[1][4]);	
+			}
+			else
+			{
+				strcpy(strlanguage,BUSINESSDEAL[SystemPara.Language][5]); 
+				strcpy(streng,BUSINESSDEAL[1][5]);	
+				strcpy(rightstrlanguage,BUSINESSDEAL[SystemPara.Language][6]); 
+				strcpy(rightstreng,BUSINESSDEAL[1][6]);
+			}
 		}
 		DispBusinessText(strlanguage,streng,rightstrlanguage,rightstreng);
 	}

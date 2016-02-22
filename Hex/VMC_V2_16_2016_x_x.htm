@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Hex\VMC_V2_16_2016_x_x.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Hex\VMC_V2_16_2016_x_x.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Mon Feb 22 10:22:09 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Mon Feb 22 11:12:39 2016
 <BR><P>
 <H3>Maximum Stack Usage =       1960 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -30,6 +30,7 @@ Function Pointers
  <LI><a href="#[7]">defaultVectorHandle</a> from target.o(.text) referenced 35 times from vector_table.o(.constdata)
  <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from vector_table.o(.constdata)
  <LI><a href="#[9]">__s_OSCtxSw</a> from os_cpu_c.o(.emb_text) referenced from vector_table.o(.constdata)
+ <LI><a href="#[36]">Uart3BuffIsNotEmpty</a> from uart3.o(.text) referenced from taskuart0device.o(.text)
  <LI><a href="#[a]">__sysTickIsr</a> from os_cpu_c.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[b]">TIMER0_IRQHandler</a> from timer.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[c]">TIMER1_IRQHandler</a> from timer.o(.text) referenced from vector_table.o(.constdata)
@@ -44,6 +45,7 @@ Function Pointers
  <LI><a href="#[9]">__s_OSCtxSw</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
  <LI><a href="#[15]">__s_OSStartHighRdy</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
  <LI><a href="#[16]">__s_OS_ENTER_CRITICAL</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
+ <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from target.o(.text)
  <LI><a href="#[17]">__s_OS_EXIT_CRITICAL</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
  <LI><a href="#[18]">__s_changeToSYSMode</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
  <LI><a href="#[19]">Uart2TaskDevice</a> from taskdevice.o(.text) referenced from main.o(.text)
@@ -71,14 +73,12 @@ Function Pointers
  <LI><a href="#[9]">__s_OSCtxSw</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[2f]">taskEntry</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
- <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from target.o(.text)
  <LI><a href="#[30]">ClrUart0Buff</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
  <LI><a href="#[31]">Uart0GetCh</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
  <LI><a href="#[32]">Uart0BuffIsNotEmpty</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
  <LI><a href="#[33]">Uart0PutStr</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
  <LI><a href="#[34]">uart3_clr_buf</a> from uart3.o(.text) referenced from taskuart0device.o(.text)
  <LI><a href="#[35]">Uart3GetCh</a> from uart3.o(.text) referenced from taskuart0device.o(.text)
- <LI><a href="#[36]">Uart3BuffIsNotEmpty</a> from uart3.o(.text) referenced from taskuart0device.o(.text)
  <LI><a href="#[37]">Uart3PutStr</a> from uart3.o(.text) referenced from taskuart0device.o(.text)
  <LI><a href="#[38]">_sputc</a> from _sputc.o(.text) referenced from c89vsprintf.o(.text)
  <LI><a href="#[38]">_sputc</a> from _sputc.o(.text) referenced from __2sprintf.o(.text)
@@ -703,7 +703,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[bb]"></a>DispSalePage</STRONG> (Thumb, 766 bytes, Stack size 168 bytes, business.o(.text))
+<P><STRONG><a name="[bb]"></a>DispSalePage</STRONG> (Thumb, 808 bytes, Stack size 168 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 400 + Unknown Stack Size
 <LI>Call Chain = DispSalePage &rArr; DispBusinessText &rArr; LCDPrintf &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -825,7 +825,7 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[c4]"></a>DispChhuoFailPage</STRONG> (Thumb, 82 bytes, Stack size 72 bytes, business.o(.text))
+<P><STRONG><a name="[c4]"></a>DispChhuoFailPage</STRONG> (Thumb, 110 bytes, Stack size 72 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 304 + Unknown Stack Size
 <LI>Call Chain = DispChhuoFailPage &rArr; DispBusinessText &rArr; LCDPrintf &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -838,7 +838,7 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[c5]"></a>DispPayoutPage</STRONG> (Thumb, 96 bytes, Stack size 72 bytes, business.o(.text))
+<P><STRONG><a name="[c5]"></a>DispPayoutPage</STRONG> (Thumb, 70 bytes, Stack size 72 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 304 + Unknown Stack Size
 <LI>Call Chain = DispPayoutPage &rArr; DispBusinessText &rArr; LCDPrintf &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -984,7 +984,7 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[da]"></a>GetMoney</STRONG> (Thumb, 518 bytes, Stack size 16 bytes, business.o(.text))
+<P><STRONG><a name="[da]"></a>GetMoney</STRONG> (Thumb, 748 bytes, Stack size 16 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 464 + Unknown Stack Size
 <LI>Call Chain = GetMoney &rArr; GetCoinDevMoneyInAPI &rArr; ReadParallelCoinAcceptor &rArr; TraceCoin &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1013,7 +1013,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusinessProcess
 </UL>
 
-<P><STRONG><a name="[e5]"></a>ChangerRecycler</STRONG> (Thumb, 628 bytes, Stack size 24 bytes, business.o(.text))
+<P><STRONG><a name="[e5]"></a>ChangerRecycler</STRONG> (Thumb, 376 bytes, Stack size 24 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 560 + Unknown Stack Size
 <LI>Call Chain = ChangerRecycler &rArr; BillRecyclerPayoutValueExpanseAPI &rArr; FS_dispense &rArr; FS_billDispense &rArr; FS_userSendRequest &rArr; FS_waitResult &rArr; FS_getDataTimeout &rArr; print_fs &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1058,7 +1058,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsErrorState
 </UL>
 
-<P><STRONG><a name="[ee]"></a>IsCanSale</STRONG> (Thumb, 700 bytes, Stack size 24 bytes, business.o(.text))
+<P><STRONG><a name="[ee]"></a>IsCanSale</STRONG> (Thumb, 718 bytes, Stack size 24 bytes, business.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 456 + Unknown Stack Size
 <LI>Call Chain = IsCanSale &rArr; ReaderDevVendoutRPTAPI &rArr; TraceReader &rArr; __c89vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
