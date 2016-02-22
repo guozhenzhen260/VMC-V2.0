@@ -8,7 +8,69 @@ Project File Date:  01/12/2016
 
 <h2>Output:</h2>
 Build target 'VMC-V2.02'
-compiling BUSINESS.C...
+compiling UBProtocol_CR.c...
+Uart3Driver\UBProtocol_CR.h(169): error:  #101: "VMC_PC_MSG" has already been declared in the current scope
+Uart3Driver\UBProtocol_CR.h:   struct VMC_PC_MSG
+Uart3Driver\UBProtocol_CR.h:          ^
+Uart3Driver\UBProtocol_CR.h(182): error:  #101: "VP_Mission" has already been declared in the current scope
+Uart3Driver\UBProtocol_CR.h:   struct VP_Mission
+Uart3Driver\UBProtocol_CR.h:          ^
+Uart3Driver\UBProtocol_CR.h(220): error:  #101: "GoodsMatrix" has already been declared in the current scope
+Uart3Driver\UBProtocol_CR.h:   struct GoodsMatrix
+Uart3Driver\UBProtocol_CR.h:          ^
+Uart3Driver\UBProtocol_CR.h(226): error:  #101: "GoodsAttribute" has already been declared in the current scope
+Uart3Driver\UBProtocol_CR.h:   struct GoodsAttribute
+Uart3Driver\UBProtocol_CR.h:          ^
+Uart3Driver\UBProtocol_CR.c(3741): error:  #167: argument of type "struct GoodsAttribute *" is incompatible with parameter of type "struct GoodsAttribute *"
+Uart3Driver\UBProtocol_CR.c:            pcSetHuodao(GoodsRev,sysGoodsAttr);
+Uart3Driver\UBProtocol_CR.c:                                 ^
+Uart3Driver\UBProtocol_CR.c: Uart3Driver\UBProtocol_CR.c: 0 warnings, 5 errors
+Target not created
+Build target 'VMC-V2.02'
+compiling UBProtocol_CR.c...
+Uart3Driver\UBProtocol_CR.h(169): error:  #101: "VMC_PC_MSG" has already been declared in the current scope
+Uart3Driver\UBProtocol_CR.h:   struct VMC_PC_MSG
+Uart3Driver\UBProtocol_CR.h:          ^
+Uart3Driver\UBProtocol_CR.h(182): error:  #101: "VP_Mission" has already been declared in the current scope
+Uart3Driver\UBProtocol_CR.h:   struct VP_Mission
+Uart3Driver\UBProtocol_CR.h:          ^
+Uart3Driver\UBProtocol_CR.h: Uart3Driver\UBProtocol_CR.c: 0 warnings, 2 errors
+Target not created
+Build target 'VMC-V2.02'
+compiling UBProtocol_CR.c...
+linking...
+.\Hex\VMC_V2_16_2016_x_x.axf: Error: L6200E: Symbol decimalPlaces multiply defined (by ubprotocol_cr.o and ubprotocol.o).
+.\Hex\VMC_V2_16_2016_x_x.axf: Error: L6200E: Symbol GoodsRev multiply defined (by ubprotocol_cr.o and ubprotocol.o).
+.\Hex\VMC_V2_16_2016_x_x.axf: Error: L6200E: Symbol GoodsSN multiply defined (by ubprotocol_cr.o and ubprotocol.o).
+.\Hex\VMC_V2_16_2016_x_x.axf: Error: L6200E: Symbol g_msg multiply defined (by ubprotocol_cr.o and ubprotocol.o).
+.\Hex\VMC_V2_16_2016_x_x.axf: Error: L6200E: Symbol VPMsgBuf multiply defined (by ubprotocol_cr.o and ubprotocol.o).
+.\Hex\VMC_V2_16_2016_x_x.axf: Error: L6200E: Symbol sysVPMission multiply defined (by ubprotocol_cr.o and ubprotocol.o).
+.\Hex\VMC_V2_16_2016_x_x.axf: Not enough information to list image symbols.
+.\Hex\VMC_V2_16_2016_x_x.axf: Not enough information to list the image map.
+.\Hex\VMC_V2_16_2016_x_x.axf: Finished: 2 information, 0 warning and 6 error messages.
+Target not created
+Build target 'VMC-V2.02'
+compiling UBProtocol_CR.c...
+linking...
+.\Hex\VMC_V2_16_2016_x_x.axf: Error: L6200E: Symbol GoodsSN multiply defined (by ubprotocol_cr.o and ubprotocol.o).
+.\Hex\VMC_V2_16_2016_x_x.axf: Error: L6200E: Symbol g_msg multiply defined (by ubprotocol_cr.o and ubprotocol.o).
+.\Hex\VMC_V2_16_2016_x_x.axf: Error: L6200E: Symbol VPMsgBuf multiply defined (by ubprotocol_cr.o and ubprotocol.o).
+.\Hex\VMC_V2_16_2016_x_x.axf: Error: L6200E: Symbol sysVPMission multiply defined (by ubprotocol_cr.o and ubprotocol.o).
+.\Hex\VMC_V2_16_2016_x_x.axf: Not enough information to list image symbols.
+.\Hex\VMC_V2_16_2016_x_x.axf: Not enough information to list the image map.
+.\Hex\VMC_V2_16_2016_x_x.axf: Finished: 2 information, 0 warning and 4 error messages.
+Target not created
+Build target 'VMC-V2.02'
+compiling UBProtocol_CR.c...
+linking...
+.\Hex\VMC_V2_16_2016_x_x.axf: Error: L6200E: Symbol VPMsgBuf multiply defined (by ubprotocol_cr.o and ubprotocol.o).
+.\Hex\VMC_V2_16_2016_x_x.axf: Error: L6200E: Symbol sysVPMission multiply defined (by ubprotocol_cr.o and ubprotocol.o).
+.\Hex\VMC_V2_16_2016_x_x.axf: Not enough information to list image symbols.
+.\Hex\VMC_V2_16_2016_x_x.axf: Not enough information to list the image map.
+.\Hex\VMC_V2_16_2016_x_x.axf: Finished: 2 information, 0 warning and 2 error messages.
+Target not created
+Build target 'VMC-V2.02'
+compiling UBProtocol_CR.c...
 linking...
 Program Size: Code=275192 RO-data=79096 RW-data=2040 ZI-data=44716  
 FromELF: creating hex file...

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Hex\VMC_V2_16_2016_x_x.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Hex\VMC_V2_16_2016_x_x.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Mon Feb 22 11:12:39 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Mon Feb 22 14:27:11 2016
 <BR><P>
 <H3>Maximum Stack Usage =       1960 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -30,7 +30,6 @@ Function Pointers
  <LI><a href="#[7]">defaultVectorHandle</a> from target.o(.text) referenced 35 times from vector_table.o(.constdata)
  <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from vector_table.o(.constdata)
  <LI><a href="#[9]">__s_OSCtxSw</a> from os_cpu_c.o(.emb_text) referenced from vector_table.o(.constdata)
- <LI><a href="#[36]">Uart3BuffIsNotEmpty</a> from uart3.o(.text) referenced from taskuart0device.o(.text)
  <LI><a href="#[a]">__sysTickIsr</a> from os_cpu_c.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[b]">TIMER0_IRQHandler</a> from timer.o(.text) referenced from vector_table.o(.constdata)
  <LI><a href="#[c]">TIMER1_IRQHandler</a> from timer.o(.text) referenced from vector_table.o(.constdata)
@@ -45,7 +44,6 @@ Function Pointers
  <LI><a href="#[9]">__s_OSCtxSw</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
  <LI><a href="#[15]">__s_OSStartHighRdy</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
  <LI><a href="#[16]">__s_OS_ENTER_CRITICAL</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
- <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from target.o(.text)
  <LI><a href="#[17]">__s_OS_EXIT_CRITICAL</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
  <LI><a href="#[18]">__s_changeToSYSMode</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.emb_text)
  <LI><a href="#[19]">Uart2TaskDevice</a> from taskdevice.o(.text) referenced from main.o(.text)
@@ -73,14 +71,16 @@ Function Pointers
  <LI><a href="#[9]">__s_OSCtxSw</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
  <LI><a href="#[2f]">taskEntry</a> from os_cpu_c.o(.emb_text) referenced from os_cpu_c.o(.text)
+ <LI><a href="#[8]">svcallHandle</a> from os_cpu_c.o(.emb_text) referenced from target.o(.text)
  <LI><a href="#[30]">ClrUart0Buff</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
  <LI><a href="#[31]">Uart0GetCh</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
  <LI><a href="#[32]">Uart0BuffIsNotEmpty</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
  <LI><a href="#[33]">Uart0PutStr</a> from uart0.o(.text) referenced 2 times from taskuart0device.o(.text)
+ <LI><a href="#[38]">_sputc</a> from _sputc.o(.text) referenced from c89vsprintf.o(.text)
  <LI><a href="#[34]">uart3_clr_buf</a> from uart3.o(.text) referenced from taskuart0device.o(.text)
  <LI><a href="#[35]">Uart3GetCh</a> from uart3.o(.text) referenced from taskuart0device.o(.text)
+ <LI><a href="#[36]">Uart3BuffIsNotEmpty</a> from uart3.o(.text) referenced from taskuart0device.o(.text)
  <LI><a href="#[37]">Uart3PutStr</a> from uart3.o(.text) referenced from taskuart0device.o(.text)
- <LI><a href="#[38]">_sputc</a> from _sputc.o(.text) referenced from c89vsprintf.o(.text)
  <LI><a href="#[38]">_sputc</a> from _sputc.o(.text) referenced from __2sprintf.o(.text)
  <LI><a href="#[39]">_snputc</a> from _snputc.o(.text) referenced from __2snprintf.o(.text)
  <LI><a href="#[3a]">_printf_input_char</a> from _printf_char_common.o(.text) referenced from _printf_char_common.o(.text)
@@ -9922,7 +9922,6 @@ Global Symbols
 <LI><a href="#[1d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPost
 <LI><a href="#[1bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSQPend
 <LI><a href="#[2c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSSchedUnlock
-<LI><a href="#[3ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDlyResume
 <LI><a href="#[3aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPostOpt
 <LI><a href="#[3a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxDel
 <LI><a href="#[3a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSFlagPost
@@ -9936,6 +9935,7 @@ Global Symbols
 <LI><a href="#[3b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskSuspend
 <LI><a href="#[3b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskResume
 <LI><a href="#[3ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskChangePrio
+<LI><a href="#[3ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDlyResume
 </UL>
 
 <P><STRONG><a name="[2c7]"></a>OSSchedUnlock</STRONG> (Thumb, 66 bytes, Stack size 8 bytes, os_core.o(.text))
@@ -10409,7 +10409,6 @@ Global Symbols
 <LI><a href="#[287]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillDevEnable
 <LI><a href="#[286]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BillDevSellect
 <LI><a href="#[281]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EvbConversation
-<LI><a href="#[3ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDlyHMSM
 <LI><a href="#[39a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSStatInit
 <LI><a href="#[389]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_TaskStat
 <LI><a href="#[330]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;msleep
@@ -10447,6 +10446,7 @@ Global Symbols
 <LI><a href="#[3dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pcShcSend
 <LI><a href="#[3db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pcControlSend
 <LI><a href="#[3c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;zyThreadDelay
+<LI><a href="#[3ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTimeDlyHMSM
 </UL>
 
 <P><STRONG><a name="[3ab]"></a>OSTimeDlyHMSM</STRONG> (Thumb, 150 bytes, Stack size 32 bytes, os_time.o(.text), UNUSED)
@@ -11577,8 +11577,8 @@ Global Symbols
 <P><STRONG><a name="[1]"></a>_init_user_alloc</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, init_alloc.o(.text), UNUSED)
 
 <P><STRONG><a name="[40c]"></a>__Heap_Full</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, init_alloc.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[41d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_heap_expand
-<LI><a href="#[41e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__Heap_ProvideMemory
+<BR><BR>[Calls]<UL><LI><a href="#[41e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__Heap_ProvideMemory
+<LI><a href="#[41d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_heap_expand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 </UL>
@@ -11590,12 +11590,12 @@ Global Symbols
 <P><STRONG><a name="[65]"></a>_init_alloc</STRONG> (Thumb, 94 bytes, Stack size 24 bytes, init_alloc.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = _init_alloc &rArr; __rt_SIGRTMEM &rArr; __rt_SIGRTMEM_inner &rArr; __default_signal_display
 </UL>
-<BR>[Calls]<UL><LI><a href="#[41d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_heap_expand
-<LI><a href="#[421]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_heap_escrow
-<LI><a href="#[420]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_SIGRTMEM
+<BR>[Calls]<UL><LI><a href="#[420]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_SIGRTMEM
 <LI><a href="#[41e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__Heap_ProvideMemory
 <LI><a href="#[422]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__Heap_Initialize
 <LI><a href="#[40b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_heap_descriptor
+<LI><a href="#[41d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_heap_expand
+<LI><a href="#[421]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_heap_escrow
 </UL>
 <BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init_heap_2
 </UL>
