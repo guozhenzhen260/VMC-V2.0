@@ -30,9 +30,9 @@
 #define VP_ERR_PAR      1   //mission parameter error
 #define VP_ERR_COM      2   //communication error
 
-#define VP_SF             0xE7
+#define VP_SF             0xAA
 #define VP_PROEASIV_SF    0xE5//骏鹏协议
-#define VP_PROTOCOL_VER   0x03//0x01---0x02版本号设为2;by gzz 20110823
+#define VP_PROTOCOL_VER   0x0//协议版本
 #define VP_PROEASIV_VER   0x40//骏鹏协议
 #define VP_PROTOCOL_ACK   0x80
 #define VP_PROEASIV_ACK   0x01//骏鹏协议
@@ -41,12 +41,11 @@
 //==========
 //VMC-->PC
 //==========
-#define VP_TEXT_MSG      0
 #define VP_ACK_RPT       1
 #define VP_NAK_RPT       2
 #define VP_POLL          3
-#define VP_STARTUP_RPT   4
-#define VP_VMC_SETUP     5
+#define VP_VMC_SETUP     4
+#define VP_STARTUP_RPT   5
 #define VP_PAYIN_RPT     6
 #define VP_PAYOUT_RPT    7
 #define VP_VENDOUT_RPT   8
@@ -74,13 +73,13 @@
 //==========
 //PC-->VMC
 //==========
-#define VP_ACK             128
-#define VP_NAK             129
-#define VP_INITIAL_OK      130
+#define VP_ACK             1
+#define VP_NAK             2
+#define VP_GET_SETUP_IND   4
+#define VP_GET_STATUS      5
 #define VP_VENDOUT_IND     131
 #define VP_RESET_IND       132
 #define VP_CONTROL_IND     133
-#define VP_GET_STATUS      134
 #define VP_HOUDAO_IND      135
 #define VP_POSITION_IND    136
 #define VP_PAYOUT_IND      137    //V2
@@ -90,7 +89,6 @@
 #define VP_SALETIME_IND    141
 #define VP_SALEPRICE_IND   142
 #define VP_HUODAO_SET_IND  143
-#define VP_GET_SETUP_IND   144
 #define VP_GET_OFFLINEDATA_IND   145
 #define VP_GETINFO_INDEXP  146
 #define VP_SET_HUODAO      147
@@ -219,7 +217,7 @@ struct VP_MissionCR
 
 
 //unsigned char VPBusTxMsg( void );
-extern void VPSerialInit(void);
+extern void VPSerialInit_CR(void);
 extern unsigned char VPMission_Poll( uint8_t *isInit );
 extern unsigned char VPMission_Payin_RPT(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney);
 extern unsigned char VPMission_Payout_RPT( uint8_t payoutDev,unsigned char Type, unsigned int payoutMoney, unsigned int payAllMoney );

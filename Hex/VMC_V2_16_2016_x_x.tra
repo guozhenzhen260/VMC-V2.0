@@ -88,7 +88,7 @@
 ### ADS-LD Output File: '.\Hex\VMC_V2_16_2016_x_x.axf'
 ### ADS-LD Command File: '.\Hex\VMC_V2_16_2016_x_x.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile '.\Hex\VMC_V2_16_2016_x_x.lnp', Handle=0x00000BC4
+### Creating CmdFile '.\Hex\VMC_V2_16_2016_x_x.lnp', Handle=0x000007B4
 ### Writing '.lnp' file
 ### ADS-LD Command file '.\Hex\VMC_V2_16_2016_x_x.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.

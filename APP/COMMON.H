@@ -44,7 +44,7 @@
 #define UBOX_PC			         2//友宝pc通讯
 #define GPRS_PC					 3 //GPRS
 #define SIMPUBOX_PC			     4//新友宝pc通讯
-
+#define CRUBOX_PC			     5//友宝成人pc通讯
 
 #define OFF_KEY			         0//普通键盘按键
 #define SELECT_KEY			     1//选货按键
