@@ -373,206 +373,108 @@ unsigned char VPBusFrameUnPack_CR( void )
 		VPMsgBufCR[sizeof(VPMsgBufCR)-1] = Uart3GetCh();	
 		reclen=1;
 	}
-	*/
-	if(SystemPara.EasiveEnable == 1)
+	*/	
+	
+	//TracePC("\r\n Drv <<dat1");
+	if(Uart3BuffIsNotEmpty())
 	{
-		if(Uart3BuffIsNotEmpty())
+		OSTimeDly(20);//等待一段时间，等数据下发完毕
+		//TracePC("\r\n Drv <<dat2");
+		//1.寻找包头	
+		while(Uart3BuffIsNotEmpty() == 1)
 		{
-			OSTimeDly(20);//等待一段时间，等数据下发完毕
-			
-			//1.寻找包头	
-			while(Uart3BuffIsNotEmpty() == 1)
+			//TracePC("\r\n Drv <<dat3");
+			if( Uart3GetCh() != VP_SF ) 
 			{
-				if( Uart3GetCh() != VP_PROEASIV_SF ) 
-				{
-					continue;
-				}
-				else
-				{
-					TracePC("\r\n Drv <<dat=");
-					VPMsgBufCR[i++]=VP_PROEASIV_SF;
-					TracePC("[%02x]",VPMsgBufCR[i-1]);	
-					datalen=Uart3pcGetChWhile_CR();//length
-					VPMsgBufCR[i++]=datalen;
-					datalen-=5;
-					VPMsgBufCR[i++]=Uart3pcGetChWhile_CR();//SN	
-					VPMsgBufCR[i++]=Uart3pcGetChWhile_CR();//ver
-					VPMsgBufCR[i++]=Uart3pcGetChWhile_CR();//MT	
-					isft=1;
-					break;
-				}
+				//TracePC("\r\n Drv <<dat4");
+				continue;
 			}
-			//2.得到包的data和chk
-			if(isft)
+			else
 			{
-				for(dataindex=0;dataindex<datalen+2;dataindex++)
-				{
-					VPMsgBufCR[i++]=Uart3pcGetChWhile_CR();
-					reclen=1;
-				}			
+				TracePC("\r\n Drv <<dat=");
+				VPMsgBufCR[i++]=VP_SF;
+				TracePC("[%02x]",VPMsgBufCR[i-1]);	
+				datalen=Uart3pcGetChWhile_CR();//length
+				VPMsgBufCR[i++]=datalen;
+				datalen-=5;
+				VPMsgBufCR[i++]=Uart3pcGetChWhile_CR();//ver
+				VPMsgBufCR[i++]=Uart3pcGetChWhile_CR();//MT	
+				VPMsgBufCR[i++]=Uart3pcGetChWhile_CR();//SN	
+				isft=1;
+				break;
 			}
 		}
-	}
-	else
-	{
-		//TracePC("\r\n Drv <<dat1");
-		if(Uart3BuffIsNotEmpty())
+		//2.得到包的data和chk
+		if(isft)
 		{
-			OSTimeDly(20);//等待一段时间，等数据下发完毕
-			//TracePC("\r\n Drv <<dat2");
-			//1.寻找包头	
-			while(Uart3BuffIsNotEmpty() == 1)
+			for(dataindex=0;dataindex<datalen+2;dataindex++)
 			{
-				//TracePC("\r\n Drv <<dat3");
-				if( Uart3GetCh() != VP_SF ) 
-				{
-					//TracePC("\r\n Drv <<dat4");
-					continue;
-				}
-				else
-				{
-					TracePC("\r\n Drv <<dat=");
-					VPMsgBufCR[i++]=VP_SF;
-					TracePC("[%02x]",VPMsgBufCR[i-1]);	
-					datalen=Uart3pcGetChWhile_CR();//length
-					VPMsgBufCR[i++]=datalen;
-					datalen-=5;
-					VPMsgBufCR[i++]=Uart3pcGetChWhile_CR();//ver
-					VPMsgBufCR[i++]=Uart3pcGetChWhile_CR();//MT	
-					VPMsgBufCR[i++]=Uart3pcGetChWhile_CR();//SN	
-					isft=1;
-					break;
-				}
-			}
-			//2.得到包的data和chk
-			if(isft)
-			{
-				for(dataindex=0;dataindex<datalen+2;dataindex++)
-				{
-					VPMsgBufCR[i++]=Uart3pcGetChWhile_CR();
-					reclen=1;
-				}			
-			}
+				VPMsgBufCR[i++]=Uart3pcGetChWhile_CR();
+				reclen=1;
+			}			
 		}
 	}
+	
 		
 		
 	
 	if(reclen)
 	{
 		for( i=0; i<=sizeof(VPMsgBufCR)-7; i++ )
-		{
-			if(SystemPara.EasiveEnable == 1)
+		{			
+			
+			//TracePC("\r\n Drv i=%d",i);
+		    //Check the SF
+			if( VPMsgBufCR[i] != VP_SF ) 
+				continue;
+			//TracePC("\r\n Drv rec=sf"); 
+			//TracePC( "\n Bus Return Str = ");
+			//for( j = 0; j < 32; j++ )
+			//	Trace( " %02x", VPMsgBufCR[i+j] );
+			//Check the len
+			len = VPMsgBufCR[i+1];
+			if( !(len >=5) ) 
+			    continue;
+					
+			if( i+len+2 > sizeof( VPMsgBufCR ) ) 
+			    break;	
+			//TracePC("\r\n Drv rec=len"); 
+			//Check the CHK
+			sum = 0;
+			sum = calc_crc69(VPMsgBufCR + i, len);
+			if( (VPMsgBufCR[i+len] != sum/256)||(VPMsgBufCR[i+len+1] != sum%256)	)
 			{
-				//TracePC("\r\n Drv i=%d",i);
-			    //Check the SF
-				if( VPMsgBufCR[i] != VP_PROEASIV_SF ) 
-					continue;
-				//TracePC("\r\n Drv rec=sf"); 
-				//TracePC( "\n Bus Return Str = ");
-				//for( j = 0; j < 32; j++ )
-				//	Trace( " %02x", VPMsgBufCR[i+j] );
-				//Check the len
-				len = VPMsgBufCR[i+1];
-				if( !(len >=5) ) 
-				    continue;
-						
-				if( i+len+2 > sizeof( VPMsgBufCR ) ) 
-				    break;	
-				//TracePC("\r\n Drv rec=len"); 
-				//Check the CHK
-				sum = 0;
-				sum = calc_crc69(VPMsgBufCR + i, len);
-				if( (VPMsgBufCR[i+len] != sum/256)||(VPMsgBufCR[i+len+1] != sum%256)	)
-				{
-					continue;
-			    }
-				//TracePC("\r\n Drv rec=chk"); 
-				//OSTimeDly(20);
-				//Check the message type
-		        if( !((VPMsgBufCR[i+4]>=VP_MT_MIN_RECEIVE) && (VPMsgBufCR[i+4]<=VP_MT_MAX_RECEIVE)) )   
-		            continue;  
-				//TracePC("\r\n Drv rec=type"); 
-				//OSTimeDly(20);
-				//Save the message
-				sysVPMissionCR.receive.sf      = VPMsgBufCR[i];
-				sysVPMissionCR.receive.len     = VPMsgBufCR[i+1];
-				sysVPMissionCR.receive.sn      = VPMsgBufCR[i+2];
-		        sysVPMissionCR.receive.verFlag = VPMsgBufCR[i+3];
-		 	    sysVPMissionCR.receive.msgType = VPMsgBufCR[i+4];				
-		        sysVPMissionCR.receive.datLen  = sysVPMissionCR.receive.len - 5;
-				TracePC("\r\n Drv <<sf=%02x,len=%02x,mt=[%02x],data=",sysVPMissionCR.receive.sf,sysVPMissionCR.receive.len,sysVPMissionCR.receive.msgType); 
-				OSTimeDly(20);
-				for( m=0,k=i+5; k<i+5+sysVPMissionCR.receive.datLen; m++,k++)
-				{			
-					sysVPMissionCR.receive.msg[m] = VPMsgBufCR[k];	
-					//TracePC("\r\n Drv k=%d,m=%d,k<%d,msg=%d",k,m,(5+sysVPMissionCR.receive.datLen),sysVPMissionCR.receive.msg[m]);
-					TracePC(" [%02x]",sysVPMissionCR.receive.msg[m]);
-				}
-				//TracePC("\r\n Drv rec2=%02x,%02x,%02x,%02x,%02x",sysVPMissionCR.receive.msg[0],sysVPMissionCR.receive.msg[1],sysVPMissionCR.receive.msg[2],sysVPMissionCR.receive.msg[3],sysVPMissionCR.receive.msg[4]); 
-				OSTimeDly(20);
-				sysVPMissionCR.receive.chk = sysVPMissionCR.receive.msg[k]*256 + sysVPMissionCR.receive.msg[k+1];
-				memset( VPMsgBufCR, 0, sizeof(VPMsgBufCR) );
-				//TracePC(",%02x,%02x",sysVPMissionCR.receive.msg[k],sysVPMissionCR.receive.msg[k+1]);
-				//TracePC("\r\n Drv rec3=%02x,%02x,%02x,%02x,%02x",sysVPMissionCR.receive.sf,sysVPMissionCR.receive.len,sysVPMissionCR.receive.verFlag,sysVPMissionCR.receive.msgType,sysVPMissionCR.receive.sn); 
-				//OSTimeDly(20);
-				return 1;
+				continue;
+		    }
+			//TracePC("\r\n Drv rec=chk"); 
+			//OSTimeDly(20);
+			//Check the message type
+	        if( !((VPMsgBufCR[i+3]>=VP_MT_MIN_RECEIVE) && (VPMsgBufCR[i+3]<=VP_MT_MAX_RECEIVE)) )   
+	            continue;  
+			//TracePC("\r\n Drv rec=type"); 
+			//OSTimeDly(20);
+			//Save the message
+			sysVPMissionCR.receive.sf      = VPMsgBufCR[i];
+			sysVPMissionCR.receive.len     = VPMsgBufCR[i+1];
+	        sysVPMissionCR.receive.verFlag = VPMsgBufCR[i+2];
+	 	    sysVPMissionCR.receive.msgType = VPMsgBufCR[i+3];
+			sysVPMissionCR.receive.sn      = VPMsgBufCR[i+4];
+	        sysVPMissionCR.receive.datLen  = sysVPMissionCR.receive.len - 5;
+			TracePC("\r\n Drv <<sf=%02x,len=%02x,mt=[%02x],data=",sysVPMissionCR.receive.sf,sysVPMissionCR.receive.len,sysVPMissionCR.receive.msgType); 
+			OSTimeDly(20);
+			for( m=0,k=i+5; k<i+5+sysVPMissionCR.receive.datLen; m++,k++)
+			{			
+				sysVPMissionCR.receive.msg[m] = VPMsgBufCR[k];	
+				//TracePC("\r\n Drv k=%d,m=%d,k<%d,msg=%d",k,m,(5+sysVPMissionCR.receive.datLen),sysVPMissionCR.receive.msg[m]);
+				TracePC(" [%02x]",sysVPMissionCR.receive.msg[m]);
 			}
-			else
-			{
-				//TracePC("\r\n Drv i=%d",i);
-			    //Check the SF
-				if( VPMsgBufCR[i] != VP_SF ) 
-					continue;
-				//TracePC("\r\n Drv rec=sf"); 
-				//TracePC( "\n Bus Return Str = ");
-				//for( j = 0; j < 32; j++ )
-				//	Trace( " %02x", VPMsgBufCR[i+j] );
-				//Check the len
-				len = VPMsgBufCR[i+1];
-				if( !(len >=5) ) 
-				    continue;
-						
-				if( i+len+2 > sizeof( VPMsgBufCR ) ) 
-				    break;	
-				//TracePC("\r\n Drv rec=len"); 
-				//Check the CHK
-				sum = 0;
-				sum = calc_crc69(VPMsgBufCR + i, len);
-				if( (VPMsgBufCR[i+len] != sum/256)||(VPMsgBufCR[i+len+1] != sum%256)	)
-				{
-					continue;
-			    }
-				//TracePC("\r\n Drv rec=chk"); 
-				//OSTimeDly(20);
-				//Check the message type
-		        if( !((VPMsgBufCR[i+3]>=VP_MT_MIN_RECEIVE) && (VPMsgBufCR[i+3]<=VP_MT_MAX_RECEIVE)) )   
-		            continue;  
-				//TracePC("\r\n Drv rec=type"); 
-				//OSTimeDly(20);
-				//Save the message
-				sysVPMissionCR.receive.sf      = VPMsgBufCR[i];
-				sysVPMissionCR.receive.len     = VPMsgBufCR[i+1];
-		        sysVPMissionCR.receive.verFlag = VPMsgBufCR[i+2];
-		 	    sysVPMissionCR.receive.msgType = VPMsgBufCR[i+3];
-				sysVPMissionCR.receive.sn      = VPMsgBufCR[i+4];
-		        sysVPMissionCR.receive.datLen  = sysVPMissionCR.receive.len - 5;
-				TracePC("\r\n Drv <<sf=%02x,len=%02x,mt=[%02x],data=",sysVPMissionCR.receive.sf,sysVPMissionCR.receive.len,sysVPMissionCR.receive.msgType); 
-				OSTimeDly(20);
-				for( m=0,k=i+5; k<i+5+sysVPMissionCR.receive.datLen; m++,k++)
-				{			
-					sysVPMissionCR.receive.msg[m] = VPMsgBufCR[k];	
-					//TracePC("\r\n Drv k=%d,m=%d,k<%d,msg=%d",k,m,(5+sysVPMissionCR.receive.datLen),sysVPMissionCR.receive.msg[m]);
-					TracePC(" [%02x]",sysVPMissionCR.receive.msg[m]);
-				}
-				//TracePC("\r\n Drv rec2=%02x,%02x,%02x,%02x,%02x",sysVPMissionCR.receive.msg[0],sysVPMissionCR.receive.msg[1],sysVPMissionCR.receive.msg[2],sysVPMissionCR.receive.msg[3],sysVPMissionCR.receive.msg[4]); 
-				OSTimeDly(20);
-				sysVPMissionCR.receive.chk = sysVPMissionCR.receive.msg[k]*256 + sysVPMissionCR.receive.msg[k+1];
-				memset( VPMsgBufCR, 0, sizeof(VPMsgBufCR) );
-				//TracePC("\r\n Drv rec3=%02x,%02x,%02x,%02x,%02x",sysVPMissionCR.receive.sf,sysVPMissionCR.receive.len,sysVPMissionCR.receive.verFlag,sysVPMissionCR.receive.msgType,sysVPMissionCR.receive.sn); //OSTimeDly(20);
-				//TracePC(",%02x,%02x",sysVPMissionCR.receive.msg[k],sysVPMissionCR.receive.msg[k+1]);
-				return 1;
-			}
+			//TracePC("\r\n Drv rec2=%02x,%02x,%02x,%02x,%02x",sysVPMissionCR.receive.msg[0],sysVPMissionCR.receive.msg[1],sysVPMissionCR.receive.msg[2],sysVPMissionCR.receive.msg[3],sysVPMissionCR.receive.msg[4]); 
+			OSTimeDly(20);
+			sysVPMissionCR.receive.chk = sysVPMissionCR.receive.msg[k]*256 + sysVPMissionCR.receive.msg[k+1];
+			memset( VPMsgBufCR, 0, sizeof(VPMsgBufCR) );
+			//TracePC("\r\n Drv rec3=%02x,%02x,%02x,%02x,%02x",sysVPMissionCR.receive.sf,sysVPMissionCR.receive.len,sysVPMissionCR.receive.verFlag,sysVPMissionCR.receive.msgType,sysVPMissionCR.receive.sn); //OSTimeDly(20);
+			//TracePC(",%02x,%02x",sysVPMissionCR.receive.msg[k],sysVPMissionCR.receive.msg[k+1]);
+			return 1;			
 		}	
 	}
 	return 0;

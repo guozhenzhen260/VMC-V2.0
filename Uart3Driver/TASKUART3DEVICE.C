@@ -174,6 +174,7 @@ void Uart3TaskDevice(void *pvData)
 		TracePC("\r\n Taskpend CRUboxinit"); 
 		LCDNumberFontPrintf(40,LINE15,2,"CRAccepter-1");
 		VPSerialInit_CR();
+		VPMission_Setup_RPT_CR();
 		NowPCDev = PC_UBOXCR;
 	}
 	else
