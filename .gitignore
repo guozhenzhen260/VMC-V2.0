@@ -2,7 +2,5 @@
 Lst/
 si/
 *.uvguix*
-
-hellooooooo
-添加内容 有用
-
+lpc17xx.*
+VMC V2.0_uvopt.*
