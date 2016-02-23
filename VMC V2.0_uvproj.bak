@@ -610,6 +610,11 @@
               <FileType>1</FileType>
               <FilePath>.\Uart3Driver\UBProtocol_SIMPLE.c</FilePath>
             </File>
+            <File>
+              <FileName>UBProtocol_CR.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Uart3Driver\UBProtocol_CR.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

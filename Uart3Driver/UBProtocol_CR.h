@@ -218,7 +218,7 @@ struct VP_MissionCR
 
 //unsigned char VPBusTxMsg( void );
 extern void VPSerialInit_CR(void);
-extern unsigned char VPMission_Poll( uint8_t *isInit );
+extern unsigned char VPMission_Poll_CR( void);
 extern unsigned char VPMission_Payin_RPT(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney);
 extern unsigned char VPMission_Payout_RPT( uint8_t payoutDev,unsigned char Type, unsigned int payoutMoney, unsigned int payAllMoney );
 extern unsigned char VPMission_Cost_RPT( unsigned char Type, uint32_t costMoney, unsigned int payAllMoney );

@@ -515,6 +515,37 @@ void Uart3TaskDevice(void *pvData)
 				}
 			}
 		}
+		else if(NowPCDev == PC_UBOXCR)
+		{
+			VPMission_Poll_CR();
+			OSTimeDly(OS_TICKS_PER_SEC/4);
+			//OSTimeDly(OS_TICKS_PER_SEC/50);
+			//OSTimeDly(7);
+			/*//取得返回值
+			AccepterSIMPLEUboxMsg = OSQPend(g_SIMPLEUbox_VMCTOPCQ,1,&ComStatus);
+			if(ComStatus == OS_NO_ERR)
+			{
+				switch(AccepterSIMPLEUboxMsg->VMCTOPCCmd)
+				{
+					case MBOX_SIMPLEVMCTOPC_BUTTONRPT:
+						TracePC("\r\n Taskpend btnchannel_id=%d",AccepterSIMPLEUboxMsg->btnchannel_id); 						
+						VPMissionSIMPLE_Button_RPT(AccepterSIMPLEUboxMsg->btnchannel_id);
+						break;
+					case MBOX_SIMPLEVMCTOPC_ADMINRPT:
+						TracePC("\r\n Taskpend Admin=%d,%d,%d",AccepterSIMPLEUboxMsg->admintype,AccepterSIMPLEUboxMsg->admincolumn,AccepterSIMPLEUboxMsg->admincolumnsum);					
+						VPMissionSIMPLE_Admin_RPT(AccepterSIMPLEUboxMsg->admintype,AccepterSIMPLEUboxMsg->admincolumn,AccepterSIMPLEUboxMsg->admincolumnsum);
+						break;
+					case MBOX_SIMPLEVMCTOPC_GETADMIN:						
+						TracePC("\r\n Taskpend GetAdmin=%d,%d",AccepterSIMPLEUboxMsg->admintype,AccepterSIMPLEUboxMsg->admincolumn);					
+						if(AccepterSIMPLEUboxMsg->admintype==3)
+						{
+							VPSIMPLE_Sethdquery(AccepterSIMPLEUboxMsg->admincolumn);
+						}
+						VPMissionSIMPLE_Get_Admin2(AccepterSIMPLEUboxMsg->admintype);
+						break;	
+				}
+			}*/
+		}
 		else if(NowPCDev == 0)
 		{
 			OSTimeDly(OS_TICKS_PER_SEC/2);

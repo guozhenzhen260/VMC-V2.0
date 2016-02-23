@@ -442,10 +442,10 @@ unsigned char VPBusFrameUnPack_CR( void )
 			//Check the CHK
 			sum = 0;
 			sum = calc_crc69(VPMsgBufCR + i, len);
-			if( (VPMsgBufCR[i+len] != sum/256)||(VPMsgBufCR[i+len+1] != sum%256)	)
-			{
-				continue;
-		    }
+		//	if( (VPMsgBufCR[i+len] != sum/256)||(VPMsgBufCR[i+len+1] != sum%256)	)
+		//	{
+		//		continue;
+		//   }
 			//TracePC("\r\n Drv rec=chk"); 
 			//OSTimeDly(20);
 			//Check the message type
@@ -1968,7 +1968,7 @@ unsigned char VPMission_Setup_RPT_CR( void )
 	unsigned char flag = 0;
 
     retry = VP_COM_RETRY;   
-	flag = VPMsgPackSend_CR( VP_VMC_SETUP,1);
+	flag = VPMsgPackSend_CR( VP_VMC_SETUP,0);
 	//DisplayStr( 0, 0, 1, "2", 1 );  
 	//WaitForWork(2000,NULL);
     if( flag != VP_ERR_NULL )
@@ -1976,7 +1976,7 @@ unsigned char VPMission_Setup_RPT_CR( void )
 		return VP_ERR_PAR;
 	}
 
-	while( retry )
+	/*while( retry )
 	{
 		Timer.PCRecTimer = VP_TIME_OUT;
 		while( Timer.PCRecTimer )
@@ -2013,7 +2013,7 @@ unsigned char VPMission_Setup_RPT_CR( void )
 		default:
 		    break;
 	}
-	
+	*/
 	return VP_ERR_NULL;
 }
 #if 0
@@ -4083,29 +4083,22 @@ unsigned char VP_Control_Ind( void )
     return VP_ERR_NULL;	
 }
 
-
+#endif
 
 /*********************************************************************************************************
-** Function name:     	VPMission_Poll
+** Function name:     	VPMission_Poll_CR
 ** Descriptions:	    轮询PC机
 ** input parameters:    
 ** output parameters:   无
 ** Returned value:      
 *********************************************************************************************************/
-unsigned char VPMission_Poll( uint8_t *isInit )
+unsigned char VPMission_Poll_CR()
 {
     unsigned char retry = 0;
 	unsigned char recRes=0;
 	unsigned char flag = 0;
 
-	if(LogPara.offLineFlag == 1)
-	{		
-		if(Timer.offLinePCTimer)
-		{	
-			return VP_ERR_NULL;
-		}
-		Timer.offLinePCTimer = 5;
-	}		
+		
 
 	retry = VP_COM_RETRY;	
 
@@ -4125,29 +4118,14 @@ unsigned char VPMission_Poll( uint8_t *isInit )
 			//WaitForWork(2000,NULL);
 			if( VPBusFrameUnPack_CR() )
 			{
-				TracePC("\r\n Drv PollLine=%d",LogPara.offLineFlag); 
-			    if(LogPara.offLineFlag == 1)
-				{
-					TracePC("\r\n Drv PollLineOK"); 
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-				}	
 				TracePC("\r\n Drv rec=ok"); 
-				recRes = 1;
-				if(SystemPara.EasiveEnable == 0)
-				{
-					if(globalSys.pcInitFlag == 0)
-						globalSys.pcInitFlag = 1;
-				}
+				recRes = 1;				
 				break;
 			}			
 		}
 		if(Timer.PCRecTimer==0)
-		{
-			if(LogPara.offLineFlag == 1)//离线退出
-				retry=0;
-			else
-				retry--;
+		{			
+			retry--;
 			TracePC("\r\n Drv failretry=%d",retry); 
 		}	
 		if(recRes)
@@ -4157,20 +4135,8 @@ unsigned char VPMission_Poll( uint8_t *isInit )
 			{
 				if( VPBusFrameUnPack_CR() )
 				{
-					TracePC("\r\n Drv PollLine2=%d",LogPara.offLineFlag); 
-				    if(LogPara.offLineFlag == 1)
-					{
-						TracePC("\r\n Drv PollLine2OK"); 
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}	
 					TracePC("\r\n Drv rec2=ok"); 
-					recRes = 1;
-					if(SystemPara.EasiveEnable == 0)
-					{
-						if(globalSys.pcInitFlag == 0)
-							globalSys.pcInitFlag = 1;
-					}
+					recRes = 1;					
 				}
 			}
 			break;//接收到数据退出
@@ -4180,12 +4146,7 @@ unsigned char VPMission_Poll( uint8_t *isInit )
 	if( retry== 0 )
 	{
 		TracePC("\r\n Drv rec=fail"); 
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
-		}
+		OSTimeDly(10);	
         return VP_ERR_COM;
 	}
 
@@ -4195,11 +4156,10 @@ unsigned char VPMission_Poll( uint8_t *isInit )
     switch( sysVPMissionCR.receive.msgType )
 	{
 		case VP_GET_SETUP_IND: 
-			VPMission_Setup_RPT_CR();
-			*isInit = 1;			
+			VPMission_Setup_RPT_CR();						
 			break;
  	    
-		case VP_HOUDAO_IND:
+		/*case VP_HOUDAO_IND:
 		    VP_CMD_HuodaoPar();
 		    break;
 		case VP_HUODAO_SET_IND: 
@@ -4241,12 +4201,14 @@ unsigned char VPMission_Poll( uint8_t *isInit )
 		case VP_GETINFO_INDEXP:
 			VP_CMD_GetInfoExp();
 			break;		
-		default:
+		*/default:
 		    break;
 	}
 	
 	return VP_ERR_NULL;
 }
+
+#if 0
 
 /*********************************************************************************************************
 ** Function name:     	VPMission_Payin_RPT
