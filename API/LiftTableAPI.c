@@ -33,6 +33,7 @@ unsigned char LiftTableHandle(unsigned char HandleType,unsigned char ChannelNum,
 {
 	MessagePack *RecvBoxPack;
 	uint8_t err,i;
+	unsigned int timeout1 = 0;
 
 	MsgAccepterPack.ChnlHandleType = HandleType;
 	MsgAccepterPack.ChannelNum = ChannelNum;
@@ -41,7 +42,18 @@ unsigned char LiftTableHandle(unsigned char HandleType,unsigned char ChannelNum,
 	TraceChannel("LiftTableHandle[start]:type = %d\r\n",HandleType);
 	liftSetReady(0);
 	OSMboxPost(g_LiftTableMail,&MsgAccepterPack);
-	RecvBoxPack = OSMboxPend(g_LiftTableBackMail,LIFT_HANDLE_TIMEOUT,&err);
+	if(HandleType == CHANNEL_OUTGOODS){
+		for(i = 0;i < 5;i++){
+			RecvBoxPack = OSMboxPend(g_LiftTableBackMail,60000,&err);
+			if(err == OS_NO_ERR){
+				break;
+			}
+		}
+	}
+	else{
+		RecvBoxPack = OSMboxPend(g_LiftTableBackMail,LIFT_HANDLE_TIMEOUT,&err);
+		
+	}
 	liftSetReady(1);
 	if(err == OS_NO_ERR){
 		TraceChannel("LiftTableHandle[pend]:type=%d\r\n",HandleType);

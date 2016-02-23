@@ -106,12 +106,9 @@ typedef struct
 
 extern STLIFTTABLE stLiftTable;
 
-unsigned short CrcCheck(unsigned char *msg, unsigned short len) ;
 
+unsigned short CrcCheck(unsigned char *msg, unsigned short len) ;
 unsigned char LiftTableDriver(unsigned char Binnum,unsigned char Cmd,unsigned char Add,unsigned char Level,unsigned char *Result);
 
-unsigned char LiftTableUart(unsigned char Binnum,unsigned char BinAdd,unsigned char Cmd,
-							unsigned char *Data,unsigned char len,unsigned char *Ack);
-
-
+unsigned char LIFT_vmcStatusReq(unsigned char bin);
 #endif

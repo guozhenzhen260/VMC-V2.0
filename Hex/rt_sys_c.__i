@@ -1,1 +1,0 @@
--c --cpu Cortex-M3 -g -O0 --apcs=interwork -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\NXP\LPC17xx" -o ".\Hex\rt_sys_c.o" --omf_browse ".\Hex\rt_sys_c.crf" --depend ".\Hex\rt_sys_c.d" "Startup\rt_sys_c.c"

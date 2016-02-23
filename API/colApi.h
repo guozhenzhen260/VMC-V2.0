@@ -50,7 +50,7 @@ typedef struct _col_ctrl_{
 
 
 unsigned char COL_driver(unsigned char Binnum,unsigned char Cmd,unsigned char Add,unsigned char *Result);
-
+void msleep(unsigned int msec);
 
 
 #endif

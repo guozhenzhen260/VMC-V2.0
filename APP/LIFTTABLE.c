@@ -311,139 +311,8 @@ unsigned char LiftTable1Process(unsigned char Binnum,unsigned char ChannelNum,un
 	if(PhysicNum == 0x00)
 		return 0xff;
 	level = ChannelGetLevelNum(Binnum,ChannelNum);
-	switch(HandleType)
-	{
-		//出货
-		case LIFTTABLE_OUTHANDLE:
-			//查询状态是否正常，正常出货
-			res = LiftTableHandle(CHANNEL_CHECKSTATE,0,0,Binnum,Result);
-			TraceChannel("res==%d  rseult1=%d  result2=%d\r\n",res,Result[0],Result[1]);
-			if(res==1)
-			{
-				if((Result[5]==0x00))		
-				{
-					//进行出货操作
-					res = LiftTableHandle(CHANNEL_OUTGOODS,PhysicNum,level,Binnum,Result);
-					if(res)
-					{
-						OSTimeDly(10);
-						LIFTTABLETIMER = 3000+level*200;
-						while(LIFTTABLETIMER)
-						{
-							//检测出货结果
-							res = LiftTableHandle(CHANNEL_CHECKOUTRESULT,0,0,Binnum,Result);
-							TraceChannel("res=%d\r\n",res);
-							if((Result[5])==0x00)
-							{
-								FailFlag = res;
-								TraceChannel("Out_OVER_Break===%x\r\n",Result[1]);
-								break;
-							}
-							OSTimeDly(100);
-						}
-						if(LIFTTABLETIMER)
-						{
-							if((Result[6]!=0)&&(Result[7]!=0))
-								return 2;
-							else
-							if((Result[6]!=0)&&(Result[7]==5))
-								return 1;
-							else
-								return 1;
-						}
-						else										   	
-							return 2;
-					}
-				}
-				else
-					return 0;
-			}
-			break;
-		//查询状态
-		case LIFTTABLE_CHECKHANDLE:
-			res = LiftTableHandle(CHANNEL_CHECKSTATE,0,0,Binnum,Result);
-			if(res == 1)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case LIFTTABLE_OUTGOODSRST:
-			res = LiftTableHandle(CHANNEL_CHECKOUTRESULT,0,0,Binnum,Result);
-			if(res==1)
-			{
-				return 1;
-			}
-			else
-				return 0;
-		case MACHINE_RESET:
-			res = LiftTableHandle(MACHINE_RESET,0,0,Binnum,Result);
-			if(res==1)
-			{
-				return 1;
-			}
-			else
-				return 0;
-		case MACHINE_LIGHTOPEN:
-			res = LiftTableHandle(MACHINE_LIGHTOPEN,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case MACHINE_LIGHTCLOSE:
-			res = LiftTableHandle(MACHINE_LIGHTCLOSE,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case MACHINE_OPENDOOR:
-			res = LiftTableHandle(MACHINE_OPENDOOR,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case MACHINE_CLOSEDOOR:
-			res = LiftTableHandle(MACHINE_CLOSEDOOR,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case MACHINE_INFORMATION:
-			res = LiftTableHandle(MACHINE_INFORMATION,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-	}
-	return 3;
+	res = LiftTableHandle(HandleType,PhysicNum,level,Binnum,Result);
+	return res;
 }
 
 
@@ -467,161 +336,8 @@ unsigned char LiftTable2Process(unsigned char Binnum,const unsigned char Channel
 		return 0xff;
 	level = ChannelNum / 10 ;
 	PhysicNum = (ChannelNum % 10 == 0) ? 10: ChannelNum % 10;
-	switch(HandleType)
-	{
-		//出货
-		case LIFTTABLE_OUTHANDLE:
-			//查询状态是否正常，正常出货
-			rcx = 10;
-			while(rcx--)
-			{
-				res = LiftTableHandle(CHANNEL_CHECKSTATE,0,0,Binnum,Result);
-				if(res==1 && (Result[5]==0x00))
-					break;
-				OSTimeDly(200);
-			}
-			
-			TraceChannel("\r\nres==%d  Result[0]=%d  Result[1]=%d Result[5]=%d\r\n",
-				res,Result[0],Result[1],Result[5]);
-	
-			if(res==1 && (Result[5]==0x00) && (Result[6]==0x00))
-			{
-					while(1)
-					{
-							//进行出货操作
-							res = LiftTableHandle(CHANNEL_OUTGOODS,PhysicNum,level,Binnum,Result);
-							if(res)
-							{
-								OSTimeDly(10);
-								//5000 * 10  = 50000 
-								LIFTTABLETIMER = 5000+(8 - level)*400;//检测出货结果超时
-								while(LIFTTABLETIMER)
-								{
-									//检测出货结果
-									res = LiftTableHandle(CHANNEL_CHECKOUTRESULT,0,0,Binnum,Result);
-									TraceChannel("res=%d\r\n",res);
-									if(((Result[5])==0x00) && (res != 0xFF))
-									{
-										FailFlag = res;
-										TraceChannel("Out_OVER_Break===%x\r\n",Result[1]);
-										break;
-									}
-									OSTimeDly(200);
-								}
-								if(LIFTTABLETIMER)
-								{
-									if((Result[6]!=0)&&(Result[7]!=0))
-									{
-										TraceChannel("Result[6] = %d,Result[7] = %d\r\n",
-											Result[6],Result[7]);
-										if(Result[7] == 5 && takeTimeOut)//货未取走
-										{
-											OSTimeDly(400);
-											takeTimeOut--;
-											continue;
-										}
-										return 2;
-									}	
-									else
-										return 1;
-								}
-								else										   	
-									return 2;
-								
-							}
-							else
-								return 0;		
-						}
-					
-			}
-			else
-				return 0;					
-			break;
-		//查询状态
-		case LIFTTABLE_CHECKHANDLE:
-			res = LiftTableHandle(CHANNEL_CHECKSTATE,0,0,Binnum,Result);
-			if(res == 1)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case LIFTTABLE_OUTGOODSRST:
-			res = LiftTableHandle(CHANNEL_CHECKOUTRESULT,0,0,Binnum,Result);
-			if(res==1)
-			{
-				return 1;
-			}
-			else
-				return 0;
-		case MACHINE_RESET:
-			res = LiftTableHandle(MACHINE_RESET,0,0,Binnum,Result);
-			if(res==1)
-			{
-				return 1;
-			}
-			else
-				return 0;
-		case MACHINE_LIGHTOPEN:
-			res = LiftTableHandle(MACHINE_LIGHTOPEN,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case MACHINE_LIGHTCLOSE:
-			res = LiftTableHandle(MACHINE_LIGHTCLOSE,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case MACHINE_OPENDOOR:
-			res = LiftTableHandle(MACHINE_OPENDOOR,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case MACHINE_CLOSEDOOR:
-			res = LiftTableHandle(MACHINE_CLOSEDOOR,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case MACHINE_INFORMATION:
-			res = LiftTableHandle(MACHINE_INFORMATION,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-	}
-	return 3;
+	res = LiftTableHandle(HandleType,PhysicNum,level,Binnum,Result);
+	return res;
 }
 
 
@@ -649,162 +365,8 @@ unsigned char LiftTable3Process(unsigned char Binnum,const unsigned char Channel
 	}
 	level = PhysicNum / 10 ;
 	PhysicNum = PhysicNum % 10;
-	switch(HandleType)
-	{
-		case LIFTTABLE_OUTHANDLE://出货
-			//查询状态是否正常，正常出货
-			rcx = 10;
-			while(rcx--)
-			{
-				TraceChannel("Check the lift remainTimes=%d\r\n",rcx);
-				res = LiftTableHandle(CHANNEL_CHECKSTATE,0,0,Binnum,Result);
-				if(res==1 && (Result[5]==0x00))
-					break;
-				OSTimeDly(200);
-			}
-			
-			TraceChannel("Check[over]:res==%d  Result[0]=%d  Result[1]=%d Result[5]=%d\r\n",
-				res,Result[0],Result[1],Result[5]);
-	
-			if(res==1 && (Result[5]==0x00) && (Result[6]==0x00))
-			{
-				while(1)
-				{
-					//进行出货操作
-					TraceChannel("OUTGOODS: level=%d,column=%d\r\n",level,PhysicNum);
-					res = LiftTableHandle(CHANNEL_OUTGOODS,PhysicNum,level,Binnum,Result);
-					if(res)
-					{
-						OSTimeDly(10);
-						//5000 * 10  = 50000 
-						LIFTTABLETIMER = 5000+(8 - level)*400;//检测出货结果超时
-						while(LIFTTABLETIMER)
-						{
-							//检测出货结果
-							TraceChannel("CHECKOUTRESULT:\r\n");
-							res = LiftTableHandle(CHANNEL_CHECKOUTRESULT,0,0,Binnum,Result);
-							if(((Result[5])==0x00) && (res != 0xFF))
-							{
-								FailFlag = res;
-								TraceChannel("Out_OVER_Break===%x\r\n",Result[1]);
-								break;
-							}
-							OSTimeDly(200);
-						}
-						if(LIFTTABLETIMER)
-						{
-							if((Result[6]!=0)&&(Result[7]!=0))
-							{
-								TraceChannel("Result[6] = %d,Result[7] = %d\r\n",
-									Result[6],Result[7]);
-								if(Result[7] == 5 && takeTimeOut)//货未取走
-								{
-									OSTimeDly(400);
-									takeTimeOut--;
-									continue;
-								}
-								return 2;
-							}	
-							else
-								return 1;
-						}
-						else										   	
-							return 2;
-						
-					}
-					else
-						return 0;		
-				}
-					
-			}
-			else
-				return 0;					
-			break;
-		//查询状态
-		case LIFTTABLE_CHECKHANDLE:
-			res = LiftTableHandle(CHANNEL_CHECKSTATE,0,0,Binnum,Result);
-			if(res == 1)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case LIFTTABLE_OUTGOODSRST:
-			res = LiftTableHandle(CHANNEL_CHECKOUTRESULT,0,0,Binnum,Result);
-			if(res==1)
-			{
-				return 1;
-			}
-			else
-				return 0;
-		case MACHINE_RESET:
-			res = LiftTableHandle(MACHINE_RESET,0,0,Binnum,Result);
-			if(res==1)
-			{
-				return 1;
-			}
-			else
-				return 0;
-		case MACHINE_LIGHTOPEN:
-			res = LiftTableHandle(MACHINE_LIGHTOPEN,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case MACHINE_LIGHTCLOSE:
-			res = LiftTableHandle(MACHINE_LIGHTCLOSE,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case MACHINE_OPENDOOR:
-			res = LiftTableHandle(MACHINE_OPENDOOR,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case MACHINE_CLOSEDOOR:
-			res = LiftTableHandle(MACHINE_CLOSEDOOR,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-		case MACHINE_INFORMATION:
-			res = LiftTableHandle(MACHINE_INFORMATION,0,0,Binnum,Result);
-			if(res)
-			{
-				if(Result[0]==0x00)
-					return 1;
-				else
-					return 0;
-			}
-			else
-				return 0;
-	}
-	return 3;
+	res = LiftTableHandle(HandleType,PhysicNum,level,Binnum,Result);
+	return res;
 }
 
 unsigned char LiftTableProcess(unsigned char Binnum,unsigned char ChannelNum,unsigned char HandleType)
@@ -922,130 +484,46 @@ void LiftTableTest(unsigned char binnum)
 					LCDPrintf(8,1,0,lang,LogoLiftTable.LiftTableTest[lang]);
 					if(rst == 0xff)
 						LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableNotHave[lang]);
-					else if(rst == 3)
-					{
+					else if(rst == 0x1F){
 						TraceChannel("Flow....1\r\n");
 						//货道板通讯故障
 						LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableGCD[lang]);		
-					}		
-					else if(rst == 0)
-					{
-						TraceChannel("Flow....2\r\n");
-						//存在故障
-						OSMboxPost(g_DeviceStateMail,&RecvBoxPack);
-						//等待邮箱返回
-						RecvBoxPack = OSMboxPend(g_DeviceStateBackMail,1000,&err);
-						if(err == OS_NO_ERR)
-						{
-							TraceChannel("Flow....3\r\n");
-							if(RecvBoxPack->Error_FMD == 1)
-							{
-								//取货电机故障
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableFMD[lang]);
-							}
-							if(RecvBoxPack->Error_FUM == 1)
-							{
-								//上下电机故障
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableFUM[lang]);
-							}
-							if(RecvBoxPack->Error_GOC == 1)
-							{
-								//出货确认板故障
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableGAD[lang]);
-							}
-							if(RecvBoxPack->Error_FLD == 1)
-							{
-								//层架检测器故障
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableFLD[lang]);
-							}
-							if(RecvBoxPack->Error_FOD == 1)
-							{
-								//起始位置传感器
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableFOD[lang]);
-							}
-							if(RecvBoxPack->Error_UDS == 1)
-							{
-								//用户取货门故障
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableUDS[lang]);
-							}
-							if(RecvBoxPack->Error_GCD == 1)
-							{
-								//货道驱动板故障
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableGCD[lang]);
-							}
-							if(RecvBoxPack->Error_SOVB == 1)
-							{
-								//出货机构忙
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableSOVB[lang]);
-							}
-							if(RecvBoxPack->Error_SOMD1 == 1)
-							{
-								//售货机大门没关
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableSOMD1[lang]);
-							}
-							if(RecvBoxPack->Error_SOEC == 1)
-							{
-								//收到错误数据包
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableSOEC[lang]);
-							}
-							if(RecvBoxPack->Error_SFHG == 1)
-							{
-								//升降台正确取货
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableSFHG[lang]);
-							}
-							if(RecvBoxPack->Error_SOFP == 1)
-							{
-								//升降台没在原点
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableSOFP[lang]);
-							}
-							if(RecvBoxPack->Error_SOMD2 == 1)
-							{
-								//取货门开启
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableSOMD2[lang]);
-							}
-						}
+					}	
+					else if(rst == 0x11){
+						LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableSOVB[lang]);
+					}
+					else if(rst == 0x12){//忙
+						LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableGCD[lang]);
+					}
+					// 2：数据错误 3：无货 4：卡货 5：取货门未开启 6：货物未取走 7：未定义错误	0xff：通信失败
+					else if(rst == 1){
+						LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableGetGoods[lang]);
+						ChannelSetParam(logicNo,binnum,CHANNELSTATE,1,0);
+					}
+					else if(rst == 2){
+						LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableDataErr[lang]);
+					}
+					else if(rst == 3){
+						LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableNotGoods[lang]);
+					}
+					else if(rst == 4){
+						LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableHang[lang]);
+					}
+					else if(rst == 5){
+						LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableDoorNotOpen[lang]);
+				
+					}
+					else if(rst == 6){
+						LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableGoodsNotTake[lang]);
+
+					}
+					else if(rst == 7){
+						LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableSOVB[lang]);
 					}
 					else
 					{
-						TraceChannel("Flow....4\r\n");
-						if(rst == 1)
-						{
-							TraceChannel("Flow....5\r\n");
-							//正常
-							LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableGetGoods[lang]);
-							ChannelSetParam(logicNo,binnum,CHANNELSTATE,1,0);
-						}
-						else
-						if(rst == 2)
-						{
-							TraceChannel("Flow....6\r\n");
-							if(FailFlag == 2)
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableDataErr[lang]);
-							else
-							if(FailFlag == 3)
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableNotGoods[lang]);
-							else
-							if(FailFlag == 4)
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableHang[lang]);
-							else
-							if(FailFlag == 5)
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableDoorNotOpen[lang]);
-							else
-							if(FailFlag == 6)
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableGoodsNotTake[lang]);
-							else
-							if(FailFlag == 7)
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableSOVB[lang]);
-							else
-							if(FailFlag == 8)
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableError[lang]);
-							else
-							if(FailFlag == 9)
-								LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableOtherErr[lang]);
+						LCDPrintf(8,5,0,lang,LogoLiftTable.LiftTableOtherErr[lang]);
 						
-							//出货失败
-							ChannelSetParam(logicNo,binnum,CHANNELSTATE,1,0);
-						}
 					}
 
 						

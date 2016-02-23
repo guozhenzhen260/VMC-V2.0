@@ -1,1 +1,0 @@
--c --cpu Cortex-M3 -g -O0 --apcs=interwork -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\NXP\LPC17xx" -o ".\Hex\os_core.o" --omf_browse ".\Hex\os_core.crf" --depend ".\Hex\os_core.d" "uCOS_II\OS_CORE.C"
