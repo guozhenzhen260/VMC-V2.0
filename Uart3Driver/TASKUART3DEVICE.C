@@ -30,7 +30,7 @@
 #define PC_UBOX  		    2			    //当前系统识别到的PC通讯类型为友宝
 #define PC_GPRS				3     			//当前系统识别到的PC通讯类型为GPRS
 #define PC_SIMPUBOX			4               //新友宝pc通讯
-
+#define PC_UBOXCR			5               //友宝成人pc通讯
 //extern uint8_t GetWeihuStatus();
 
 
@@ -168,6 +168,13 @@ void Uart3TaskDevice(void *pvData)
 		LCDNumberFontPrintf(40,LINE15,2,"SIMPLEAccepter-1");
 		SIMPLESIMPLEVPSerialInit();
 		NowPCDev = PC_SIMPUBOX;
+	}
+	else if( SystemPara.PcEnable == CRUBOX_PC )
+	{
+		TracePC("\r\n Taskpend CRUboxinit"); 
+		LCDNumberFontPrintf(40,LINE15,2,"CRAccepter-1");
+		VPSerialInit_CR();
+		NowPCDev = PC_UBOXCR;
 	}
 	else
 	{

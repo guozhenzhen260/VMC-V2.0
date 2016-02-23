@@ -189,7 +189,7 @@ const char  *BUSINESSERROR[MAXLANGUAGETYPE][23] =
 	  "Sorry",
 	  "Caution",
 	  "Unable to Give Change Now",
-	  "Bill is disable"
+	  "Pls Insert Coins"
    },
    //change by liya 2012-10-16
    {
