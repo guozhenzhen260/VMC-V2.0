@@ -505,7 +505,14 @@ void ButtonRPTAPI(uint8_t type,unsigned char Logicnum,unsigned char binnum)
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
-			break;		
+			break;	
+		case CRUBOX_PC:
+			TracePC("\r\n MiddUboxButton");	
+			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_BUTTON;							
+			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+			UpdateIndex();
+			OSTimeDly(OS_TICKS_PER_SEC/100);
+			break;	
 	}
 
 }

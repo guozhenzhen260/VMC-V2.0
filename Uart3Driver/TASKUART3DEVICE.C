@@ -550,6 +550,10 @@ void Uart3TaskDevice(void *pvData)
 						TracePC("\r\n Taskpend UboxAction=%d",AccepterUboxMsg->action); 
 						VPMission_Act_RPT_CR(AccepterUboxMsg->action);
 						break;	
+					case MBOX_VMCTOPC_BUTTON:
+						VPMission_Button_RPT_CR();
+						TracePC("\r\n Taskpend UboxBtn"); 
+						break;	
 				}
 				OSTimeDly(OS_TICKS_PER_SEC/4);
 			}	

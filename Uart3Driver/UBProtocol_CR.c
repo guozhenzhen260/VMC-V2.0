@@ -823,6 +823,14 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 				sysVPMissionCR.send.datLen  = i;
 			}				
 			break; 
+		case VP_BUTTON_RPT:	
+			{
+				sysVPMissionCR.send.msgType = VP_BUTTON_RPT;	
+				i=0;		
+				sysVPMissionCR.send.msg[i++]  = 0;	
+				sysVPMissionCR.send.datLen  = i;
+			}				
+			break; 	
 		
 				/*
                 
@@ -1190,6 +1198,41 @@ unsigned char VPMission_Act_RPT_CR( unsigned char action)
 		return VP_ERR_PAR;
 	}	
 	return VP_ERR_NULL;
+}
+
+
+/*********************************************************************************************************
+** Function name:     	VPMission_Button_RPT_CR
+** Descriptions:	    上报按键信息
+** input parameters:    type=1小键盘选择货道,4退币,0游戏按键
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+unsigned char VPMission_Button_RPT_CR()
+{
+    unsigned char retry = 0;
+	unsigned char recRes=0;
+	unsigned char flag = 0;
+
+	if(LogPara.offLineFlag == 1)
+	{
+		//if(type==VP_BUT_GAME)//游戏按键蜂鸣器响;by gzz 20110721
+	    //{   
+	    	//Buzzer();
+	    //}
+		return VP_ERR_NULL;
+	}
+	//
+    retry = VP_COM_RETRY;
+    //-------------------------------------------  
+	//1-0: button message, not need ACK
+    flag = VPMsgPackSend_CR( VP_BUTTON_RPT, 0);   
+    if( flag != VP_ERR_NULL )
+    {
+		return VP_ERR_PAR;
+	}	
+	return VP_ERR_NULL;
+
 }
 #if 0
 
@@ -3056,101 +3099,7 @@ unsigned char VPMission_Cost_RPT( unsigned char Type, uint32_t costMoney, unsign
 	return VP_ERR_NULL;
 }
 
-/*********************************************************************************************************
-** Function name:     	VPMission_Button_RPT
-** Descriptions:	    上报按键信息
-** input parameters:    type=1小键盘选择货道,4退币,0游戏按键
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VPMission_Button_RPT( unsigned char type, unsigned char value,uint8_t device )
-{
-    unsigned char retry = 0;
-	unsigned char recRes=0;
-	unsigned char flag = 0;
 
-	if(LogPara.offLineFlag == 1)
-	{
-		//if(type==VP_BUT_GAME)//游戏按键蜂鸣器响;by gzz 20110721
-	    //{   
-	    	//Buzzer();
-	    //}
-		return VP_ERR_NULL;
-	}
-	//
-    retry = VP_COM_RETRY;
-    //-------------------------------------------
-    sysVPMissionCR.type   = type;
-	sysVPMissionCR.Column  = value;
-	sysVPMissionCR.device  = device;
-    //if(type==VP_BUT_GAME)//游戏按键蜂鸣器响;by gzz 20110721
-    //{   
-    //	Buzzer();
-    //}
-    if(SystemPara.EasiveEnable == 1)
-	{
-		//===========================================
-	    //1-0: button message, not need ACK
-		flag = VPMsgPackSend_CR( VP_BUTTON_RPT, 1);   
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		
-	    while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack_CR() )
-				{
-					if(LogPara.offLineFlag == 1)
-					{
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}
-					recRes = 1;
-					break;
-				}
-			}	
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-		}
-		if( retry== 0 )
-		{
-			OSTimeDly(10);		
-			if(LogPara.offLineFlag == 0)
-			{
-				LogPara.offLineFlag = 1;
-				LogPara.offDetailPage = LogPara.LogDetailPage;
-			}
-	        return VP_ERR_COM;
-		}
-		switch( sysVPMissionCR.receive.msgType )
-		{
-			default:
-			    break;
-		}
-    }
-	else
-	{
-		//1-0: button message, not need ACK
-		flag = VPMsgPackSend_CR( VP_BUTTON_RPT, 0);   
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-	}
-	return VP_ERR_NULL;
-
-}
 
 
 
