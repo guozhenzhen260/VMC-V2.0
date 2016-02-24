@@ -815,6 +815,15 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 				sysVPMissionCR.send.datLen  = i;
 				break;
 			}
+		case VP_ACTION_RPT:	
+			{
+				sysVPMissionCR.send.msgType = VP_ACTION_RPT;	
+				i=0;		
+				sysVPMissionCR.send.msg[i++]  = sysVPMissionCR.action;	
+				sysVPMissionCR.send.datLen  = i;
+			}				
+			break; 
+		
 				/*
                 
 		/*case VP_PAYIN_RPT:
@@ -888,89 +897,7 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 				sysVPMissionCR.send.msg[0] = sysVPMissionCR.type;
 				sysVPMissionCR.send.msg[1] = 0;
 			}	
-			break;		
-		case VP_ACTION_RPT:		    
-			sysVPMissionCR.send.msgType = VP_ACTION_RPT;	
-			if( (sysVPMissionCR.action==VP_ACT_HEART)||(sysVPMissionCR.action==VP_ACT_ONLINE)||(sysVPMissionCR.action==VP_ACT_PCON) )
-			{
-				sysVPMissionCR.send.datLen = 1;
-				sysVPMissionCR.send.msg[0] = sysVPMissionCR.action;
-				decimalPlacesCR = SystemPara.DecimalNum;
-				TracePC("\r\n Drv PCAction=%d",sysVPMissionCR.action); 
-			}			
-			else if(sysVPMissionCR.action==VP_ACT_ADMIN)
-			{
-				sysVPMissionCR.send.datLen = 2;
-				sysVPMissionCR.send.msg[0] = sysVPMissionCR.action;
-				sysVPMissionCR.send.msg[1] = sysVPMissionCR.value;
-			}	
-			else if(sysVPMissionCR.action==VP_ACT_CHUHUO)
-			{
-				sysVPMissionCR.send.datLen = 8;
-				sysVPMissionCR.send.msg[0] = sysVPMissionCR.action;
-				sysVPMissionCR.send.msg[1] = sysVPMissionCR.second;
-				sysVPMissionCR.send.msg[2] = sysVPMissionCR.Column;
-				sysVPMissionCR.send.msg[3] = sysVPMissionCR.type;
-				tempMoney = MoneySend_CR(sysVPMissionCR.costMoney);
-				sysVPMissionCR.send.msg[4] = tempMoney/256;
-				sysVPMissionCR.send.msg[5] = tempMoney%256;
-				//PAYIN_RPT协议中末尾添加两个字节
-                //Total_Value：表示当前交易投币后，或者出货后，屏幕上显示的金额数 
-				//by gzz 20110721
-				tempMoney = MoneySend_CR(sysVPMissionCR.payAllMoney);
-                sysVPMissionCR.send.msg[6] = tempMoney/256;
-                sysVPMissionCR.send.msg[7] = tempMoney%256;
-			}	
-			else if(sysVPMissionCR.action==VP_ACT_PAYOUT)
-			{
-				sysVPMissionCR.send.datLen = 7;
-				sysVPMissionCR.send.msg[0] = sysVPMissionCR.action;
-				if(SystemPara.EasiveEnable == 1)
-				{
-					sysVPMissionCR.send.msg[1] = sysVPMissionCR.second;
-				}
-				else
-				{
-					sysVPMissionCR.send.msg[1] = 240;
-				}	
-				tempMoney = MoneySend_CR(sysVPMissionCR.costMoney);
-				sysVPMissionCR.send.msg[2] = tempMoney/256;
-				sysVPMissionCR.send.msg[3] = tempMoney%256;
-				//PAYIN_RPT协议中末尾添加两个字节
-                //Total_Value：表示当前交易投币后，或者出货后，屏幕上显示的金额数 
-				//by gzz 20110721
-				tempMoney = MoneySend_CR(sysVPMissionCR.payAllMoney);
-                sysVPMissionCR.send.msg[4] = tempMoney/256;
-                sysVPMissionCR.send.msg[5] = tempMoney%256;
-				sysVPMissionCR.send.msg[6] = sysVPMissionCR.type;
-				//TracePC("\r\n Drv ActPayout=%d,%d,%d,%d,%d,%ld,%ld",AccepterUboxMsg->action,AccepterUboxMsg->value,AccepterUboxMsg->second,AccepterUboxMsg->Column,AccepterUboxMsg->Type,AccepterUboxMsg->costMoney,AccepterUboxMsg->payAllMoney); 
-			}				
-			break; 
-		case VP_ADMIN_RPT:
-		    {
-			    sysVPMissionCR.send.msgType =  VP_ADMIN_RPT;
-
-				if( sysVPMissionCR.type == VP_ADMIN_GOODSADDCOL )
-				{
-					sysVPMissionCR.send.datLen = 3;
-					sysVPMissionCR.send.msg[0] = sysVPMissionCR.type;
-					sysVPMissionCR.send.msg[1] = sysVPMissionCR.Column;
-					sysVPMissionCR.send.msg[2] = sysVPMissionCR.ColumnSum;
-				}
-                else if( sysVPMissionCR.type == VP_ADMIN_GOODSADDTRAY ) //Add the tray's goods
-				{
-				    sysVPMissionCR.send.datLen = 2;
-					sysVPMissionCR.send.msg[0] = sysVPMissionCR.type;
-					sysVPMissionCR.send.msg[1] = sysVPMissionCR.Column;
-				}
-				else  //Add all columns' goods, chage, get bill
-				{
-				    sysVPMissionCR.send.datLen = 1;
-					sysVPMissionCR.send.msg[0] = sysVPMissionCR.type;
-				}
-				
-			}
-			break;    	
+			break;
 			case VP_OFFLINEDATA_RPT:
             {
 				if(sysVPMissionCR.type==0)
@@ -1229,6 +1156,39 @@ unsigned char VPMission_Info_RPT_CR(uint8_t type)
 		return VP_ERR_PAR;
 	}
 	
+	return VP_ERR_NULL;
+}
+
+/*********************************************************************************************************
+** Function name:       VPMission_Act_RPT_CR
+** Descriptions:        向PC上报Action信息
+** input parameters:    status=0出货成功,2，出货失败
+                        column实际出货货道  
+                        type出货类型
+                        cost商品的花费
+                        payAllMoney出货完成后，用户投币余额
+                        columnLeft本货道剩余商品个数
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+unsigned char VPMission_Act_RPT_CR( unsigned char action)
+{
+    unsigned char retry = 0;
+	unsigned char recRes=0;
+	unsigned char flag = 0;
+    
+	
+	
+    retry = VP_COM_RETRY;
+	//-------------------------------------------
+      sysVPMissionCR.action   = action;	
+	//===========================================
+		
+    flag = VPMsgPackSend_CR( VP_ACTION_RPT, 0);   
+    if( flag != VP_ERR_NULL )
+    {
+		return VP_ERR_PAR;
+	}	
 	return VP_ERR_NULL;
 }
 #if 0
@@ -1632,7 +1592,7 @@ unsigned char VPMission_ColumnSta_RPT( void )
 					if(LogPara.offLineFlag == 1)
 					{
 						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+						VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
 					}
 					recRes = 1;
 					break;
@@ -2012,7 +1972,7 @@ unsigned char VPMission_OfflineData_RPT( void )
 					if(LogPara.offLineFlag == 1)
 					{
 						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+						VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
 					}
 					recRes = 1;
 					break;
@@ -2063,7 +2023,7 @@ unsigned char VPMission_OfflineData_RPT( void )
 				if(LogPara.offLineFlag == 1)
 				{
 					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
 				}
 				recRes = 1;
 				break;
@@ -2897,7 +2857,7 @@ unsigned char VPMission_Payin_RPT(uint8_t dev,uint16_t payInMoney,uint32_t payAl
 					if(LogPara.offLineFlag == 1)
 					{
 						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+						VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
 					}
 					recRes = 1;
 					break;
@@ -2984,7 +2944,7 @@ unsigned char VPMission_Payout_RPT( uint8_t payoutDev,unsigned char Type, unsign
 				if(LogPara.offLineFlag == 1)
 				{
 					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
 				}
 				recRes = 1;
 				break;
@@ -3061,7 +3021,7 @@ unsigned char VPMission_Cost_RPT( unsigned char Type, uint32_t costMoney, unsign
 				if(LogPara.offLineFlag == 1)
 				{
 					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
 				}
 				recRes = 1;
 				break;
@@ -3147,7 +3107,7 @@ unsigned char VPMission_Button_RPT( unsigned char type, unsigned char value,uint
 					if(LogPara.offLineFlag == 1)
 					{
 						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+						VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
 					}
 					recRes = 1;
 					break;
@@ -3256,7 +3216,7 @@ unsigned char VPMission_Vendout_RPT( unsigned char status, unsigned char device,
 				if(LogPara.offLineFlag == 1)
 				{
 					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
 				}
 				recRes = 1;
 				break;
@@ -3292,160 +3252,9 @@ unsigned char VPMission_Vendout_RPT( unsigned char status, unsigned char device,
 
 
 
-/*********************************************************************************************************
-** Function name:       VPMission_Act_RPT
-** Descriptions:        向PC上报Action信息
-** input parameters:    status=0出货成功,2，出货失败
-                        column实际出货货道  
-                        type出货类型
-                        cost商品的花费
-                        payAllMoney出货完成后，用户投币余额
-                        columnLeft本货道剩余商品个数
-** output parameters:   无
-** Returned value:      无
-*********************************************************************************************************/
-unsigned char VPMission_Act_RPT( unsigned char action, uint8_t value,uint8_t second,uint8_t column,uint8_t type,uint32_t cost,uint32_t payAllMoney)
-{
-    unsigned char retry = 0;
-	unsigned char recRes=0;
-	unsigned char flag = 0;
-    
-	//离线不处理
-	//if(LogPara.offLineFlag == 1)
-	//{		
-	//	return VP_ERR_NULL;
-	//}
-	
-    retry = VP_COM_RETRY;
-	//-------------------------------------------
-    sysVPMissionCR.action   = action;
-	sysVPMissionCR.value  = value; 
-	sysVPMissionCR.second  = second;
-	sysVPMissionCR.Column = column;
-	sysVPMissionCR.type = type;
-	sysVPMissionCR.costMoney = cost;
-	sysVPMissionCR.payAllMoney = payAllMoney;	
-	//===========================================
-	if(SystemPara.EasiveEnable == 1)
-	{
-	    flag = VPMsgPackSend_CR( VP_ACTION_RPT, 1);   
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		
-		while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack_CR() )
-				{
-					TracePC("\r\n Drv ActLine=%d",LogPara.offLineFlag); 
-					if(LogPara.offLineFlag == 1)
-					{
-						TracePC("\r\n Drv ActLineOK"); 
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}
-					recRes = 1;
-					//Trace("\r\n getaction1");
-					break;
-				}
-			}	
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-		}
-		if( retry== 0 )
-		{
-			OSTimeDly(10);		
-			if(LogPara.offLineFlag == 0)
-			{
-				LogPara.offLineFlag = 1;
-				LogPara.offDetailPage = LogPara.LogDetailPage;
-			}
-	        return VP_ERR_COM;
-		}
-		
-		//Trace("\r\n getaction2=%d",sysVPMissionCR.receive.msgType);
-		switch( sysVPMissionCR.receive.msgType )
-		{		
-			case VP_GET_SETUP_IND: 
-				VPMsgPackSend_CR( VP_NAK_RPT, 0 );  //1,0
-				break;
-			case VP_HOUDAO_IND:
-			    VP_CMD_HuodaoPar(); //1,0
-			    break;
-			case VP_HUODAO_SET_IND: 
-				VP_CMD_HuodaoNo();			
-				break;
-			case VP_POSITION_IND:
-			    VP_CMD_Position();  //1,0	
-				break;	
-			case VP_SALEPRICE_IND:
-				VP_CMD_GoodsPar();	  //1,0
-				break;	
-			case VP_GET_HUODAO:
-				VP_CMD_GetColumnSta();  //1,0        
-	            break;	
-			case VP_VENDOUT_IND:
-			    VPMsgPackSend_CR( VP_NAK_RPT, 0 );  //1,0
-			    break;
-			case VP_RESET_IND:
-			    VPMsgPackSend_CR( VP_NAK_RPT, 0 );  //1,0
-			    break;
-			case VP_CONTROL_IND:
-			    VPMsgPackSend_CR( VP_NAK_RPT, 0 );  //1,0
-			    break;
-			case VP_GETINFO_IND://120419 by cq TotalSell 			
-				VPMsgPackSend_CR( VP_NAK_RPT, 0 );  //1,0
-				break;
-			case VP_GET_STATUS:
-			    VPMsgPackSend_CR( VP_NAK_RPT, 0 );  //1,0
-			    break;		
-			case VP_COST_IND://添加扣款函数;by gzz 20110823
-			    VPMsgPackSend_CR( VP_NAK_RPT, 0 );  //1,0
-			    break;	
-			case VP_PAYOUT_IND:
-			    VPMsgPackSend_CR( VP_NAK_RPT, 0 );  //1,0
-			    break;   	
-			case VP_GET_OFFLINEDATA_IND:
-				VPMsgPackSend_CR( VP_NAK_RPT, 0 );  //1,0
-				break;	
-			case VP_GETINFO_INDEXP:
-				VPMsgPackSend_CR( VP_NAK_RPT, 0 );  //1,0
-				break;		
-			case VP_SET_HUODAO: 
-				//Trace("\r\n getaction3");
-				VP_CMD_SetHuodao();
-				break;
-			default:
-			    break;
-		}
-	}
-	else
-	{
-	    flag = VPMsgPackSend_CR( VP_ACTION_RPT, 0);   
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-	}
-	return VP_ERR_NULL;
-}
-
-
-
 
 /*********************************************************************************************************
-** Function name:       VPMission_Act_RPT
+** Function name:       VPMission_Act_RPT_CR
 ** Descriptions:        向PC上报Action信息
 ** input parameters:    type
                         
@@ -3496,7 +3305,7 @@ unsigned char VPMission_Admin_RPT( unsigned char type,uint8_t Column,uint8_t Col
 				if(LogPara.offLineFlag == 1)
 				{
 					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
+					VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
 				}
 				recRes = 1;
 				break;

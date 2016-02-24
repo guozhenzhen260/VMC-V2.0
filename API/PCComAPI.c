@@ -421,7 +421,15 @@ void ActionRPTAPI(uint8_t action,uint8_t value,uint8_t second,uint8_t column,uin
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
-			break;		
+			break;
+		case CRUBOX_PC:			
+			TracePC("\r\n MiddUboxAction Post");
+			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_ACTION;
+			MsgUboxPack[g_Ubox_Index].action = 2;
+			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+			UpdateIndex();
+			OSTimeDly(OS_TICKS_PER_SEC/100);
+			break;	
 	}
 }
 

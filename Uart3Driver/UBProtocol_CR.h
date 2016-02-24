@@ -113,11 +113,9 @@
 #define VP_BUT_RETURN         4
 
 #define VP_ACT_HEART          0
-#define VP_ACT_CHUHUO         1
-#define VP_ACT_PAYOUT         2
-#define VP_ACT_ADMIN          5
-#define VP_ACT_ONLINE         6
-#define VP_ACT_PCON           7
+#define VP_ACT_ADMIN         1
+#define VP_ACT_ADMINOUT    2
+
 
 
 #define VP_CONTROL_BILLCOIN   2
@@ -184,7 +182,7 @@ struct VP_MissionCR
 	uint8_t ColumnSum;    
 	uint8_t method; 
 	uint8_t device; 
-	
+	uint8_t action;
 	//向PC机下发设备状态
 	uint8_t bv_st;                      //纸币器状态：0=正常，1=被软件临时禁用，2=故障，3=设备不存在
 	uint8_t check_st;                   //纸币找零器状态：0=正常，1=被软件临时禁用，2=故障，3=设备不存在
@@ -205,7 +203,7 @@ extern unsigned char VPMission_Cost_RPT( unsigned char Type, uint32_t costMoney,
 extern unsigned char VPMission_Button_RPT( unsigned char type, unsigned char value,uint8_t device );
 extern unsigned char VPMission_Vendout_RPT( unsigned char status, unsigned char device,unsigned char column, unsigned char type, unsigned int cost, unsigned int payAllMoney, unsigned char columnLeft );
 extern unsigned char VPMission_Status_RPT_CR(void);
-extern unsigned char VPMission_Act_RPT( unsigned char action, uint8_t value,uint8_t second,uint8_t column,uint8_t type,uint32_t cost,uint32_t payAllMoney);
+extern unsigned char VPMission_Act_RPT_CR( unsigned char action);
 extern unsigned char VPMission_Admin_RPT( unsigned char type,uint8_t Column,uint8_t ColumnSum);
 extern unsigned char VPMission_Info_RPT_CR( uint8_t type );
 #endif
