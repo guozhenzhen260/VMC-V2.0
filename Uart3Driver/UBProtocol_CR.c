@@ -24,7 +24,7 @@
 #include "..\APP\CHANNEL.h"
 
 
-uint8_t  decimalPlacesCR=1;//基本单位1角,2分,0元
+uint8_t  decimalPlacesCR=0;//基本单位1角,2分,0元
 /******************************
 //将定义的结构体存放到RAM2的方法:
 第一步:
@@ -546,22 +546,278 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 				
 			}
 			break;
-		case VP_HUODAO_RPT:
-            {
-                sysVPMissionCR.send.msgType = VP_HUODAO_RPT;
-				if(SystemPara.EasiveEnable == 1)
+		case VP_STATUS_RPT:
+		    {
+			    sysVPMissionCR.send.msgType = VP_STATUS_RPT;
+                //sysVPMissionCR.send.datLen  = 15;
+				sysVPMissionCR.send.datLen  = 5;
+
+				tempSend |= sysVPMissionCR.vmc_st;
+				tempSend |= sysVPMissionCR.cc_st<<2;
+				tempSend |= sysVPMissionCR.check_st<<4;
+				tempSend |= sysVPMissionCR.bv_st<<6;				
+				sysVPMissionCR.send.msg[0]  = tempSend;
+				
+				tempMoney = MoneySend_CR(sysVPMissionCR.change);
+	                sysVPMissionCR.send.msg[1] = tempMoney/256;
+	                sysVPMissionCR.send.msg[2] = tempMoney%256;
+				
+				tempMoney = MoneySend_CR(sysVPMissionCR.recychange);
+	                sysVPMissionCR.send.msg[3] = tempMoney/256;
+	                sysVPMissionCR.send.msg[4] = tempMoney%256;	
+			}
+			break;
+		case VP_INFO_RPT://120419 by cq TotalSell 
+			{
+                		sysVPMissionCR.send.msgType = VP_INFO_RPT; 
+				i=0;		
+				sysVPMissionCR.send.msg[i++]  = sysVPMissionCR.type;				
+				switch(sysVPMissionCR.type)
 				{
-                	sysVPMissionCR.send.datLen  = COLUMN_NUM_SET+1;    
-				}
-				else
-				{
-                	sysVPMissionCR.send.datLen  = 1+1;    
+					case VP_INFO_ERR:
+						//找零器状态
+						//MDB找零器
+						if(SystemPara.CoinChangerType==MDB_CHANGER)
+						{
+							if(DeviceStateBusiness.CoinCommunicate)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x0b;
+								sysVPMissionCR.send.msg[i++] = 0xbf;
+							}
+							else if(DeviceStateBusiness.Coinsensor)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x0b;
+								sysVPMissionCR.send.msg[i++] = 0xbc;
+							}
+							else if(DeviceStateBusiness.Cointubejam)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x0b;
+								sysVPMissionCR.send.msg[i++] = 0xbe;
+							}
+							else if(DeviceStateBusiness.Coinromchk)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x0b;
+								sysVPMissionCR.send.msg[i++] = 0xbd;
+							}							
+							else if(DeviceStateBusiness.CoinunknowError)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x0b;
+								sysVPMissionCR.send.msg[i++] = 0xbf;
+							}								
+							
+						}
+						//Hopper找零器
+						else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
+						{
+							if(SystemPara.HopperValue[0]==0)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x0b;
+								sysVPMissionCR.send.msg[i++] = 0xbf;
+							}
+							else
+							{								
+								if(DeviceStateBusiness.Hopper1State==1)
+								{
+									sysVPMissionCR.send.msg[i++] = 0x0b;
+									sysVPMissionCR.send.msg[i++] = 0xbf;
+								}
+								if(DeviceStateBusiness.Hopper1State==2)
+								{
+									sysVPMissionCR.send.msg[i++] = 0x0b;
+									sysVPMissionCR.send.msg[i++] = 0xbe;
+								}
+							}							
+						}						
+													
+						//5.硬币器模块	
+						if(SystemPara.CoinAcceptorType==MDB_COINACCEPTER)				
+						{															
+							if(DeviceStateBusiness.Coinsensor)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x13;
+								sysVPMissionCR.send.msg[i++] = 0x8b;
+							}
+							else if(DeviceStateBusiness.Coinromchk)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x13;
+								sysVPMissionCR.send.msg[i++] = 0x8e;
+							}
+							else if(DeviceStateBusiness.Coinrouting)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x13;
+								sysVPMissionCR.send.msg[i++] = 0x8f;
+							}							
+							else if(DeviceStateBusiness.Coinjam)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x13;
+								sysVPMissionCR.send.msg[i++] = 0x8d;
+							}
+							else if(DeviceStateBusiness.CoinremoveTube)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x13;
+								sysVPMissionCR.send.msg[i++] = 0x8c;
+							}							
+						}
+						//脉冲硬币器
+						else if((SystemPara.CoinAcceptorType == PARALLEL_COINACCEPTER)||(SystemPara.CoinAcceptorType == SERIAL_COINACCEPTER))
+						{							
+						}
+						
+													
+						//7.纸币器模块
+						if(SystemPara.BillValidatorType==MDB_BILLACCEPTER)					
+						{
+							if(DeviceStateBusiness.BillCommunicate)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x0f;
+								sysVPMissionCR.send.msg[i++] = 0xa7;
+							}
+							else if(DeviceStateBusiness.Billmoto)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x17;
+								sysVPMissionCR.send.msg[i++] = 0x73;
+							}
+							else if(DeviceStateBusiness.Billsensor)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x17;
+								sysVPMissionCR.send.msg[i++] = 0x74;
+							}
+							else if(DeviceStateBusiness.Billromchk)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x17;
+								sysVPMissionCR.send.msg[i++] = 0x75;
+							}
+							else if(DeviceStateBusiness.Billjam)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x17;
+								sysVPMissionCR.send.msg[i++] = 0x76;
+							}
+							else if(DeviceStateBusiness.BillremoveCash)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x17;
+								sysVPMissionCR.send.msg[i++] = 0x77;
+							}
+							else if(DeviceStateBusiness.BillcashErr)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x17;
+								sysVPMissionCR.send.msg[i++] = 0x78;
+							}								
+						}												
+						break;
+					case VP_INFO_TOTALVALUE:
+						//Total_Value：表示当前交易投币后，或者出货后，屏幕上显示的金额数 
+						//by gzz 20110721						
+						tempMoney = MoneySend_CR(GetAmountMoney());
+						//tempMoney = sysVPMissionCR.payAllMoney;
+				                sysVPMissionCR.send.msg[i++] = tempMoney/256;
+				                sysVPMissionCR.send.msg[i++] = tempMoney%256;
+						break;	
+					case VP_INFO_VER:
+						//easivend-duligui-Jun 14 2009 
+						sysVPMissionCR.send.msg[i++]  = 'e'; 	 
+						sysVPMissionCR.send.msg[i++]  = 'a'; 	 
+						sysVPMissionCR.send.msg[i++]  = 's'; 	 
+						sysVPMissionCR.send.msg[i++]  = 'i';
+						sysVPMissionCR.send.msg[i++]  = 'e'; 	
+						sysVPMissionCR.send.msg[i++]  = 'v'; 
+						sysVPMissionCR.send.msg[i++]  = 'e'; 	 
+						sysVPMissionCR.send.msg[i++]  = 'n'; 	 
+						sysVPMissionCR.send.msg[i++]  = 'd';
+						sysVPMissionCR.send.msg[i++]  = '-'; 	 
+						sysVPMissionCR.send.msg[i++]  = 'd'; 	 
+						sysVPMissionCR.send.msg[i++]  = 'u';
+						sysVPMissionCR.send.msg[i++]  = 'l'; 	 
+						sysVPMissionCR.send.msg[i++]  = 'i'; 	 
+						sysVPMissionCR.send.msg[i++]  = 'g'; 	 
+						sysVPMissionCR.send.msg[i++]  = 'u';
+						sysVPMissionCR.send.msg[i++]  = 'i'; 	 
+						sysVPMissionCR.send.msg[i++]  = '-'; 	 
+						sysVPMissionCR.send.msg[i++]  = 'j';
+						sysVPMissionCR.send.msg[i++]  = 'u';
+						sysVPMissionCR.send.msg[i++]  = 'n'; 	 
+						sysVPMissionCR.send.msg[i++]  = ' '; 	 
+						sysVPMissionCR.send.msg[i++]  = '0'; 	 
+						sysVPMissionCR.send.msg[i++]  = '2';
+						sysVPMissionCR.send.msg[i++]  = ' '; 	 
+						sysVPMissionCR.send.msg[i++]  = '2'; 	 
+						sysVPMissionCR.send.msg[i++]  = '0';
+						sysVPMissionCR.send.msg[i++]  = '1'; 	 
+						sysVPMissionCR.send.msg[i++]  = '5'; 
+						break;
+					case VP_INFO_HARD:						
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[0]; 	 
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[1];	 
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[2];	 
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[3];
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[4];	 
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[5];	 
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[6]; 	
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[7];	 
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[8];	 
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[9];
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[10];	 
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[11];	 
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[12]; 
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[13];	 
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[14];	 
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[15];
+						sysVPMissionCR.send.msg[i++]  = stMacSn.id[16];			
+						
+						break;	
+					case VP_INFO_BILL:
+						if(SystemPara.BillValidatorType>OFF_BILLACCEPTER)					
+						{
+							sysVPMissionCR.send.msg[i++]  = 'b'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'i'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'l'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'l';
+						}
+						break;
+					case VP_INFO_COIN:
+						if(SystemPara.CoinAcceptorType>OFF_COINACCEPTER)					
+						{
+							sysVPMissionCR.send.msg[i++]  = 'c'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'o'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'i'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'n';
+						}
+						break;
+					case VP_INFO_COINOUT:
+						if(SystemPara.CoinChangerType>OFF_CHANGER)					
+						{
+							sysVPMissionCR.send.msg[i++]  = 'c'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'o'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'i'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'n';
+							sysVPMissionCR.send.msg[i++]  = 'o'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'u'; 	 
+							sysVPMissionCR.send.msg[i++]  = 't';
+						}
+						break;
+					case VP_INFO_BILLOUT:
+						if(SystemPara.BillRecyclerType>OFF_BILLRECYCLER)					
+						{
+							sysVPMissionCR.send.msg[i++]  = 'b'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'i'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'l'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'l';
+							sysVPMissionCR.send.msg[i++]  = 'r'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'e'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'c'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'y';
+							sysVPMissionCR.send.msg[i++]  = 'c'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'l'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'e'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'r';
+						}
+						break;	
 				}	
-				//sysVPMissionCR.send.msg[0]  = 0;
-                //
-            }
-            break;	
-		case VP_PAYIN_RPT:
+				sysVPMissionCR.send.datLen  = i;
+				break;
+			}
+				/*
+                
+		/*case VP_PAYIN_RPT:
 		    {
 			    sysVPMissionCR.send.msgType = VP_PAYIN_RPT;
                 sysVPMissionCR.send.datLen = 5;      //3,5
@@ -632,60 +888,7 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 				sysVPMissionCR.send.msg[0] = sysVPMissionCR.type;
 				sysVPMissionCR.send.msg[1] = 0;
 			}	
-			break;	
-		case VP_VENDOUT_RPT:
-		    {
-				sysVPMissionCR.send.msgType = VP_VENDOUT_RPT;
-                sysVPMissionCR.send.datLen = 9;
-				sysVPMissionCR.send.msg[0] = sysVPMissionCR.device;
-				sysVPMissionCR.send.msg[1] = sysVPMissionCR.status;
-				sysVPMissionCR.send.msg[2] = sysVPMissionCR.Column;
-				sysVPMissionCR.send.msg[3] = sysVPMissionCR.type;
-				tempMoney = MoneySend_CR(sysVPMissionCR.costMoney);
-				sysVPMissionCR.send.msg[4] = tempMoney/256;
-				sysVPMissionCR.send.msg[5] = tempMoney%256;
-				//PAYIN_RPT协议中末尾添加两个字节
-                //Total_Value：表示当前交易投币后，或者出货后，屏幕上显示的金额数 
-				//by gzz 20110721				
-				tempMoney = MoneySend_CR(sysVPMissionCR.payAllMoney);
-                sysVPMissionCR.send.msg[6] = tempMoney/256;
-                sysVPMissionCR.send.msg[7] = tempMoney%256;
-				sysVPMissionCR.send.msg[8] = sysVPMissionCR.ColumnSum;
-			}
-			break;
-		case VP_STATUS_RPT:
-		    {
-			    sysVPMissionCR.send.msgType = VP_STATUS_RPT;
-                //sysVPMissionCR.send.datLen  = 15;
-				sysVPMissionCR.send.datLen  = 16;
-
-				tempSend |= sysVPMissionCR.vmc_st;
-				tempSend |= sysVPMissionCR.cc_st<<2;
-				tempSend |= sysVPMissionCR.bv_st<<4;
-				tempSend |= sysVPMissionCR.check_st<<6;				
-				sysVPMissionCR.send.msg[0]  = tempSend;
-				tempSend = 0xff;
-				sysVPMissionCR.send.msg[1]  = tempSend;
-				
-				tempMoney = MoneySend_CR(sysVPMissionCR.change);
-                sysVPMissionCR.send.msg[2] = tempMoney/256;
-                sysVPMissionCR.send.msg[3] = tempMoney%256;
-				
-				sysVPMissionCR.send.msg[4]  = sysVPMissionCR.recyclerSum[0];
-				sysVPMissionCR.send.msg[5]  = sysVPMissionCR.recyclerSum[1];
-				sysVPMissionCR.send.msg[6]  = sysVPMissionCR.recyclerSum[2];
-				sysVPMissionCR.send.msg[7]  = sysVPMissionCR.recyclerSum[3];
-				sysVPMissionCR.send.msg[8]  = sysVPMissionCR.recyclerSum[4];
-				sysVPMissionCR.send.msg[9]  = sysVPMissionCR.recyclerSum[5];
-				
-				sysVPMissionCR.send.msg[10] = sysVPMissionCR.coinSum[0];
-				sysVPMissionCR.send.msg[11] = sysVPMissionCR.coinSum[1];
-				sysVPMissionCR.send.msg[12] = sysVPMissionCR.coinSum[2];
-				sysVPMissionCR.send.msg[13] = sysVPMissionCR.coinSum[3];
-				sysVPMissionCR.send.msg[14] = sysVPMissionCR.coinSum[4];	
-				sysVPMissionCR.send.msg[15] = sysVPMissionCR.coinSum[5];		
-			}
-			break;
+			break;		
 		case VP_ACTION_RPT:		    
 			sysVPMissionCR.send.msgType = VP_ACTION_RPT;	
 			if( (sysVPMissionCR.action==VP_ACT_HEART)||(sysVPMissionCR.action==VP_ACT_ONLINE)||(sysVPMissionCR.action==VP_ACT_PCON) )
@@ -768,1106 +971,6 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 				
 			}
 			break;    	
-		
-		case VP_INFO_RPT://120419 by cq TotalSell 
-			{
-                sysVPMissionCR.send.msgType = VP_INFO_RPT;  
-				switch(sysVPMissionCR.type)
-				{
-					case VP_INFO_TOTALVALUE:
-						sysVPMissionCR.send.datLen  = 3;
-						sysVPMissionCR.send.msg[0]  = VP_INFO_TOTALVALUE;
-						//Total_Value：表示当前交易投币后，或者出货后，屏幕上显示的金额数 
-						//by gzz 20110721						
-						tempMoney = MoneySend_CR(GetAmountMoney());
-						//tempMoney = sysVPMissionCR.payAllMoney;
-		                sysVPMissionCR.send.msg[1] = tempMoney/256;
-		                sysVPMissionCR.send.msg[2] = tempMoney%256;
-						break;
-					case VP_INFO_CLOCK:
-						sysVPMissionCR.send.datLen  = 9;
-						sysVPMissionCR.send.msg[0]  = VP_INFO_CLOCK;												
-		                sysVPMissionCR.send.msg[1] = RTCData.year/256;
-		                sysVPMissionCR.send.msg[2] = RTCData.year%256;
-						sysVPMissionCR.send.msg[3] = RTCData.month;
-						sysVPMissionCR.send.msg[4] = RTCData.day;
-						sysVPMissionCR.send.msg[5] = RTCData.hour;
-						sysVPMissionCR.send.msg[6] = RTCData.minute;
-						sysVPMissionCR.send.msg[7] = RTCData.second;
-						sysVPMissionCR.send.msg[8] = RTCData.week;
-						break;
-					case VP_INFO_CHUHUO:
-						sysVPMissionCR.send.datLen  = 53;
-						sysVPMissionCR.send.msg[0]  = VP_INFO_CHUHUO;
-						if(SystemPara.EasiveEnable == 1)
-						{
-							//全部出货数量
-							sysVPMissionCR.send.msg[1]  = LogPara.vpSuccessNumTotal/256/256/256;       
-			                sysVPMissionCR.send.msg[2]  = LogPara.vpSuccessNumTotal/256/256%256;       
-			                sysVPMissionCR.send.msg[3]  = LogPara.vpSuccessNumTotal/256%256;       
-			                sysVPMissionCR.send.msg[4]  = LogPara.vpSuccessNumTotal%256; 
-							//全部出货金额						
-							//tradeMoney = MoneySendInfo_CR(TradeCounter.vpSuccessMoney); 
-							tradeMoney = LogPara.vpSuccessMoneyTotal; 
-							sysVPMissionCR.send.msg[5]  = tradeMoney/256/256/256;		 
-							sysVPMissionCR.send.msg[6]  = tradeMoney/256/256%256;		 
-							sysVPMissionCR.send.msg[7]  = tradeMoney/256%256;		 
-							sysVPMissionCR.send.msg[8]  = tradeMoney%256;	
-							
-							//tradeMoney = MoneySendInfo_CR(TradeCounter.vpSuccessMoney); 
-							//sysVPMissionCR.send.msg[5]  = tradeMoney/256/256/256;		 
-							//sysVPMissionCR.send.msg[6]  = tradeMoney/256/256%256;		 
-							//sysVPMissionCR.send.msg[7]  = tradeMoney/256%256;		 
-							//sysVPMissionCR.send.msg[8]  = tradeMoney%256;
-							//len = sprintf( str, "%ld,%ld,%u,%u", TradeCounter.vpSuccessMoney, tradeMoney,sysVPMissionCR.send.msg[7],sysVPMissionCR.send.msg[8] );
-							//DisplayStr( 0, 0, 1, str, len );
-							//len = sprintf( str, "%u,%u", tradeMoney/256%256, tradeMoney%256 );
-							//DisplayStr( 0, 1, 1, str, len );
-							//WaitForWork( 5000, NULL );
-
-							//现金出货数量
-							sysVPMissionCR.send.msg[9]  = LogPara.vpCashNumTotal/256/256/256;		 
-							sysVPMissionCR.send.msg[10]  = LogPara.vpCashNumTotal/256/256%256;		 
-							sysVPMissionCR.send.msg[11]  = LogPara.vpCashNumTotal/256%256;		 
-							sysVPMissionCR.send.msg[12]  = LogPara.vpCashNumTotal%256; 
-							//现金出货金额	
-							//tradeMoney = MoneySendInfo_CR(TradeCounter.vpCashMoney); 
-							tradeMoney = LogPara.vpCashMoneyTotal; 
-							sysVPMissionCR.send.msg[13]  = tradeMoney/256/256/256; 	 
-							sysVPMissionCR.send.msg[14]  = tradeMoney/256/256%256; 	 
-							sysVPMissionCR.send.msg[15]  = tradeMoney/256%256; 	 
-							sysVPMissionCR.send.msg[16]  = tradeMoney%256; 
-							/*
-							//游戏出货数量 		
-							sysVPMissionCR.send.msg[17]  = TradeCounter.vpGameNum/256/256/256;		 
-							sysVPMissionCR.send.msg[18]  = TradeCounter.vpGameNum/256/256%256;		 
-							sysVPMissionCR.send.msg[19]  = TradeCounter.vpGameNum/256%256;		 
-							sysVPMissionCR.send.msg[20]  = TradeCounter.vpGameNum%256; 
-							//游戏出货金额
-							tradeMoney = 0; 
-							sysVPMissionCR.send.msg[21]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[22]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[23]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[24]  = tradeMoney; 
-							//刷卡出货数量
-							sysVPMissionCR.send.msg[25]  = TradeCounter.vpCardNum/256/256/256;		 
-							sysVPMissionCR.send.msg[26]  = TradeCounter.vpCardNum/256/256%256;		 
-							sysVPMissionCR.send.msg[27]  = TradeCounter.vpCardNum/256%256;		 
-							sysVPMissionCR.send.msg[28]  = TradeCounter.vpCardNum%256; 
-							//刷卡出货金额
-							tradeMoney =0; 
-							sysVPMissionCR.send.msg[29]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[30]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[31]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[32]  = tradeMoney;
-							//在线出货数量
-							sysVPMissionCR.send.msg[33]  = TradeCounter.vpOnlineNum/256/256/256;		 
-							sysVPMissionCR.send.msg[34]  = TradeCounter.vpOnlineNum/256/256%256;		 
-							sysVPMissionCR.send.msg[35]  = TradeCounter.vpOnlineNum/256%256;		 
-							sysVPMissionCR.send.msg[36]  = TradeCounter.vpOnlineNum%256; 
-							//在线出货金额
-							tradeMoney = 0; 
-							sysVPMissionCR.send.msg[37]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[38]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[39]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[40]  = tradeMoney;
-							*/
-							//游戏出货数量 		
-							sysVPMissionCR.send.msg[17]  = LogPara.vpGameNumTotal/256/256/256;		 
-							sysVPMissionCR.send.msg[18]  = LogPara.vpGameNumTotal/256/256%256;					 
-							sysVPMissionCR.send.msg[19]  = LogPara.vpGameNumTotal/256%256;			 
-							sysVPMissionCR.send.msg[20]  = LogPara.vpGameNumTotal%256; 	
-							//游戏出货金额
-							tradeMoney = 0; 
-							sysVPMissionCR.send.msg[21]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[22]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[23]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[24]  = tradeMoney; 
-							//刷卡出货数量
-							sysVPMissionCR.send.msg[25]  = LogPara.vpCardNumTotal/256/256/256;		 
-							sysVPMissionCR.send.msg[26]  = LogPara.vpCardNumTotal/256/256%256;		 
-							sysVPMissionCR.send.msg[27]  = LogPara.vpCardNumTotal/256%256;	 
-							sysVPMissionCR.send.msg[28]  = LogPara.vpCardNumTotal%256; 
-							//刷卡出货金额
-							tradeMoney =0; 
-							sysVPMissionCR.send.msg[29]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[30]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[31]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[32]  = tradeMoney;
-							//在线出货数量
-							sysVPMissionCR.send.msg[33]  = LogPara.vpOnlineNumTotal/256/256/256;	 
-							sysVPMissionCR.send.msg[34]  = LogPara.vpOnlineNumTotal/256/256%256;		 
-							sysVPMissionCR.send.msg[35]  = LogPara.vpOnlineNumTotal/256%256;	 
-							sysVPMissionCR.send.msg[36]  = LogPara.vpOnlineNumTotal%256; 
-							//在线出货金额
-							tradeMoney = 0; 
-							sysVPMissionCR.send.msg[37]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[38]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[39]  = tradeMoney; 	 
-							sysVPMissionCR.send.msg[40]  = tradeMoney;
-							//硬币投入
-							//tradeMoney = MoneySendInfo_CR(TradeCounter.CoinSum1y+TradeCounter.CoinSum5j); 
-							tradeMoney = LogPara.CoinsIncomeTotal; 
-							sysVPMissionCR.send.msg[41]  = tradeMoney/256/256/256; 	 
-							sysVPMissionCR.send.msg[42]  = tradeMoney/256/256%256; 	 
-							sysVPMissionCR.send.msg[43]  = tradeMoney/256%256; 	 
-							sysVPMissionCR.send.msg[44]  = tradeMoney%256;
-							//纸币投入
-							//tradeMoney = MoneySendInfo_CR(TradeCounter.CashSum); 
-							tradeMoney = LogPara.NoteIncomeTotal; 
-							sysVPMissionCR.send.msg[45]  = tradeMoney/256/256/256; 	 
-							sysVPMissionCR.send.msg[46]  = tradeMoney/256/256%256; 	 
-							sysVPMissionCR.send.msg[47]  = tradeMoney/256%256; 	 
-							sysVPMissionCR.send.msg[48]  = tradeMoney%256;
-							//硬币出币
-							//tradeMoney = MoneySendInfo_CR(TradeCounter.Hopper2Sum+TradeCounter.Hopper1Sum); 
-							tradeMoney = LogPara.TotalChangeTotal; 
-							sysVPMissionCR.send.msg[49]  = tradeMoney/256/256/256; 	 
-							sysVPMissionCR.send.msg[50]  = tradeMoney/256/256%256; 	 
-							sysVPMissionCR.send.msg[51]  = tradeMoney/256%256; 	 
-							sysVPMissionCR.send.msg[52]  = tradeMoney%256;
-						}
-						else
-						{
-							for( i=0; i<52; i++)
-							{
-								//sysVPMissionCR.send.msg[i+2] = sysVPMissionCR.selItem[i];
-								sysVPMissionCR.send.msg[i+1] = 0;
-							}
-						}
-						break;
-					case VP_INFO_HUODAO:	
-						if(SystemPara.EasiveEnable == 1)
-						{
-							sysVPMissionCR.send.datLen  = COLUMN_NUM_SET + 2;
-							sysVPMissionCR.send.msg[0]  = VP_INFO_HUODAO;
-							sysVPMissionCR.send.msg[1]  = 1; 
-							hd_huodao_id_rpt_vp(1,&sysVPMissionCR.send.msg[2]);
-						}
-						else
-						{
-							sysVPMissionCR.send.datLen  = 48 + 2;
-							sysVPMissionCR.send.msg[0]  = VP_INFO_HUODAO;
-							sysVPMissionCR.send.msg[1]  = 1; 
-							for( i=0; i<48; i++)
-							{
-								//sysVPMissionCR.send.msg[i+2] = sysVPMissionCR.selItem[i];
-								sysVPMissionCR.send.msg[i+2] = 0;
-							}
-						}
-						break;
-					case VP_INFO_POSITION:
-						sysVPMissionCR.send.datLen  = 18 + 2;
-						sysVPMissionCR.send.msg[0]  = VP_INFO_POSITION;
-						sysVPMissionCR.send.msg[1]  = 0; 
-						for( i=0; i<18; i++)
-						{
-							//sysVPMissionCR.send.msg[i+2] = sysVPMissionCR.selItem[i];
-							sysVPMissionCR.send.msg[i+2] = 0;
-						}
-						break;					
-					case VP_INFO_VMC:
-						sysVPMissionCR.send.datLen  = 4;
-						sysVPMissionCR.send.msg[0]  = VP_INFO_VMC;
-						sysVPMissionCR.send.msg[1]  = 0; 
-						sysVPMissionCR.send.msg[2]  = 0; 
-						sysVPMissionCR.send.msg[3]  = COLUMN_NUM_SET + 1;
-						break;
-					case VP_INFO_VER:
-						sysVPMissionCR.send.datLen  = 32;
-						sysVPMissionCR.send.msg[0]  = VP_INFO_VER;
-						// unpeng-zonghe-2.00(2012-11-07)
-						sysVPMissionCR.send.msg[1]  = 'J'; 	 
-						sysVPMissionCR.send.msg[2]  = 'u'; 	 
-						sysVPMissionCR.send.msg[3]  = 'n'; 	 
-						sysVPMissionCR.send.msg[4]  = 'p';
-						sysVPMissionCR.send.msg[5]  = 'e'; 	 
-						sysVPMissionCR.send.msg[6]  = 'n'; 	 
-						sysVPMissionCR.send.msg[7]  = 'g'; 	 
-						sysVPMissionCR.send.msg[8]  = '-';
-						sysVPMissionCR.send.msg[9]  = 'z'; 	 
-						sysVPMissionCR.send.msg[10]  = 'o'; 	 
-						sysVPMissionCR.send.msg[11]  = 'n';
-						sysVPMissionCR.send.msg[12]  = 'g'; 	 
-						sysVPMissionCR.send.msg[13]  = 'h'; 	 
-						sysVPMissionCR.send.msg[14]  = 'e'; 	 
-						sysVPMissionCR.send.msg[15]  = '-';
-						sysVPMissionCR.send.msg[16]  = '2'; 	 
-						sysVPMissionCR.send.msg[17]  = '.'; 	 
-						sysVPMissionCR.send.msg[18]  = '0';
-						sysVPMissionCR.send.msg[19]  = '3';
-						sysVPMissionCR.send.msg[20]  = '('; 	 
-						sysVPMissionCR.send.msg[21]  = '2'; 	 
-						sysVPMissionCR.send.msg[22]  = '0'; 	 
-						sysVPMissionCR.send.msg[23]  = '1';
-						sysVPMissionCR.send.msg[24]  = '4'; 	 
-						sysVPMissionCR.send.msg[25]  = '-'; 	 
-						sysVPMissionCR.send.msg[26]  = '0';
-						sysVPMissionCR.send.msg[27]  = '4'; 	 
-						sysVPMissionCR.send.msg[28]  = '-'; 	 
-						sysVPMissionCR.send.msg[29]  = '0'; 	 
-						sysVPMissionCR.send.msg[30]  = '3';
-						sysVPMissionCR.send.msg[31]  = ')';
-						break;
-					case VP_INFO_HARD:
-						sysVPMissionCR.send.datLen  = 18;
-						sysVPMissionCR.send.msg[0]  = VP_INFO_HARD;						
-						sysVPMissionCR.send.msg[1]  = stMacSn.id[0]; 	 
-						sysVPMissionCR.send.msg[2]  = stMacSn.id[1];	 
-						sysVPMissionCR.send.msg[3]  = stMacSn.id[2];	 
-						sysVPMissionCR.send.msg[4]  = stMacSn.id[3];
-						sysVPMissionCR.send.msg[5]  = stMacSn.id[4];	 
-						sysVPMissionCR.send.msg[6]  = stMacSn.id[5];	 
-						sysVPMissionCR.send.msg[7]  = stMacSn.id[6]; 	
-						sysVPMissionCR.send.msg[8]  = stMacSn.id[7];	 
-						sysVPMissionCR.send.msg[9]  = stMacSn.id[8];	 
-						sysVPMissionCR.send.msg[10]  = stMacSn.id[9];
-						sysVPMissionCR.send.msg[11]  = stMacSn.id[10];	 
-						sysVPMissionCR.send.msg[12]  = stMacSn.id[11];	 
-						sysVPMissionCR.send.msg[13]  = stMacSn.id[12]; 
-						sysVPMissionCR.send.msg[14]  = stMacSn.id[13];	 
-						sysVPMissionCR.send.msg[15]  = stMacSn.id[14];	 
-						sysVPMissionCR.send.msg[16]  = stMacSn.id[15];
-						sysVPMissionCR.send.msg[17]  = stMacSn.id[16];
-						
-						
-						break;
-					case VP_INFO_BILL:						
-						sysVPMissionCR.send.datLen  = 19+33;
-						sysVPMissionCR.send.msg[0]  = VP_INFO_BILL;
-						sysVPMissionCR.send.msg[1]  = stDevValue.BillLevel;
-						sysVPMissionCR.send.msg[2]  = stDevValue.BillCode/256;	 
-						sysVPMissionCR.send.msg[3]  = stDevValue.BillCode%256; 	 
-						sysVPMissionCR.send.msg[4]  = stDevValue.BillScale/256; 	
-						sysVPMissionCR.send.msg[5]  = stDevValue.BillScale%256; 		 
-						sysVPMissionCR.send.msg[6]  = stDevValue.BillDecimal; 	 
-						sysVPMissionCR.send.msg[7]  = stDevValue.BillStkCapacity/256;  
-						sysVPMissionCR.send.msg[8]  = stDevValue.BillStkCapacity%256; 
-						sysVPMissionCR.send.msg[9]  = stDevValue.BillSecurity%256;  	 
-						sysVPMissionCR.send.msg[10]  = stDevValue.BillEscrowFun; 	 
-						sysVPMissionCR.send.msg[11]  = stDevValue.BillValue[0]/stDevValue.BillScale;
-						sysVPMissionCR.send.msg[12]  = stDevValue.BillValue[1]/stDevValue.BillScale; 	 
-						sysVPMissionCR.send.msg[13]  = stDevValue.BillValue[2]/stDevValue.BillScale; 	 
-						sysVPMissionCR.send.msg[14]  = stDevValue.BillValue[3]/stDevValue.BillScale; 	 
-						sysVPMissionCR.send.msg[15]  = stDevValue.BillValue[4]/stDevValue.BillScale;
-						sysVPMissionCR.send.msg[16]  = stDevValue.BillValue[5]/stDevValue.BillScale; 	
-						sysVPMissionCR.send.msg[17]  = stDevValue.BillValue[6]/stDevValue.BillScale;
-						sysVPMissionCR.send.msg[18]  = stDevValue.BillValue[7]/stDevValue.BillScale;
-						for(i=0;i<33;i++)
-						{
-							sysVPMissionCR.send.msg[19+i]  = stDevValue.billIDENTITYBuf[i];
-						}
-						TracePC("\r\nDrvUbill=%d,%ld,%ld,%ld,%ld,%ld,%d,%ld,%ld,%ld,%ld,%ld,%ld,%ld,%ld",stDevValue.BillLevel,stDevValue.BillCode,stDevValue.BillScale,stDevValue.BillDecimal,stDevValue.BillStkCapacity,
-							stDevValue.BillSecurity,stDevValue.BillEscrowFun,stDevValue.BillValue[0],stDevValue.BillValue[1],stDevValue.BillValue[2],stDevValue.BillValue[3],
-							stDevValue.BillValue[4],stDevValue.BillValue[5],stDevValue.BillValue[6],stDevValue.BillValue[7]);
-						break;
-					case VP_INFO_COIN:						
-						sysVPMissionCR.send.datLen  = 18+33;
-						sysVPMissionCR.send.msg[0]  = VP_INFO_COIN;
-						sysVPMissionCR.send.msg[1]  = stDevValue.CoinLevel;
-						sysVPMissionCR.send.msg[2]  = stDevValue.CoinCode/256;	 
-						sysVPMissionCR.send.msg[3]  = stDevValue.CoinCode%256; 	 
-						sysVPMissionCR.send.msg[4]  = stDevValue.CoinScale; 	
-						sysVPMissionCR.send.msg[5]  = SendCoinDem_CR(); 		 
-						sysVPMissionCR.send.msg[6]  = stDevValue.CoinValue[0]/stDevValue.CoinScale; 	 
-						sysVPMissionCR.send.msg[7]  = stDevValue.CoinValue[1]/stDevValue.CoinScale;  
-						sysVPMissionCR.send.msg[8]  = stDevValue.CoinValue[2]/stDevValue.CoinScale; 
-						sysVPMissionCR.send.msg[9]  = stDevValue.CoinValue[3]/stDevValue.CoinScale;  	 
-						sysVPMissionCR.send.msg[10]  = stDevValue.CoinValue[4]/stDevValue.CoinScale; 	 
-						sysVPMissionCR.send.msg[11]  = stDevValue.CoinValue[5]/stDevValue.CoinScale;
-						sysVPMissionCR.send.msg[12]  = stDevValue.CoinValue[0]/stDevValue.CoinScale; 	 
-						sysVPMissionCR.send.msg[13]  = stDevValue.CoinValue[1]/stDevValue.CoinScale; 	 
-						sysVPMissionCR.send.msg[14]  = stDevValue.CoinValue[2]/stDevValue.CoinScale; 	 
-						sysVPMissionCR.send.msg[15]  = stDevValue.CoinValue[3]/stDevValue.CoinScale;
-						sysVPMissionCR.send.msg[16]  = stDevValue.CoinValue[4]/stDevValue.CoinScale; 	
-						sysVPMissionCR.send.msg[17]  = stDevValue.CoinValue[5]/stDevValue.CoinScale;
-						for(i=0;i<33;i++)
-						{
-							sysVPMissionCR.send.msg[18+i]  = stDevValue.coinIDENTITYBuf[i];
-						}						
-						TracePC("\r\nDrvUcoin=%d,%ld,%d,%d,%ld,%ld,%ld,%ld,%ld,%ld,%ld,%ld,%ld,%ld,%ld,%ld",stDevValue.CoinLevel,stDevValue.CoinCode,stDevValue.CoinScale,stDevValue.CoinDecimal,stDevValue.CoinValue[0],
-							stDevValue.CoinValue[1],stDevValue.CoinValue[2],stDevValue.CoinValue[3],stDevValue.CoinValue[4],stDevValue.CoinValue[5],
-							stDevValue.CoinValue[0],stDevValue.CoinValue[1],stDevValue.CoinValue[2],stDevValue.CoinValue[3],stDevValue.CoinValue[4],stDevValue.CoinValue[5]);
-						break;
-					case VP_INFO_COMP:
-						sysVPMissionCR.send.datLen  = 1;
-						sysVPMissionCR.send.msg[0]  = VP_INFO_COMP;
-						break;
-					case VP_INFO_ERR:
-						{	
-							i = 0;				
-							sysVPMissionCR.send.msg[i++] = VP_INFO_ERR;
-
-							if(SystemPara.EasiveEnable == 1)
-							{
-								//找零器状态
-								//MDB找零器
-								if(SystemPara.CoinChangerType==MDB_CHANGER)
-								{
-									if(DeviceStateBusiness.CoinCommunicate)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x08;
-										sysVPMissionCR.send.msg[i++] = 0xa2;
-									}
-									else if(DeviceStateBusiness.Coinsensor)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x08;
-										sysVPMissionCR.send.msg[i++] = 0xa3;
-									}
-									else if(DeviceStateBusiness.Cointubejam)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x08;
-										sysVPMissionCR.send.msg[i++] = 0xa4;
-									}
-									else if(DeviceStateBusiness.Coinromchk)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x08;
-										sysVPMissionCR.send.msg[i++] = 0xa5;
-									}
-									else if(DeviceStateBusiness.Coinrouting)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x08;
-										sysVPMissionCR.send.msg[i++] = 0xa6;
-									}							
-									else if(DeviceStateBusiness.Coinjam)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x08;
-										sysVPMissionCR.send.msg[i++] = 0xa7;
-									}
-									else if(DeviceStateBusiness.CoinremoveTube)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x08;
-										sysVPMissionCR.send.msg[i++] = 0xa8;
-									}
-									else if(DeviceStateBusiness.Coindisable)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x08;
-										sysVPMissionCR.send.msg[i++] = 0xa9;
-									}
-									else if(DeviceStateBusiness.CoinunknowError)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x08;
-										sysVPMissionCR.send.msg[i++] = 0xaa;
-									}
-									else
-									{
-										sysVPMissionCR.send.msg[i++] = 0x08;
-										sysVPMissionCR.send.msg[i++] = 0xa1;
-									}	
-									
-								}
-								//Hopper找零器
-								else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
-								{
-									if(SystemPara.HopperValue[0]==0)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x13;
-										sysVPMissionCR.send.msg[i++] = 0x88;
-									}
-									else
-									{
-										if(DeviceStateBusiness.Hopper1State==0)
-										{
-											sysVPMissionCR.send.msg[i++] = 0x13;
-											sysVPMissionCR.send.msg[i++] = 0x89;
-										}
-										if(DeviceStateBusiness.Hopper1State==1)
-										{
-											sysVPMissionCR.send.msg[i++] = 0x13;
-											sysVPMissionCR.send.msg[i++] = 0x8a;
-										}
-										if(DeviceStateBusiness.Hopper1State==2)
-										{
-											sysVPMissionCR.send.msg[i++] = 0x13;
-											sysVPMissionCR.send.msg[i++] = 0x8b;
-										}
-									}
-									if(SystemPara.HopperValue[1]==0)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x13;
-										sysVPMissionCR.send.msg[i++] = 0x8c;
-									}
-									else
-									{
-										if(DeviceStateBusiness.Hopper2State==0)
-										{
-											sysVPMissionCR.send.msg[i++] = 0x13;
-											sysVPMissionCR.send.msg[i++] = 0x8d;
-										}
-										if(DeviceStateBusiness.Hopper2State==1)
-										{
-											sysVPMissionCR.send.msg[i++] = 0x13;
-											sysVPMissionCR.send.msg[i++] = 0x8e;
-										}
-										if(DeviceStateBusiness.Hopper2State==2)
-										{
-											sysVPMissionCR.send.msg[i++] = 0x13;
-											sysVPMissionCR.send.msg[i++] = 0x8f;
-										}
-									}
-									if(SystemPara.HopperValue[2]==0)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x13;
-										sysVPMissionCR.send.msg[i++] = 0x90;
-									}
-									else
-									{
-										if(DeviceStateBusiness.Hopper3State==0)
-										{
-											sysVPMissionCR.send.msg[i++] = 0x13;
-											sysVPMissionCR.send.msg[i++] = 0x91;
-										}
-										if(DeviceStateBusiness.Hopper3State==1)
-										{
-											sysVPMissionCR.send.msg[i++] = 0x13;
-											sysVPMissionCR.send.msg[i++] = 0x92;
-										}
-										if(DeviceStateBusiness.Hopper3State==2)
-										{
-											sysVPMissionCR.send.msg[i++] = 0x13;
-											sysVPMissionCR.send.msg[i++] = 0x93;
-										}
-									}
-								}
-								else
-								{
-									sysVPMissionCR.send.msg[i++] = 0x08;
-									sysVPMissionCR.send.msg[i++] = 0xa0;
-								}
-															
-								//5.硬币器模块	
-								if(SystemPara.CoinAcceptorType==MDB_COINACCEPTER)				
-								{															
-									if(DeviceStateBusiness.CoinCommunicate)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0f;
-										sysVPMissionCR.send.msg[i++] = 0xa2;
-									}
-									else if(DeviceStateBusiness.Coinsensor)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0f;
-										sysVPMissionCR.send.msg[i++] = 0xa3;
-									}
-									else if(DeviceStateBusiness.Cointubejam)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0f;
-										sysVPMissionCR.send.msg[i++] = 0xa4;
-									}
-									else if(DeviceStateBusiness.Coinromchk)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0f;
-										sysVPMissionCR.send.msg[i++] = 0xa5;
-									}
-									else if(DeviceStateBusiness.Coinrouting)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0f;
-										sysVPMissionCR.send.msg[i++] = 0xa6;
-									}							
-									else if(DeviceStateBusiness.Coinjam)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0f;
-										sysVPMissionCR.send.msg[i++] = 0xa7;
-									}
-									else if(DeviceStateBusiness.CoinremoveTube)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0f;
-										sysVPMissionCR.send.msg[i++] = 0xa8;
-									}
-									else if(DeviceStateBusiness.Coindisable)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0f;
-										sysVPMissionCR.send.msg[i++] = 0xa9;
-									}
-									else if(DeviceStateBusiness.CoinunknowError)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0f;
-										sysVPMissionCR.send.msg[i++] = 0xaa;
-									}
-									else if(GetBillCoinStatus(2)==0)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0f;
-										sysVPMissionCR.send.msg[i++] = 0xa0;
-									}
-									else 
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0f;
-										sysVPMissionCR.send.msg[i++] = 0xa1;
-									}
-								}
-								//脉冲硬币器
-								else if((SystemPara.CoinAcceptorType == PARALLEL_COINACCEPTER)||(SystemPara.CoinAcceptorType == SERIAL_COINACCEPTER))
-								{
-									if(GetBillCoinStatus(2)==0)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0f;
-										sysVPMissionCR.send.msg[i++] = 0xa0;
-									}
-									else 
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0f;
-										sysVPMissionCR.send.msg[i++] = 0xa1;
-									}
-								}
-								else 
-								{
-									sysVPMissionCR.send.msg[i++] = 0x0f;
-									sysVPMissionCR.send.msg[i++] = 0xa0;
-								}
-															
-								//7.纸币器模块
-								if(SystemPara.BillValidatorType==MDB_BILLACCEPTER)					
-								{
-									if(DeviceStateBusiness.BillCommunicate)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x72;
-									}
-									else if(DeviceStateBusiness.Billmoto)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x73;
-									}
-									else if(DeviceStateBusiness.Billsensor)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x74;
-									}
-									else if(DeviceStateBusiness.Billromchk)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x75;
-									}
-									else if(DeviceStateBusiness.Billjam)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x76;
-									}
-									else if(DeviceStateBusiness.BillremoveCash)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x77;
-									}
-									else if(DeviceStateBusiness.BillcashErr)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x78;
-									}
-									else if(DeviceStateBusiness.Billdisable)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x79;
-									}
-									else if(TubeMoneyEnough())
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x7a;
-									}
-									else if(GetBillCoinStatus(1)==0)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x70;
-									}
-									else
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x71;
-									}	
-								}
-								else
-								{
-									sysVPMissionCR.send.msg[i++] = 0x17;
-									sysVPMissionCR.send.msg[i++] = 0x70;
-								}
-							}
-							else
-							{								
-								//7.纸币器模块
-								if(SystemPara.BillValidatorType==MDB_BILLACCEPTER)					
-								{
-									if(DeviceStateBusiness.Billmoto)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x73;
-									}
-									else if(DeviceStateBusiness.Billsensor)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x74;
-									}
-									else if(DeviceStateBusiness.Billjam)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x76;
-									}
-									else if(DeviceStateBusiness.BillremoveCash)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x77;
-									}
-									else if(DeviceStateBusiness.BillcashErr)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x17;
-										sysVPMissionCR.send.msg[i++] = 0x78;
-									}										
-								}
-								
-							}
-							
-							sysVPMissionCR.send.datLen = i;   
-						}
-						break;
-					case VP_INFO_HEFANGGUI:
-						sysVPMissionCR.send.datLen  = 4;
-						sysVPMissionCR.send.msg[0]  = VP_INFO_HEFANGGUI;
-						sysVPMissionCR.send.msg[1]  = sysVPMissionCR.Control_Bin;
-						sysVPMissionCR.send.msg[2]  = sysVPMissionCR.Control_Huodao;
-						sysVPMissionCR.send.msg[3]  = sysVPMissionCR.value;
-						break;
-					case VP_INFO_CABINET:
-						i = 0;
-						sysVPMissionCR.send.msg[i++]  = VP_INFO_CABINET;
-						sysVPMissionCR.send.msg[i++]  = 1;
-						for(cabinet = 0,cabno=0;cabinet<sysVPMissionCR.cabinetNums;cabinet++)
-						{
-							sysVPMissionCR.send.msg[i++]  = sysVPMissionCR.cabinetdata[cabno++];
-							sysVPMissionCR.send.msg[i++]  = sysVPMissionCR.cabinetdata[cabno++];
-							sysVPMissionCR.send.msg[i++]  = sysVPMissionCR.cabinetdata[cabno++];
-						}
-						sysVPMissionCR.send.datLen = i;
-						break;
-					case VP_INFO_CABERR:
-						TracePC("\r\nDrvCabErr=%d",sysVPMissionCR.Control_Bin);
-						i = 0;
-						sysVPMissionCR.send.msg[i++]  = VP_INFO_CABERR;
-						//1柜设备状态
-						if(sysVPMissionCR.Control_Bin==1)
-						{
-							//1.货道类型
-							if((SystemPara.GeziDeviceType==1)||(SystemPara.Channel==0))
-							{
-								sysVPMissionCR.send.msg[i++] = 0x06;
-								sysVPMissionCR.send.msg[i++] = 0xd0;
-							}
-							else if(SystemPara.Channel==1)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x06;
-								sysVPMissionCR.send.msg[i++] = 0xd1;
-							}
-							else if(SystemPara.Channel==2)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x06;
-								sysVPMissionCR.send.msg[i++] = 0xd2;
-							}
-							else if(SystemPara.Channel==3)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x06;
-								sysVPMissionCR.send.msg[i++] = 0xd3;
-							}
-							else if(SystemPara.Channel==4)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x06;
-								sysVPMissionCR.send.msg[i++] = 0xd4;
-							}
-							
-							if(SystemPara.GeziDeviceType==0)
-							{
-								//1.GOC故障模块
-								if(SystemPara.GOCIsOpen == 0)
-								{
-									sysVPMissionCR.send.msg[i++] = 0x03;
-									sysVPMissionCR.send.msg[i++] = 0xe8;									
-									
-								}
-								else if(SystemPara.GOCIsOpen == 1)
-								{
-									if(DeviceStateBusiness.GOCError==0)//1柜
-									{
-										sysVPMissionCR.send.msg[i++] = 0x03;
-										sysVPMissionCR.send.msg[i++] = 0xe9;
-									}
-									else
-									{
-										sysVPMissionCR.send.msg[i++] = 0x03;
-										sysVPMissionCR.send.msg[i++] = 0xea;
-									}									
-								}
-																
-								//2.弹簧货道模块
-								//1柜
-								if(SystemPara.Channel==1)
-								{
-									if(DeviceStateBusiness.ColBoardError==0)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x07;
-										sysVPMissionCR.send.msg[i++] = 0xd1;
-									}
-									else
-									{
-										sysVPMissionCR.send.msg[i++] = 0x07;
-										sysVPMissionCR.send.msg[i++] = 0xd2;
-									}	
-								}
-															
-
-								//3.升降机模块
-								//1柜
-								if((SystemPara.Channel==2)||(SystemPara.Channel==3)||(SystemPara.Channel==4))							
-								{
-									if((DeviceStateBusiness.Error_FMD==0)&&(DeviceStateBusiness.Error_FUM==0)&&(DeviceStateBusiness.Error_GOC==0)&&(DeviceStateBusiness.Error_FLD==0)&&(DeviceStateBusiness.Error_FOD==0)
-										&&(DeviceStateBusiness.Error_UDS==0)&&(DeviceStateBusiness.Error_GCD==0)&&(DeviceStateBusiness.Error_SOVB==0)&&(DeviceStateBusiness.Error_SOMD1==0)&&(DeviceStateBusiness.Error_SOEC==0)
-										&&(DeviceStateBusiness.Error_SFHG==0)&&(DeviceStateBusiness.Error_SOFP==0)&&(DeviceStateBusiness.Error_SOMD2==0))
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xb9;
-									}
-									if(DeviceStateBusiness.Error_FMD)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xba;
-									}
-									if(DeviceStateBusiness.Error_FUM)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xbb;
-									}				
-									if(DeviceStateBusiness.Error_GOC)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xbc;
-									}
-									if(DeviceStateBusiness.Error_FLD)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xbd;
-									}
-									if(DeviceStateBusiness.Error_FOD)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xbe;
-									}
-									if(DeviceStateBusiness.Error_UDS)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xbf;
-									}
-									if(DeviceStateBusiness.Error_GCD)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xc0;
-									}			
-									if(DeviceStateBusiness.Error_SOVB)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xc1;
-									}
-									if(DeviceStateBusiness.Error_SOMD1)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xc2;
-									}
-									if(DeviceStateBusiness.Error_SOEC)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xc3;
-									}
-									if(DeviceStateBusiness.Error_SFHG)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xc4;
-									}								
-									if(DeviceStateBusiness.Error_SOFP)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xc5;
-									}				
-									if(DeviceStateBusiness.Error_SOMD2)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x0b;
-										sysVPMissionCR.send.msg[i++] = 0xc6;
-									}
-								}
-																
-								//4.货道全不可用
-								if(DeviceStateBusiness.Emp_Gol)
-								{
-									sysVPMissionCR.send.msg[i++] = 0x07;
-									sysVPMissionCR.send.msg[i++] = 0xd6;
-								}
-							}
-																			
-							//8.							
-							//1柜加热模块故障
-							if(acdc_status_API(1,3)==0)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x58;
-							}	
-							else if(acdc_status_API(1,3)==1)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x59;
-								//读取1柜温度
-								sysVPMissionCR.send.msg[i++] = 0xff;
-								sysVPMissionCR.send.msg[i++] = 0x01;
-								sysVPMissionCR.send.msg[i++] = sysXMTMission.recPVTemp/256;
-								sysVPMissionCR.send.msg[i++] = sysXMTMission.recPVTemp%256;
-								
-							}
-							else if(acdc_status_API(1,3)==2)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x5a;
-							}	
-							
-							//1柜制冷模块故障
-							if(acdc_status_API(1,2)==0)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x5e;
-							}	
-							else if(acdc_status_API(1,2)==1)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x5f;
-								//读取1柜温度
-								sysVPMissionCR.send.msg[i++] = 0xff;
-								sysVPMissionCR.send.msg[i++] = 0x03;
-								sysVPMissionCR.send.msg[i++] = 0xfe;
-								sysVPMissionCR.send.msg[i++] = 0xfe;
-							}
-							else if(acdc_status_API(1,2)==2)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x60;
-							}	
-							
-							//1柜照明块故障
-							if(acdc_status_API(1,1)==0)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x64;
-							}	
-							else if(acdc_status_API(1,1)==1)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x65;
-							}
-							else if(acdc_status_API(1,1)==2)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x66;
-							}
-							
-							//1柜制除臭块故障
-							if(acdc_status_API(1,4)==0)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x6a;
-							}	
-							else if(acdc_status_API(1,4)==1)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x6b;
-							}
-							else if(acdc_status_API(1,4)==2)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x6c;
-							}
-							
-						
-						}
-						//2柜设备状态
-						else if(sysVPMissionCR.Control_Bin==2)
-						{
-							//1.货道类型
-							if((SystemPara.GeziDeviceType==1)||(SystemPara.SubChannel==0)||(SystemPara.SubBinOpen==0))
-							{
-								sysVPMissionCR.send.msg[i++] = 0x06;
-								sysVPMissionCR.send.msg[i++] = 0xd0;
-							}
-							else if((SystemPara.SubBinOpen==1)&&(SystemPara.SubChannel==1))
-							{
-								sysVPMissionCR.send.msg[i++] = 0x06;
-								sysVPMissionCR.send.msg[i++] = 0xd1;
-							}
-							else if((SystemPara.SubBinOpen==1)&&(SystemPara.SubChannel==2))
-							{
-								sysVPMissionCR.send.msg[i++] = 0x06;
-								sysVPMissionCR.send.msg[i++] = 0xd2;
-							}
-							else if((SystemPara.SubBinOpen==1)&&(SystemPara.SubChannel==3))
-							{
-								sysVPMissionCR.send.msg[i++] = 0x06;
-								sysVPMissionCR.send.msg[i++] = 0xd3;
-							}
-							else if((SystemPara.SubBinOpen==1)&&(SystemPara.SubChannel==4))
-							{
-								sysVPMissionCR.send.msg[i++] = 0x06;
-								sysVPMissionCR.send.msg[i++] = 0xd4;
-							}
-							
-							if(SystemPara.GeziDeviceType==0)
-							{
-								//1.GOC故障模块
-								if(SystemPara.GOCIsOpen == 0)
-								{
-									if(SystemPara.SubBinOpen==1)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x03;
-										sysVPMissionCR.send.msg[i++] = 0xe8;
-									}
-									
-								}
-								else if(SystemPara.GOCIsOpen == 1)
-								{									
-									if(SystemPara.SubBinOpen==1)
-									{
-										if(DeviceStateBusiness.GOCErrorSub==0)//2柜
-										{
-											sysVPMissionCR.send.msg[i++] = 0x03;
-											sysVPMissionCR.send.msg[i++] = 0xe9;
-										}
-										else
-										{
-											sysVPMissionCR.send.msg[i++] = 0x03;
-											sysVPMissionCR.send.msg[i++] = 0xea;
-										}
-									}
-								}
-								
-								//2.弹簧货道模块								
-								//2柜
-								if((SystemPara.SubBinOpen==1)&&(SystemPara.SubChannel==1))							
-								{
-									if(DeviceStateBusiness.ColBoardErrorSub==0)
-									{
-										sysVPMissionCR.send.msg[i++] = 0x07;
-										sysVPMissionCR.send.msg[i++] = 0xd1;
-									}
-									else
-									{
-										sysVPMissionCR.send.msg[i++] = 0x07;
-										sysVPMissionCR.send.msg[i++] = 0xd2;
-									}	
-								}
-								
-
-								//3.升降机模块
-								//2柜
-								if((SystemPara.SubBinOpen==1)&&((SystemPara.SubChannel==2)||(SystemPara.SubChannel==3)||(SystemPara.SubChannel==4)))	
-								{
-									sysVPMissionCR.send.msg[i++] = 0x0b;
-									sysVPMissionCR.send.msg[i++] = 0xb9;
-								}
-								
-								
-								//4.货道全不可用
-								if(DeviceStateBusiness.Emp_Gol)
-								{
-									sysVPMissionCR.send.msg[i++] = 0x07;
-									sysVPMissionCR.send.msg[i++] = 0xd6;
-								}
-							}
-																			
-							//8.		
-							//2柜加热模块故障
-							if(acdc_status_API(2,3)==0)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x58;
-							}	
-							else if(acdc_status_API(2,3)==1)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x59;
-								//读取2柜温度
-								sysVPMissionCR.send.msg[i++] = 0xff;
-								sysVPMissionCR.send.msg[i++] = 0x01;
-								sysVPMissionCR.send.msg[i++] = 0xfe;
-								sysVPMissionCR.send.msg[i++] = 0xfe;
-							}
-							else if(acdc_status_API(2,3)==2)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x5a;
-							}								
-							//2柜制冷模块故障
-							if(acdc_status_API(2,2)==0)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x5e;
-							}	
-							else if(acdc_status_API(2,2)==1)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x5f;
-								//读取1柜温度
-								sysVPMissionCR.send.msg[i++] = 0xff;
-								sysVPMissionCR.send.msg[i++] = 0x03;
-								sysVPMissionCR.send.msg[i++] = 0xfe;
-								sysVPMissionCR.send.msg[i++] = 0xfe;
-							}
-							else if(acdc_status_API(2,2)==2)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x60;
-							}								
-							//2柜照明块故障
-							if(acdc_status_API(2,1)==0)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x64;
-							}	
-							else if(acdc_status_API(2,1)==1)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x65;
-							}
-							else if(acdc_status_API(2,1)==2)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x66;
-							}							
-							//2柜制除臭块故障
-							if(acdc_status_API(2,4)==0)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x6a;
-							}	
-							else if(acdc_status_API(2,4)==1)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x6b;
-							}
-							else if(acdc_status_API(2,4)==2)
-							{
-								sysVPMissionCR.send.msg[i++] = 0x1b;
-								sysVPMissionCR.send.msg[i++] = 0x6c;
-							}
-						
-						}
-						
-						sysVPMissionCR.send.datLen = i; 
-						break;
-				}
-				/*
-                sysVPMissionCR.send.datLen  = 9;
-                sysVPMissionCR.send.msg[0]  = 6; 
-				
-                sysVPMissionCR.send.msg[1]  = TradeCounter.TotalSellNum/256/256/256;       
-                sysVPMissionCR.send.msg[2]  = TradeCounter.TotalSellNum/256/256%256;       
-                sysVPMissionCR.send.msg[3]  = TradeCounter.TotalSellNum/256%256;       
-                sysVPMissionCR.send.msg[4]  = TradeCounter.TotalSellNum%256; 
-
-				sysVPMissionCR.send.msg[5]  = TradeCounter.TotalSellMoeny/256/256/256;		 
-				sysVPMissionCR.send.msg[6]  = TradeCounter.TotalSellMoeny/256/256%256;		 
-				sysVPMissionCR.send.msg[7]  = TradeCounter.TotalSellMoeny/256%256;		 
-				sysVPMissionCR.send.msg[8]  = TradeCounter.TotalSellMoeny%256;	
-				*/
-
-			}
-			break;			
 			case VP_OFFLINEDATA_RPT:
             {
 				if(sysVPMissionCR.type==0)
@@ -1919,7 +1022,8 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 				}
 				
             }
-            break;			
+            break;	
+            */
 		default: break;
 	}
 	//	
@@ -2014,6 +1118,117 @@ unsigned char VPMission_Setup_RPT_CR( void )
 		    break;
 	}
 	*/
+	return VP_ERR_NULL;
+}
+
+/*********************************************************************************************************
+** Function name:     	VPMission_Status_RPT_CR
+** Descriptions:	    上报机器状态
+** input parameters:    
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+unsigned char VPMission_Status_RPT_CR()
+{
+    unsigned char retry = 0;
+	unsigned char recRes=0;
+	unsigned char flag = 0;
+	uint32_t change;
+	
+    retry = VP_COM_RETRY;	
+	
+	sysVPMissionCR.bv_st = ErrorStatus(2);
+	sysVPMissionCR.check_st = ErrorStatus(2);
+	sysVPMissionCR.cc_st = ErrorStatus(3);
+	sysVPMissionCR.vmc_st = ErrorStatus(1);
+	if(SystemPara.CoinChangerType == MDB_CHANGER)
+	{
+		change = stDevValue.CoinValue[0]*stDevValue.CoinNum[0] + stDevValue.CoinValue[1]*stDevValue.CoinNum[1] + stDevValue.CoinValue[2]*stDevValue.CoinNum[2]
+				+stDevValue.CoinValue[3]*stDevValue.CoinNum[3] + stDevValue.CoinValue[4]*stDevValue.CoinNum[4] + stDevValue.CoinValue[5]*stDevValue.CoinNum[5] 
+				+stDevValue.CoinValue[6]*stDevValue.CoinNum[6] + stDevValue.CoinValue[7]*stDevValue.CoinNum[7]
+				+stDevValue.CoinValue[8]*stDevValue.CoinNum[8] + stDevValue.CoinValue[9]*stDevValue.CoinNum[9] + stDevValue.CoinValue[10]*stDevValue.CoinNum[10]
+				+stDevValue.CoinValue[11]*stDevValue.CoinNum[11] + stDevValue.CoinValue[12]*stDevValue.CoinNum[12] + stDevValue.CoinValue[13]*stDevValue.CoinNum[13]
+				+stDevValue.CoinValue[14]*stDevValue.CoinNum[14] + stDevValue.CoinValue[15]*stDevValue.CoinNum[15]; 
+	}
+	else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
+	{
+		change =( !HopperIsEmpty() )? SystemPara.MaxValue:0;
+		if(change < SystemPara.BillEnableValue)
+		{
+			change  = 0;
+		}
+		else
+		{
+			change  = change;
+		}
+		//MsgUboxPack[g_Ubox_Index].change  =( !HopperIsEmpty() )? SystemPara.MaxValue:0;				
+	}
+	//无硬币器
+	else if(SystemPara.CoinChangerType == OFF_CHANGER)
+	{	
+		change =0;
+	}
+	sysVPMissionCR.change=change;
+	
+	//添加纸币循环器时，可找硬币金额
+	//if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
+	//{
+	//	MsgUboxPack[g_Ubox_Index].change += stDevValue.RecyclerValue[0]*stDevValue.RecyclerNum[0] + stDevValue.RecyclerValue[1]*stDevValue.RecyclerNum[1] + stDevValue.RecyclerValue[2]*stDevValue.RecyclerNum[2]
+	//			+stDevValue.RecyclerValue[3]*stDevValue.RecyclerNum[3] + stDevValue.RecyclerValue[4]*stDevValue.RecyclerNum[4] + stDevValue.RecyclerValue[5]*stDevValue.RecyclerNum[5]
+	//			+stDevValue.RecyclerValue[6]*stDevValue.RecyclerNum[6];
+	//}
+	//添加纸币循环器时，纸币的存币数量
+	if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
+	{
+		change = stDevValue.RecyclerValue[0]*stDevValue.RecyclerNum[0] + stDevValue.RecyclerValue[1]*stDevValue.RecyclerNum[1] + stDevValue.RecyclerValue[2]*stDevValue.RecyclerNum[2]
+				+stDevValue.RecyclerValue[3]*stDevValue.RecyclerNum[3] + stDevValue.RecyclerValue[4]*stDevValue.RecyclerNum[4] + stDevValue.RecyclerValue[5]*stDevValue.RecyclerNum[5]
+				+stDevValue.RecyclerValue[6]*stDevValue.RecyclerNum[6];
+	}
+	else
+	{
+		change =0;
+	}
+	sysVPMissionCR.recychange = change;
+	
+	//==============================================================
+	flag = VPMsgPackSend_CR( VP_STATUS_RPT, 0);  //1-0, not need ACK
+      if( flag != VP_ERR_NULL )
+      {
+		return VP_ERR_PAR;
+	}	
+	return VP_ERR_NULL;
+
+}
+
+
+/*********************************************************************************************************
+** Function name:     	VPMission_Info_RPT_CR
+** Descriptions:	    上报Info信息
+** input parameters:    
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+unsigned char VPMission_Info_RPT_CR(uint8_t type)
+{
+    unsigned char retry = 0;
+	unsigned char recRes=0;
+	unsigned char flag = 0;
+
+	if(LogPara.offLineFlag == 1)
+	{
+		return VP_ERR_NULL;
+	}
+	//
+    retry = VP_COM_RETRY;
+	//-------------------------------------------
+    sysVPMissionCR.type = type;		
+	//===========================================
+	flag = VPMsgPackSend_CR( VP_INFO_RPT, 0);
+    if( flag != VP_ERR_NULL )
+    {
+		return VP_ERR_PAR;
+	}
+	
 	return VP_ERR_NULL;
 }
 #if 0
@@ -2510,595 +1725,7 @@ unsigned char VP_CMD_GetColumnSta( void )
 }
 
 
-/*********************************************************************************************************
-** Function name:     	VPMission_Status_RPT
-** Descriptions:	    上报机器状态
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VPMission_Status_RPT( uint8_t check_st,uint8_t bv_st,uint8_t cc_st,uint8_t vmc_st,uint16_t change,uint8_t tem_st,uint16_t *recyclerSum,uint16_t *coinSum )
-{
-    unsigned char retry = 0;
-	unsigned char recRes=0;
-	unsigned char flag = 0;
 
-	
-    retry = VP_COM_RETRY;
-	
-	
-	if(SystemPara.EasiveEnable == 1)
-	{
-		sysVPMissionCR.check_st = check_st;
-		sysVPMissionCR.bv_st = bv_st;
-		sysVPMissionCR.cc_st = cc_st;
-		sysVPMissionCR.vmc_st = vmc_st;
-		sysVPMissionCR.change = change;
-		sysVPMissionCR.tem_st = tem_st;
-		sysVPMissionCR.recyclerSum[0] = recyclerSum[0];
-		sysVPMissionCR.recyclerSum[1] = recyclerSum[1];
-		sysVPMissionCR.recyclerSum[2] = recyclerSum[2];
-		sysVPMissionCR.recyclerSum[3] = recyclerSum[3];
-		sysVPMissionCR.recyclerSum[4] = recyclerSum[4];
-		sysVPMissionCR.recyclerSum[5] = recyclerSum[5];
-		sysVPMissionCR.coinSum[0] = coinSum[0];
-		sysVPMissionCR.coinSum[1] = coinSum[1];
-		sysVPMissionCR.coinSum[2] = coinSum[2];
-		sysVPMissionCR.coinSum[3] = coinSum[3];
-		sysVPMissionCR.coinSum[4] = coinSum[4];
-		sysVPMissionCR.coinSum[5] = coinSum[5];
-	}
-	else
-	{
-		sysVPMissionCR.check_st = 0;
-		sysVPMissionCR.bv_st = bv_st;
-		sysVPMissionCR.cc_st = 0; 
-		sysVPMissionCR.vmc_st = vmc_st;
-		if(change>0)
-			sysVPMissionCR.change = 50000;
-		else
-			sysVPMissionCR.change = 0;
-		sysVPMissionCR.tem_st = tem_st;
-		sysVPMissionCR.recyclerSum[0] = 0xfe;
-		sysVPMissionCR.recyclerSum[1] = 0xfe;
-		sysVPMissionCR.recyclerSum[2] = 0xfe;
-		sysVPMissionCR.recyclerSum[3] = 0xfe;
-		sysVPMissionCR.recyclerSum[4] = 0xfd;
-		sysVPMissionCR.recyclerSum[5] = SystemPara.SaleTime;
-		if(sysVPMissionCR.change>0)
-			sysVPMissionCR.coinSum[0] = 50;
-		else
-			sysVPMissionCR.coinSum[0] = 0;
-		sysVPMissionCR.coinSum[1] = 0;
-		sysVPMissionCR.coinSum[2] = 0;
-		sysVPMissionCR.coinSum[3] = 0;
-		sysVPMissionCR.coinSum[4] = 0;
-		sysVPMissionCR.coinSum[5] = 0;
-	}
-	if(SystemPara.EasiveEnable == 1)
-	{
-		//==============================================================
-		flag = VPMsgPackSend_CR( VP_STATUS_RPT, 1);  //1-0, not need ACK
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack_CR() )
-				{			
-					if(LogPara.offLineFlag == 1)
-					{
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}
-					recRes = 1;
-					break;
-				}
-			}
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-		}	
-		if( retry== 0 )	
-		{
-			OSTimeDly(10);	
-			if(LogPara.offLineFlag == 0)
-			{
-				LogPara.offLineFlag = 1;
-				LogPara.offDetailPage = LogPara.LogDetailPage;
-			}
-	        return VP_ERR_COM;
-		}
-
-	    switch( sysVPMissionCR.receive.msgType )
-		{
-			default:
-			    break;
-		}
-	}
-	else
-	{
-		//==============================================================
-		flag = VPMsgPackSend_CR( VP_STATUS_RPT, 0);  //1-0, not need ACK
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-	}
-	//------------------------------------------------------
-    /*//1.硬币器状态cc_st
-	//if( DeviceStatus.CoinAccepter != 0 )
-	if(sysVPMissionCR.billCoinEnable == 0)
-	{
-        sysVPMissionCR.STA_CoinA = 1;
-    }	
-    else if( sysMDBMission.coinDeviceStatus != 0 )
-	{
-        sysVPMissionCR.STA_CoinA = 2;
-    }
-    //币管没关紧，上报故障;by gzz 20110902
-	else if( sysMDBMission.tubeRemoved == 1 )
-	{
-		sysVPMissionCR.STA_CoinA = 2;
-	}
-	else if(sysMDBMission.coinIsEnable == 0)
-	{
-        sysVPMissionCR.STA_CoinA = 1;
-    }	
-	else
-	{
-		sysVPMissionCR.STA_CoinA = 0;
-	}
-
-    //2.机器中当前可用于找零的5角硬币量cnt5j
-    //if( DeviceStatus.ChangeUnit1 == 0 )
-    if( ( sysMDBMission.coinDeviceStatus == 0x00 )&&(sysMDBMission.coin5jNum > 0) )
-    	sysVPMissionCR.STA_ChangeNum1 = sysMDBMission.coin5jNum;   //VP_STA_CHANGE_ENOUGH;
-    else
-	    sysVPMissionCR.STA_ChangeNum1 = 0;
-
-    //3.机器中当前可用于找零的1元硬币量cnt1y
-    //if( DeviceStatus.ChangeUnit2 == 0 )
-    if( ( sysMDBMission.coinDeviceStatus == 0x00 )&&(sysMDBMission.coin1yNum > 0) )
-    	sysVPMissionCR.STA_ChangeNum2 = sysMDBMission.coin1yNum;   //VP_STA_CHANGE_ENOUGH;
-    else
-	    sysVPMissionCR.STA_ChangeNum2 = 0;
-
-    //4.纸币器状态bv_st
-	//1. 
-	if( SystemParameter.BillNo == 1 )
-	{
-	    //if( DeviceStatus.BillAccepter == 0 )
-	    if(sysVPMissionCR.billCoinEnable == 0)
-		{
-	        sysVPMissionCR.STA_BillA = 1;
-	    }	
-		else if(sysMDBMission.billCashBuf == 1)//钞箱移除报故障;by gzz 20121224
-	    {
-			if( sysITLMission.billHoldingFlag == 1 )
-			{
-				CurrentMoney = CurrentPayed + sysITLMission.billHoldingValue;
-			}
-			else
-			{
-				CurrentMoney = CurrentPayed;
-			}
-			if( (CurrentMoney == 0)&&( sysITLMission.billHoldingFlag == 0 ) )
-			{
-				sysVPMissionCR.STA_BillA = 2;	
-			}
-			else
-			{
-				sysVPMissionCR.STA_BillA = 0;	
-			}				
-		}		
-	    else if( sysMDBMission.billDeviceStatus == 0 )
-		{
-			if(sysMDBMission.billIsEnable == 0)
-			{
-				sysVPMissionCR.STA_BillA = 1;			
-			}
-			else
-			{
-				sysVPMissionCR.STA_BillA = 0;
-			}
-            
-			sysVPMissionCR.STA_BillCount = 0;//by gzz 20110905
-		}
-        //1)如果发现此次纸币器和硬币器同时故障，则全部上报
-        //2)pc轮询时，如果只有纸币器故障，给予累加，只有连续故障次数大于5次时，才上报
-		//by gzz 20110905
-		else if(( sysMDBMission.coinDeviceStatus != 0 )||( sysVPMissionCR.STA_BillCount >= 1 ))
-		{
-			sysVPMissionCR.STA_BillA = 2;			
-		}		
-		else//by gzz 20110905 
-		{
-		    sysVPMissionCR.STA_BillA = 0;
-			sysVPMissionCR.STA_BillCount ++;
-		}
-	}
-	else
-	{
-		sysVPMissionCR.STA_BillA = 3;
-	}
-
-    //5.找零设备状态ch1_st,ch2_st
-	//2.
-    if( SystemParameter.HopperCoinPrice1 > 0 )
-	{
-		//if( DeviceStatus.ChangeUnit1 == 1 )
-        if( sysMDBMission.coinDeviceStatus != 0 )
-		{
-			sysVPMissionCR.STA_Changer1 = 2;
-		}
-		//币管没关紧，上报故障;by gzz 20110901
-		else if( sysMDBMission.tubeRemoved == 1 )
-		{
-			sysVPMissionCR.STA_Changer1 = 2;
-		}
-		else
-		{
-			sysVPMissionCR.STA_Changer1 = 0;
-		}
-	}
-	else
-	{
-		sysVPMissionCR.STA_Changer1 = 3;
-	}
-    //
-	if( SystemParameter.HopperCoinPrice2 > 0 )
-	{
-	    
-		//if( DeviceStatus.ChangeUnit2 == 1 )
-        if( sysMDBMission.coinDeviceStatus != 0 )
-		{
-			sysVPMissionCR.STA_Changer2 = 2;
-		}
-		//币管没关紧，上报故障;by gzz 20110901
-		else if( sysMDBMission.tubeRemoved == 1 )
-		{
-			sysVPMissionCR.STA_Changer2 = 2;
-		}
-		else
-		{
-			sysVPMissionCR.STA_Changer2 = 0;
-		}
-
-	}
-	else
-	{
-		sysVPMissionCR.STA_Changer2 = 3;
-	}
-    
-    //6.主控器状态vmc_st
-	//只有机器因故障而不能工作后，才上报故障信息;by gzz 20110902
-	//if( HardWareErr == 0 )
-	if(( HardWareErr & 0x0010 )||( HardWareErr & 0x0080 ))
-    {
-	    sysVPMissionCR.STA_VMC = 1;
-	}
-	//else if(( HardWareErr & 0x0020 )||( HardWareErr & 0x0040 )||( HardWareErr & 0x0100 )
-	//	   ||( HardWareErr & 0x0200 )||( HardWareErr & 0x1000 )||( HardWareErr & 0x2000 ))
-	else if( HardWareErr != 0)
-    {
-	    sysVPMissionCR.STA_VMC = 2;
-	}
-	else if(sysVPMissionCR.adminType == 1)
-	{
-		sysVPMissionCR.STA_VMC = 3;
-	}
-    else
-	{
-		sysVPMissionCR.STA_VMC = 0;
-	}
-	
-	
-	
-    //7.选货1,选货2,选货3状态
-	//sysVPMissionCR.STA_Tep1    = 0x7f;
-    //sysVPMissionCR.STA_Tep2    = 0x7f;
-	if( DeviceStatus.Selection[0] == 0 )
-	{
-		sysVPMissionCR.STA_Tep1 = 0;
-	}
-	else
-	{
-		sysVPMissionCR.STA_Tep1 = 2;	
-	}
-    //
-    if( DeviceStatus.Selection[1] == 0 )
-	{
-		sysVPMissionCR.STA_Tep2 = 0;
-	}
-	else
-	{
-		sysVPMissionCR.STA_Tep2 = 2;	
-	}
-    
-	//sysVPMissionCR.STA_Bank   = 3;
-	if( DeviceStatus.Selection[2] == 0 )
-	{
-		sysVPMissionCR.STA_Tep3 = 0;
-	}
-	else
-	{
-		sysVPMissionCR.STA_Tep3 = 2;	
-	}
-    
-
-    
-
-	//8.出货检测
-	//sysVPMissionCR.STA_ICCard    = 3;
-	if( SystemParameter.GOCOn == 1 )
-	{
-        //只有确认出货检测故障，才发送故障信息给pc端;by cq 20110815
-        / *	            
-        if( DeviceStatus.GOCStatus & 0x01 )
-		{
-			sysVPMissionCR.STA_ICCard = 2;
-		}
-		else 
-		{
-			sysVPMissionCR.STA_ICCard = 0;
-		} 
-        * /
-        if( DeviceStatus.GOCStatus == 0 )
-        {
-        	sysVPMissionCR.STA_ICCard = 0;
-            sysVPMissionCR.STA_ICCardCount = 0;//by gzz 20111012
-        }
-        else if(( DeviceStatus.GOCStatus & 0x01 )&&( sysVPMissionCR.STA_ICCardCount > 5 ))
-        {
-			sysVPMissionCR.STA_ICCard = 2;
-		}
-        else 
-		{
-			sysVPMissionCR.STA_ICCard = 0;
-            sysVPMissionCR.STA_ICCardCount ++;
-		} 
-	}
-	else
-	{
-		sysVPMissionCR.STA_ICCard = 1;
-	}	
-	//9.货仓1状态
-	if(sysVPMissionCR.ACDCCompressorCtr == 1)
-		sysVPMissionCR.ESTA_Tem1 = 1;
-	else
-		sysVPMissionCR.ESTA_Tem1 = 0;
-	//10.货仓1温度tem1
-	if( SystemParameter.ACDCModule == 1 )
-	{
-        if( DeviceStatus.ACDCModule == 0x00 )
-		{
-			sysVPMissionCR.E_Tem1 = 0xfd;//0xfd表示温度无意义;by gzz 20110721
-		}
-		else
-		{
-			sysVPMissionCR.E_Tem1 = 0xff;//故障
-		}
-	}
-	else
-	{  
-		sysVPMissionCR.E_Tem1 = 0xfe;//不存在此货仓
-	}
-	//11.货仓2,3,4状态
-	sysVPMissionCR.ESTA_Tem2 = 3;//不存在此货仓
-	//12，货仓2,3,4温度tem2,表示
-	sysVPMissionCR.E_Tem2 = 0xfe;//不存在此货仓
-
-    //13交易时间
-	sysVPMissionCR.Payout_Time = SystemParameter.tradeTime;
-
-	//==============================================================
-//TAB_VPM_STATUS_RETRY:
-    flag = VPMsgPackSend_CR( VP_STATUS_RPT, 0, 1);  //1-0, not need ACK
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	*/
-	/*
-	sysVPMissionCR.msTimer2 = VP_TIME_OUT;
-	while( sysVPMissionCR.msTimer2 )
-	{
-		if( VPBusFrameUnPack_CR() )
-		{
-		    sysVPMissionCR.comErrNum = 0;
-			goto TAB_VPM_STATUS_COM_OK;
-		}
-	}
-	if( retry-- )
-	{
-		goto TAB_VPM_STATUS_RETRY;
-	}
-	else
-	{
-		sysVPMissionCR.comErrNum++;
-		//? 
-        return VP_ERR_COM;
-	}
-TAB_VPM_STATUS_COM_OK:
-    switch( sysVPMissionCR.receive.msgType )
-	{
-		default:
-		    break;
-	}
-	*/
-	return VP_ERR_NULL;
-
-}
-
-
-/*********************************************************************************************************
-** Function name:     	VP_CMD_GetStatus
-** Descriptions:	    需要上报状态信息
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VP_CMD_GetStatus( void )
-{
-	//MessageUboxPCPack *AccepterUboxMsg;
-	//unsigned char ComStatus;
-
-	//1.Check the data
-    if( sysVPMissionCR.receive.datLen != 0  )
-	{
-	    VPMsgPackSend_CR( VP_NAK_RPT, 0 );	 
-		return VP_ERR_PAR;
-	}
-	//发送邮箱给vmc
-	//MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_STATUSIND;				
-	//OSMboxPost(g_Ubox_PCTOVMCMail,&MsgUboxPack[g_Ubox_Index]);	
-	//UpdateIndex();
-	//2.ACK	
-	/**/
-	if(SystemPara.EasiveEnable == 1)
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-		{
-			VPMsgPackSend_CR( VP_ACK_RPT, 0);
-		}
-	}
-	else
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-		{
-			VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-		}
-	}
-	
-	TracePC("\r\n Drv Payout_Ind ACK"); 
-	//VPMsgPackSend_CR( VP_ACK_RPT, 0  );
-	OSTimeDly(OS_TICKS_PER_SEC/10);
-	StatusRPTAPI();
-	/*
-	//取得返回值
-	AccepterUboxMsg = OSMboxPend(g_Ubox_PCTOVMCBackCMail,OS_TICKS_PER_SEC*10,&ComStatus);
-	if(ComStatus == OS_NO_ERR)
-	{
-		switch(AccepterUboxMsg->PCCmd)
-		{
-			case MBOX_VMCTOPC_ACK:
-				TracePC("\r\n Drv Payout_Ind ACK"); 
-				VPMsgPackSend_CR( VP_ACK_RPT, 0  );	
-				break;
-			case MBOX_VMCTOPC_NAK:
-				TracePC("\r\n Drv Payout_Ind NAK"); 
-				VPMsgPackSend_CR( VP_NAK_RPT, 0  );	
-				break;	
-		}
-	}	
-	*/
-    return VP_ERR_NULL;	
-}
-
-
-/*********************************************************************************************************
-** Function name:     	VPMission_Info_RPT
-** Descriptions:	    上报Info信息
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VPMission_Info_RPT( unsigned char type, unsigned int payAllMoney,uint8_t check_st,uint8_t bv_st,uint8_t cc_st,uint8_t Control_Huodao,uint8_t value,uint8_t Control_device,uint8_t  cabinetNums,uint8_t *cabinetdata )
-{
-    unsigned char retry = 0;
-	unsigned char recRes=0;
-	unsigned char flag = 0;
-
-	if(LogPara.offLineFlag == 1)
-	{
-		return VP_ERR_NULL;
-	}
-	//
-    retry = VP_COM_RETRY;
-	//-------------------------------------------
-    sysVPMissionCR.type = type;	
-	sysVPMissionCR.payAllMoney = payAllMoney;
-	sysVPMissionCR.check_st = check_st;
-	sysVPMissionCR.bv_st = bv_st;
-	sysVPMissionCR.cc_st = cc_st;
-	sysVPMissionCR.Control_Bin = Control_device;
-	sysVPMissionCR.Control_Huodao = Control_Huodao;
-	sysVPMissionCR.value = value;
-	sysVPMissionCR.cabinetNums = cabinetNums;
-	memcpy(sysVPMissionCR.cabinetdata,(uint8_t *)cabinetdata,30);
-	if(SystemPara.EasiveEnable == 1)
-	{
-		//===========================================
-		flag = VPMsgPackSend_CR( VP_INFO_RPT, 1);
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack_CR() )
-				{
-					if(LogPara.offLineFlag == 1)
-					{
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}
-					recRes = 1;
-					break;
-				}
-			}
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-			
-		}
-		if( retry== 0 )
-		{
-			OSTimeDly(10);		
-			if(LogPara.offLineFlag == 0)
-			{
-				LogPara.offLineFlag = 1;
-				LogPara.offDetailPage = LogPara.LogDetailPage;
-			}
-	        return VP_ERR_COM;
-		}
-	    switch( sysVPMissionCR.receive.msgType )
-		{
-			default:
-			    break;
-		}
-	}
-	else
-	{
-		//===========================================
-		flag = VPMsgPackSend_CR( VP_INFO_RPT, 0);
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-	}
-	return VP_ERR_NULL;
-}
 
 
 /*********************************************************************************************************
@@ -4158,7 +2785,12 @@ unsigned char VPMission_Poll_CR()
 		case VP_GET_SETUP_IND: 
 			VPMission_Setup_RPT_CR();						
 			break;
- 	    
+ 	      case VP_GET_STATUS:
+		    VPMission_Status_RPT_CR();
+		    break;	
+		case VP_GETINFO_IND:			
+			VPMission_Info_RPT_CR(sysVPMissionCR.receive.msg[0]);
+			break;	
 		/*case VP_HOUDAO_IND:
 		    VP_CMD_HuodaoPar();
 		    break;
@@ -4182,13 +2814,7 @@ unsigned char VPMission_Poll_CR()
 		    break;
 		case VP_CONTROL_IND:
 		    VP_Control_Ind();
-		    break;
-		case VP_GETINFO_IND://120419 by cq TotalSell 			
-			VP_CMD_GetInfo();
-			break;
-		case VP_GET_STATUS:
-		    VP_CMD_GetStatus();
-		    break;		
+		    break;					
 		case VP_COST_IND://添加扣款函数;by gzz 20110823
 		    VP_Cost_Ind();
 		    break;	

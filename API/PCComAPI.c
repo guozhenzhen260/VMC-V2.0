@@ -359,6 +359,14 @@ void StatusRPTAPI()
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
 			break;		
+		case CRUBOX_PC:			
+			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;
+			TracePC("\r\n MiddUboxSataus check_st=%d,bv_st=%d,cc_st=%d,vmc_st=%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,change=%ld",MsgUboxPack[g_Ubox_Index].check_st,MsgUboxPack[g_Ubox_Index].bv_st,MsgUboxPack[g_Ubox_Index].cc_st,MsgUboxPack[g_Ubox_Index].vmc_st,stDevValue.CoinValue[0],MsgUboxPack[g_Ubox_Index].coinSum[0],stDevValue.CoinValue[1],MsgUboxPack[g_Ubox_Index].coinSum[1],
+				stDevValue.CoinValue[2],MsgUboxPack[g_Ubox_Index].coinSum[2],stDevValue.CoinValue[3],MsgUboxPack[g_Ubox_Index].coinSum[3],stDevValue.CoinValue[4],MsgUboxPack[g_Ubox_Index].coinSum[4],stDevValue.CoinValue[5],MsgUboxPack[g_Ubox_Index].coinSum[5],MsgUboxPack[g_Ubox_Index].change);	
+			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+			UpdateIndex();
+			OSTimeDly(OS_TICKS_PER_SEC/100);
+			break;
 	}
 }
 

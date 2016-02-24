@@ -521,30 +521,32 @@ void Uart3TaskDevice(void *pvData)
 			OSTimeDly(OS_TICKS_PER_SEC/4);
 			//OSTimeDly(OS_TICKS_PER_SEC/50);
 			//OSTimeDly(7);
-			/*//取得返回值
-			AccepterSIMPLEUboxMsg = OSQPend(g_SIMPLEUbox_VMCTOPCQ,1,&ComStatus);
+			
+			//检查友宝PC控制
+			AccepterUboxMsg = OSQPend(g_Ubox_VMCTOPCQ,20,&ComStatus);
 			if(ComStatus == OS_NO_ERR)
 			{
-				switch(AccepterSIMPLEUboxMsg->VMCTOPCCmd)
-				{
-					case MBOX_SIMPLEVMCTOPC_BUTTONRPT:
-						TracePC("\r\n Taskpend btnchannel_id=%d",AccepterSIMPLEUboxMsg->btnchannel_id); 						
-						VPMissionSIMPLE_Button_RPT(AccepterSIMPLEUboxMsg->btnchannel_id);
-						break;
-					case MBOX_SIMPLEVMCTOPC_ADMINRPT:
-						TracePC("\r\n Taskpend Admin=%d,%d,%d",AccepterSIMPLEUboxMsg->admintype,AccepterSIMPLEUboxMsg->admincolumn,AccepterSIMPLEUboxMsg->admincolumnsum);					
-						VPMissionSIMPLE_Admin_RPT(AccepterSIMPLEUboxMsg->admintype,AccepterSIMPLEUboxMsg->admincolumn,AccepterSIMPLEUboxMsg->admincolumnsum);
-						break;
-					case MBOX_SIMPLEVMCTOPC_GETADMIN:						
-						TracePC("\r\n Taskpend GetAdmin=%d,%d",AccepterSIMPLEUboxMsg->admintype,AccepterSIMPLEUboxMsg->admincolumn);					
-						if(AccepterSIMPLEUboxMsg->admintype==3)
-						{
-							VPSIMPLE_Sethdquery(AccepterSIMPLEUboxMsg->admincolumn);
-						}
-						VPMissionSIMPLE_Get_Admin2(AccepterSIMPLEUboxMsg->admintype);
-						break;	
+				/*
+				if((AccepterUboxMsg->PCCmd)==MBOX_VMC_UBOXINITDEV)
+				{	
+					//OSTimeDly(1000);
+					TracePC("\r\n Taskpend Uboxinit"); 
+					LCDNumberFontPrintf(40,LINE15,2,"UBOXAccepter-1");
+					VPSerialInit();
+					NowPCDev = PC_UBOX;	
+				}*/
+				//TracePC("\r\n Taskpend Ubox=%d",AccepterUboxMsg->PCCmd);	
+				switch(AccepterUboxMsg->PCCmd)
+				{					
+					case MBOX_VMCTOPC_INFORPT:
+						VPMission_Info_RPT_CR(0);
+						TracePC("\r\n Taskpend UboxStatus=%d,%d,%d,%d,%ld,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",AccepterUboxMsg->check_st,AccepterUboxMsg->bv_st,AccepterUboxMsg->cc_st,AccepterUboxMsg->vmc_st,AccepterUboxMsg->change,AccepterUboxMsg->recyclerSum[0],AccepterUboxMsg->recyclerSum[1],
+						      AccepterUboxMsg->recyclerSum[2],AccepterUboxMsg->recyclerSum[3],AccepterUboxMsg->recyclerSum[4],AccepterUboxMsg->recyclerSum[5],AccepterUboxMsg->coinSum[0],AccepterUboxMsg->coinSum[1],AccepterUboxMsg->coinSum[2],AccepterUboxMsg->coinSum[3],AccepterUboxMsg->coinSum[4],AccepterUboxMsg->coinSum[5]); 
+						break;								
 				}
-			}*/
+				OSTimeDly(OS_TICKS_PER_SEC/4);
+			}	
+
 		}
 		else if(NowPCDev == 0)
 		{

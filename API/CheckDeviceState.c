@@ -101,7 +101,7 @@ uint8_t GetScaleError()
 uint8_t IsErrorState()
 { 
 	uint8_t coinError = 0,hopperError = 0,GOCError = 0,ColBoardError = 0,PcErr=0;
-	static uint8_t billError = 0;
+	static uint8_t billError = 0,status=0;
 	//纸币器	
 	if(SystemPara.BillValidatorType==MDB_BILLACCEPTER)
 	{
@@ -111,6 +111,12 @@ uint8_t IsErrorState()
 		  )
 		{
 			billError = 1;
+			//故障时，只发送一次status
+			if(status==0)
+			{
+				StatusRPTAPI();
+				status=1;
+			}
 		}
 		else if(billError == 1)
 		{
@@ -208,6 +214,8 @@ uint8_t IsErrorState()
 			billError = 0;
 			ResetBill();
 			TraceBill("\r\n MiddBillState2=%d",billError);
+			StatusRPTAPI();
+			status=0;
 		}
 		return 0;
 	}
