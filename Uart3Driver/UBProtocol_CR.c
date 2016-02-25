@@ -1167,6 +1167,41 @@ unsigned char VPMission_Info_RPT_CR(uint8_t type)
 	return VP_ERR_NULL;
 }
 
+
+/*********************************************************************************************************
+** Function name:     	VP_Control_Ind_CR
+** Descriptions:	    PC指示VMC控制设备的命令
+** input parameters:    
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+unsigned char VP_Control_Ind_CR( void )
+{
+	//MessageUboxPCPack *AccepterUboxMsg;
+	//unsigned char ComStatus;
+		
+	//发送邮箱给vmc
+    MsgUboxPack[g_Ubox_Index].Type  = sysVPMissionCR.receive.msg[0];
+	//sysVPMissionCR.ctrValue = sysVPMissionCR.receive.msg[1];
+    switch(MsgUboxPack[g_Ubox_Index].Type)
+    {    
+    	case VP_CONTROL_BILLCOIN:
+		MsgUboxPack[g_Ubox_Index].value  = sysVPMissionCR.receive.msg[1];
+		TracePC("\r\n Drv CtrBillcoin"); 
+		break;		
+    }
+	//TracePC("\r\n Drv Ctr=%d,%d",MsgUboxPack.Type,sysVPMissionCR.receive.msg[1]); 
+	//发送邮箱给vmc
+	MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_CONTROLIND;				
+	OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
+	UpdateIndex();
+	OSTimeSet(0);
+	OSTimeDly(OS_TICKS_PER_SEC/10);
+	TracePC("\r\n Drv %dControl_Ind",OSTimeGet()); 
+	
+    return VP_ERR_NULL;	
+}
+
 /*********************************************************************************************************
 ** Function name:       VPMission_Act_RPT_CR
 ** Descriptions:        向PC上报Action信息
@@ -1234,6 +1269,8 @@ unsigned char VPMission_Button_RPT_CR()
 	return VP_ERR_NULL;
 
 }
+
+
 #if 0
 
 /*********************************************************************************************************
@@ -2604,115 +2641,6 @@ unsigned char VP_Reset_Ind( void )
 }
 
 
-
-/*********************************************************************************************************
-** Function name:     	VP_Control_Ind
-** Descriptions:	    PC指示VMC控制设备的命令
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VP_Control_Ind( void )
-{
-	//MessageUboxPCPack *AccepterUboxMsg;
-	//unsigned char ComStatus;
-	
-	//1.Check the data
-    //2.ACK	
-    /**/
-    if(SystemPara.EasiveEnable == 1)
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-        {
-	    	VPMsgPackSend_CR( VP_ACK_RPT, 0);
-        }
-	}
-	else
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-	    {
-			VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-		}
-	}
-	
-	//发送邮箱给vmc
-    MsgUboxPack[g_Ubox_Index].Type  = sysVPMissionCR.receive.msg[0];
-	//sysVPMissionCR.ctrValue = sysVPMissionCR.receive.msg[1];
-    switch(MsgUboxPack[g_Ubox_Index].Type)
-    {    
-    	case VP_CONTROL_BILLCOIN:
-			MsgUboxPack[g_Ubox_Index].value  = sysVPMissionCR.receive.msg[1];
-			TracePC("\r\n Drv CtrBillcoin"); 
-			break;
-		case VP_CONTROL_CABINETDEV:
-			MsgUboxPack[g_Ubox_Index].Control_device = sysVPMissionCR.receive.msg[1];
-			MsgUboxPack[g_Ubox_Index].Control_type  = sysVPMissionCR.receive.msg[2];
-			MsgUboxPack[g_Ubox_Index].wenduvalue    = INTEG16(sysVPMissionCR.receive.msg[3],sysVPMissionCR.receive.msg[4]);
-			TracePC("\r\n Drv CtrCabinet"); 
-			break;	
-    	case VP_CONTROL_PAYOUT:
-			TracePC("\r\n Drv Ctrpayout"); 
-			break;
-		case VP_CONTROL_GAMELED:
-			MsgUboxPack[g_Ubox_Index].value  = sysVPMissionCR.receive.msg[1];
-			TracePC("\r\n Drv Ctrgame=%d",MsgUboxPack[g_Ubox_Index].value);
-			break;
-		case VP_CONTROL_CLOCK:
-			//MsgUboxPack.value  = sysVPMissionCR.receive.msg[1];
-			MsgUboxPack[g_Ubox_Index].RTCyear = sysVPMissionCR.receive.msg[1]*256 + sysVPMissionCR.receive.msg[2];
-			MsgUboxPack[g_Ubox_Index].RTCmonth = sysVPMissionCR.receive.msg[3];
-			MsgUboxPack[g_Ubox_Index].RTCday = sysVPMissionCR.receive.msg[4];
-			MsgUboxPack[g_Ubox_Index].RTChour = sysVPMissionCR.receive.msg[5];
-			MsgUboxPack[g_Ubox_Index].RTCmin = sysVPMissionCR.receive.msg[6];
-			MsgUboxPack[g_Ubox_Index].RTCsecond = sysVPMissionCR.receive.msg[7];
-			MsgUboxPack[g_Ubox_Index].RTCweek = sysVPMissionCR.receive.msg[8];
-			TracePC("\r\n Drv Ctrclock");
-			break;	
-		case VP_CONTROL_SCALFACTOR:
-			MsgUboxPack[g_Ubox_Index].value  = sysVPMissionCR.receive.msg[1];
-			TracePC("\r\n Drv Ctrscale");
-			break;
-		case VP_CONTROL_INITOK:
-			TracePC("\r\n Drv InitOK"); 
-			break;
-		case VP_CONTROL_HEFANGUI:
-			MsgUboxPack[g_Ubox_Index].Control_device = sysVPMissionCR.receive.msg[1];
-			MsgUboxPack[g_Ubox_Index].Control_type  = sysVPMissionCR.receive.msg[2];
-			MsgUboxPack[g_Ubox_Index].value  = sysVPMissionCR.receive.msg[3];
-			TracePC("\r\n Drv HefangGui"); 
-			break;
-    }
-	//TracePC("\r\n Drv Ctr=%d,%d",MsgUboxPack.Type,sysVPMissionCR.receive.msg[1]); 
-	//发送邮箱给vmc
-	MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_CONTROLIND;				
-	OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
-	UpdateIndex();
-	OSTimeSet(0);
-	OSTimeDly(OS_TICKS_PER_SEC/10);
-	TracePC("\r\n Drv %dControl_Ind",OSTimeGet()); 
-	//TracePC("\r\n Drv Control_Ind ACK"); 
-	//VPMsgPackSend_CR( VP_ACK_RPT, 0  );
-	/*
-	//取得返回值
-	AccepterUboxMsg = OSMboxPend(g_Ubox_PCTOVMCBackCMail,OS_TICKS_PER_SEC*10,&ComStatus);
-	if(ComStatus == OS_NO_ERR)
-	{		
-		switch(AccepterUboxMsg->PCCmd)
-		{
-			case MBOX_VMCTOPC_ACK:
-				TracePC("\r\n Drv Control_Ind ACK"); 
-				VPMsgPackSend_CR( VP_ACK_RPT, 0  );	
-				break;
-			case MBOX_VMCTOPC_NAK:
-				TracePC("\r\n Drv Control_Ind NAK"); 
-				VPMsgPackSend_CR( VP_NAK_RPT, 0  );	
-				break;	
-		}		
-	}	    
-	*/
-    return VP_ERR_NULL;	
-}
-
 #endif
 
 /*********************************************************************************************************
@@ -2794,6 +2722,9 @@ unsigned char VPMission_Poll_CR()
 		case VP_GETINFO_IND:			
 			VPMission_Info_RPT_CR(sysVPMissionCR.receive.msg[0]);
 			break;	
+		case VP_CONTROL_IND:
+		    VP_Control_Ind_CR();
+		    break;		
 		/*case VP_HOUDAO_IND:
 		    VP_CMD_HuodaoPar();
 		    break;
@@ -2814,10 +2745,7 @@ unsigned char VPMission_Poll_CR()
 		    break;
 		case VP_RESET_IND:
 		    VP_Reset_Ind();
-		    break;
-		case VP_CONTROL_IND:
-		    VP_Control_Ind();
-		    break;					
+		    break;						
 		case VP_COST_IND://添加扣款函数;by gzz 20110823
 		    VP_Cost_Ind();
 		    break;	

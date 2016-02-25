@@ -77,8 +77,8 @@
 #define VP_GET_SETUP_IND   4
 #define VP_GET_STATUS      5
 #define VP_GETINFO_IND     6
+#define VP_CONTROL_IND     7
 #define VP_RESET_IND       132
-#define VP_CONTROL_IND     133
 #define VP_HOUDAO_IND      135
 #define VP_POSITION_IND    136
 #define VP_PAYOUT_IND      137    //V2
@@ -118,7 +118,7 @@
 
 
 
-#define VP_CONTROL_BILLCOIN   2
+#define VP_CONTROL_BILLCOIN   0
 #define VP_CONTROL_CABINETDEV 3
 #define VP_CONTROL_PAYOUT     6
 #define VP_CONTROL_GAMELED    16

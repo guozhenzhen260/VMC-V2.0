@@ -1426,6 +1426,31 @@ void PollAPI(uint32_t payAllMoney)
 				}
 			}	
 			break;
+		case CRUBOX_PC:
+			//TracePC("\r\n MiddUboxPayout");	
+			AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCQ,10,&ComStatus);
+			if(ComStatus == OS_NO_ERR)
+			{				
+				switch(AccepterUboxMsg->PCCmd)
+				{
+					case MBOX_PCTOVMC_CONTROLIND:
+						TracePC("\r\n MiddUbox controlInd");												
+						switch(AccepterUboxMsg->Type)
+						{
+							case 0://¿ªÆôÊÕ±ÒÄ£¿é
+								TracePC("\r\n MiddUbox billcoin=%d",AccepterUboxMsg->value);
+								if(AccepterUboxMsg->value==1)
+								{
+									BillCoinCtr(1,1,0);
+								}
+								else if(AccepterUboxMsg->value==0)
+								{
+									BillCoinCtr(2,2,0);
+								}
+								break;
+						}	
+				}
+			}	
 	}
 }
 
