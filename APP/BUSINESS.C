@@ -150,8 +150,10 @@ void DispFreePage()
 		LCDNumberFontPrintf(40,LINE2,2,strlanguage);
 		strcpy(strlanguage,BUSINESSERROR[1][22]); 
 		LCDNumberFontPrintf(40,LINE4,1,strlanguage);
-		strcpy(strlanguage,BUSINESSERROR[SystemPara.Language][22]);
+		strcpy(strlanguage,BUSINESSERROR[SystemPara.Language][21]);
 		LCDPrintf(40,LINE6,0,SystemPara.Language,strlanguage);
+		strcpy(strlanguage,BUSINESSERROR[SystemPara.Language][22]);
+		LCDPrintf(40,LINE8,0,SystemPara.Language,strlanguage);
 		//strcpy(strlanguage,BUSINESSERROR[SystemPara.Language][21]); 
 		//LCDNumberFontPrintf(40,LINE6,1,strlanguage);
 		//LCDClearLineDraw(0,LINE11,1);
@@ -1210,8 +1212,8 @@ void DispSalePage(uint8_t haveSale,uint8_t hefangMode)
 			//Ç¿ÖÆ¹ºÂò	
 			if(UserPara.TransEscape == 1)
 			{
-				strcpy(strlanguage,BUSINESSDEAL[SystemPara.Language][4]); 
-				strcpy(streng,BUSINESSDEAL[1][4]);	
+				strcpy(strlanguage,BUSINESSDEAL[SystemPara.Language][20]); 
+				strcpy(streng,BUSINESSDEAL[1][20]);	
 			}
 			else
 			{

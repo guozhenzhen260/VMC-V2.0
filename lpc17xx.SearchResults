@@ -1,23 +1,21 @@
----- msleep Matches (22 in 4 files) ----
-colApi.c (api):** Function name:     	msleep
-colApi.c (api):void msleep(unsigned int msec)
-colApi.c (api):		msleep(100);
-colApi.c (api):			msleep(100);
-colApi.c (api):		msleep(50);
-colApi.c (api):			msleep(50);
-colApi.c (api):			msleep(500);
-colApi.c (api):		msleep(300);
-colApi.c (api):		msleep(300);
-FS_billChanger.c (uart1driver):** Function name:     	msleep
-FS_billChanger.c (uart1driver):static void msleep(unsigned int msec)
-FS_billChanger.c (uart1driver):		msleep(10);
-FS_billChanger.c (uart1driver):					msleep(1000);
-FS_billChanger.c (uart1driver):			msleep(20);
-FS_billChanger.c (uart1driver):		msleep(100);
-LiftTableDriver.c (drivers):			msleep(1000);
-LiftTableDriver.c (drivers):				msleep(1000);
-LiftTableDriver.c (drivers):			msleep(500);
-LiftTableDriver.c (drivers):				msleep(2000);
-LiftTableDriver.c (drivers):			msleep(1000);
-LiftTableDriver.c (drivers):				msleep(1000);
-Taskuart1device.c (uart1driver):			msleep(10);
+---- g_Ubox_VMCTOPCQ 匹配 (20 in 6 文件) ----
+Common.c (app):OS_EVENT *g_Ubox_VMCTOPCQ;//VMC下发给PC的消息队列
+Common.c (app):	g_Ubox_VMCTOPCQ = OSQCreate(&UboxSizeQ[0],UBOX_SIZE);
+Common.h (app):extern OS_EVENT *g_Ubox_VMCTOPCQ;
+PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+PCComAPI.c (api):				OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+PCComAPI.c (api):							OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+PCComAPI.c (api):						OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+Taskuart3device.c (uart3driver):		AccepterUboxMsg = OSQPend(g_Ubox_VMCTOPCQ,OS_TICKS_PER_SEC,&ComStatus);
+Taskuart3device.c (uart3driver):			AccepterUboxMsg = OSQPend(g_Ubox_VMCTOPCQ,20,&ComStatus);
+UBProtocol.c (uart3driver):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+UBProtocol.c (uart3driver):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+UBProtocol_CR.c (uart3driver):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+UBProtocol_CR.c (uart3driver):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);

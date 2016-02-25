@@ -174,6 +174,7 @@ void Uart3TaskDevice(void *pvData)
 		TracePC("\r\n Taskpend CRUboxinit"); 
 		LCDNumberFontPrintf(40,LINE15,2,"CRAccepter-1");
 		VPSerialInit_CR();
+		VPMission_Setup_RPT_CR();
 		NowPCDev = PC_UBOXCR;
 	}
 	else
@@ -513,6 +514,71 @@ void Uart3TaskDevice(void *pvData)
 						break;	
 				}
 			}
+		}
+		else if(NowPCDev == PC_UBOXCR)
+		{
+			if(GetWeihuStatus()==0)
+			{
+				VPMission_Poll_CR();
+				OSTimeDly(OS_TICKS_PER_SEC/4);
+				//OSTimeDly(OS_TICKS_PER_SEC/50);
+				//OSTimeDly(7);
+			}
+			
+			//检查友宝PC控制
+			AccepterUboxMsg = OSQPend(g_Ubox_VMCTOPCQ,20,&ComStatus);
+			if(ComStatus == OS_NO_ERR)
+			{
+				/*
+				if((AccepterUboxMsg->PCCmd)==MBOX_VMC_UBOXINITDEV)
+				{	
+					//OSTimeDly(1000);
+					TracePC("\r\n Taskpend Uboxinit"); 
+					LCDNumberFontPrintf(40,LINE15,2,"UBOXAccepter-1");
+					VPSerialInit();
+					NowPCDev = PC_UBOX;	
+				}*/
+				//TracePC("\r\n Taskpend Ubox=%d",AccepterUboxMsg->PCCmd);	
+				switch(AccepterUboxMsg->PCCmd)
+				{					
+					case MBOX_VMCTOPC_INFORPT:
+						VPMission_Info_RPT_CR(0);
+						TracePC("\r\n Taskpend UboxStatus=%d,%d,%d,%d,%ld,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",AccepterUboxMsg->check_st,AccepterUboxMsg->bv_st,AccepterUboxMsg->cc_st,AccepterUboxMsg->vmc_st,AccepterUboxMsg->change,AccepterUboxMsg->recyclerSum[0],AccepterUboxMsg->recyclerSum[1],
+						      AccepterUboxMsg->recyclerSum[2],AccepterUboxMsg->recyclerSum[3],AccepterUboxMsg->recyclerSum[4],AccepterUboxMsg->recyclerSum[5],AccepterUboxMsg->coinSum[0],AccepterUboxMsg->coinSum[1],AccepterUboxMsg->coinSum[2],AccepterUboxMsg->coinSum[3],AccepterUboxMsg->coinSum[4],AccepterUboxMsg->coinSum[5]); 
+						break;	
+					case MBOX_VMCTOPC_ACTION:
+						TracePC("\r\n Taskpend UboxAction=%d",AccepterUboxMsg->action); 
+						VPMission_Act_RPT_CR(AccepterUboxMsg->action);
+						break;	
+					case MBOX_VMCTOPC_BUTTON:
+						VPMission_Button_RPT_CR();
+						TracePC("\r\n Taskpend UboxBtn"); 
+						break;	
+				}
+				OSTimeDly(OS_TICKS_PER_SEC/4);
+			}	
+			
+			//每隔时间，发送action指令
+			//交易模式下
+			if(GetWeihuStatus()==0)
+			{		
+				if(Timer.ActionPCTimer==0)
+				{
+					Timer.ActionPCTimer = 10;
+					VPMission_Act_RPT_CR(0);
+					OSTimeDly(OS_TICKS_PER_SEC/4);
+				}					
+			}
+			//维护模式下
+			else if(GetWeihuStatus()==1)
+			{
+				if(Timer.ActionPCTimer==0)
+				{
+					Timer.ActionPCTimer = 10;
+					VPMission_Act_RPT_CR(1);
+				}
+			}
+
 		}
 		else if(NowPCDev == 0)
 		{
