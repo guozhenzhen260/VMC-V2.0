@@ -290,15 +290,15 @@ const char  *BUSINESSERROR[MAXLANGUAGETYPE][23] =
 	  "Erreur",
 	  "Desole",
 	  "Desole",
-	  "Monnaie insuffisante",
-	  "Monnaie insuffisante"
+	  "inserez des pieces svp",
+	  "billet non dispo"
 	  
    }
 };
 
 
 /*************************************交易界面交易界面************************************************/
-const char  *BUSINESSDEAL[MAXLANGUAGETYPE][20] =
+const char  *BUSINESSDEAL[MAXLANGUAGETYPE][21] =
 {
    {	  
 	  "金额",
@@ -320,7 +320,8 @@ const char  *BUSINESSDEAL[MAXLANGUAGETYPE][20] =
 	  "扣款失败",
 	  "计时:",
 	  "请输入柜子号:",
-	  "柜,请输入格子号:"
+	  "柜,请输入格子号:",
+	  "选择另外产品"
 	  
    },
    {
@@ -343,7 +344,8 @@ const char  *BUSINESSDEAL[MAXLANGUAGETYPE][20] =
 	  "Debit failed",
 	  "Time:",
 	  "Input Cabinet No.:",
-	  ",Input Box No.:"
+	  ",Input Box No.:",
+	  "Choose another one"
 	  
 	  
    },
@@ -368,8 +370,8 @@ const char  *BUSINESSDEAL[MAXLANGUAGETYPE][20] =
 	  "Fail",
 	  "Time:",
 	  "Input Bin No.:",
-	  ",Input Box No.:"
-	   
+	  ",Input Box No.:",
+	  ",Input Box No.:" 
    },
    //土耳其语;by gzz 20121115
    {
@@ -392,6 +394,7 @@ const char  *BUSINESSDEAL[MAXLANGUAGETYPE][20] =
 	  "Fail",
 	  "Time:",
 	  "Input Bin No.:",
+	  ",Input Box No.:",
 	  ",Input Box No.:"
    },
    {
@@ -414,7 +417,8 @@ const char  *BUSINESSDEAL[MAXLANGUAGETYPE][20] =
 	  "FALHA NA COBRAN\x83\A",
 	  "TEMPO:",
 	  "Input Bin No.:",
-	  ",Input Box No.:" 
+	  ",Input Box No.:" ,
+	  ",Input Box No.:"
 	  
    },
    {	  
@@ -437,7 +441,8 @@ const char  *BUSINESSDEAL[MAXLANGUAGETYPE][20] =
 	  "fail",
 	  "Time:",
 	  "Choisissez le produit SVP:",
-	  "Choisissez le produit SVP:"
+	  "Choisissez le produit SVP:",
+	  "Faites un autre choix"
 	  
    }
 };

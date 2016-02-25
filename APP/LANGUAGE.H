@@ -9,7 +9,7 @@ extern   const char *     BUSINESS[LANGUAGENO][10];
 
 extern   const char *	  BUSINESSERROR[LANGUAGENO][23];
 
-extern   const char *	  BUSINESSDEAL[LANGUAGENO][20];
+extern   const char *	  BUSINESSDEAL[LANGUAGENO][21];
 
 extern   const char  *	  BUSINESSCHANGE[LANGUAGENO][5];
 
