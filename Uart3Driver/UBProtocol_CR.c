@@ -832,6 +832,22 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 			    sysVPMissionCR.send.datLen = i;      //3,5
 			}
 			break;
+		case VP_COST_RPT://扣款操作;by gzz 20110823
+		    {
+			    sysVPMissionCR.send.msgType = VP_COST_RPT;
+				i=0;				
+               	      tempMoney = MoneySend_CR(sysVPMissionCR.costMoney);
+				sysVPMissionCR.send.msg[i++] = tempMoney/256;
+				sysVPMissionCR.send.msg[i++] = tempMoney%256;                 
+				//PAYIN_RPT协议中末尾添加两个字节
+                //Total_Value：表示当前交易投币后，或者出货后，屏幕上显示的金额数 
+				//by gzz 20110721				
+				tempMoney = MoneySend_CR(sysVPMissionCR.payAllMoney);
+	                sysVPMissionCR.send.msg[i++] = tempMoney/256;
+	                sysVPMissionCR.send.msg[i++] = tempMoney%256;
+				sysVPMissionCR.send.datLen = i;   
+			}
+			break;	
 		case VP_ACTION_RPT:	
 			{
 				sysVPMissionCR.send.msgType = VP_ACTION_RPT;	
@@ -851,22 +867,7 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 		
 				/*
                 
-		/*case VP_PAYIN_RPT:
-		    {
-			    sysVPMissionCR.send.msgType = VP_PAYIN_RPT;
-                sysVPMissionCR.send.datLen = 5;      //3,5
-				sysVPMissionCR.send.msg[0] = sysVPMissionCR.payInDev;
-				TracePC("\r\n Drv Uboxbill=%d,all=%ld",sysVPMissionCR.payInMoney,sysVPMissionCR.payAllMoney); 				
-				tempMoney = MoneySend_CR(sysVPMissionCR.payInMoney);
-				sysVPMissionCR.send.msg[1] = tempMoney/256;
-				sysVPMissionCR.send.msg[2] = tempMoney%256;
-				//PAYIN_RPT协议中末尾添加两个字节
-                //Total_Value：表示当前交易投币后，或者出货后，屏幕上显示的金额数 
-				tempMoney = MoneySend_CR(sysVPMissionCR.payAllMoney);
-                sysVPMissionCR.send.msg[3] = tempMoney/256;
-                sysVPMissionCR.send.msg[4] = tempMoney%256;
-			}
-			break;
+		/*
 		case VP_PAYOUT_RPT:
 		    {
 			    sysVPMissionCR.send.msgType = VP_PAYOUT_RPT;
@@ -884,97 +885,7 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 				sysVPMissionCR.send.msg[5] = sysVPMissionCR.type;				
 			}
 			break;
-        case VP_COST_RPT://扣款操作;by gzz 20110823
-		    {
-			    sysVPMissionCR.send.msgType = VP_COST_RPT;
-				sysVPMissionCR.send.datLen = 6;   
-                sysVPMissionCR.send.msg[0] = 0;
-				tempMoney = MoneySend_CR(sysVPMissionCR.costMoney);
-				sysVPMissionCR.send.msg[1] = tempMoney/256;
-				sysVPMissionCR.send.msg[2] = tempMoney%256;                 
-				//PAYIN_RPT协议中末尾添加两个字节
-                //Total_Value：表示当前交易投币后，或者出货后，屏幕上显示的金额数 
-				//by gzz 20110721				
-				tempMoney = MoneySend_CR(sysVPMissionCR.payAllMoney);
-                sysVPMissionCR.send.msg[3] = tempMoney/256;
-                sysVPMissionCR.send.msg[4] = tempMoney%256;
-				sysVPMissionCR.send.msg[5] = sysVPMissionCR.type;				
-			}
-			break;	
-		case VP_BUTTON_RPT:		    
-			sysVPMissionCR.send.msgType = VP_BUTTON_RPT;
-			if((sysVPMissionCR.type==VP_BUT_GOODS)||(sysVPMissionCR.type==VP_BUT_NUMBER))
-			{
-				sysVPMissionCR.send.datLen = 3;
-				sysVPMissionCR.send.msg[0] = sysVPMissionCR.type;
-				sysVPMissionCR.send.msg[1] = sysVPMissionCR.device;
-				sysVPMissionCR.send.msg[2] = sysVPMissionCR.Column;
-			}
-			else if(sysVPMissionCR.type==VP_BUT_GAME)
-			{
-				sysVPMissionCR.send.datLen = 2;
-				sysVPMissionCR.send.msg[0] = sysVPMissionCR.type;
-				sysVPMissionCR.send.msg[1] = 0;
-			}	
-			else if(sysVPMissionCR.type==VP_BUT_RETURN)
-			{
-				sysVPMissionCR.send.datLen = 2;
-				sysVPMissionCR.send.msg[0] = sysVPMissionCR.type;
-				sysVPMissionCR.send.msg[1] = 0;
-			}	
-			break;
-			case VP_OFFLINEDATA_RPT:
-            {
-				if(sysVPMissionCR.type==0)
-				{
-	                sysVPMissionCR.send.msgType = VP_OFFLINEDATA_RPT;  	                
-	                sysVPMissionCR.send.msg[index++]  = sysVPMissionCR.type; 
-					if(ReadLogDetailAPI(LogPara.offDetailPage))
-					{
-						for(i = 0,j = 0;i < 8;i++,j += 3)
-						{
-							if(LogParaDetail.ColumnNo[j] == 0) break;
-							sysVPMissionCR.send.msg[index++] = LogParaDetail.ColumnNo[j] - 'A';
-							sysVPMissionCR.send.msg[index++] = (INT8U)(LogParaDetail.ColumnNo[j+1] - '0') * 10 + (INT8U)(LogParaDetail.ColumnNo[j+2] - '0');
-							sysVPMissionCR.send.msg[index++] = LogParaDetail.GoodsNo[i];
-							sysVPMissionCR.send.msg[index++] = HUINT16(LogParaDetail.PriceNo[i]);
-							sysVPMissionCR.send.msg[index++] = LUINT16(LogParaDetail.PriceNo[i]);
-							
-							k = LogParaDetail.PayMode[i];						
-							if(k == 0)
-								k = 0;
-							else if(k == 1)
-								k = 5;
-							else if((k == 5) || ((k >= 101) && (k <= 255)))//刷卡出货
-								k = 7;
-							else if(((k >= 2) && (k <= 4)) || ((k >= 6) && (k <= 100)))//在线出货
-								k = 6;												
-							sysVPMissionCR.send.msg[index++] = k;
-							sysVPMissionCR.send.msg[index++] = LogParaDetail.TransSucc[i];
-							sysVPMissionCR.send.msg[index++] = LogParaDetail.run_no[i];						
-						
-						}
-					}
-					sysVPMissionCR.send.datLen  = index;
-					
-				}	
-				else if(sysVPMissionCR.type==1)
-				{
-	                sysVPMissionCR.send.msgType = VP_OFFLINEDATA_RPT;  
-	                sysVPMissionCR.send.datLen  = 5;
-	                sysVPMissionCR.send.msg[0]  = sysVPMissionCR.type;    
-					
-					tempMoney = MoneySend_CR(LogPara.offLineMoney);				
-	                sysVPMissionCR.send.msg[1]  = tempMoney/256;
-					sysVPMissionCR.send.msg[2]  = tempMoney%256;
-					sysVPMissionCR.send.msg[3]  = LogPara.offLineNum/256;
-					sysVPMissionCR.send.msg[4]  = LogPara.offLineNum%256;
-					LogPara.offLineMoney = 0;
-					LogPara.offLineNum = 0;	
-				}
-				
-            }
-            break;	
+        
             */
 		default: break;
 	}
@@ -1358,6 +1269,95 @@ unsigned char VP_Payin_Ind_CR( void )
 	OSTimeSet(0);
 	OSTimeDly(OS_TICKS_PER_SEC/10);
 	TracePC("\r\n Drv %dPayin_Ind",OSTimeGet()); 
+	
+    return VP_ERR_NULL;	
+}
+
+/*********************************************************************************************************
+** Function name:     	VPMission_Cost_RPT_CR
+** Descriptions:	    上报扣款信息
+** input parameters:    dev: 1投入硬币,2投入纸币,3暂存纸币进入,4暂存纸币出币
+                        moneyIn投入的金额,以分为单位
+                        moneyAll总的投入的金额,以分为单位 
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+unsigned char VPMission_Cost_RPT_CR( unsigned char Type, uint32_t costMoney, unsigned int payAllMoney )
+{
+    unsigned char retry = 0;
+	unsigned char recRes=0;
+	unsigned char flag = 0;
+
+	 retry = VP_COM_RETRY;
+	//-------------------------------------------
+    sysVPMissionCR.type = Type;
+	sysVPMissionCR.costMoney = costMoney;
+	sysVPMissionCR.payAllMoney = payAllMoney;
+	//===========================================
+	flag = VPMsgPackSend_CR( VP_COST_RPT, 1);
+    if( flag != VP_ERR_NULL )
+    {
+		return VP_ERR_PAR;
+	}
+	while( retry )
+	{
+		Timer.PCRecTimer = VP_TIME_OUT;
+		while( Timer.PCRecTimer )
+		{
+			if( VPBusFrameUnPack_CR() )
+			{
+				recRes = 1;
+				break;
+			}
+		}
+		if(Timer.PCRecTimer==0)
+		{
+			retry--;
+			//TracePC("\r\n Drv failretry=%d",retry); 
+		}	
+		if(recRes)
+		{
+			break;
+		}
+		
+	}
+	if( retry== 0 )
+	{
+		OSTimeDly(10);			
+        return VP_ERR_COM;
+	}
+    switch( sysVPMissionCR.receive.msgType )
+	{
+		default:
+		    break;
+	}
+	return VP_ERR_NULL;
+}
+
+/*********************************************************************************************************
+** Function name:     	VP_Cost_Ind_CR
+** Descriptions:	    PC指示VMC扣款命令
+** input parameters:    
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+unsigned char VP_Cost_Ind_CR( void )
+{
+//	MessageUboxPCPack *AccepterUboxMsg;
+//	unsigned char ComStatus;
+	//u_char xdata len = 0;
+	//u_char xdata str[20];
+//	unsigned char ComReturn = 0;
+		
+    sysVPMissionCR.costMoney = MoneyRec_CR(sysVPMissionCR.receive.msg[0],sysVPMissionCR.receive.msg[1]);
+		
+	//发送邮箱给vmc
+	MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_COSTIND;				
+	MsgUboxPack[g_Ubox_Index].costMoney = sysVPMissionCR.costMoney;	
+	OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
+	UpdateIndex();
+	OSTimeDly(OS_TICKS_PER_SEC/10);
+	TracePC("\r\n Drv Cost_Ind"); 
 	
     return VP_ERR_NULL;	
 }
@@ -2316,117 +2316,6 @@ unsigned char VP_Payout_Ind( void )
 }
 
 /*********************************************************************************************************
-** Function name:     	VP_Cost_Ind
-** Descriptions:	    PC指示VMC扣款命令
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VP_Cost_Ind( void )
-{
-//	MessageUboxPCPack *AccepterUboxMsg;
-//	unsigned char ComStatus;
-	//u_char xdata len = 0;
-	//u_char xdata str[20];
-//	unsigned char ComReturn = 0;
-
-    //1.Check the data
-    if( sysVPMissionCR.receive.datLen != 4  )
-	{
-	    VPMsgPackSend_CR( VP_NAK_RPT, 0 );	 
-		return VP_ERR_PAR;
-	}
-	//2.ACK
-	if(SystemPara.EasiveEnable == 1)
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-        {
-	    	VPMsgPackSend_CR( VP_ACK_RPT, 0);
-        }
-	}
-	else
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-	    {
-			VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-		}
-	}
-		
-    sysVPMissionCR.costMoney = MoneyRec_CR(sysVPMissionCR.receive.msg[1],sysVPMissionCR.receive.msg[2]);
-	sysVPMissionCR.type = sysVPMissionCR.receive.msg[3];
-	
-	//发送邮箱给vmc
-	MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_COSTIND;				
-	MsgUboxPack[g_Ubox_Index].costMoney = sysVPMissionCR.costMoney;
-	MsgUboxPack[g_Ubox_Index].Type        = sysVPMissionCR.type;
-	OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
-	UpdateIndex();
-	OSTimeDly(OS_TICKS_PER_SEC/10);
-	TracePC("\r\n Drv Cost_Ind"); 
-	/*
-	//取得返回值
-	AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*5,&ComStatus);
-	if(ComStatus == OS_NO_ERR)
-	{
-		switch(AccepterUboxMsg->PCCmd)
-		{
-			case MBOX_VMCTOPC_ACK:
-				TracePC("\r\n Drv Cost_Ind ACK"); 
-				VPMsgPackSend_CR( VP_ACK_RPT, 0  );	
-				break;
-			case MBOX_VMCTOPC_NAK:
-				TracePC("\r\n Drv Cost_Ind NAK"); 
-				VPMsgPackSend_CR( VP_NAK_RPT, 0  );	
-				break;	
-		}
-	}	
-	*/
-	
-	/*
-	//2.得到当前投入的金额
-	if( sysITLMission.billHoldingFlag == 1 )
-	{
-		CurrentMoney = CurrentPayed + sysITLMission.billHoldingValue;
-	}
-	else
-	{
-		CurrentMoney = CurrentPayed;
-	}
-	//3.用户投币金额小于扣款金额时，返回NAK_RPT    
-    if( (sysVPMissionCR.costDev != 0) || (sysVPMissionCR.costMoney > CurrentMoney ) )
-	{
-		//len = sprintf( str, "1=%lu,%lu", sysVPMissionCR.costMoney,CurrentMoney );
-		//DisplayStr( 0, 0, 1, str, strlen(str) );  
-		//WaitForWork(2000,NULL);
-    	VPMsgPackSend_CR( VP_NAK_RPT, 0, 0  );	 
-		return VP_ERR_PAR;
-	}
-	//扣钱后不能找零
-	if(!(IsCanChange(sysVPMissionCR.costMoney)))
-	{
-		//DisplayStr( 0, 0, 1, "2", 1 );  
-		//WaitForWork(2000,NULL);
-    	VPMsgPackSend_CR( VP_NAK_RPT, 0, 0  );	 
-		return VP_ERR_PAR;
-	}
-	sysVPMissionCR.costType = sysVPMissionCR.receive.msg[3];
-
-	//2.ACK
-	if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-	{
-    	VPMsgPackSend_CR( VP_ACK_RPT, 0, 0 );
-	}
-	
-
-    //3.Set command flag
-	sysVPMissionCR.costCmd = 1;
-	*/
-    return VP_ERR_NULL;	
-}
-
-
-
-/*********************************************************************************************************
 ** Function name:     	VP_Vendout_Ind
 ** Descriptions:	    PC指示VMC出货命令
 ** input parameters:    
@@ -2818,30 +2707,12 @@ unsigned char VPMission_Poll_CR()
 		case VP_PAYIN_IND:
 			VP_Payin_Ind_CR();
 			break;
-		/*case VP_HOUDAO_IND:
-		    VP_CMD_HuodaoPar();
-		    break;
-		case VP_HUODAO_SET_IND: 
-			VP_CMD_HuodaoNo();			
-			break;	
-		case VP_POSITION_IND:
-		    VP_CMD_Position();			
-			break;	
-		case VP_SALEPRICE_IND:
-			VP_CMD_GoodsPar();	
-			break;	
-		case VP_GET_HUODAO:
-			VP_CMD_GetColumnSta();            
-            break;	
-		case VP_VENDOUT_IND:
-		    VP_Vendout_Ind();
-		    break;
-		case VP_RESET_IND:
-		    VP_Reset_Ind();
-		    break;						
 		case VP_COST_IND://添加扣款函数;by gzz 20110823
-		    VP_Cost_Ind();
-		    break;	
+		    VP_Cost_Ind_CR();
+		    break;		
+		/*case VP_RESET_IND:
+		    VP_Reset_Ind();
+		    break;			
 		case VP_PAYOUT_IND:
 		    VP_Payout_Ind();
 		    break;   	
@@ -2940,81 +2811,7 @@ unsigned char VPMission_Payout_RPT( uint8_t payoutDev,unsigned char Type, unsign
 
 
 
-/*********************************************************************************************************
-** Function name:     	VPMission_Cost_RPT
-** Descriptions:	    上报扣款信息
-** input parameters:    dev: 1投入硬币,2投入纸币,3暂存纸币进入,4暂存纸币出币
-                        moneyIn投入的金额,以分为单位
-                        moneyAll总的投入的金额,以分为单位 
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VPMission_Cost_RPT( unsigned char Type, uint32_t costMoney, unsigned int payAllMoney )
-{
-    unsigned char retry = 0;
-	unsigned char recRes=0;
-	unsigned char flag = 0;
 
-	if(LogPara.offLineFlag == 1)
-	{
-		return VP_ERR_NULL;
-	}
-	//
-    retry = VP_COM_RETRY;
-	//-------------------------------------------
-    sysVPMissionCR.type = Type;
-	sysVPMissionCR.costMoney = costMoney;
-	sysVPMissionCR.payAllMoney = payAllMoney;
-	//===========================================
-	flag = VPMsgPackSend_CR( VP_COST_RPT, 1);
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	while( retry )
-	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
-		{
-			if( VPBusFrameUnPack_CR() )
-			{
-				if(LogPara.offLineFlag == 1)
-				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
-				}
-				recRes = 1;
-				break;
-			}
-		}
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
-		}
-		
-	}
-	if( retry== 0 )
-	{
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
-		}
-        return VP_ERR_COM;
-	}
-    switch( sysVPMissionCR.receive.msgType )
-	{
-		default:
-		    break;
-	}
-	return VP_ERR_NULL;
-}
 
 
 

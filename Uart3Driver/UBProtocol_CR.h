@@ -48,19 +48,12 @@
 #define VP_STATUS_RPT   5
 #define VP_INFO_RPT      6
 #define VP_PAYIN_RPT     8
+#define VP_PAYOUT_RPT    9
+#define VP_COST_RPT      10//扣款后，返回扣款执行结果;by gzz 20110823
 
-#define VP_PAYOUT_RPT    7
-#define VP_ADMIN_RPT     10
+
 #define VP_ACTION_RPT    11   //V2
 #define VP_BUTTON_RPT    12
-#define VP_HUODAO_RPT    14
-#define VP_CARD_RPT      15
-#define VP_COST_RPT      16//扣款后，返回扣款执行结果;by gzz 20110823
-//#define VP_DEBT_RPT      17//返回欠条结果;by gzz 20110825 
-#define VP_VENDOUT_REQ   18
-#define VP_OFFLINEDATA_RPT   19
-
-#define VP_STARTUP_RPT_1   0x22 //120419 by cq TotalSell
 
 
 #define VP_MT_MIN_SEND  VP_TEXT_MSG
@@ -78,20 +71,12 @@
 #define VP_GETINFO_IND     6
 #define VP_CONTROL_IND     7
 #define VP_PAYIN_IND     8
+#define VP_PAYOUT_IND      9    //V2
+#define VP_COST_IND        10//执行扣款命令;by gzz 20110823
 
 #define VP_RESET_IND       132
 #define VP_HOUDAO_IND      135
 #define VP_POSITION_IND    136
-#define VP_PAYOUT_IND      137    //V2
-#define VP_GET_HUODAO	   138
-#define VP_COST_IND        139//执行扣款命令;by gzz 20110823
-#define VP_SALETIME_IND    141
-#define VP_SALEPRICE_IND   142
-#define VP_HUODAO_SET_IND  143
-#define VP_GET_OFFLINEDATA_IND   145
-#define VP_GETINFO_INDEXP  146
-#define VP_SET_HUODAO      147
-
 
 
 #define VP_MT_MIN_RECEIVE  VP_ACK
@@ -200,12 +185,10 @@ extern void VPSerialInit_CR(void);
 extern unsigned char VPMission_Poll_CR( void);
 extern unsigned char VPMission_Payin_RPT_CR(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney);
 extern unsigned char VPMission_Payout_RPT( uint8_t payoutDev,unsigned char Type, unsigned int payoutMoney, unsigned int payAllMoney );
-extern unsigned char VPMission_Cost_RPT( unsigned char Type, uint32_t costMoney, unsigned int payAllMoney );
+extern unsigned char VPMission_Cost_RPT_CR( unsigned char Type, uint32_t costMoney, unsigned int payAllMoney );
 extern unsigned char VPMission_Button_RPT_CR( void );
-extern unsigned char VPMission_Vendout_RPT( unsigned char status, unsigned char device,unsigned char column, unsigned char type, unsigned int cost, unsigned int payAllMoney, unsigned char columnLeft );
 extern unsigned char VPMission_Status_RPT_CR(void);
 extern unsigned char VPMission_Act_RPT_CR( unsigned char action);
-extern unsigned char VPMission_Admin_RPT( unsigned char type,uint8_t Column,uint8_t ColumnSum);
 extern unsigned char VPMission_Info_RPT_CR( uint8_t type );
 #endif
 

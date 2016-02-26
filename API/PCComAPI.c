@@ -210,6 +210,16 @@ void CostRPTAPI(uint8_t costType,uint32_t costMoney,uint32_t payAllMoney)
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
+			break;	
+		case CRUBOX_PC:
+			TracePC("\r\n MiddUboxCost");	
+			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_COST;				
+			MsgUboxPack[g_Ubox_Index].costMoney = costMoney;
+			MsgUboxPack[g_Ubox_Index].payAllMoney = payAllMoney;
+			MsgUboxPack[g_Ubox_Index].Type        = costType;
+			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+			UpdateIndex();
+			OSTimeDly(OS_TICKS_PER_SEC/100);
 			break;		
 	}
 }
@@ -1469,6 +1479,83 @@ void PollAPI(uint32_t payAllMoney)
 					case MBOX_PCTOVMC_PAYININD:
 						StackReturnBillDev(AccepterUboxMsg->Type);						
 						break;
+					//cost_ind扣款
+					case MBOX_PCTOVMC_COSTIND:
+						TracePC("\r\n MiddUbox costInd=%d,type=%d",AccepterUboxMsg->costMoney,AccepterUboxMsg->Type);
+						//ACK
+						//MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_ACK;	
+						//OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);
+						//UpdateIndex();
+							
+						//1.系统进入故障状态时，返回NAK_RPT  
+						if(IsErrorState())
+						{
+							TracePC("\r\n MiddUbox vendE3");
+							ComReturn = 24;		
+						}	
+						//2.用户投币金额小于扣款金额时，返回NAK_RPT    
+					    else if( AccepterUboxMsg->costMoney > payAllMoney ) 
+						{
+							TracePC("\r\n MiddUbox vendE5");
+							ComReturn = 0;
+						}
+						else
+						{
+							/*
+							//3零钱是否够扣
+							if(SystemPara.CoinChangerType == MDB_CHANGER)
+							{
+								//ComReturn = MDBchange(resultdisp, &recoin, payAllMoney - (AccepterUboxMsg->costMoney));//检查这些剩余的金额是否可以找零
+								ComReturn = 1;
+							}	
+							else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
+							{
+								ComReturn = 1;
+							}
+							*/
+							//读卡器有开启并且有插卡金额
+							if((SystemPara.CashlessDeviceType != OFF_READERACCEPTER)&&(GetReaderAmount()))
+							{
+								ComReturn = 1;
+								TracePC("\r\n OFF_CHANGER=1");
+							}	
+							//3无找零器
+							else if(SystemPara.CoinChangerType == OFF_CHANGER)
+							{
+								ComReturn = 1;
+								TracePC("\r\n OFF_CHANGER=1");
+							}
+							else
+							{
+								//4压抄是否成功,是否可以支付
+								if(StackMoneyInd(AccepterUboxMsg->costMoney)==1)
+								{
+									ComReturn = 1;
+									TracePC("\r\n Stack_CHANGER=1");
+								}
+								else
+								{
+									ComReturn = 26;
+									TracePC("\r\n MiddUbox vendE7");
+								}	
+							}
+						}
+						//3如果可以扣款
+		                	    	if(ComReturn == 1)
+		                	    	{							
+							//4扣款
+							CostReaderRPT(AccepterUboxMsg->costMoney);
+							CostMoneyInd(AccepterUboxMsg->costMoney);	
+							LogCostAPI(AccepterUboxMsg->costMoney);	
+							//5上报cost_report
+							CostRPTAPI(0,AccepterUboxMsg->costMoney,payAllMoney-(AccepterUboxMsg->costMoney));
+                	 		      }
+						else
+						{
+							//5上报cost_report
+							CostRPTAPI(0,0,GetAmountMoney());
+                	   			 }							
+						break;	
 				}
 			}	
 	}
