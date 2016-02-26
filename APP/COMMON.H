@@ -878,7 +878,8 @@ extern MESSAGE_ZHIHUI zh_vmc_mbox;
 #define MBOX_PCTOVMC_INFOIND     		    0x16
 //向PC机上传相应的Info指令
 #define MBOX_VMCTOPC_INFORPT     		    0x17
-
+//pc上发给vmc机PAYININD指令
+#define MBOX_PCTOVMC_PAYININD     	           0x18
 
 
 

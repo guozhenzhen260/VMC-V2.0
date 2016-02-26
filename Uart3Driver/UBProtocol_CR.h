@@ -47,10 +47,9 @@
 #define VP_VMC_SETUP     4
 #define VP_STATUS_RPT   5
 #define VP_INFO_RPT      6
-#define VP_PAYIN_RPT     13
+#define VP_PAYIN_RPT     8
+
 #define VP_PAYOUT_RPT    7
-#define VP_VENDOUT_RPT   8
-#define VP_REQUEST       9
 #define VP_ADMIN_RPT     10
 #define VP_ACTION_RPT    11   //V2
 #define VP_BUTTON_RPT    12
@@ -78,6 +77,8 @@
 #define VP_GET_STATUS      5
 #define VP_GETINFO_IND     6
 #define VP_CONTROL_IND     7
+#define VP_PAYIN_IND     8
+
 #define VP_RESET_IND       132
 #define VP_HOUDAO_IND      135
 #define VP_POSITION_IND    136
@@ -104,8 +105,8 @@
 #define COLUMN_NUM_SET      80
 #define VP_DEV_COIN         0
 #define VP_DEV_BILL         1
-#define VP_DEV_ESCROWIN        100
-#define VP_DEV_ESCROWOUT       101
+#define VP_DEV_ESCROWIN        2
+#define VP_DEV_ESCROWOUT       3
 #define VP_DEV_READER         2
 #define VP_BUT_GAME           0
 #define VP_BUT_NUMBER         1
@@ -197,7 +198,7 @@ struct VP_MissionCR
 //unsigned char VPBusTxMsg( void );
 extern void VPSerialInit_CR(void);
 extern unsigned char VPMission_Poll_CR( void);
-extern unsigned char VPMission_Payin_RPT(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney);
+extern unsigned char VPMission_Payin_RPT_CR(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney);
 extern unsigned char VPMission_Payout_RPT( uint8_t payoutDev,unsigned char Type, unsigned int payoutMoney, unsigned int payAllMoney );
 extern unsigned char VPMission_Cost_RPT( unsigned char Type, uint32_t costMoney, unsigned int payAllMoney );
 extern unsigned char VPMission_Button_RPT_CR( void );

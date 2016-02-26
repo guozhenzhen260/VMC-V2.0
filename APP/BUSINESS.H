@@ -28,6 +28,7 @@ extern uint8_t VendoutSIMPLEInd(uint16_t columnNo);
 extern void GetmoneySIMPLEInd(uint16_t payInMoney);
 extern void PriceSIMPLEInd(uint16_t payInMoney);
 extern void TxtSIMPLEInd(char *disp);
+extern void StackReturnBillDev(uint8_t type);
 extern void BillCoinCtr(uint8_t billCtr,uint8_t coinCtr,uint8_t readerCtr);
 extern void ResetBill(void);
 extern void rstTime(void);

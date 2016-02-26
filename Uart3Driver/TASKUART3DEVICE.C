@@ -540,7 +540,31 @@ void Uart3TaskDevice(void *pvData)
 				}*/
 				//TracePC("\r\n Taskpend Ubox=%d",AccepterUboxMsg->PCCmd);	
 				switch(AccepterUboxMsg->PCCmd)
-				{					
+				{		
+					case MBOX_VMCTOPC_PAYINCOIN:
+						VPMission_Payin_RPT_CR(1,AccepterUboxMsg->payInMoney,AccepterUboxMsg->payAllMoney);
+						TracePC("\r\n Taskpend Uboxcoin=%d,all=%ld",AccepterUboxMsg->payInMoney,AccepterUboxMsg->payAllMoney); 
+						break;
+					case MBOX_VMCTOPC_PAYINBILL:
+						VPMission_Payin_RPT_CR(2,AccepterUboxMsg->payInMoney,AccepterUboxMsg->payAllMoney);
+						TracePC("\r\n Taskpend Uboxbill=%d,all=%ld",AccepterUboxMsg->payInMoney,AccepterUboxMsg->payAllMoney); 
+						break;
+					case MBOX_VMCTOPC_PAYINESCROWIN:
+						VPMission_Payin_RPT_CR(3,AccepterUboxMsg->payInMoney,AccepterUboxMsg->payAllMoney);
+						TracePC("\r\n Taskpend Uboxescrowin=%d,all=%ld",AccepterUboxMsg->payInMoney,AccepterUboxMsg->payAllMoney); 
+						break;	
+					case MBOX_VMCTOPC_PAYINESCROWOUT:
+						VPMission_Payin_RPT_CR(4,AccepterUboxMsg->payInMoney,AccepterUboxMsg->payAllMoney);
+						TracePC("\r\n Taskpend Uboxescrowout=%d,all=%ld",AccepterUboxMsg->payInMoney,AccepterUboxMsg->payAllMoney); 
+						break;
+					case MBOX_VMCTOPC_PAYOUT:
+						VPMission_Payout_RPT(AccepterUboxMsg->payoutDev,AccepterUboxMsg->Type,AccepterUboxMsg->payoutMoney,AccepterUboxMsg->payAllMoney);
+						TracePC("\r\n Taskpend Uboxpayout=%d,all=%ld,type=%d",AccepterUboxMsg->payoutMoney,AccepterUboxMsg->payAllMoney,AccepterUboxMsg->Type); 
+						break;	
+					case MBOX_VMCTOPC_COST:
+						VPMission_Cost_RPT(AccepterUboxMsg->Type,AccepterUboxMsg->costMoney,AccepterUboxMsg->payAllMoney);
+						TracePC("\r\n Taskpend Uboxcost=%d,all=%ld,type=%d",AccepterUboxMsg->costMoney,AccepterUboxMsg->payAllMoney,AccepterUboxMsg->Type); 
+						break;
 					case MBOX_VMCTOPC_INFORPT:
 						VPMission_Info_RPT_CR(0);
 						TracePC("\r\n Taskpend UboxStatus=%d,%d,%d,%d,%ld,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",AccepterUboxMsg->check_st,AccepterUboxMsg->bv_st,AccepterUboxMsg->cc_st,AccepterUboxMsg->vmc_st,AccepterUboxMsg->change,AccepterUboxMsg->recyclerSum[0],AccepterUboxMsg->recyclerSum[1],

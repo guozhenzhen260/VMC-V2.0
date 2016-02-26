@@ -1867,7 +1867,95 @@ uint8_t UnpdateTubeMoney()
 }
 */
 
+/*********************************************************************************************************
+** Function name:     	StackReturnBillDev
+** Descriptions:	    暂存的纸币压超或退出
+** input parameters:    2压超,3退出
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void StackReturnBillDev(uint8_t type)
+{
+	uint32_t InValue;	
+	InValue=g_holdValue;
+	switch(type)
+	{
+		case 2://暂存压超
+			TracePC("\r\n App Escrowin");
+			if(g_holdValue==0)
+			{
+				PayinRPTAPI(3,0,GetAmountMoney());//上报PC端
+			}
+			else
+			{
+				if(StackedBillDevMoneyInAPI())
+				{
+					g_billAmount += InValue;
+					g_holdValue=0;	
+					LogGetMoneyAPI(InValue,2);//记录日志
+					PayinRPTAPI(2,InValue,GetAmountMoney());//上报PC端				
+				}
+				else
+				{
+					ReturnBillDevMoneyInAPI();
+					g_holdValue=0;
+					PayinRPTAPI(4,InValue,GetAmountMoney());//上报PC端
+				}
+			}
+			break;
+		case 3://暂存退出
+			TracePC("\r\n App Escrowout");
+			if(g_holdValue==0)
+			{
+				PayinRPTAPI(4,0,GetAmountMoney());//上报PC端
+			}
+			else
+			{
+				ReturnBillDevMoneyInAPI();
+				g_holdValue=0;
+				PayinRPTAPI(4,InValue,GetAmountMoney());//上报PC端
+			}
+			break;	
+	}	
 
+	//产生状态变化
+	if(GetAmountMoney())
+	{					
+		vmcStatus = VMC_SALE;
+		Timer.SaleTimer = SaleTimeSet(0);
+		if(vmcStatus == VMC_SALE)
+		{
+			//Trace("\r\n 1money=%ld",GetAmountMoney());
+			if(g_billAmount< MoneyMaxin)							
+				BillCoinCtr(1,1,0);
+			//Trace("\r\n 2money=%ld",GetAmountMoney());
+			channelInput = 0;
+			channelMode = 0;
+			memset(BinNum,0,sizeof(BinNum));
+			memset(ChannelNum,0,sizeof(ChannelNum));
+			//Trace("\r\n 3money=%ld",GetAmountMoney());
+			OSMboxAccept(g_CoinMoneyBackMail);
+			LCDClrScreen();
+			//Trace("\r\n 4money=%ld",GetAmountMoney());
+			DispSalePage(0,hefangMode);
+			//Trace("\r\n 4money=%ld",GetAmountMoney());
+			SaleSelectionKeyAPI(GetAmountMoney());
+		}
+	}							
+	else
+	{
+		BillCoinCtr(1,1,0);
+		channelInput = 0;
+		channelMode = 0;
+		memset(BinNum,0,sizeof(BinNum));
+		memset(ChannelNum,0,sizeof(ChannelNum));
+		//Trace("\r\n 3money=%ld",GetAmountMoney());
+		OSMboxAccept(g_CoinMoneyBackMail);
+		LCDClrScreen();
+		DispEndPage();
+		vmcStatus = VMC_END;
+	}
+}
 
 /*********************************************************************************************************
 ** Function name:     	GetMoney
@@ -1915,7 +2003,13 @@ uint8_t GetMoney()
 		{
 			TraceBill("\r\n2.Appbill=%ld",InValue);
 			TraceBill("\r\nAppbill=%ld,Money=%ld,price=%ld\r\n",(g_billAmount + InValue),MoneyMaxin,PriceMaxin);
-			if( ((g_billAmount + InValue) < MoneyMaxin) )
+			if(SystemPara.PcEnable==CRUBOX_PC)//友宝成人模块，收币后暂存
+			{
+				g_holdValue = InValue;
+				PayinRPTAPI(3,InValue,GetAmountMoney());//上报PC端
+				InValue = 0;
+			}
+			else if( ((g_billAmount + InValue) < MoneyMaxin) )
 			{
 				if(StackedBillDevMoneyInAPI())
 				{

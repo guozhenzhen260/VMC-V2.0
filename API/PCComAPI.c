@@ -112,7 +112,7 @@ void PayinRPTAPI(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney)
 			}		
 			break;	
 		case UBOX_PC:
-			TracePC("\r\n MiddUboxPayin");	
+			TracePC("\r\n MiddUboxPayin="+dev);	
 			if(dev==1)
 				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINCOIN;
 			else if(dev==2)
@@ -129,7 +129,24 @@ void PayinRPTAPI(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney)
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
-			break;		
+			break;	
+		case CRUBOX_PC:
+			TracePC("\r\n MiddUboxPayin");	
+			if(dev==1)
+				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINCOIN;
+			else if(dev==2)
+				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINBILL;	
+			else if(dev==3)
+				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINESCROWIN;	
+			else if(dev==4)
+				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINESCROWOUT;				
+			MsgUboxPack[g_Ubox_Index].payInMoney = payInMoney;
+			MsgUboxPack[g_Ubox_Index].payAllMoney = payAllMoney;
+			TraceCoin("\r\nMidcoin=%ld,%ld",MsgUboxPack[g_Ubox_Index].payInMoney,MsgUboxPack[g_Ubox_Index].payAllMoney);
+			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+			UpdateIndex();
+			OSTimeDly(OS_TICKS_PER_SEC/100);
+			break;	
 	}
 }
 
@@ -1448,7 +1465,10 @@ void PollAPI(uint32_t payAllMoney)
 									BillCoinCtr(2,2,0);
 								}
 								break;
-						}	
+						}
+					case MBOX_PCTOVMC_PAYININD:
+						StackReturnBillDev(AccepterUboxMsg->Type);						
+						break;
 				}
 			}	
 	}
