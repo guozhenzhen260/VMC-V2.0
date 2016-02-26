@@ -754,7 +754,7 @@ void Uart2TaskDevice(void *pvData)
 			else 
 			{
 				//Õý³£
-				if((DeviceStatePack.fsstatus->box[0]==0)||(DeviceStatePack.fsstatus->box[0]==1))
+				if((DeviceStatePack.fsstatus->box[0]==0))
 				{
 					stDevValue.RecyclerNum[0]=20;
 				}

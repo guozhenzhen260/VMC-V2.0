@@ -549,22 +549,38 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 		case VP_STATUS_RPT:
 		    {
 			    sysVPMissionCR.send.msgType = VP_STATUS_RPT;
-                //sysVPMissionCR.send.datLen  = 15;
-				sysVPMissionCR.send.datLen  = 5;
+                	    i=0;
 
 				tempSend |= sysVPMissionCR.vmc_st;
 				tempSend |= sysVPMissionCR.cc_st<<2;
 				tempSend |= sysVPMissionCR.check_st<<4;
 				tempSend |= sysVPMissionCR.bv_st<<6;				
-				sysVPMissionCR.send.msg[0]  = tempSend;
+				sysVPMissionCR.send.msg[i++]  = tempSend;
 				
 				tempMoney = MoneySend_CR(sysVPMissionCR.change);
-	                sysVPMissionCR.send.msg[1] = tempMoney/256;
-	                sysVPMissionCR.send.msg[2] = tempMoney%256;
+	                sysVPMissionCR.send.msg[i++] = tempMoney/256;
+	                sysVPMissionCR.send.msg[i++] = tempMoney%256;
 				
 				tempMoney = MoneySend_CR(sysVPMissionCR.recychange);
-	                sysVPMissionCR.send.msg[3] = tempMoney/256;
-	                sysVPMissionCR.send.msg[4] = tempMoney%256;	
+				if(tempMoney>0)
+				{
+					if(SystemPara.BillRecyclerType==FS_BILLRECYCLER)//富士用ffff代替
+					{
+			                sysVPMissionCR.send.msg[i++] = 0xff;
+			                sysVPMissionCR.send.msg[i++] = 0xff;	
+					}
+					else
+					{
+			                sysVPMissionCR.send.msg[i++] = tempMoney/256;
+			                sysVPMissionCR.send.msg[i++] = tempMoney%256;	
+					}
+				}
+				else
+				{
+		                sysVPMissionCR.send.msg[i++] = 0;
+		                sysVPMissionCR.send.msg[i++] = 0;	
+				}
+				sysVPMissionCR.send.datLen  = i;
 			}
 			break;
 		case VP_INFO_RPT://120419 by cq TotalSell 
@@ -1042,6 +1058,12 @@ unsigned char VPMission_Status_RPT_CR()
 	//}
 	//添加纸币循环器时，纸币的存币数量
 	if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
+	{
+		change = stDevValue.RecyclerValue[0]*stDevValue.RecyclerNum[0] + stDevValue.RecyclerValue[1]*stDevValue.RecyclerNum[1] + stDevValue.RecyclerValue[2]*stDevValue.RecyclerNum[2]
+				+stDevValue.RecyclerValue[3]*stDevValue.RecyclerNum[3] + stDevValue.RecyclerValue[4]*stDevValue.RecyclerNum[4] + stDevValue.RecyclerValue[5]*stDevValue.RecyclerNum[5]
+				+stDevValue.RecyclerValue[6]*stDevValue.RecyclerNum[6];
+	}
+	else if(SystemPara.BillRecyclerType==FS_BILLRECYCLER)
 	{
 		change = stDevValue.RecyclerValue[0]*stDevValue.RecyclerNum[0] + stDevValue.RecyclerValue[1]*stDevValue.RecyclerNum[1] + stDevValue.RecyclerValue[2]*stDevValue.RecyclerNum[2]
 				+stDevValue.RecyclerValue[3]*stDevValue.RecyclerNum[3] + stDevValue.RecyclerValue[4]*stDevValue.RecyclerNum[4] + stDevValue.RecyclerValue[5]*stDevValue.RecyclerNum[5]
@@ -2716,12 +2738,6 @@ unsigned char VPMission_Poll_CR()
 		case VP_PAYOUT_IND:
 		    VP_Payout_Ind();
 		    break;   	
-		case VP_GET_OFFLINEDATA_IND:
-			VPMission_OfflineData_RPT();
-			break;	
-		case VP_GETINFO_INDEXP:
-			VP_CMD_GetInfoExp();
-			break;		
 		*/default:
 		    break;
 	}
