@@ -101,7 +101,8 @@ uint8_t GetScaleError()
 uint8_t IsErrorState()
 { 
 	uint8_t coinError = 0,hopperError = 0,GOCError = 0,ColBoardError = 0,PcErr=0;
-	static uint8_t billError = 0,status=0;
+	static uint8_t billError = 0;
+	static uint8_t status=0,coinstatus=0,changestatus=0;
 	//纸币器	
 	if(SystemPara.BillValidatorType==MDB_BILLACCEPTER)
 	{
@@ -134,6 +135,17 @@ uint8_t IsErrorState()
 		  )
 		{
 			coinError = 1;
+			//故障时，只发送一次status
+			if(coinstatus==0)
+			{
+				StatusRPTAPI();
+				coinstatus=1;
+			}
+		}
+		else if(coinstatus == 1)
+		{
+			StatusRPTAPI();
+			coinstatus=0;
 		}
 	}
 	//Hopper找零器
@@ -142,6 +154,27 @@ uint8_t IsErrorState()
 		if(DeviceStateBusiness.Hopper1State == 2)
 		{
 			hopperError = 1;
+			//故障时，只发送一次status
+			if(changestatus==0)
+			{
+				StatusRPTAPI();
+				changestatus=1;
+			}
+		}
+		//只是上报一次，不作为故障点
+		else if(DeviceStateBusiness.Hopper1State == 1)
+		{
+			//故障时，只发送一次status
+			if(changestatus==0)
+			{
+				StatusRPTAPI();
+				changestatus=1;
+			}
+		}
+		else if(changestatus == 1)
+		{
+			StatusRPTAPI();
+			changestatus=0;
 		}
 	}
 	if(SystemPara.GeziDeviceType==0)

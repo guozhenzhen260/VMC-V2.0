@@ -2090,7 +2090,7 @@ uint8_t GetMoney()
 		else if(readerType == 2)
 		{		
 			TraceReader("\r\n AppReader OUTPUT card");
-			PayoutRPTAPI(2,0,GetAmountMoney(),0);
+			PayoutRPTAPI(2,0,GetAmountMoney(),0,0);
 			readerType = 0;
 			g_readerAmount = 0;
 			return 2;
@@ -2136,7 +2136,7 @@ void ChangerRecycler(void)
 						TraceBill("\r\n Apppay=%ld",paymoney);
 						if(SystemPara.EasiveEnable == 1)
 						{
-							PayoutRPTAPI(1,0,RecyPayoutMoneyBack,paymoney);
+							PayoutRPTAPI(1,0,RecyPayoutMoneyBack,0,paymoney);
 						}
 					}
 					break;
@@ -2164,7 +2164,7 @@ void ChangerRecycler(void)
 				print_fs("\r\n Apppay=%ld",paymoney);
 				if(SystemPara.EasiveEnable == 1)
 				{
-					PayoutRPTAPI(1,0,RecyPayoutMoneyBack,paymoney);
+					PayoutRPTAPI(1,0,RecyPayoutMoneyBack,0,paymoney);
 				}
 			}				
 			
@@ -2220,7 +2220,7 @@ uint32_t ChangerMoney(void)
 		{		
 			TracePC("\r\n Appchange Fail=%ld,%ld",GetAmountMoney(),backmoney);
 			LogChangeAPI(GetAmountMoney()-backmoney,backmoney);//记录日志
-			PayoutRPTAPI(0,0,GetAmountMoney()-backmoney,0);
+			PayoutRPTAPI(0,0,GetAmountMoney()-backmoney,0,0);
 			//OSTimeDly(OS_TICKS_PER_SEC);
 			//PayinRPTAPI(2,0,0);//上报PC端
 			g_coinAmount = 0;
@@ -2232,7 +2232,7 @@ uint32_t ChangerMoney(void)
 		{
 			TracePC("\r\n Appchange succ=%ld",GetAmountMoney());
 			LogChangeAPI(GetAmountMoney(),0);//记录日志
-			PayoutRPTAPI(0,0,GetAmountMoney(),0);
+			PayoutRPTAPI(0,0,GetAmountMoney(),0,0);
 			g_coinAmount = 0;
 			g_billAmount = 0;
 			return 0;
@@ -2245,7 +2245,7 @@ uint32_t ChangerMoney(void)
 		{		
 			TracePC("\r\n Appchange Fail");
 			LogChangeAPI(tempmoney-backmoney,backmoney);//记录日志
-			PayoutRPTAPI(0,0,tempmoney-backmoney,0);
+			PayoutRPTAPI(0,0,tempmoney-backmoney,0,0);
 			//OSTimeDly(OS_TICKS_PER_SEC);
 			//PayinRPTAPI(2,0,0);//上报PC端
 			g_coinAmount = 0;
@@ -2257,7 +2257,7 @@ uint32_t ChangerMoney(void)
 		{
 			TracePC("\r\n Appchange succ%d",OSTimeGet());
 			LogChangeAPI(tempmoney,0);//记录日志
-			PayoutRPTAPI(0,0,tempmoney,0);
+			PayoutRPTAPI(0,0,tempmoney,0,0);
 			g_coinAmount = 0;
 			g_billAmount = 0;
 			return 0;
@@ -2999,7 +2999,7 @@ void TuiMoneyInd()
 		LogChangeAPI(0,0);//记录日志
 		if(SystemPara.EasiveEnable == 1)
 		{
-			PayoutRPTAPI(0,0,0,0);
+			PayoutRPTAPI(0,0,0,0,0);
 		}
 		//OSTimeDly(OS_TICKS_PER_SEC);
 		//PayinRPTAPI(2,0,0);//上报PC端

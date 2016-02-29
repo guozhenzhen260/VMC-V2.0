@@ -23,7 +23,7 @@
 
 extern void PCInitAPI(void);
 extern void PayinRPTAPI(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney);
-extern void PayoutRPTAPI(uint8_t payoutDev,uint8_t payoutType,uint16_t payoutMoney,uint32_t payAllMoney);
+extern void PayoutRPTAPI(uint8_t payoutDev,uint8_t payoutType,uint16_t payoutMoney,uint16_t payoutRemain,uint32_t payAllMoney);
 extern void ButtonRPTAPI(uint8_t type,unsigned char Logicnum,unsigned char binnum);
 extern void VendoutRPTAPI( unsigned char status, unsigned char Binnum,unsigned char column, unsigned char type, uint32_t cost,uint32_t payAllMoney, unsigned char columnLeft );
 extern void ActionRPTAPI(uint8_t action,uint8_t value,uint8_t second,uint8_t column,uint8_t type,uint32_t  cost,uint32_t payAllMoney);

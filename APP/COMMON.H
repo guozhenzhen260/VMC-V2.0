@@ -891,6 +891,7 @@ typedef struct
 	
 	uint16_t payInMoney;                //vmc下发给PC投币金额
 	uint16_t payoutMoney;                //vmc下发给PC找零总金额
+	uint16_t payoutRemain;                //vmc下发给PC找零欠款金额
 	uint32_t payAllMoney;               //vmc下发给PC总共投入的金额
 	uint8_t  payoutDev;					//vmc下发给PC找零设备
 	

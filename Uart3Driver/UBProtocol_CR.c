@@ -848,6 +848,26 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 			    sysVPMissionCR.send.datLen = i;      //3,5
 			}
 			break;
+		case VP_PAYOUT_RPT:
+		    {
+			    sysVPMissionCR.send.msgType = VP_PAYOUT_RPT;
+				i=0;					 
+                sysVPMissionCR.send.msg[i++] = sysVPMissionCR.type;
+				tempMoney = MoneySend_CR(sysVPMissionCR.payoutMoney);
+				sysVPMissionCR.send.msg[i++] = tempMoney/256;
+				sysVPMissionCR.send.msg[i++] = tempMoney%256; 
+				tempMoney = MoneySend_CR(sysVPMissionCR.payremainMoney);
+                sysVPMissionCR.send.msg[i++] = tempMoney/256;
+                sysVPMissionCR.send.msg[i++] = tempMoney%256;
+				//PAYIN_RPT协议中末尾添加两个字节
+                //Total_Value：表示当前交易投币后，或者出货后，屏幕上显示的金额数 
+				//by gzz 20110721				
+				tempMoney = MoneySend_CR(sysVPMissionCR.payAllMoney);
+                sysVPMissionCR.send.msg[i++] = tempMoney/256;
+                sysVPMissionCR.send.msg[i++] = tempMoney%256;
+				sysVPMissionCR.send.datLen = i;  
+			}
+			break;	
 		case VP_COST_RPT://扣款操作;by gzz 20110823
 		    {
 			    sysVPMissionCR.send.msgType = VP_COST_RPT;
@@ -881,28 +901,7 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 			}				
 			break; 	
 		
-				/*
-                
-		/*
-		case VP_PAYOUT_RPT:
-		    {
-			    sysVPMissionCR.send.msgType = VP_PAYOUT_RPT;
-				sysVPMissionCR.send.datLen = 6;   
-                sysVPMissionCR.send.msg[0] = sysVPMissionCR.payoutDev;
-				tempMoney = MoneySend_CR(sysVPMissionCR.payoutMoney);
-				sysVPMissionCR.send.msg[1] = tempMoney/256;
-				sysVPMissionCR.send.msg[2] = tempMoney%256; 				
-				//PAYIN_RPT协议中末尾添加两个字节
-                //Total_Value：表示当前交易投币后，或者出货后，屏幕上显示的金额数 
-				//by gzz 20110721				
-				tempMoney = MoneySend_CR(sysVPMissionCR.payAllMoney);
-                sysVPMissionCR.send.msg[3] = tempMoney/256;
-                sysVPMissionCR.send.msg[4] = tempMoney%256;
-				sysVPMissionCR.send.msg[5] = sysVPMissionCR.type;				
-			}
-			break;
-        
-            */
+			
 		default: break;
 	}
 	//	
@@ -1383,828 +1382,61 @@ unsigned char VP_Cost_Ind_CR( void )
 	
     return VP_ERR_NULL;	
 }
-#if 0
 
 /*********************************************************************************************************
-** Function name:     	VP_CMD_HuodaoPar
-** Descriptions:	    设置货道商品ID信息
+** Function name:     	VP_Payout_Ind_CR
+** Descriptions:	    PC指示VMC出币命令
 ** input parameters:    
 ** output parameters:   无
 ** Returned value:      
 *********************************************************************************************************/
-unsigned char VP_CMD_HuodaoPar( void )
-{	
-	if(SystemPara.EasiveEnable == 1)
-	{
-		//uint8_t i;
-		if( sysVPMissionCR.receive.datLen == COLUMN_NUM_SET+1 )
-		{
-	        if(SystemPara.EasiveEnable == 1)
-			{
-				if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-		        {
-			    	VPMsgPackSend_CR( VP_ACK_RPT, 0);
-		        }
-			}
-			else
-			{
-				if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-			    {
-					VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-				}
-			}
-			TracePC("\r\n DrvHuodaoIDSet changed by yoc");
-			hd_set_by_pc(sysVPMissionCR.receive.msg[0],COLUMN_NUM_SET,(void *)&sysVPMissionCR.receive.msg[1],1);
-			//ChannelGetPCChange(1,1,sysVPMissionCR.receive.msg);
-			//for( i=0; i<COLUMN_NUM_SET; i++ )
-			//{
-			//	Trace("\r\n gID=%d",sysVPMissionCR.receive.msg[i+1]);
-			//}
-			//-------------------------------------------------
-			//1...       48  49...        96
-			//colNum_1...48  colGoods_1...48
-		/*	for( i=0; i<COLUMN_NUM_SET; i++ )
-			{
-				if( (sysVPMissionCR.receive.msg[i+1]==0xff)||(sysVPMissionCR.receive.msg[i+1]==0x0) )
-	            {
-	                GoodsWaySetVal[i].GoodsCurrentSum = 0;
-	                GoodsWaySetVal[i].GoodsType = sysVPMissionCR.receive.msg[i+1];
-					GoodsWaySetVal[i].Price = 0;
-	            }
-	            else
-	            {
-					//GoodsWaySetVal[i].GoodsCurrentSum = sysVPMissionCR.receive.msg[i];
-					GoodsWaySetVal[i].GoodsType = sysVPMissionCR.receive.msg[i+1];
-	            }
-			}*/
-			//sysVPMissionCR.sysStatus |= VPM_STA_COLUMNPAR;
-			
-			
-		}
-		else
-		{
-			VPMsgPackSend_CR( VP_NAK_RPT, 0);  
-			return VP_ERR_PAR;
-		}
-	}
-	else
-	{
-		if(SystemPara.EasiveEnable == 1)
-		{
-			if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-	        {
-		    	VPMsgPackSend_CR( VP_ACK_RPT, 0);
-	        }
-		}
-		else
-		{
-			if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-		    {
-				VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-			}
-		}
-	}
-	
-    return VP_ERR_NULL;	
-}	
-
-
-/*********************************************************************************************************
-** Function name:     	VP_CMD_HuodaoNo
-** Descriptions:	    设置货道商品存货数量信息
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VP_CMD_HuodaoNo( void )
-{
-    unsigned char i = 0;
-
-	if(SystemPara.EasiveEnable == 1)
-	{
-		if( sysVPMissionCR.receive.datLen == COLUMN_NUM_SET+1 )
-		{
-	        if(SystemPara.EasiveEnable == 1)
-			{
-				if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-		        {
-			    	VPMsgPackSend_CR( VP_ACK_RPT, 0);
-		        }
-			}
-			else
-			{
-				if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-			    {
-					VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-				}
-			}	
-			TracePC("\r\n DrvHuodaoNOSet");
-			//-------------------------------------------------
-			//1...       48  49...        96
-			//colNum_1...48  colGoods_1...48		
-			for( i=0; i<COLUMN_NUM_SET; i++)
-			{
-				//if( (GoodsWaySetVal[i].GoodsType!=0xff)&&(GoodsWaySetVal[i].GoodsType!=0x0) )
-	            {
-					sysVPMissionCR.receive.msg[i+1] = (sysVPMissionCR.receive.msg[i+1]>63)?63:(sysVPMissionCR.receive.msg[i+1]&0x3f);				
-				}
-			}	
-			//changed by yoc
-			hd_set_by_pc(sysVPMissionCR.receive.msg[0],COLUMN_NUM_SET,(void *)&sysVPMissionCR.receive.msg[1],2);	
-			//ChannelGetPCChange(1,3,sysVPMissionCR.receive.msg);
-		}
-		else
-		{
-			VPMsgPackSend_CR( VP_NAK_RPT, 0 );  //1,0
-			return VP_ERR_PAR;
-		}
-	}
-	else
-	{
-		if(SystemPara.EasiveEnable == 1)
-		{
-			if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-	        {
-		    	VPMsgPackSend_CR( VP_ACK_RPT, 0);
-	        }
-		}
-		else
-		{
-			if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-		    {
-				VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-			}
-		}
-	}
-    return VP_ERR_NULL;	
-}
-
-/*********************************************************************************************************
-** Function name:     	VP_CMD_GoodsPar
-** Descriptions:	    设置货道商品单价信息
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VP_CMD_GoodsPar( void )
-{
-	unsigned char i = 0;
-	unsigned char j = 0;
-	//static u_int  tempMoney = 0;	
-	unsigned char Binunm = 0;
-	
-	
-	//if( sysVPMissionCR.receive.datLen == (GOODSTYPEMAX+GOODSTYPEMAX*2)	)
-	if(SystemPara.EasiveEnable == 1)
-	{
-		if( sysVPMissionCR.receive.datLen <= (COLUMN_NUM_SET*2+2) )
-		{	
-			if(SystemPara.EasiveEnable == 1)
-			{
-				if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-		        {
-			    	VPMsgPackSend_CR( VP_ACK_RPT, 0);
-		        }
-			}
-			else
-			{
-				if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-			    {
-					VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-				}
-			}	
-			Binunm = sysVPMissionCR.receive.msg[0];
-			TracePC("\r\n DrvPriceSet");
-			//----------------------------------
-			//	1...			  n
-			//SP1_Price...Sn_Price
-			GoodsRev = (sysVPMissionCR.receive.datLen - 2) / 2;	
-			if(sysVPMissionCR.receive.msg[1]==0)//根据ID设置商品单价
-			{
-				for( i=0,  j=2; i<GoodsRev; i++, j+=2 )
-				{
-					sysGoodsMatrix[i].GoodsType = i+1;			
-					if((sysVPMissionCR.receive.msg[j]==0xff)&&(sysVPMissionCR.receive.msg[j+1]==0xff))
-					{
-						sysGoodsMatrix[i].Price  = 0;
-					}
-					else
-					{				
-						sysGoodsMatrix[i].Price  = MoneyRec_CR(sysVPMissionCR.receive.msg[j],sysVPMissionCR.receive.msg[j+1]);				
-					}			
-					//Trace("\r\n id=%d,[%ld]",sysGoodsMatrix[i].GoodsType,sysGoodsMatrix[i].Price);
-				}	
-				//changed by yoc
-				hd_set_by_pc(Binunm,GoodsRev,(void *)sysGoodsMatrix,3);//根据ID设置商品单价 
-				#if 0
-				for(j=0;j<GoodsRev;j++)
-				{
-					hd_set_price_by_id(Binunm,sysGoodsMatrix[j].GoodsType,sysGoodsMatrix[j].Price);
-				}
-				#endif
-				//sysVPMissionCR.sysStatus |= VPM_STA_GOODSPAR; 
-			}
-			else 
-			if(sysVPMissionCR.receive.msg[1]==1)//根据货道设置商品单价
-			{
-				for( i=0,  j=2; i<GoodsRev; i++, j+=2 )
-				{
-					sysGoodsMatrix[i].GoodsType = i+1;			
-					if((sysVPMissionCR.receive.msg[j]==0xff)&&(sysVPMissionCR.receive.msg[j+1]==0xff))
-					{
-						sysGoodsMatrix[i].Price  = 0;
-					}
-					else
-					{				
-						sysGoodsMatrix[i].Price  = MoneyRec_CR(sysVPMissionCR.receive.msg[j],sysVPMissionCR.receive.msg[j+1]);				
-					}			
-				}
-				//changed by yoc
-				hd_set_by_pc(Binunm,GoodsRev,(void *)sysGoodsMatrix,4);
-#if 0
-				j=0;
-				for(i=0;i<8;i++)
-				{
-					for(n=0;n<10;n++)
-					{	
-						if(n >= 9 )
-							logicNo = (i + 1) * 10;
-						else
-							logicNo = (i + 1) * 10 + n + 1;
-						if(ChannelGetPhysicNum(logicNo,Binunm) == 0xff)
-						{
-							j++;
-							continue;
-						}	
-						else
-						{
-							TracePC("logicNo = %d ,price[%d].Price = %d\r\n",logicNo,j,sysGoodsMatrix[j].Price);
-							ChannelSetParam(logicNo,Binunm,CHANNELPRICE,0,sysGoodsMatrix[j++].Price);	
-						}
-							
-					}
-				}	
-				//sysVPMissionCR.sysStatus |= VPM_STA_GOODSPAR; 
-#endif
-
-			}
-			
-		}
-		else
-		{
-			VPMsgPackSend_CR( VP_NAK_RPT, 0);  
-			return VP_ERR_PAR;
-		}
-	}
-	else
-	{
-		if(SystemPara.EasiveEnable == 1)
-		{
-			if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-	        {
-		    	VPMsgPackSend_CR( VP_ACK_RPT, 0);
-	        }
-		}
-		else
-		{
-			if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-		    {
-				VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-			}
-		}
-	}
-	return VP_ERR_NULL; 
-}
-
-
-/*********************************************************************************************************
-** Function name:     	VP_CMD_Position
-** Descriptions:	    设置各个展示位
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VP_CMD_Position( void )
-{
-    //if( sysVPMissionCR.receive.datLen == (GOODSTYPEMAX+GOODSTYPEMAX*2)  )
-    if(SystemPara.EasiveEnable == 1)
-    {
-	    if( sysVPMissionCR.receive.datLen == 18+1)
-		{
-	        if(SystemPara.EasiveEnable == 1)
-			{
-				if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-		        {
-			    	VPMsgPackSend_CR( VP_ACK_RPT, 0);
-		        }
-			}
-			else
-			{
-			    if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-		        {
-			    	VPMsgPackSend_CR( VP_ACK_RPT, 0);
-		        }
-			}
-			TracePC("\r\n DrvPosIDSet");
-			/*
-			for( i=0; i<GOODSTYPEMAX; i++)
-			{
-				//sysVPMissionCR.selItem[i] = sysVPMissionCR.receive.msg[i+1];
-				SystemParameter.selItem[i] = sysVPMissionCR.receive.msg[i+1];
-			}
-			*/
-		}
-		else
-		{
-		    VPMsgPackSend_CR( VP_NAK_RPT, 0 );	 //1, 0
-			return VP_ERR_PAR;
-		}
-    }
-	else
-	{
-		if(SystemPara.EasiveEnable == 1)
-		{
-			if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-	        {
-		    	VPMsgPackSend_CR( VP_ACK_RPT, 0);
-	        }
-		}
-		else
-		{
-			if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-		    {
-				VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-			}
-		}
-	}
-    return VP_ERR_NULL;	
-}
-
-
-/*********************************************************************************************************
-** Function name:     	VPMission_HuodaoSta_RPT
-** Descriptions:	    上报各个货道状态
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VPMission_ColumnSta_RPT( void )
-{
-	unsigned char bin=0;
-	unsigned char i = 0;
-	unsigned char flag = 0; 
-
-
-	if(SystemPara.EasiveEnable == 1)
-	{
-		bin = sysVPMissionCR.receive.msg[0];
-
-		//2.send huodao data
-		//retry = VP_COM_RETRY;
-		//--------------------------------------------
-		for(i=0; i<COLUMN_NUM_SET+1; i++)
-		{
-			sysVPMissionCR.send.msg[i] = 0;
-		}
-		sysVPMissionCR.send.msg[0] = bin;
-		hd_huodao_rpt_vp(bin,&sysVPMissionCR.send.msg[1]);
-		flag = VPMsgPackSend_CR( VP_HUODAO_RPT, 0);   //Not need ACK
-		if( flag != VP_ERR_NULL )
-		{
-			return VP_ERR_PAR;
-		}	
-		/*
-		while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack_CR() )
-				{			
-					if(LogPara.offLineFlag == 1)
-					{
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}
-					recRes = 1;
-					break;
-				}
-			}
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-		}	
-		if( retry== 0 ) 
-		{
-			OSTimeDly(10);		
-			LogPara.offLineFlag = 1;	
-			return VP_ERR_COM;
-		}
-		*/
-
-		switch( sysVPMissionCR.receive.msgType )
-		{
-			default:
-				break;
-		}
-	}	
-	else
-	{
-		sysVPMissionCR.send.msg[0] = bin;
-		sysVPMissionCR.send.msg[1] = bin;
-		flag = VPMsgPackSend_CR( VP_HUODAO_RPT, 0);   //Not need ACK
-		if( flag != VP_ERR_NULL )
-		{
-			return VP_ERR_PAR;
-		}
-	}
-	
-		
-	
-	
-	return VP_ERR_NULL;
-
-}
-
-/*********************************************************************************************************
-** Function name:     	VPMission_HuodaoSta_RPT
-** Descriptions:	    上报各个货道状态
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VP_CMD_GetColumnSta( void )
-{
-	/*
-	//1.Check the data	
-    if( sysVPMissionCR.receive.datLen == 0  )
-	{
-	    VPMsgPackSend_CR( VP_NAK_RPT, 0  );	 
-		//return VP_ERR_PAR;
-	}
-	if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK  )
-	{
-		VPMsgPackSend_CR( VP_ACK_RPT, 0  );
-	}
-	*/
-	//2.ACK	
-	/**/
-	if(SystemPara.EasiveEnable == 1)
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-		{
-			VPMsgPackSend_CR( VP_ACK_RPT, 0);
-		}
-	}
-	else
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-		{
-			VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-		}
-	}
-	OSTimeDly(OS_TICKS_PER_SEC / 10);
-	
-	//2.
-    VPMission_ColumnSta_RPT();	
-    return VP_ERR_NULL;	
-}
-
-
-
-
-
-/*********************************************************************************************************
-** Function name:     	VP_CMD_GetInfo
-** Descriptions:	    需要上报Info信息
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VP_CMD_GetInfo( void )
-{
+unsigned char VP_Payout_Ind_CR( void )
+{	 	
 	//MessageUboxPCPack *AccepterUboxMsg;
-	//unsigned char ComStatus;
-
-	//1.Check the data
-    if( sysVPMissionCR.receive.datLen != 1  )
-	{
-	    VPMsgPackSend_CR( VP_NAK_RPT, 0 );	 
-		return VP_ERR_PAR;
-	}
-	//2.ACK	
-	/**/
-	if(SystemPara.EasiveEnable == 1)
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-		{
-			VPMsgPackSend_CR( VP_ACK_RPT, 0);
-		}
-	}
-	else
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-		{
-			VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-		}
-	}
+//	unsigned char ComStatus;
+   	sysVPMissionCR.type = sysVPMissionCR.receive.msg[0];    
+	sysVPMissionCR.changeMoney = MoneyRec_CR(sysVPMissionCR.receive.msg[1],sysVPMissionCR.receive.msg[2]);
 	
-	switch(sysVPMissionCR.receive.msg[0])
-	{
-		case 24:
-		case 25:
-			//发送邮箱给vmc
-			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_INFOIND;	
-			MsgUboxPack[g_Ubox_Index].Type = sysVPMissionCR.receive.msg[0];
-			OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
-			UpdateIndex();
-			OSTimeDly(OS_TICKS_PER_SEC/10);
-			/*
-			//取得返回值
-			AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*10,&ComStatus);
-			if(ComStatus == OS_NO_ERR)
-			{
-				switch(AccepterUboxMsg->PCCmd)
-				{
-					case MBOX_VMCTOPC_ACK:
-						TracePC("\r\n Drv Info_Ind ACK"); 
-						VPMsgPackSend_CR( VP_ACK_RPT, 0  );	
-						break;
-					case MBOX_VMCTOPC_NAK:
-						TracePC("\r\n Drv Info_Ind NAK"); 
-						VPMsgPackSend_CR( VP_NAK_RPT, 0  );	
-						break;	
-				}
-			}*/	
-			break;
-		default:
-			//TracePC("\r\n Drv Info_Ind ACK"); 
-			//VPMsgPackSend_CR( VP_ACK_RPT, 0  );
-			//OSTimeDly(OS_TICKS_PER_SEC/10);
-			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;		
-			MsgUboxPack[g_Ubox_Index].Type = sysVPMissionCR.receive.msg[0];
-			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-			UpdateIndex();
-			OSTimeDly(OS_TICKS_PER_SEC/100);	
-			break;
-	}
-    return VP_ERR_NULL;	
-}
-
-
-/*********************************************************************************************************
-** Function name:     	VP_CMD_GetInfoExp
-** Descriptions:	    (扩展)需要上报Info信息
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VP_CMD_GetInfoExp( void )
-{
-	//MessageUboxPCPack *AccepterUboxMsg;
-	//unsigned char ComStatus;
-
-	//1.Check the data
-    if( sysVPMissionCR.receive.datLen > 2  )
-	{
-	    VPMsgPackSend_CR( VP_NAK_RPT, 0 );	 
-		return VP_ERR_PAR;
-	}
-	//2.ACK	
-	/**/
-	if(SystemPara.EasiveEnable == 1)
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-		{
-			VPMsgPackSend_CR( VP_ACK_RPT, 0);
-		}
-	}
-	else
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-		{
-			VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-		}
-	}
-	
-	switch(sysVPMissionCR.receive.msg[0])
-	{
-		case 24:
-		case 25:
-			//发送邮箱给vmc
-			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_INFOIND;	
-			MsgUboxPack[g_Ubox_Index].Type = sysVPMissionCR.receive.msg[0];
-			MsgUboxPack[g_Ubox_Index].Control_device = sysVPMissionCR.receive.msg[1];
-			OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
-			UpdateIndex();
-			OSTimeDly(OS_TICKS_PER_SEC/10);
-			/*//取得返回值
-			AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*10,&ComStatus);
-			if(ComStatus == OS_NO_ERR)
-			{
-				switch(AccepterUboxMsg->PCCmd)
-				{
-					case MBOX_VMCTOPC_ACK:
-						TracePC("\r\n Drv Info_Ind ACK"); 
-						VPMsgPackSend_CR( VP_ACK_RPT, 0  );	
-						break;
-					case MBOX_VMCTOPC_NAK:
-						TracePC("\r\n Drv Info_Ind NAK"); 
-						VPMsgPackSend_CR( VP_NAK_RPT, 0  );	
-						break;	
-				}
-			}*/		
-			break;
-		case 26:
-			//TracePC("\r\n Drv Info_Ind ACK"); 
-			//VPMsgPackSend_CR( VP_ACK_RPT, 0  );
-			//OSTimeDly(OS_TICKS_PER_SEC/10);
-			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_INFORPT;		
-			MsgUboxPack[g_Ubox_Index].Type = sysVPMissionCR.receive.msg[0];
-			MsgUboxPack[g_Ubox_Index].Control_device=sysVPMissionCR.receive.msg[1];
-			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-			UpdateIndex();
-			OSTimeDly(OS_TICKS_PER_SEC/100);	
-			break;
-	}
+	//发送邮箱给vmc
+	MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_PAYOUTIND;				
+	MsgUboxPack[g_Ubox_Index].changeMoney = sysVPMissionCR.changeMoney;
+	MsgUboxPack[g_Ubox_Index].Type        = sysVPMissionCR.type;
+	OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
+	UpdateIndex();
+	OSTimeDly(OS_TICKS_PER_SEC/10);
+	TracePC("\r\n Drv Payout_Ind"); 
 	
     return VP_ERR_NULL;	
 }
 
-
 /*********************************************************************************************************
-** Function name:     	VP_CMD_SetHuodao
-** Descriptions:	    设置单独的货道信息
-** input parameters:    
+** Function name:     	VPMission_Payout_RPT_CR
+** Descriptions:	    上报找零信息
+** input parameters:    dev: 1投入硬币,2投入纸币,3暂存纸币进入,4暂存纸币出币
+                        moneyIn投入的金额,以分为单位
+                        moneyAll总的投入的金额,以分为单位 
 ** output parameters:   无
 ** Returned value:      
 *********************************************************************************************************/
-unsigned char VP_CMD_SetHuodao( void )
-{	 
-	unsigned char i = 0,j = 0,GoodsRev = 0;
-	//uint8_t i;
-	if( sysVPMissionCR.receive.datLen <= 80 )
-	{
-		//Trace("\r\n getaction4=%d",( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK ));
-		if(SystemPara.EasiveEnable == 1)
-		{
-			if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-			{
-				VPMsgPackSend_CR( VP_ACK_RPT, 0);
-			}
-		}
-		else
-		{
-			if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-			{
-				VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-			}
-		}
-		TracePC("\r\n DrvHuodaoAttrSet");
-		GoodsRev = sysVPMissionCR.receive.datLen/8;
-		for( i=0,  j=0; i<GoodsRev; i++, j+=8 )
-		{
-			sysGoodsAttr[i].Cabinet = sysVPMissionCR.receive.msg[j];
-			sysGoodsAttr[i].hd_no = sysVPMissionCR.receive.msg[j+1];
-			sysGoodsAttr[i].hd_id = sysVPMissionCR.receive.msg[j+2];
-			sysGoodsAttr[i].hd_count = sysVPMissionCR.receive.msg[j+3];
-			if((sysVPMissionCR.receive.msg[j+4]==0xff)&&(sysVPMissionCR.receive.msg[j+5]==0xff))
-			{
-				sysGoodsAttr[i].hd_Price  = 0;
-			}
-			else
-			{				
-				sysGoodsAttr[i].hd_Price  = MoneyRec_CR(sysVPMissionCR.receive.msg[j+4],sysVPMissionCR.receive.msg[j+5]);				
-			}
-		}
-		for( i=0; i<GoodsRev; i++ )
-		{
-			TracePC("\r\n DrvHuodaoAttr=%d,%d,%d,%d,%d",sysGoodsAttr[i].Cabinet,sysGoodsAttr[i].hd_no,sysGoodsAttr[i].hd_id,sysGoodsAttr[i].hd_count,sysGoodsAttr[i].hd_Price);
-		}
-		pcSetHuodao(GoodsRev,sysGoodsAttr);
-		//-------------------------------------------------
-		//1...		 48  49...		  96
-		//colNum_1...48  colGoods_1...48
-	/*	for( i=0; i<COLUMN_NUM_SET; i++ )
-		{
-			if( (sysVPMissionCR.receive.msg[i+1]==0xff)||(sysVPMissionCR.receive.msg[i+1]==0x0) )
-			{
-				GoodsWaySetVal[i].GoodsCurrentSum = 0;
-				GoodsWaySetVal[i].GoodsType = sysVPMissionCR.receive.msg[i+1];
-				GoodsWaySetVal[i].Price = 0;
-			}
-			else
-			{
-				//GoodsWaySetVal[i].GoodsCurrentSum = sysVPMissionCR.receive.msg[i];
-				GoodsWaySetVal[i].GoodsType = sysVPMissionCR.receive.msg[i+1];
-			}
-		}*/
-		//sysVPMissionCR.sysStatus |= VPM_STA_COLUMNPAR;
-		
-		
-	}
-	else
-	{
-		VPMsgPackSend_CR( VP_NAK_RPT, 0);	
-		return VP_ERR_PAR;
-	}
-	
-	return VP_ERR_NULL; 
-}
-
-
-
-
-
-
-/*********************************************************************************************************
-** Function name:     	VPMission_OfflineData_RPT
-** Descriptions:	    上报离线交易信息
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VPMission_OfflineData_RPT( void )
+unsigned char VPMission_Payout_RPT_CR( uint8_t payoutDev,unsigned char Type, unsigned int payoutMoney,  unsigned int payremainMoney, unsigned int payAllMoney )
 {
-	unsigned char retry = 0;
+    unsigned char retry = 0;
 	unsigned char recRes=0;
 	unsigned char flag = 0;
 
-
-	if(LogPara.offLineFlag == 1)
-	{
-		return VP_ERR_NULL;
-	}
-
-	TracePC("\r\n Drv Offline=%ld,%ld",LogPara.offDetailPage,LogPara.LogDetailPage); 
-	//上报逐条交易记录
-	while(LogPara.offDetailPage < LogPara.LogDetailPage)
-	{		
-		TracePC("\r\n Drv OfflineDe=%ld",LogPara.offDetailPage);
-		retry = VP_COM_RETRY;
-		sysVPMissionCR.type = 0;
-		flag = VPMsgPackSend_CR( VP_OFFLINEDATA_RPT, 1);
-		if( flag != VP_ERR_NULL )
-		{
-			return VP_ERR_PAR;
-		}
-		while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack_CR() )
-				{
-					if(LogPara.offLineFlag == 1)
-					{
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}
-					recRes = 1;
-					break;
-				}
-			}
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-		}
-		if( retry== 0 )	
-		{
-			OSTimeDly(10);		
-			LogPara.offLineFlag = 1;
-			//LogPara.offDetailPage = LogPara.LogDetailPage;
-			return VP_ERR_COM;
-		}			
-		else
-		{
-			LogPara.offDetailPage++;
-		}
-		OSTimeDly(2);		
-	}
-	OSTimeDly(10);
-
-	TracePC("\r\n Drv OfflineAll=%ld",LogPara.offDetailPage);
-	//上报总交易记录
 	retry = VP_COM_RETRY;
-	sysVPMissionCR.type = 1;
-	flag = VPMsgPackSend_CR( VP_OFFLINEDATA_RPT, 1);
-	if( flag != VP_ERR_NULL )
-	{
+    //-------------------------------------------
+    sysVPMissionCR.payoutDev = payoutDev;
+    sysVPMissionCR.type = Type;
+	sysVPMissionCR.payoutMoney = payoutMoney;
+	sysVPMissionCR.payremainMoney=payremainMoney;
+	sysVPMissionCR.payAllMoney = payAllMoney;
+	//===========================================	
+	flag = VPMsgPackSend_CR( VP_PAYOUT_RPT, 1);
+	 if( flag != VP_ERR_NULL )
+    {
 		return VP_ERR_PAR;
 	}
-	
 	while( retry )
 	{
 		Timer.PCRecTimer = VP_TIME_OUT;
@@ -2212,11 +1444,6 @@ unsigned char VPMission_OfflineData_RPT( void )
 		{
 			if( VPBusFrameUnPack_CR() )
 			{
-				if(LogPara.offLineFlag == 1)
-				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
-				}
 				recRes = 1;
 				break;
 			}
@@ -2230,112 +1457,25 @@ unsigned char VPMission_OfflineData_RPT( void )
 		{
 			break;
 		}
+		
 	}
-	if( retry== 0 )	
+	if( retry== 0 )
 	{
-		OSTimeDly(10);		
-		LogPara.offLineFlag = 1;
-		//LogPara.offDetailPage = LogPara.LogDetailPage;
-		return VP_ERR_COM;
+		OSTimeDly(10);			
+        return VP_ERR_COM;
 	}
-
-	switch( sysVPMissionCR.receive.msgType )
+    switch( sysVPMissionCR.receive.msgType )
 	{
 		default:
-			break;
-	}	
-	
+		    break;
+	}
 	return VP_ERR_NULL;
 }
+#if 0
 
-/*********************************************************************************************************
-** Function name:     	VP_Payout_Ind
-** Descriptions:	    PC指示VMC出币命令
-** input parameters:    
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VP_Payout_Ind( void )
-{	 	
-	//MessageUboxPCPack *AccepterUboxMsg;
-//	unsigned char ComStatus;
 
-    //1.Check the data
-    if( sysVPMissionCR.receive.datLen != 4  )
-	{
-	    VPMsgPackSend_CR( VP_NAK_RPT, 0  );	 
-		return VP_ERR_PAR;
-	}
-	//2.ACK
-	if(SystemPara.EasiveEnable == 1)
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROEASIV_ACK )
-        {
-	    	VPMsgPackSend_CR( VP_ACK_RPT, 0);
-        }
-	}
-	else
-	{
-		if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-	    {
-			VPMsgPackSend_CR( VP_ACK_RPT, 0 );
-		}
-	}
-	    
-	sysVPMissionCR.changeMoney = MoneyRec_CR(sysVPMissionCR.receive.msg[1],sysVPMissionCR.receive.msg[2]);
-	sysVPMissionCR.type = sysVPMissionCR.receive.msg[3];
-	//发送邮箱给vmc
-	MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_PAYOUTIND;				
-	MsgUboxPack[g_Ubox_Index].changeMoney = sysVPMissionCR.changeMoney;
-	MsgUboxPack[g_Ubox_Index].Type        = sysVPMissionCR.type;
-	OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
-	UpdateIndex();
-	OSTimeDly(OS_TICKS_PER_SEC/10);
-	TracePC("\r\n Drv Payout_Ind"); 
-	/*
-	//取得返回值
-	AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*10,&ComStatus);
-	if(ComStatus == OS_NO_ERR)
-	{
-		switch(AccepterUboxMsg->PCCmd)
-		{
-			case MBOX_VMCTOPC_ACK:
-				TracePC("\r\n Drv Payout_Ind ACK"); 
-				VPMsgPackSend_CR( VP_ACK_RPT, 0  );	
-				break;
-			case MBOX_VMCTOPC_NAK:
-				TracePC("\r\n Drv Payout_Ind NAK"); 
-				VPMsgPackSend_CR( VP_NAK_RPT, 0  );	
-				break;	
-		}
-	}
-	*/
-	/*//if( (sysVPMissionCR.changeDev != 0) || (sysVPMissionCR.changeMoney < SystemParameter.HopperCoinPrice1 ) )
-    if( (sysVPMissionCR.changeDev != 0) || (sysVPMissionCR.changeMoney > sysMDBMission.coinAllValue ) || (sysMDBMission.coinDeviceStatus!=0) )
-	{
-    	VPMsgPackSend_CR( VP_NAK_RPT, 0, 0  );	 
-		return VP_ERR_PAR;
-	}
-	//扣钱后不能找零
-	tempPrice = sysVPMissionCR.changeMoney/10;
-	if(!(changeCNY2(resultdisp,tempPrice)))
-	{
-    	VPMsgPackSend_CR( VP_NAK_RPT, 0, 0  );	 
-		return VP_ERR_PAR;
-	}
-	
 
-	//2.ACK
-	if( sysVPMissionCR.receive.verFlag & VP_PROTOCOL_ACK )
-	{
-    	VPMsgPackSend_CR( VP_ACK_RPT, 0, 0 );
-	}
 
-    //3.Set command flag
-	sysVPMissionCR.changeCmd = 1;
-	*/
-    return VP_ERR_NULL;	
-}
 
 /*********************************************************************************************************
 ** Function name:     	VP_Vendout_Ind
@@ -2729,15 +1869,15 @@ unsigned char VPMission_Poll_CR()
 		case VP_PAYIN_IND:
 			VP_Payin_Ind_CR();
 			break;
+		case VP_PAYOUT_IND:
+		    VP_Payout_Ind_CR();
+		    break; 	
 		case VP_COST_IND://添加扣款函数;by gzz 20110823
 		    VP_Cost_Ind_CR();
 		    break;		
 		/*case VP_RESET_IND:
 		    VP_Reset_Ind();
-		    break;			
-		case VP_PAYOUT_IND:
-		    VP_Payout_Ind();
-		    break;   	
+		    break;		
 		*/default:
 		    break;
 	}
@@ -2749,81 +1889,6 @@ unsigned char VPMission_Poll_CR()
 
 
 
-/*********************************************************************************************************
-** Function name:     	VPMission_Payout_RPT
-** Descriptions:	    上报找零信息
-** input parameters:    dev: 1投入硬币,2投入纸币,3暂存纸币进入,4暂存纸币出币
-                        moneyIn投入的金额,以分为单位
-                        moneyAll总的投入的金额,以分为单位 
-** output parameters:   无
-** Returned value:      
-*********************************************************************************************************/
-unsigned char VPMission_Payout_RPT( uint8_t payoutDev,unsigned char Type, unsigned int payoutMoney, unsigned int payAllMoney )
-{
-    unsigned char retry = 0;
-	unsigned char recRes=0;
-	unsigned char flag = 0;
-
-	if(LogPara.offLineFlag == 1)
-	{
-		return VP_ERR_NULL;
-	}	
-	//
-    retry = VP_COM_RETRY;
-    //-------------------------------------------
-    sysVPMissionCR.payoutDev = payoutDev;
-    sysVPMissionCR.type = Type;
-	sysVPMissionCR.payoutMoney = payoutMoney;
-	sysVPMissionCR.payAllMoney = payAllMoney;
-	//===========================================	
-	while( retry )
-	{
-		flag = VPMsgPackSend_CR( VP_PAYOUT_RPT, 1);
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
-		{
-			if( VPBusFrameUnPack_CR() )
-			{
-				if(LogPara.offLineFlag == 1)
-				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
-				}
-				recRes = 1;
-				break;
-			}
-		}
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
-		}
-	}
-	if( retry== 0 )		
-	{
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
-		}
-        return VP_ERR_COM;
-	}
-	switch( sysVPMissionCR.receive.msgType )
-	{
-		default:
-		    break;
-	}
-	return VP_ERR_NULL;
-}
 
 
 
@@ -2833,213 +1898,6 @@ unsigned char VPMission_Payout_RPT( uint8_t payoutDev,unsigned char Type, unsign
 
 
 
-/*********************************************************************************************************
-** Function name:       VPMission_Vendout_RPT
-** Descriptions:        向PC上报出货信息
-** input parameters:    status=0出货成功,2，出货失败
-                        column实际出货货道  
-                        type出货类型
-                        cost商品的花费
-                        payAllMoney出货完成后，用户投币余额
-                        columnLeft本货道剩余商品个数
-** output parameters:   无
-** Returned value:      无
-*********************************************************************************************************/
-unsigned char VPMission_Vendout_RPT( unsigned char status, unsigned char device,unsigned char column, unsigned char type, unsigned int cost, unsigned int payAllMoney, unsigned char columnLeft )
-{
-    unsigned char retry = 0;
-	unsigned char recRes=0;
-	unsigned char flag = 0;
-	
-	
-	if(status == 2)
-	{
-		changeFailedBeep();
-		
-		//离线时不上报
-		if(LogPara.offLineFlag == 0)
-		{
-			VPMission_ColumnSta_RPT();
-		}
-	}
-
-	
-	//离线时不上报
-	if(LogPara.offLineFlag == 1)
-	{
-		return VP_ERR_NULL;
-	}
-    retry = VP_COM_RETRY;
-    //-------------------------------------------
-    sysVPMissionCR.status = status;
-	sysVPMissionCR.device = device;
-	sysVPMissionCR.Column = column;
-	sysVPMissionCR.type = type;
-	sysVPMissionCR.costMoney = cost;
-	sysVPMissionCR.payAllMoney = payAllMoney;
-	sysVPMissionCR.ColumnSum = columnLeft;
-	
-	//===========================================	
-	while( retry )
-	{
-		flag = VPMsgPackSend_CR( VP_VENDOUT_RPT, 1);
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
-		{
-			if( VPBusFrameUnPack_CR() )
-			{
-				if(LogPara.offLineFlag == 1)
-				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
-				}
-				recRes = 1;
-				break;
-			}
-		}	
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
-		}
-	}
-	if( retry== 0 )
-	{
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
-		}
-        return VP_ERR_COM;
-	}
-	switch( sysVPMissionCR.receive.msgType )
-	{
-		default:
-		    break;
-	}
-	return VP_ERR_NULL;
-}
-
-
-
-
-/*********************************************************************************************************
-** Function name:       VPMission_Act_RPT_CR
-** Descriptions:        向PC上报Action信息
-** input parameters:    type
-                        
-						#define VP_ADMIN_GOODSADDALL  1
-						#define VP_ADMIN_GOODSADDCOL  2
-						#define VP_ADMIN_CHANGEADD    3
-						#define VP_ADMIN_GOODSCOLUMN  4
-						#define VP_ADMIN_GOODSADDTRAY 8
-						#define VP_ADMIN_GETBILL      9
-						#define VP_ADMIN_GOODSBUHUO  10
-** output parameters:   无
-** Returned value:      无
-*********************************************************************************************************/
-unsigned char VPMission_Admin_RPT( unsigned char type,uint8_t Column,uint8_t ColumnSum)
-{
-    unsigned char retry = 0;
-	unsigned char recRes=0;
-	unsigned char flag = 0;
-	//u_char xdata str[20];
-	//u_char xdata len = 0;
-
-	if(LogPara.offLineFlag == 1)
-	{
-		return VP_ERR_NULL;
-	}
-	
-	//
-    retry = VP_COM_RETRY;
-	//-------------------------------------------
-	sysVPMissionCR.type = type;
-	sysVPMissionCR.Column = Column;
-	sysVPMissionCR.ColumnSum = ColumnSum;
-	
-	//===========================================
-	flag = VPMsgPackSend_CR( VP_ADMIN_RPT, 1);
-	//DisplayStr( 0, 0, 1, "01", 2 );  
-	if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	while( retry )
-	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
-		{
-			if( VPBusFrameUnPack_CR() )
-			{
-				if(LogPara.offLineFlag == 1)
-				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT_CR(VP_ACT_ONLINE,0,0,0,0,0,0);
-				}
-				recRes = 1;
-				break;
-			}
-		}	
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
-		}
-	}
-	if( retry== 0 )
-	{
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
-		}
-		TracePC("\r\n Drv UboxAdminFail");
-        return VP_ERR_COM;
-	}
-	
-    switch( sysVPMissionCR.receive.msgType )
-	{   		
-        case VP_NAK:
-			changeFailedBeep();
-			TracePC("\r\n Drv UboxAdminFail");
-            return VP_ERR_PAR;	         	
-		case VP_ACK:
-			TracePC("\r\n Drv UboxAdminSuc");
-		    return VP_ERR_NULL;		    
-		case VP_HOUDAO_IND:
-			VP_CMD_HuodaoPar();
-		    break;
-		case VP_HUODAO_SET_IND: 
-			VP_CMD_HuodaoNo();			
-			break;		
-		case VP_POSITION_IND:
-			VP_CMD_Position();			
-			break;
-		case VP_SALEPRICE_IND:
-			VP_CMD_GoodsPar();	
-			break;	
-		default:
-		    break;
-	}	
-	TracePC("\r\n Drv UboxAdminSuc");
-	return VP_ERR_NULL;
-
-}
 #endif
 
 

@@ -558,8 +558,8 @@ void Uart3TaskDevice(void *pvData)
 						TracePC("\r\n Taskpend Uboxescrowout=%d,all=%ld",AccepterUboxMsg->payInMoney,AccepterUboxMsg->payAllMoney); 
 						break;
 					case MBOX_VMCTOPC_PAYOUT:
-						VPMission_Payout_RPT(AccepterUboxMsg->payoutDev,AccepterUboxMsg->Type,AccepterUboxMsg->payoutMoney,AccepterUboxMsg->payAllMoney);
-						TracePC("\r\n Taskpend Uboxpayout=%d,all=%ld,type=%d",AccepterUboxMsg->payoutMoney,AccepterUboxMsg->payAllMoney,AccepterUboxMsg->Type); 
+						VPMission_Payout_RPT_CR(AccepterUboxMsg->payoutDev,AccepterUboxMsg->Type,AccepterUboxMsg->payoutMoney,AccepterUboxMsg->payoutRemain,AccepterUboxMsg->payAllMoney);
+						TracePC("\r\n Taskpend Uboxpayout=%d,remain=%d,all=%ld,type=%d",AccepterUboxMsg->payoutMoney,AccepterUboxMsg->payoutRemain,AccepterUboxMsg->payAllMoney,AccepterUboxMsg->Type); 
 						break;	
 					case MBOX_VMCTOPC_COST:
 						VPMission_Cost_RPT_CR(AccepterUboxMsg->Type,AccepterUboxMsg->costMoney,AccepterUboxMsg->payAllMoney);

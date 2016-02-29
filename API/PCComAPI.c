@@ -161,7 +161,7 @@ void PayinRPTAPI(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney)
 ** output parameters:   Œﬁ
 ** Returned value:      Œﬁ
 *********************************************************************************************************/
-void PayoutRPTAPI(uint8_t payoutDev,uint8_t payoutType,uint16_t payoutMoney,uint32_t payAllMoney)
+void PayoutRPTAPI(uint8_t payoutDev,uint8_t payoutType,uint16_t payoutMoney,uint16_t payoutRemain,uint32_t payAllMoney)
 {
 	switch(SystemPara.PcEnable)
 	{
@@ -180,7 +180,19 @@ void PayoutRPTAPI(uint8_t payoutDev,uint8_t payoutType,uint16_t payoutMoney,uint
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
-			break;		
+			break;	
+		case CRUBOX_PC:
+			TracePC("\r\n MiddUboxPayout");	
+			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYOUT;	
+			MsgUboxPack[g_Ubox_Index].payoutDev = payoutDev;
+			MsgUboxPack[g_Ubox_Index].payoutMoney = payoutMoney;
+			MsgUboxPack[g_Ubox_Index].payoutRemain = payoutRemain;
+			MsgUboxPack[g_Ubox_Index].payAllMoney = payAllMoney;
+			MsgUboxPack[g_Ubox_Index].Type        = payoutType;
+			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+			UpdateIndex();
+			OSTimeDly(OS_TICKS_PER_SEC/100);
+			break;
 	}
 }
 
@@ -397,6 +409,78 @@ void StatusRPTAPI()
 	}
 }
 
+/*********************************************************************************************************
+** Function name:       PayoutRecyAPI
+** Descriptions:        ∑µªÿø…’“¡„”≤±“Ω∂Ó∫Õ÷Ω±“Ω∂Ó
+** input parameters:    type=0”≤±“’“¡„Ω∂Ó,1÷Ω±“’“¡„Ω∂Ó
+** output parameters:  Œﬁ
+** Returned value:      ’“¡„Ω∂Ó
+*********************************************************************************************************/
+uint32_t PayoutRecyAPI(uint8_t type)
+{
+	uint32_t coinMoney=0,change=0;
+	if(type==0)//”≤±“’“¡„
+	{
+		//”≤±“∆˜ «∑Òπ ’œ
+		if(ChangerIsErr()==1)
+		{
+			change = 0;
+		}
+		//’“¡„Ω∂Ó
+	       else if(SystemPara.CoinChangerType == MDB_CHANGER)
+		{
+			change = stDevValue.CoinValue[0]*stDevValue.CoinNum[0] + stDevValue.CoinValue[1]*stDevValue.CoinNum[1] + stDevValue.CoinValue[2]*stDevValue.CoinNum[2]
+					+stDevValue.CoinValue[3]*stDevValue.CoinNum[3] + stDevValue.CoinValue[4]*stDevValue.CoinNum[4] + stDevValue.CoinValue[5]*stDevValue.CoinNum[5] 
+					+stDevValue.CoinValue[6]*stDevValue.CoinNum[6] + stDevValue.CoinValue[7]*stDevValue.CoinNum[7]
+					+stDevValue.CoinValue[8]*stDevValue.CoinNum[8] + stDevValue.CoinValue[9]*stDevValue.CoinNum[9] + stDevValue.CoinValue[10]*stDevValue.CoinNum[10]
+					+stDevValue.CoinValue[11]*stDevValue.CoinNum[11] + stDevValue.CoinValue[12]*stDevValue.CoinNum[12] + stDevValue.CoinValue[13]*stDevValue.CoinNum[13]
+					+stDevValue.CoinValue[14]*stDevValue.CoinNum[14] + stDevValue.CoinValue[15]*stDevValue.CoinNum[15]; 
+		}
+		else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
+		{
+			coinMoney =( !HopperIsEmpty() )? SystemPara.MaxValue:0;
+			if(coinMoney < SystemPara.BillEnableValue)
+			{
+				change  = 0;
+			}
+			else
+			{
+				change  = coinMoney;
+			}
+			//MsgUboxPack[g_Ubox_Index].change  =( !HopperIsEmpty() )? SystemPara.MaxValue:0;				
+		}
+		//Œﬁ”≤±“∆˜
+		else if(SystemPara.CoinChangerType == OFF_CHANGER)
+		{	
+			change =0;
+		}
+	}	
+	else if(type==1)//÷Ω±“’“¡„
+	{
+		//ÃÌº”÷Ω±“—≠ª∑∆˜ ±£¨ø…’“”≤±“Ω∂Ó
+		if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
+		{
+			if(ErrorStatus(2)>0)
+			{	
+				change =0;
+			}
+			else 
+			{
+				change = stDevValue.RecyclerValue[0]*stDevValue.RecyclerNum[0] + stDevValue.RecyclerValue[1]*stDevValue.RecyclerNum[1] + stDevValue.RecyclerValue[2]*stDevValue.RecyclerNum[2]
+						+stDevValue.RecyclerValue[3]*stDevValue.RecyclerNum[3] + stDevValue.RecyclerValue[4]*stDevValue.RecyclerNum[4] + stDevValue.RecyclerValue[5]*stDevValue.RecyclerNum[5]
+						+stDevValue.RecyclerValue[6]*stDevValue.RecyclerNum[6];
+			}
+		}
+		//∏ª ø÷Ω±“∆˜
+		else if(SystemPara.BillRecyclerType==FS_BILLRECYCLER)
+		{
+			change = stDevValue.RecyclerValue[0]*stDevValue.RecyclerNum[0] + stDevValue.RecyclerValue[1]*stDevValue.RecyclerNum[1] + stDevValue.RecyclerValue[2]*stDevValue.RecyclerNum[2]
+					+stDevValue.RecyclerValue[3]*stDevValue.RecyclerNum[3] + stDevValue.RecyclerValue[4]*stDevValue.RecyclerNum[4] + stDevValue.RecyclerValue[5]*stDevValue.RecyclerNum[5]
+					+stDevValue.RecyclerValue[6]*stDevValue.RecyclerNum[6];
+		}
+	}		
+	return change;		
+}
 
 /*********************************************************************************************************
 ** Function name:       ActionRPTAPI
@@ -463,7 +547,7 @@ void ActionRPTAPI(uint8_t action,uint8_t value,uint8_t second,uint8_t column,uin
 
 /*********************************************************************************************************
 ** Function name:       ChangeMoneyInd
-** Descriptions:        PC÷∏ æ’“¡„
+** Descriptions:        PC÷∏ æ’“¡„”≤±“
 ** input parameters:    Œﬁ
 ** output parameters:   Œﬁ
 ** Returned value:      Œﬁ
@@ -475,8 +559,11 @@ void ChangeMoneyInd(uint32_t changeMoney,uint8_t Type,uint32_t payAllMoney)
 	
 	if(changeMoney)
 	{
-		ActionRPTAPI(2,0,30,0,Type,changeMoney,payAllMoney);
-		OSTimeDly(OS_TICKS_PER_SEC*2);
+		if(SystemPara.PcEnable!=CRUBOX_PC)
+		{
+			ActionRPTAPI(2,0,30,0,Type,changeMoney,payAllMoney);
+			OSTimeDly(OS_TICKS_PER_SEC*2);
+		}
 		ComStatus = ChangerDevPayoutAPI(changeMoney,&backmoney);				
 	}
 	else
@@ -486,14 +573,26 @@ void ChangeMoneyInd(uint32_t changeMoney,uint8_t Type,uint32_t payAllMoney)
 	//’“¡„ ß∞‹
 	if(!ComStatus)
 	{	
-		PayoutRPTAPI(0,Type,changeMoney-backmoney,payAllMoney);
+		PayoutRPTAPI(0,Type,changeMoney-backmoney,backmoney,payAllMoney);
 	}
 	//’“¡„≥…π¶
 	else
 	{
-		PayoutRPTAPI(0,Type,changeMoney,payAllMoney);
+		PayoutRPTAPI(0,Type,changeMoney,0,payAllMoney);
 	}	
 	 	
+}
+
+/*********************************************************************************************************
+** Function name:       ChangeMoneyIndFail
+** Descriptions:        PC÷∏ æ’“¡„”≤±“ ß∞‹
+** input parameters:    Œﬁ
+** output parameters:   Œﬁ
+** Returned value:      Œﬁ
+*********************************************************************************************************/
+void ChangeMoneyIndFail(uint32_t changeMoney,uint32_t remainMoney,uint8_t Type,uint32_t payAllMoney)
+{		
+	PayoutRPTAPI(0,Type,changeMoney,remainMoney,payAllMoney);	 	
 }
 
 
@@ -1480,7 +1579,27 @@ void PollAPI(uint32_t payAllMoney)
 						}
 						break;
 					case MBOX_PCTOVMC_PAYININD:
-						StackReturnBillDev(AccepterUboxMsg->Type);						
+                        			StackReturnBillDev(AccepterUboxMsg->Type);                        
+						break;
+					//payout_ind’“¡„
+					case MBOX_PCTOVMC_PAYOUTIND:
+						TracePC("\r\n MiddUbox payoutInd=%d,type=%d",AccepterUboxMsg->changeMoney,AccepterUboxMsg->Type); 
+						if(AccepterUboxMsg->Type==0)//”≤±“’“¡„
+						{
+							//ø…“‘’“¡„	
+							if(PayoutRecyAPI(AccepterUboxMsg->Type)>(AccepterUboxMsg->changeMoney))
+							{
+								ChangeMoneyInd(AccepterUboxMsg->changeMoney,AccepterUboxMsg->Type,payAllMoney);
+							}
+							//≤ªø…“‘’“¡„
+							else
+							{
+								ChangeMoneyIndFail(0,AccepterUboxMsg->changeMoney,AccepterUboxMsg->Type,payAllMoney);
+							}
+						}
+						else if(AccepterUboxMsg->Type==1)//÷Ω±“’“¡„
+						{
+						}						
 						break;
 					//cost_indø€øÓ
 					case MBOX_PCTOVMC_COSTIND:
