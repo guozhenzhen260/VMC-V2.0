@@ -162,7 +162,7 @@ const char  *BUSINESSERROR[MAXLANGUAGETYPE][23] =
 	  "货柜门没关",
 	  "故障",
 	  "注意",
-	  "本机暂无法找零,请谨慎选购",
+	  "本机暂无找零",
 	  "无零币,本机不收纸币"
 	  
    },
