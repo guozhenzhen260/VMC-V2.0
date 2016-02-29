@@ -1468,14 +1468,17 @@ void PollAPI(uint32_t payAllMoney)
 								TracePC("\r\n MiddUbox billcoin=%d",AccepterUboxMsg->value);
 								if(AccepterUboxMsg->value==1)
 								{
-									BillCoinCtr(1,1,0);
+									//BillCoinCtr(1,1,0);
+									BillCoinEnable(1);
 								}
 								else if(AccepterUboxMsg->value==0)
 								{
-									BillCoinCtr(2,2,0);
+									//BillCoinCtr(2,2,0);
+									BillCoinEnable(2);
 								}
 								break;
 						}
+						break;
 					case MBOX_PCTOVMC_PAYININD:
 						StackReturnBillDev(AccepterUboxMsg->Type);						
 						break;

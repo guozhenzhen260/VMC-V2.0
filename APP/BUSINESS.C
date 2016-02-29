@@ -1684,7 +1684,11 @@ uint8_t UnpdateTubeMoney()
 		billMoney,coinMoney,SystemPara.MaxValue,MoneyMaxin,SystemPara.BillEnableValue);
 
 	//4.是否禁用现金设备
-	if(SystemPara.CoinChangerType == MDB_CHANGER)
+	//友宝成人由友宝控制，不自己禁能使能设备
+	if(SystemPara.PcEnable==CRUBOX_PC)
+	{
+	}
+	else if(SystemPara.CoinChangerType == MDB_CHANGER)
 	{
 		if(coinMoney < SystemPara.BillEnableValue)
 		{
