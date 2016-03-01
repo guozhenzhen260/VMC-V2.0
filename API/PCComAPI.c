@@ -257,6 +257,33 @@ void CostRPTAPI(uint8_t costType,uint32_t costMoney,uint32_t payAllMoney)
 	}
 }
 
+/*********************************************************************************************************
+** Function name:       ResetRPTAPI
+** Descriptions:        复位后,发送消息给PC机
+** input parameters:    
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void ResetRPTAPI()
+{
+	switch(SystemPara.PcEnable)
+	{
+		case ZHIHUI_PC:
+			//Trace("\r\n MiddPCCommInit");			
+			break;	
+		case UBOX_PC:
+			TracePC("\r\n MiddUboxCost");	
+			break;	
+		case CRUBOX_PC:
+			TracePC("\r\n MiddUboxReset");	
+			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_RESETRPT;				
+			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+			UpdateIndex();
+			OSTimeDly(OS_TICKS_PER_SEC/100);
+			break;		
+	}
+}
+
 
 /*********************************************************************************************************
 ** Function name:       BillStatusRPTAPI
@@ -1754,6 +1781,11 @@ void PollAPI(uint32_t payAllMoney)
 							//5上报cost_report
 							CostRPTAPI(0,0,GetAmountMoney());
                 	   			 }							
+						break;	
+					//reset_ind重新复位
+					case MBOX_PCTOVMC_RESETIND:
+						TracePC("\r\n MiddUbox resetInd");
+						ResetInd();						
 						break;	
 				}
 			}	

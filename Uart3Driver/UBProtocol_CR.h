@@ -52,7 +52,7 @@
 #define VP_COST_RPT      10//扣款后，返回扣款执行结果;by gzz 20110823
 #define VP_ACTION_RPT    11   //V2
 #define VP_BUTTON_RPT    12
-
+#define VP_RESET_RPT       13
 
 #define VP_MT_MIN_SEND  VP_TEXT_MSG
 //#define VP_MT_MAX_SEND  VP_DEBT_RPT
@@ -71,8 +71,7 @@
 #define VP_PAYIN_IND     8
 #define VP_PAYOUT_IND      9    //V2
 #define VP_COST_IND        10//执行扣款命令;by gzz 20110823
-
-#define VP_RESET_IND       132
+#define VP_RESET_IND       13
 
 #define VP_MT_MIN_RECEIVE  VP_ACK
 #define VP_MT_MAX_RECEIVE  VP_SET_HUODAO
@@ -186,5 +185,6 @@ extern unsigned char VPMission_Button_RPT_CR( void );
 extern unsigned char VPMission_Status_RPT_CR(void);
 extern unsigned char VPMission_Act_RPT_CR( unsigned char action);
 extern unsigned char VPMission_Info_RPT_CR( uint8_t type );
+extern unsigned char VP_Reset_Rpt_CR( void );
 #endif
 

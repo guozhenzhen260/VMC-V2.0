@@ -41,4 +41,5 @@ extern void PCHuamanCloseAPI(void);
 extern void UpdateIndex(void);
 extern void UpdateSIMPLEIndex(void);
 extern void WaitForPCInit(void);
+extern void ResetRPTAPI(void);
 #endif

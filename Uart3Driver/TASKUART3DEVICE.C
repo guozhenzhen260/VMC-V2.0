@@ -578,6 +578,10 @@ void Uart3TaskDevice(void *pvData)
 						VPMission_Button_RPT_CR();
 						TracePC("\r\n Taskpend UboxBtn"); 
 						break;	
+					case MBOX_PCTOVMC_RESETRPT:
+						VP_Reset_Rpt_CR();
+						TracePC("\r\n Taskpend UboxReset"); 
+						break;
 				}
 				OSTimeDly(OS_TICKS_PER_SEC/4);
 			}	

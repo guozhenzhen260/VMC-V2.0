@@ -2939,25 +2939,40 @@ void VendoutIndFail(uint16_t columnNo, uint32_t PriceSale,uint8_t Type,uint8_t s
 *********************************************************************************************************/
 void ResetInd()
 {
-	if(GetAmountMoney())
+	if(SystemPara.PcEnable==CRUBOX_PC)
 	{
-		ChangerMoney();
-		OSTimeDly(OS_TICKS_PER_SEC*2);
-		channelInput = 0;
-		channelMode = 0;
-		memset(BinNum,0,sizeof(BinNum));
-		memset(ChannelNum,0,sizeof(ChannelNum));
-		//Trace("\r\n 3money=%ld",GetAmountMoney());
-		OSMboxAccept(g_CoinMoneyBackMail);
-		LCDClrScreen();
-		DispEndPage();
-		vmcStatus = VMC_END;
+		//‘›¥ÊÕÀ±“
+		if(g_holdValue)
+		{
+			if(ReturnBillDevMoneyInAPI())
+			{
+				PayinRPTAPI(4,g_holdValue,GetAmountMoney()-g_holdValue);//…œ±®PC∂À
+				g_holdValue = 0;			
+			}
+			TracePC("\r\n AppHoldRet%d",OSTimeGet());
+			OSTimeDly(OS_TICKS_PER_SEC/2);
+		}
 	}
-	BillCoinCtr(2,2,0);
-	OSTimeDly(OS_TICKS_PER_SEC);
-	MdbBusHardwareReset();
-	OSTimeDly(OS_TICKS_PER_SEC*2);
-	BillCoinCtr(1,1,0);
+	else
+	{
+		if(GetAmountMoney())
+		{
+			ChangerMoney();
+			OSTimeDly(OS_TICKS_PER_SEC*2);
+			channelInput = 0;
+			channelMode = 0;
+			memset(BinNum,0,sizeof(BinNum));
+			memset(ChannelNum,0,sizeof(ChannelNum));
+			//Trace("\r\n 3money=%ld",GetAmountMoney());
+			OSMboxAccept(g_CoinMoneyBackMail);
+			LCDClrScreen();
+			DispEndPage();
+			vmcStatus = VMC_END;
+		}
+	}
+	ResetRPTAPI();
+	OSTimeDly(OS_TICKS_PER_SEC/2);
+	zyReset(ZY_HARD_RESET);
 }
 
 

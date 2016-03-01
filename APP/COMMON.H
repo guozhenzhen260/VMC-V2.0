@@ -880,7 +880,8 @@ extern MESSAGE_ZHIHUI zh_vmc_mbox;
 #define MBOX_VMCTOPC_INFORPT     		    0x17
 //pc上发给vmc机PAYININD指令
 #define MBOX_PCTOVMC_PAYININD     	           0x18
-
+//向PC机上传重新复位指令
+#define MBOX_PCTOVMC_RESETRPT     		    0x19
 
 
 typedef struct
