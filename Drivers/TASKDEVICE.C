@@ -293,7 +293,7 @@ void Uart2TaskDevice(void *pvData)
 		OSTimeDly(7);
 
 		//HopperÕÒÁãÆ÷Í¨Ñ¶º¯Êý
-		if(NowChangerDev == CHANGEDEV_HOPPER)
+		if(SystemPara.CoinChangerType == HOPPER_CHANGER)
 		{
 			//ÂÖÑ¯µÃµ½Ó²±ÒÆ÷¿ÉÕÒÁãÓ²±Ò
 			if(getHopper++ >= 10)

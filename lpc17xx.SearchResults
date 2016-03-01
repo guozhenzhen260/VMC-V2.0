@@ -1,21 +1,4 @@
----- g_Ubox_VMCTOPCQ 匹配 (20 in 6 文件) ----
-Common.c (app):OS_EVENT *g_Ubox_VMCTOPCQ;//VMC下发给PC的消息队列
-Common.c (app):	g_Ubox_VMCTOPCQ = OSQCreate(&UboxSizeQ[0],UBOX_SIZE);
-Common.h (app):extern OS_EVENT *g_Ubox_VMCTOPCQ;
-PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-PCComAPI.c (api):				OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-PCComAPI.c (api):							OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-PCComAPI.c (api):						OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-PCComAPI.c (api):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-Taskuart3device.c (uart3driver):		AccepterUboxMsg = OSQPend(g_Ubox_VMCTOPCQ,OS_TICKS_PER_SEC,&ComStatus);
-Taskuart3device.c (uart3driver):			AccepterUboxMsg = OSQPend(g_Ubox_VMCTOPCQ,20,&ComStatus);
-UBProtocol.c (uart3driver):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-UBProtocol.c (uart3driver):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-UBProtocol_CR.c (uart3driver):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
-UBProtocol_CR.c (uart3driver):			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+---- MBOX_HOPPERINITSTATE 匹配 (3 in 3 文件) ----
+ChangerAPI.c (api):		MsgAccepterPack.PayoutCmd = MBOX_HOPPERINITSTATE;			
+Common.h (app):#define MBOX_HOPPERINITSTATE            0x1A
+Taskdevice.c (drivers):				case MBOX_HOPPERINITSTATE:

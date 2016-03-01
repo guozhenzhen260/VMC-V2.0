@@ -116,7 +116,7 @@ void Uart1TaskDevice(void *pvData)
 	
 	while(1)
 	{		
-		if(NowSelectDev == SELECT_KEY)
+		if(SystemPara.UserSelectKeyBoard==SELECT_KEY)
 		{
 			//Trace("\r\n UART1TASK");
 			//1.poll选货按键
@@ -144,7 +144,7 @@ void Uart1TaskDevice(void *pvData)
 			}	
 		}
 		//温控器
-		else if(TempDev==TEMPERATURE)
+		else if(SystemPara.XMTTemp==1)
 		{	
 			if(Timer.getTempTimer==0)
 			{
@@ -176,7 +176,7 @@ void Uart1TaskDevice(void *pvData)
 			}
 		}
 		//检查格子柜
-		else if(GeziCtr == GEZIGUI)
+		else if(SystemPara.hefangGui==SERIAL_GEZI)
 		{
 			//接收盒饭柜控制邮箱  Add by liya 2014-01-20
 			GeziMsg = OSMboxPend(g_HeFanGuiMail,OS_TICKS_PER_SEC/100,&ComStatus);

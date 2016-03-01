@@ -184,7 +184,7 @@ void Uart3TaskDevice(void *pvData)
 
 	while(1)
 	{
-		if(NowPCDev == PC_ZHIHUI)
+		if(SystemPara.PcEnable == ZHIHUI_PC)
 		{
 			task3_zh_poll();
 			//OSTimeDly(100/5);
@@ -281,7 +281,7 @@ void Uart3TaskDevice(void *pvData)
 			}
 
 		}		
-		else if(NowPCDev == PC_UBOX)
+		else if(SystemPara.PcEnable == UBOX_PC)
 		{
 			if(GetWeihuStatus()==0)
 			{
@@ -430,7 +430,7 @@ void Uart3TaskDevice(void *pvData)
 				}
 			}
 		}
-		else if(NowPCDev == PC_GPRS)//add by yoc 2013.11.13
+		else if(SystemPara.PcEnable == GPRS_PC)//add by yoc 2013.11.13
 		{
 			//add by yoc gprs
 			Trace("fun: Uart3TaskDevice 'NowPCDev == PC_GPRS' is finish! \r\n");	
@@ -484,7 +484,7 @@ void Uart3TaskDevice(void *pvData)
 				OSTimeDly(250/2);
 			 }
 		}
-		else if(NowPCDev == PC_SIMPUBOX)
+		else if(SystemPara.PcEnable == SIMPUBOX_PC)
 		{
 			VPMissionSIMPLESIMPLE_Poll();
 			//OSTimeDly(OS_TICKS_PER_SEC/4);
@@ -515,7 +515,7 @@ void Uart3TaskDevice(void *pvData)
 				}
 			}
 		}
-		else if(NowPCDev == PC_UBOXCR)
+		else if(SystemPara.PcEnable == CRUBOX_PC)
 		{
 			if(GetWeihuStatus()==0)
 			{

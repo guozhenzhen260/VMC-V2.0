@@ -1599,6 +1599,21 @@ void PollAPI(uint32_t payAllMoney)
 						}
 						else if(AccepterUboxMsg->Type==1)//纸币找零
 						{
+							//可以找零	
+							if(//金额足够
+								(PayoutRecyAPI(AccepterUboxMsg->Type)>(AccepterUboxMsg->changeMoney))
+								//可以用这个面值进行找币
+								&&((AccepterUboxMsg->changeMoney)%SystemPara.RecyclerMoney==0)
+
+							)
+							{
+								//ChangeMoneyInd(AccepterUboxMsg->changeMoney,AccepterUboxMsg->Type,payAllMoney);
+							}
+							//不可以找零
+							else
+							{
+								ChangeMoneyIndFail(0,AccepterUboxMsg->changeMoney,AccepterUboxMsg->Type,payAllMoney);
+							}
 						}						
 						break;
 					//cost_ind扣款
