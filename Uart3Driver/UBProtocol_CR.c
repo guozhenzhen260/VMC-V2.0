@@ -91,7 +91,7 @@ struct VP_MissionCR sysVPMissionCR;
 #pragma arm section zidata
 
 uint8_t GoodsSNCR;//ack与nak的sn序列号
-
+uint8_t issnup=0;//1时不升级sn,0时需要升级sn
 
 
 /*********************************************************************************************************
@@ -490,15 +490,14 @@ unsigned char VPBusFrameUnPack_CR( void )
 unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 {
     
-    uint8_t i=0,j=0,k=0,index=0,tempcan=0;
-	uint8_t issnup=0;//1时不升级sn,0时需要升级sn
+      uint8_t i=0,j=0,k=0,index=0,tempcan=0;	
 	uint16_t tempMoney;
 	uint8_t tempSend=0;
 	uint32_t tradeMoney=0;
 	uint8_t cabinet=0,cabno=0;
 	
 
-    GoodsSNCR=sysVPMissionCR.receive.sn;
+    
     
 	if( msgType>VP_MT_MAX_SEND )
 		return VP_ERR_PAR;
@@ -931,10 +930,12 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 	{
 		//更新SN流水号			
 		PackSNUpdate_CR();
+		GoodsSNCR=sysVPMissionCR.send.sn;
 	}
 	else
 	{
 		sysVPMissionCR.send.sn=GoodsSNCR;
+		issnup=0;
 	}
 	
 	
@@ -1314,44 +1315,53 @@ unsigned char VPMission_Cost_RPT_CR( unsigned char Type, uint32_t costMoney, uns
     unsigned char retry = 0;
 	unsigned char recRes=0;
 	unsigned char flag = 0;
+	unsigned char ressend=1;
 
-	 retry = VP_COM_RETRY;
+	 
 	//-------------------------------------------
     sysVPMissionCR.type = Type;
 	sysVPMissionCR.costMoney = costMoney;
 	sysVPMissionCR.payAllMoney = payAllMoney;
 	//===========================================
-	flag = VPMsgPackSend_CR( VP_COST_RPT, 1);
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	while( retry )
+	while(ressend)
 	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
+	    retry = VP_COM_RETRY;
+	    flag = VPMsgPackSend_CR( VP_COST_RPT, 1);
+	    if( flag != VP_ERR_NULL )
+	    {
+			return VP_ERR_PAR;
+		}
+		while( retry )
 		{
-			if( VPBusFrameUnPack_CR() )
+			Timer.PCRecTimer = VP_TIME_OUT;
+			while( Timer.PCRecTimer )
 			{
-				recRes = 1;
+				if( VPBusFrameUnPack_CR() )
+				{
+					recRes = 1;
+					break;
+				}
+			}
+			if(Timer.PCRecTimer==0)
+			{
+				retry--;
+				//TracePC("\r\n Drv failretry=%d",retry); 
+			}	
+			if(recRes)
+			{
 				break;
 			}
+			
 		}
-		if(Timer.PCRecTimer==0)
+		if( retry== 0 )
 		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
+			OSTimeDly(10);	
+			issnup=1;
 		}
-		
-	}
-	if( retry== 0 )
-	{
-		OSTimeDly(10);			
-        return VP_ERR_COM;
+		else
+		{
+			ressend=0;			
+		}
 	}
     switch( sysVPMissionCR.receive.msgType )
 	{
@@ -1429,8 +1439,9 @@ unsigned char VPMission_Payout_RPT_CR( uint8_t payoutDev,unsigned char Type, uns
     unsigned char retry = 0;
 	unsigned char recRes=0;
 	unsigned char flag = 0;
+	unsigned char ressend=1;
 
-	retry = VP_COM_RETRY;
+	
     //-------------------------------------------
     sysVPMissionCR.payoutDev = payoutDev;
     sysVPMissionCR.type = Type;
@@ -1438,39 +1449,47 @@ unsigned char VPMission_Payout_RPT_CR( uint8_t payoutDev,unsigned char Type, uns
 	sysVPMissionCR.payremainMoney=payremainMoney;
 	sysVPMissionCR.payAllMoney = payAllMoney;
 	//===========================================	
-	flag = VPMsgPackSend_CR( VP_PAYOUT_RPT, 1);
-	 if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	while( retry )
+	while(ressend)
 	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
+		retry = VP_COM_RETRY;
+		flag = VPMsgPackSend_CR( VP_PAYOUT_RPT, 1);
+		 if( flag != VP_ERR_NULL )
+	      {
+			return VP_ERR_PAR;
+		}
+		while( retry )
 		{
-			if( VPBusFrameUnPack_CR() )
+			Timer.PCRecTimer = VP_TIME_OUT;
+			while( Timer.PCRecTimer )
 			{
-				recRes = 1;
+				if( VPBusFrameUnPack_CR() )
+				{
+					recRes = 1;
+					break;
+				}
+			}
+			if(Timer.PCRecTimer==0)
+			{
+				retry--;
+				//TracePC("\r\n Drv failretry=%d",retry); 
+			}	
+			if(recRes)
+			{
 				break;
 			}
+			
 		}
-		if(Timer.PCRecTimer==0)
+		if( retry== 0 )
 		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
+			OSTimeDly(10);	
+			issnup=1;
 		}
-		
+		else
+		{
+			ressend=0;			
+		}
 	}
-	if( retry== 0 )
-	{
-		OSTimeDly(10);			
-        return VP_ERR_COM;
-	}
-    switch( sysVPMissionCR.receive.msgType )
+      switch( sysVPMissionCR.receive.msgType )
 	{
 		default:
 		    break;

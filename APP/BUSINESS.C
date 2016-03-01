@@ -3477,8 +3477,11 @@ void BusinessProcess(void *pvData)
 					&&(g_readerAmount == 0)
 				)
 				{
-					BillCoinCtr(2,2,0);
-					vmcStatus = VMC_PAYOUT;					
+					if(SystemPara.PcEnable!=CRUBOX_PC)
+					{
+						BillCoinCtr(2,2,0);
+						vmcStatus = VMC_PAYOUT;
+					}
 				}
 				//Trace("\r\n u=%d",i++);
 				//œ‘ æµπº∆ ±
