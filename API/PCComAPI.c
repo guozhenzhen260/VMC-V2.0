@@ -21,7 +21,9 @@
 #include "PCComAPI.h"
 #include "..\App\Business.h"
 #include "..\App\Channel.h"
-
+uint32_t changeMoneyInd;
+uint8_t TypeInd;
+uint32_t payAllMoneyInd;
 
 
 //更新邮箱缓冲区数组索引
@@ -40,6 +42,25 @@ void UpdateSIMPLEIndex()
 	else
 		g_SIMPLEUbox_Index=0;
 }
+
+uint32_t getchangeMoneyInd()
+{
+	return changeMoneyInd;
+}
+
+void setchangeMoneyInd(uint32_t changeMoney)
+{
+	(changeMoneyInd>=changeMoney)?(changeMoneyInd-=changeMoney):0;
+}
+uint32_t getpayAllMoneyInd()
+{
+	return payAllMoneyInd;
+}
+uint8_t getTypeInd()
+{
+	return TypeInd;
+}
+	
 
 //等待pc初始化成功
 void WaitForPCInit()
@@ -112,7 +133,7 @@ void PayinRPTAPI(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney)
 			}		
 			break;	
 		case UBOX_PC:
-			TracePC("\r\n MiddUboxPayin="+dev);	
+			TracePC("\r\n MiddUboxPayin=%d",dev);	
 			if(dev==1)
 				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINCOIN;
 			else if(dev==2)
@@ -581,6 +602,47 @@ void ChangeMoneyInd(uint32_t changeMoney,uint8_t Type,uint32_t payAllMoney)
 		PayoutRPTAPI(0,Type,changeMoney,0,payAllMoney);
 	}	
 	 	
+}
+
+/*********************************************************************************************************
+** Function name:       ChangerRecyclerInd
+** Descriptions:        纸币找零器找零
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void ChangerRecyclerInd(uint32_t changeMoney,uint8_t Type,uint32_t payAllMoney)
+{
+	uint8_t ComStatus;
+	uint32_t  backmoney=0;
+
+	//设置到全局变量中
+	changeMoneyInd=changeMoney;
+	TypeInd=Type;
+	payAllMoneyInd=payAllMoney;
+	
+	if(changeMoney)
+	{
+		ComStatus=BillRecyclerPayoutValueExpanseAPI(changeMoney,&backmoney);		
+	}
+	else
+	{
+		ComStatus = 1;
+	}
+	if(SystemPara.BillValidatorType==FS_BILLRECYCLER)
+	{
+		//找零失败
+		if(!ComStatus)
+		{	
+			PayoutRPTAPI(0,Type,backmoney,changeMoney-backmoney,payAllMoney);
+		}
+		//找零成功
+		else
+		{
+			PayoutRPTAPI(0,Type,backmoney,changeMoney-backmoney,payAllMoney);
+		}	
+	}
+	
 }
 
 /*********************************************************************************************************
@@ -1601,13 +1663,13 @@ void PollAPI(uint32_t payAllMoney)
 						{
 							//可以找零	
 							if(//金额足够
-								(PayoutRecyAPI(AccepterUboxMsg->Type)>(AccepterUboxMsg->changeMoney))
+								(PayoutRecyAPI(AccepterUboxMsg->Type)>=(AccepterUboxMsg->changeMoney))
 								//可以用这个面值进行找币
 								&&((AccepterUboxMsg->changeMoney)%SystemPara.RecyclerMoney==0)
 
 							)
 							{
-								//ChangeMoneyInd(AccepterUboxMsg->changeMoney,AccepterUboxMsg->Type,payAllMoney);
+								ChangerRecyclerInd(AccepterUboxMsg->changeMoney,AccepterUboxMsg->Type,payAllMoney);
 							}
 							//不可以找零
 							else

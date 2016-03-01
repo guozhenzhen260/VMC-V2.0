@@ -20,7 +20,10 @@
 #ifndef __PCCOMAPI_H 
 #define __PCCOMAPI_H
 
-
+extern uint32_t getchangeMoneyInd(void);
+extern void setchangeMoneyInd(uint32_t changeMoney);
+extern uint32_t getpayAllMoneyInd(void);
+extern uint8_t getTypeInd(void);
 extern void PCInitAPI(void);
 extern void PayinRPTAPI(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney);
 extern void PayoutRPTAPI(uint8_t payoutDev,uint8_t payoutType,uint16_t payoutMoney,uint16_t payoutRemain,uint32_t payAllMoney);

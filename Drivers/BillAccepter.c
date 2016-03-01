@@ -1156,6 +1156,7 @@ unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney,unsign
 	uint8_t BillRdBuff[36],BillRdLen,ComStatus,VMCdata[3]={0x07,0x00,0x00},VMCPoll[1]={0x09},i,payout=1;
 	uint8_t billscale,dispenseValue;	
 	uint8_t payStatus=0;
+	uint8_t rptStatus=0,rptStatusfail=0,BillBuffstatus=0;//
 	uint32_t RecyclerValue=0;
 
 	*RecyPayoutMoneyBack=0;
@@ -1178,12 +1179,61 @@ unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney,unsign
 		{
 			//2∑¢ÀÕpoll÷∏¡Ó
 			ComStatus = MdbConversation(0x33,NULL,0x00,&BillRdBuff[0],&BillRdLen);
+			BillBuffstatus=0;
 			TraceBill("\r\nDrvBillPoll= %02d-",BillRdLen);
 			for(i=0;i<BillRdLen;i++)
 			{
 				TraceBill(" %#02x ",BillRdBuff[i]);
+				if(//µ»¥˝»°±“
+				  (BillRdBuff[i]==0x2a)
+				  //π ’œ
+				  ||(BillRdBuff[i]==0x24)||(BillRdBuff[i]==0x26)
+				  ||(BillRdBuff[i]==0x28)||(BillRdBuff[i]==0x29)
+				  //ø®±“
+				  ||(BillRdBuff[i]==0x27)||((BillRdBuff[i]&0xf0)==0xf0)
+				  )
+				{
+					BillBuffstatus=BillRdBuff[i];
+				}
 			}
 			TraceBill("\r\n");
+			//∑¢ÀÕ≥ˆ±“≥…π¶
+			if(BillBuffstatus==0x2a)
+			{
+				if(rptStatus==0)
+				{
+					rptStatus=1;
+					setchangeMoneyInd(SystemPara.RecyclerMoney);
+					PayoutRPTAPI(0,getTypeInd(),SystemPara.RecyclerMoney,getchangeMoneyInd(),getpayAllMoneyInd());
+				}
+			}
+			else
+			{
+				rptStatus=0;
+			}
+			//∑¢ÀÕ≥ˆ±“ ß∞‹
+			//÷Ω±“∆˜π ’œ
+			if(
+			  (BillBuffstatus==0x24)||(BillBuffstatus==0x26)
+			  ||(BillBuffstatus==0x28)||(BillBuffstatus==0x29)
+			  //ø®±“
+			  ||(BillBuffstatus==0x27)||((BillBuffstatus&0xf0)==0xf0)
+			  )
+			{
+				if(rptStatusfail==0)
+				{
+					rptStatusfail=1;
+					if((BillBuffstatus&0xf0)==0xf0)
+					{
+						setchangeMoneyInd(SystemPara.RecyclerMoney);
+					}
+					PayoutRPTAPI(0,getTypeInd(),0,getchangeMoneyInd(),getpayAllMoneyInd());
+				}
+			}
+			else
+			{
+				rptStatusfail=0;
+			}
 			OSTimeDly(7);
 			
 			//3∑¢ÀÕ¿©’πpayout value poll÷∏¡Ó£¨ºÏ≤‚’“±“«Èøˆ
