@@ -1004,6 +1004,11 @@ uint8_t RecyclerDevInit()
 		TraceBill(" %#02x ",BillRdBuff[i]);
 	}
 	TraceBill("\r\n");
+	TraceBill("\r\nIden=");
+	for(i=0;i<BillRdLen;i++)
+	{
+		TraceBill(" [%02x]",stDevValue.billIDENTITYBuf[i]);
+	}
 	//6IDLevel2
 	BillRecyclerIdExpanse();
 	OSTimeDly(OS_TICKS_PER_SEC / 100);

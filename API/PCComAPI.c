@@ -508,7 +508,11 @@ uint32_t PayoutRecyAPI(uint8_t type)
 		//添加纸币循环器时，可找硬币金额
 		if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
 		{
-			if(ErrorStatus(2)>0)
+			if(ErrorStatus(2)>0)//故障
+			{	
+				change =0;
+			}
+			else if(GetHoldMoney()>0)//有暂存纸币
 			{	
 				change =0;
 			}
@@ -1711,16 +1715,10 @@ void PollAPI(uint32_t payAllMoney)
 						//ACK
 						//MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_ACK;	
 						//OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);
-						//UpdateIndex();
-							
-						//1.系统进入故障状态时，返回NAK_RPT  
-						if(IsErrorState())
-						{
-							TracePC("\r\n MiddUbox vendE3");
-							ComReturn = 24;		
-						}	
+						//UpdateIndex();							
+						//1	
 						//2.用户投币金额小于扣款金额时，返回NAK_RPT    
-					    else if( AccepterUboxMsg->costMoney > payAllMoney ) 
+					    if( AccepterUboxMsg->costMoney > payAllMoney ) 
 						{
 							TracePC("\r\n MiddUbox vendE5");
 							ComReturn = 0;

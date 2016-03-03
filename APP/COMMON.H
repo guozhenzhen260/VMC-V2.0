@@ -1119,6 +1119,7 @@ typedef struct
 	uint8_t		offLinePCTimer;				    //UBOX的离线模式下定时器
 	uint8_t     printTimer;                     //打印交易记录计时器
 	uint8_t		selTimer;						//选货按键接收定时器
+	uint16_t		weiTimer;						//退出维护定时器
 
 	//add by yoc zhihui 2013.12.16
 	uint8_t    	zhihui_recv_timeout;

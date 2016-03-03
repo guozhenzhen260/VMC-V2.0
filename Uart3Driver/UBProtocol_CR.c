@@ -490,7 +490,7 @@ unsigned char VPBusFrameUnPack_CR( void )
 unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 {
     
-      uint8_t i=0,j=0,k=0,index=0,tempcan=0;	
+      uint8_t i=0,j=0,k=0,index=0,tempcan=0,dex=0,dexind=0,strdex[20] = {0};	
 	uint16_t tempMoney;
 	uint8_t tempSend=0;
 	uint32_t tradeMoney=0;
@@ -579,6 +579,14 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 		                sysVPMissionCR.send.msg[i++] = 0;
 		                sysVPMissionCR.send.msg[i++] = 0;	
 				}
+				//”√ªß”‡∂Ó
+				tempMoney = MoneySend_CR(GetAmountMoney());
+	                   sysVPMissionCR.send.msg[i++] = tempMoney/256;
+	                   sysVPMissionCR.send.msg[i++] = tempMoney%256;
+			      //‘›¥Ê”‡∂Ó
+				tempMoney = MoneySend_CR(GetHoldMoney());
+	                   sysVPMissionCR.send.msg[i++] = tempMoney/256;
+	                   sysVPMissionCR.send.msg[i++] = tempMoney%256;
 				sysVPMissionCR.send.datLen  = i;
 			}
 			break;
@@ -630,12 +638,7 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 								sysVPMissionCR.send.msg[i++] = 0xbf;
 							}
 							else
-							{								
-								if(DeviceStateBusiness.Hopper1State==1)
-								{
-									sysVPMissionCR.send.msg[i++] = 0x0b;
-									sysVPMissionCR.send.msg[i++] = 0xbf;
-								}
+							{	
 								if(DeviceStateBusiness.Hopper1State==2)
 								{
 									sysVPMissionCR.send.msg[i++] = 0x0b;
@@ -732,8 +735,7 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 						sysVPMissionCR.send.msg[i++]  = 'e'; 	 
 						sysVPMissionCR.send.msg[i++]  = 'a'; 	 
 						sysVPMissionCR.send.msg[i++]  = 's'; 	 
-						sysVPMissionCR.send.msg[i++]  = 'i';
-						sysVPMissionCR.send.msg[i++]  = 'e'; 	
+						sysVPMissionCR.send.msg[i++]  = 'i'; 	
 						sysVPMissionCR.send.msg[i++]  = 'v'; 
 						sysVPMissionCR.send.msg[i++]  = 'e'; 	 
 						sysVPMissionCR.send.msg[i++]  = 'n'; 	 
@@ -750,14 +752,11 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 						sysVPMissionCR.send.msg[i++]  = 'j';
 						sysVPMissionCR.send.msg[i++]  = 'u';
 						sysVPMissionCR.send.msg[i++]  = 'n'; 	 
-						sysVPMissionCR.send.msg[i++]  = ' '; 	 
-						sysVPMissionCR.send.msg[i++]  = '0'; 	 
-						sysVPMissionCR.send.msg[i++]  = '2';
-						sysVPMissionCR.send.msg[i++]  = ' '; 	 
-						sysVPMissionCR.send.msg[i++]  = '2'; 	 
-						sysVPMissionCR.send.msg[i++]  = '0';
-						sysVPMissionCR.send.msg[i++]  = '1'; 	 
-						sysVPMissionCR.send.msg[i++]  = '5'; 
+						sysVPMissionCR.send.msg[i++]  = ' '; 
+						dexind=sprintf(strdex,"%s",__DATE__);
+						for(dex=0;dex<dexind;dex++)
+							sysVPMissionCR.send.msg[i++]  = strdex[dex]; 
+						TracePC("\r\n Drv Uboxdata=%s",__DATE__ );
 						break;
 					case VP_INFO_HARD:						
 						sysVPMissionCR.send.msg[i++]  = stMacSn.id[0]; 	 
@@ -782,15 +781,23 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 					case VP_INFO_BILL:
 						if(SystemPara.BillValidatorType>OFF_BILLACCEPTER)					
 						{
-							sysVPMissionCR.send.msg[i++]  = 'b'; 	 
-							sysVPMissionCR.send.msg[i++]  = 'i'; 	 
-							sysVPMissionCR.send.msg[i++]  = 'l'; 	 
-							sysVPMissionCR.send.msg[i++]  = 'l';
+							for(dex=0;dex<29;dex++)
+								sysVPMissionCR.send.msg[i++]  = stDevValue.billIDENTITYBuf[dex];  
 						}
 						break;
 					case VP_INFO_COIN:
 						if(SystemPara.CoinAcceptorType>OFF_COINACCEPTER)					
 						{
+							sysVPMissionCR.send.msg[i++]  = 'e'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'a'; 	 
+							sysVPMissionCR.send.msg[i++]  = 's'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'i';
+							sysVPMissionCR.send.msg[i++]  = 'e'; 	
+							sysVPMissionCR.send.msg[i++]  = 'v'; 
+							sysVPMissionCR.send.msg[i++]  = 'e'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'n'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'd';
+							sysVPMissionCR.send.msg[i++]  = '-';
 							sysVPMissionCR.send.msg[i++]  = 'c'; 	 
 							sysVPMissionCR.send.msg[i++]  = 'o'; 	 
 							sysVPMissionCR.send.msg[i++]  = 'i'; 	 
@@ -800,6 +807,16 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 					case VP_INFO_COINOUT:
 						if(SystemPara.CoinChangerType>OFF_CHANGER)					
 						{
+							sysVPMissionCR.send.msg[i++]  = 'e'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'a'; 	 
+							sysVPMissionCR.send.msg[i++]  = 's'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'i';
+							sysVPMissionCR.send.msg[i++]  = 'e'; 	
+							sysVPMissionCR.send.msg[i++]  = 'v'; 
+							sysVPMissionCR.send.msg[i++]  = 'e'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'n'; 	 
+							sysVPMissionCR.send.msg[i++]  = 'd';
+							sysVPMissionCR.send.msg[i++]  = '-'; 
 							sysVPMissionCR.send.msg[i++]  = 'c'; 	 
 							sysVPMissionCR.send.msg[i++]  = 'o'; 	 
 							sysVPMissionCR.send.msg[i++]  = 'i'; 	 
@@ -812,18 +829,21 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 					case VP_INFO_BILLOUT:
 						if(SystemPara.BillRecyclerType>OFF_BILLRECYCLER)					
 						{
-							sysVPMissionCR.send.msg[i++]  = 'b'; 	 
-							sysVPMissionCR.send.msg[i++]  = 'i'; 	 
-							sysVPMissionCR.send.msg[i++]  = 'l'; 	 
-							sysVPMissionCR.send.msg[i++]  = 'l';
-							sysVPMissionCR.send.msg[i++]  = 'r'; 	 
-							sysVPMissionCR.send.msg[i++]  = 'e'; 	 
-							sysVPMissionCR.send.msg[i++]  = 'c'; 	 
-							sysVPMissionCR.send.msg[i++]  = 'y';
-							sysVPMissionCR.send.msg[i++]  = 'c'; 	 
-							sysVPMissionCR.send.msg[i++]  = 'l'; 	 
-							sysVPMissionCR.send.msg[i++]  = 'e'; 	 
-							sysVPMissionCR.send.msg[i++]  = 'r';
+							if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
+							{
+								for(dex=0;dex<29;dex++)
+									sysVPMissionCR.send.msg[i++]  = stDevValue.billIDENTITYBuf[dex];  
+							}
+							else if(SystemPara.BillRecyclerType==FS_BILLRECYCLER)
+							{
+								sysVPMissionCR.send.msg[i++]  = 'F'; 	 
+								sysVPMissionCR.send.msg[i++]  = 'S'; 
+								sysVPMissionCR.send.msg[i++]  = '_'; 
+								sysVPMissionCR.send.msg[i++]  = 'b'; 	 
+								sysVPMissionCR.send.msg[i++]  = 'i'; 	 
+								sysVPMissionCR.send.msg[i++]  = 'l'; 	 
+								sysVPMissionCR.send.msg[i++]  = 'l';
+							}
 						}
 						break;	
 				}	
@@ -1044,7 +1064,7 @@ unsigned char VPMission_Status_RPT_CR()
 		}
 		else
 		{
-			change  = change;
+			change  = 6553500;
 		}
 		//MsgUboxPack[g_Ubox_Index].change  =( !HopperIsEmpty() )? SystemPara.MaxValue:0;				
 	}

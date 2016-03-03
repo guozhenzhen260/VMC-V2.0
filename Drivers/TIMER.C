@@ -143,6 +143,8 @@ void TIMER0_IRQHandler (void)
 			Timer.getTempTimer--;
 		if(Timer.mdb_col_timer)
 			Timer.mdb_col_timer--;	
+		if(Timer.weiTimer)
+			Timer.weiTimer--;
 	}
 	OSIntExit();
 }

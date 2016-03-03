@@ -1534,6 +1534,18 @@ uint32_t GetAmountMoney()
 }
 
 /*********************************************************************************************************
+** Function name:     	GetHoldMoney
+** Descriptions:	    暂存纸币金额
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+uint32_t GetHoldMoney()
+{	
+	return g_holdValue;
+}
+
+/*********************************************************************************************************
 ** Function name:     	GetReaderAmount
 ** Descriptions:	    刷卡总金额总金额
 ** input parameters:    无
@@ -3275,7 +3287,7 @@ void BusinessProcess(void *pvData)
 #endif
 
 	//5.是否进入维护状态
-	if(ReadMaintainKeyValue())
+	if(ReturnMaintainKeyValue(1))
 	{
 		BillCoinCtr(2,2,2);
 		vmcStatus = VMC_WEIHU;
@@ -3353,13 +3365,16 @@ void BusinessProcess(void *pvData)
 					CheckDeviceState();					
 					if(IsErrorState())
 					{
-						Timer.DispFreeTimer=0;
-						StatusRPTAPI();
-						OSTimeDly(OS_TICKS_PER_SEC/2);
-						LCDClrScreen();
-						BillCoinCtr(2,2,2);
-						rstTime();
-						vmcStatus = VMC_ERROR;
+						if(SystemPara.PcEnable!=CRUBOX_PC)
+						{
+							Timer.DispFreeTimer=0;
+							StatusRPTAPI();
+							OSTimeDly(OS_TICKS_PER_SEC/2);
+							LCDClrScreen();
+							BillCoinCtr(2,2,2);
+							rstTime();
+							vmcStatus = VMC_ERROR;
+						}
 					}
 					else
 					{
@@ -3367,7 +3382,7 @@ void BusinessProcess(void *pvData)
 					}
 				}
 				//5.是否进入维护状态
-				if(ReadMaintainKeyValue())
+				if(ReturnMaintainKeyValue(1))
 				{
 					BillCoinCtr(2,2,2);
 					vmcStatus = VMC_WEIHU;
@@ -3734,7 +3749,7 @@ void BusinessProcess(void *pvData)
 					PollAPI(GetAmountMoney());
 				}
 				//3.是否进入维护状态
-				if(ReadMaintainKeyValue())
+				if(ReturnMaintainKeyValue(1))
 				{
 					vmcStatus = VMC_WEIHU;
 				}
@@ -3832,13 +3847,13 @@ void BusinessProcess(void *pvData)
 					}
 				}
 				
-				do
+				//do
 				{
 					//7.检查pc机轮询
 					PollAPI(GetAmountMoney());
 					MaintainUserProcess((void*)0);
 				}
-				while(ReadMaintainKeyValue());
+				//while(ReadMaintainKeyValue());
 				Timer.DispFreeTimer=0;
 				LCDClrScreen();
 				BillCoinCtr(1,1,1);
