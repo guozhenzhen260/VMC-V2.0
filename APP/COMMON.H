@@ -606,7 +606,7 @@ typedef struct
 	uint8_t Billromchk;//1代表rom出错
 	uint8_t Billjam;//1代表投币卡币
 	uint8_t BillremoveCash;//1移除纸币钞箱
-	uint8_t BillcashErr;//1纸币钞箱故障
+	uint8_t BillcashErr;//1纸币钞箱故障,以及钞箱满
 	uint8_t Billdisable;//1纸币因为各种原因被禁能了
 
 	//MDB硬币器

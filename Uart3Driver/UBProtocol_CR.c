@@ -1530,8 +1530,9 @@ unsigned char VP_Reset_Ind_CR( void )
 {
 	//MessageUboxPCPack *AccepterUboxMsg;
 	//unsigned char ComStatus;
-    
-		
+        MdbBusHardwareReset();
+    OSTimeDly(OS_TICKS_PER_SEC*10);
+		zyReset(ZY_HARD_RESET);
     //∑¢ÀÕ” œ‰∏¯vmc
 	MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_RESETIND;				
 	OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	

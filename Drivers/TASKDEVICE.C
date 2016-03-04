@@ -281,6 +281,7 @@ void Uart2TaskDevice(void *pvData)
 					break;					
 				case 5:
 					TraceBill("\r\n TaskRecPayoutFail");
+					PayoutRPTAPI(0,getTypeInd(),0,getchangeMoneyInd(),getpayAllMoneyInd());
 					MsgAccepterPack.BillBackCmd = MBOX_BILLRECYPAYOUTFAIL;						
 					OSMboxPost(g_BillMoneyBackMail,&MsgAccepterPack);
 					billOptBack = 0;

@@ -132,17 +132,25 @@ void HopperAccepter_CheckHPOk(void)
 	//2.检测当前几个Hopper可用,不可用则将该Hp的故障位标志位1
 	for(j=0;j<3;j++)
 	{
-		for(i=0;i<3;i++)
+		if(stEvbHp[j].Price ==0)
 		{
-			res = HopperAccepter_Handle(EVBHANDLE_HPQUERY,stEvbHp[j].Add,0x00);	
-			if(res == 1)
+			stEvbHp[j].DevBadFlag = 3;			
+		}
+		else
+		{
+			for(i=0;i<3;i++)
 			{
-				stEvbHp[j].DevBadFlag = 0;
-				break;	
-			}
-			else
-			{
-				stEvbHp[j].DevBadFlag += 1;	
+				TraceChange("\r\n2Hp[%d]GetState",j);				
+				res = HopperAccepter_Handle(EVBHANDLE_HPQUERY,stEvbHp[j].Add,0x00);	
+				if(res == 1)
+				{
+					stEvbHp[j].DevBadFlag = 0;
+					break;	
+				}
+				else
+				{
+					stEvbHp[j].DevBadFlag += 1;	
+				}
 			}
 		}
 	}
@@ -202,19 +210,19 @@ void HopperAccepter_GetState(uint8_t DevType)
 {
 	if(DevType == EVBDEV_HP1)
 	{
-		TraceChange("Hp1State=%d\r\n",stEvbHp[0].State);
+		TraceChange("1Hp[1]State=%d\r\n",stEvbHp[0].State);		
 		if((stEvbHp[0].Price !=0)&&(stEvbHp[0].State != 0x03))
 			HopperAccepter_Handle(EVBHANDLE_HPQUERY,0x00,0x00);	
 	}
 	if(DevType == EVBDEV_HP2)
 	{
-		TraceChange("Hp2State=%d\r\n",stEvbHp[1].State);
+		TraceChange("1Hp[2]State=%d\r\n",stEvbHp[1].State);		
 		if((stEvbHp[1].Price !=0)&&(stEvbHp[1].State != 0x03))
 			HopperAccepter_Handle(EVBHANDLE_HPQUERY,0x01,0x00);	
 	}
 	if(DevType == EVBDEV_HP3)
 	{
-		TraceChange("Hp3State=%d\r\n",stEvbHp[2].State);
+		TraceChange("1Hp[3]State=%d\r\n",stEvbHp[2].State);		
 		if((stEvbHp[2].Price !=0)&&(stEvbHp[2].State != 0x03))
 			HopperAccepter_Handle(EVBHANDLE_HPQUERY,0x02,0x00);	
 	}	

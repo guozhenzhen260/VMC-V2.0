@@ -351,6 +351,40 @@ void BillDevEnable(void)
 }
 
 
+/*********************************************************************************************************
+** Function name:       BillDevGetEscrow
+** Descriptions:        纸币器钞箱是否满
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void BillDevGetEscrow(void)
+{
+	uint8_t BillRdBuff[36],BillRdLen,j;
+	uint8_t ComStatus;
+	//Stacker
+	ComStatus = MdbConversation(0x36,NULL,0x00,&BillRdBuff[0],&BillRdLen);
+	//OSTimeDly(OS_TICKS_PER_SEC / 100);
+	if(ComStatus == 1)
+	{
+		 TraceBill("\r\n DrvEscrowrbuf=",BillRdLen);
+		 for(j = 0; j < BillRdLen; j++) 
+		 {
+			 TraceBill("[%d]", BillRdBuff[j]);
+         	  }
+		  TraceBill("\r\n");
+		 if((BillRdBuff[0]&0x80)==0x80)
+		 {
+		 	MdbBillErr.cashErr = 1;
+			TraceBill("\r\n DrvEscrowrfull");
+		 }
+		 else
+		 {
+		 	MdbBillErr.cashErr = 0;
+			TraceBill("\r\n DrvEscrowrEmpty");
+		 }	
+	}
+}
 
 
 /*********************************************************************************************************
@@ -465,7 +499,8 @@ uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char
 								if((BillRdBuff[i]&0xf0)==0x80)
 								{
 									*RecvMoney = nBillvalue[type];
-									*BillType = type;						
+									*BillType = type;		
+									BillDevGetEscrow();
 									return 1;	
 								}
 							}
@@ -641,6 +676,7 @@ uint8_t BillDevEscrow()
 					{
 						BillRecyclerTubeExpanse();
 					}
+					BillDevGetEscrow();
 					return 1;	
 				}
 				//没有压抄成功，中途退出
