@@ -184,7 +184,7 @@ void Uart3TaskDevice(void *pvData)
 
 	while(1)
 	{
-		if(NowPCDev == PC_ZHIHUI)
+		if(SystemPara.PcEnable == ZHIHUI_PC)
 		{
 			task3_zh_poll();
 			//OSTimeDly(100/5);
@@ -281,7 +281,7 @@ void Uart3TaskDevice(void *pvData)
 			}
 
 		}		
-		else if(NowPCDev == PC_UBOX)
+		else if(SystemPara.PcEnable == UBOX_PC)
 		{
 			if(GetWeihuStatus()==0)
 			{
@@ -430,7 +430,7 @@ void Uart3TaskDevice(void *pvData)
 				}
 			}
 		}
-		else if(NowPCDev == PC_GPRS)//add by yoc 2013.11.13
+		else if(SystemPara.PcEnable == GPRS_PC)//add by yoc 2013.11.13
 		{
 			//add by yoc gprs
 			Trace("fun: Uart3TaskDevice 'NowPCDev == PC_GPRS' is finish! \r\n");	
@@ -484,7 +484,7 @@ void Uart3TaskDevice(void *pvData)
 				OSTimeDly(250/2);
 			 }
 		}
-		else if(NowPCDev == PC_SIMPUBOX)
+		else if(SystemPara.PcEnable == SIMPUBOX_PC)
 		{
 			VPMissionSIMPLESIMPLE_Poll();
 			//OSTimeDly(OS_TICKS_PER_SEC/4);
@@ -515,7 +515,7 @@ void Uart3TaskDevice(void *pvData)
 				}
 			}
 		}
-		else if(NowPCDev == PC_UBOXCR)
+		else if(SystemPara.PcEnable == CRUBOX_PC)
 		{
 			if(GetWeihuStatus()==0)
 			{
@@ -558,8 +558,8 @@ void Uart3TaskDevice(void *pvData)
 						TracePC("\r\n Taskpend Uboxescrowout=%d,all=%ld",AccepterUboxMsg->payInMoney,AccepterUboxMsg->payAllMoney); 
 						break;
 					case MBOX_VMCTOPC_PAYOUT:
-						VPMission_Payout_RPT(AccepterUboxMsg->payoutDev,AccepterUboxMsg->Type,AccepterUboxMsg->payoutMoney,AccepterUboxMsg->payAllMoney);
-						TracePC("\r\n Taskpend Uboxpayout=%d,all=%ld,type=%d",AccepterUboxMsg->payoutMoney,AccepterUboxMsg->payAllMoney,AccepterUboxMsg->Type); 
+						VPMission_Payout_RPT_CR(AccepterUboxMsg->payoutDev,AccepterUboxMsg->Type,AccepterUboxMsg->payoutMoney,AccepterUboxMsg->payoutRemain,AccepterUboxMsg->payAllMoney);
+						TracePC("\r\n Taskpend Uboxpayout=%d,remain=%d,all=%ld,type=%d",AccepterUboxMsg->payoutMoney,AccepterUboxMsg->payoutRemain,AccepterUboxMsg->payAllMoney,AccepterUboxMsg->Type); 
 						break;	
 					case MBOX_VMCTOPC_COST:
 						VPMission_Cost_RPT_CR(AccepterUboxMsg->Type,AccepterUboxMsg->costMoney,AccepterUboxMsg->payAllMoney);
@@ -578,6 +578,10 @@ void Uart3TaskDevice(void *pvData)
 						VPMission_Button_RPT_CR();
 						TracePC("\r\n Taskpend UboxBtn"); 
 						break;	
+					case MBOX_PCTOVMC_RESETRPT:
+						VP_Reset_Rpt_CR();
+						TracePC("\r\n Taskpend UboxReset"); 
+						break;
 				}
 				OSTimeDly(OS_TICKS_PER_SEC/4);
 			}	

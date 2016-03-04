@@ -21,7 +21,9 @@
 #include "PCComAPI.h"
 #include "..\App\Business.h"
 #include "..\App\Channel.h"
-
+uint32_t changeMoneyInd;
+uint8_t TypeInd;
+uint32_t payAllMoneyInd;
 
 
 //更新邮箱缓冲区数组索引
@@ -40,6 +42,25 @@ void UpdateSIMPLEIndex()
 	else
 		g_SIMPLEUbox_Index=0;
 }
+
+uint32_t getchangeMoneyInd()
+{
+	return changeMoneyInd;
+}
+
+void setchangeMoneyInd(uint32_t changeMoney)
+{
+	(changeMoneyInd>=changeMoney)?(changeMoneyInd-=changeMoney):0;
+}
+uint32_t getpayAllMoneyInd()
+{
+	return payAllMoneyInd;
+}
+uint8_t getTypeInd()
+{
+	return TypeInd;
+}
+	
 
 //等待pc初始化成功
 void WaitForPCInit()
@@ -112,7 +133,7 @@ void PayinRPTAPI(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney)
 			}		
 			break;	
 		case UBOX_PC:
-			TracePC("\r\n MiddUboxPayin="+dev);	
+			TracePC("\r\n MiddUboxPayin=%d",dev);	
 			if(dev==1)
 				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINCOIN;
 			else if(dev==2)
@@ -161,7 +182,7 @@ void PayinRPTAPI(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney)
 ** output parameters:   无
 ** Returned value:      无
 *********************************************************************************************************/
-void PayoutRPTAPI(uint8_t payoutDev,uint8_t payoutType,uint16_t payoutMoney,uint32_t payAllMoney)
+void PayoutRPTAPI(uint8_t payoutDev,uint8_t payoutType,uint16_t payoutMoney,uint16_t payoutRemain,uint32_t payAllMoney)
 {
 	switch(SystemPara.PcEnable)
 	{
@@ -180,7 +201,19 @@ void PayoutRPTAPI(uint8_t payoutDev,uint8_t payoutType,uint16_t payoutMoney,uint
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
-			break;		
+			break;	
+		case CRUBOX_PC:
+			TracePC("\r\n MiddUboxPayout");	
+			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYOUT;	
+			MsgUboxPack[g_Ubox_Index].payoutDev = payoutDev;
+			MsgUboxPack[g_Ubox_Index].payoutMoney = payoutMoney;
+			MsgUboxPack[g_Ubox_Index].payoutRemain = payoutRemain;
+			MsgUboxPack[g_Ubox_Index].payAllMoney = payAllMoney;
+			MsgUboxPack[g_Ubox_Index].Type        = payoutType;
+			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+			UpdateIndex();
+			OSTimeDly(OS_TICKS_PER_SEC/100);
+			break;
 	}
 }
 
@@ -217,6 +250,33 @@ void CostRPTAPI(uint8_t costType,uint32_t costMoney,uint32_t payAllMoney)
 			MsgUboxPack[g_Ubox_Index].costMoney = costMoney;
 			MsgUboxPack[g_Ubox_Index].payAllMoney = payAllMoney;
 			MsgUboxPack[g_Ubox_Index].Type        = costType;
+			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
+			UpdateIndex();
+			OSTimeDly(OS_TICKS_PER_SEC/100);
+			break;		
+	}
+}
+
+/*********************************************************************************************************
+** Function name:       ResetRPTAPI
+** Descriptions:        复位后,发送消息给PC机
+** input parameters:    
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void ResetRPTAPI()
+{
+	switch(SystemPara.PcEnable)
+	{
+		case ZHIHUI_PC:
+			//Trace("\r\n MiddPCCommInit");			
+			break;	
+		case UBOX_PC:
+			TracePC("\r\n MiddUboxCost");	
+			break;	
+		case CRUBOX_PC:
+			TracePC("\r\n MiddUboxReset");	
+			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_RESETRPT;				
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
@@ -397,6 +457,82 @@ void StatusRPTAPI()
 	}
 }
 
+/*********************************************************************************************************
+** Function name:       PayoutRecyAPI
+** Descriptions:        返回可找零硬币金额和纸币金额
+** input parameters:    type=0硬币找零金额,1纸币找零金额
+** output parameters:  无
+** Returned value:      找零金额
+*********************************************************************************************************/
+uint32_t PayoutRecyAPI(uint8_t type)
+{
+	uint32_t coinMoney=0,change=0;
+	if(type==0)//硬币找零
+	{
+		//硬币器是否故障
+		if(ChangerIsErr()==1)
+		{
+			change = 0;
+		}
+		//找零金额
+	       else if(SystemPara.CoinChangerType == MDB_CHANGER)
+		{
+			change = stDevValue.CoinValue[0]*stDevValue.CoinNum[0] + stDevValue.CoinValue[1]*stDevValue.CoinNum[1] + stDevValue.CoinValue[2]*stDevValue.CoinNum[2]
+					+stDevValue.CoinValue[3]*stDevValue.CoinNum[3] + stDevValue.CoinValue[4]*stDevValue.CoinNum[4] + stDevValue.CoinValue[5]*stDevValue.CoinNum[5] 
+					+stDevValue.CoinValue[6]*stDevValue.CoinNum[6] + stDevValue.CoinValue[7]*stDevValue.CoinNum[7]
+					+stDevValue.CoinValue[8]*stDevValue.CoinNum[8] + stDevValue.CoinValue[9]*stDevValue.CoinNum[9] + stDevValue.CoinValue[10]*stDevValue.CoinNum[10]
+					+stDevValue.CoinValue[11]*stDevValue.CoinNum[11] + stDevValue.CoinValue[12]*stDevValue.CoinNum[12] + stDevValue.CoinValue[13]*stDevValue.CoinNum[13]
+					+stDevValue.CoinValue[14]*stDevValue.CoinNum[14] + stDevValue.CoinValue[15]*stDevValue.CoinNum[15]; 
+		}
+		else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
+		{
+			coinMoney =( !HopperIsEmpty() )? SystemPara.MaxValue:0;
+			if(coinMoney < SystemPara.BillEnableValue)
+			{
+				change  = 0;
+			}
+			else
+			{
+				change  = coinMoney;
+			}
+			//MsgUboxPack[g_Ubox_Index].change  =( !HopperIsEmpty() )? SystemPara.MaxValue:0;				
+		}
+		//无硬币器
+		else if(SystemPara.CoinChangerType == OFF_CHANGER)
+		{	
+			change =0;
+		}
+	}	
+	else if(type==1)//纸币找零
+	{
+		//添加纸币循环器时，可找硬币金额
+		if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
+		{
+			if(ErrorStatus(2)>0)//故障
+			{	
+				change =0;
+			}
+			else if(GetHoldMoney()>0)//有暂存纸币
+			{	
+				change =0;
+			}
+			else 
+			{
+				change = stDevValue.RecyclerValue[0]*stDevValue.RecyclerNum[0] + stDevValue.RecyclerValue[1]*stDevValue.RecyclerNum[1] + stDevValue.RecyclerValue[2]*stDevValue.RecyclerNum[2]
+						+stDevValue.RecyclerValue[3]*stDevValue.RecyclerNum[3] + stDevValue.RecyclerValue[4]*stDevValue.RecyclerNum[4] + stDevValue.RecyclerValue[5]*stDevValue.RecyclerNum[5]
+						+stDevValue.RecyclerValue[6]*stDevValue.RecyclerNum[6];
+			}
+		}
+		//富士纸币器
+		else if(SystemPara.BillRecyclerType==FS_BILLRECYCLER)
+		{
+			change = stDevValue.RecyclerValue[0]*stDevValue.RecyclerNum[0] + stDevValue.RecyclerValue[1]*stDevValue.RecyclerNum[1] + stDevValue.RecyclerValue[2]*stDevValue.RecyclerNum[2]
+					+stDevValue.RecyclerValue[3]*stDevValue.RecyclerNum[3] + stDevValue.RecyclerValue[4]*stDevValue.RecyclerNum[4] + stDevValue.RecyclerValue[5]*stDevValue.RecyclerNum[5]
+					+stDevValue.RecyclerValue[6]*stDevValue.RecyclerNum[6];
+		}
+	}		
+	return change;		
+}
 
 /*********************************************************************************************************
 ** Function name:       ActionRPTAPI
@@ -463,7 +599,7 @@ void ActionRPTAPI(uint8_t action,uint8_t value,uint8_t second,uint8_t column,uin
 
 /*********************************************************************************************************
 ** Function name:       ChangeMoneyInd
-** Descriptions:        PC指示找零
+** Descriptions:        PC指示找零硬币
 ** input parameters:    无
 ** output parameters:   无
 ** Returned value:      无
@@ -475,8 +611,11 @@ void ChangeMoneyInd(uint32_t changeMoney,uint8_t Type,uint32_t payAllMoney)
 	
 	if(changeMoney)
 	{
-		ActionRPTAPI(2,0,30,0,Type,changeMoney,payAllMoney);
-		OSTimeDly(OS_TICKS_PER_SEC*2);
+		if(SystemPara.PcEnable!=CRUBOX_PC)
+		{
+			ActionRPTAPI(2,0,30,0,Type,changeMoney,payAllMoney);
+			OSTimeDly(OS_TICKS_PER_SEC*2);
+		}
 		ComStatus = ChangerDevPayoutAPI(changeMoney,&backmoney);				
 	}
 	else
@@ -486,14 +625,67 @@ void ChangeMoneyInd(uint32_t changeMoney,uint8_t Type,uint32_t payAllMoney)
 	//找零失败
 	if(!ComStatus)
 	{	
-		PayoutRPTAPI(0,Type,changeMoney-backmoney,payAllMoney);
+		PayoutRPTAPI(0,Type,changeMoney-backmoney,backmoney,payAllMoney);
 	}
 	//找零成功
 	else
 	{
-		PayoutRPTAPI(0,Type,changeMoney,payAllMoney);
+		PayoutRPTAPI(0,Type,changeMoney,0,payAllMoney);
 	}	
 	 	
+}
+
+/*********************************************************************************************************
+** Function name:       ChangerRecyclerInd
+** Descriptions:        纸币找零器找零
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void ChangerRecyclerInd(uint32_t changeMoney,uint8_t Type,uint32_t payAllMoney)
+{
+	uint8_t ComStatus;
+	uint32_t  backmoney=0;
+
+	//设置到全局变量中
+	changeMoneyInd=changeMoney;
+	TypeInd=Type;
+	payAllMoneyInd=payAllMoney;
+	
+	if(changeMoney)
+	{
+		ComStatus=BillRecyclerPayoutValueExpanseAPI(changeMoney,&backmoney);		
+	}
+	else
+	{
+		ComStatus = 1;
+	}
+	if(SystemPara.BillRecyclerType==FS_BILLRECYCLER)
+	{
+		//找零失败
+		if(!ComStatus)
+		{	
+			PayoutRPTAPI(0,Type,backmoney,changeMoney-backmoney,payAllMoney);
+		}
+		//找零成功
+		else
+		{
+			PayoutRPTAPI(0,Type,backmoney,changeMoney-backmoney,payAllMoney);
+		}	
+	}
+	
+}
+
+/*********************************************************************************************************
+** Function name:       ChangeMoneyIndFail
+** Descriptions:        PC指示找零硬币失败
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void ChangeMoneyIndFail(uint32_t changeMoney,uint32_t remainMoney,uint8_t Type,uint32_t payAllMoney)
+{		
+	PayoutRPTAPI(0,Type,changeMoney,remainMoney,payAllMoney);	 	
 }
 
 
@@ -1480,7 +1672,42 @@ void PollAPI(uint32_t payAllMoney)
 						}
 						break;
 					case MBOX_PCTOVMC_PAYININD:
-						StackReturnBillDev(AccepterUboxMsg->Type);						
+                        			StackReturnBillDev(AccepterUboxMsg->Type);                        
+						break;
+					//payout_ind找零
+					case MBOX_PCTOVMC_PAYOUTIND:
+						TracePC("\r\n MiddUbox payoutInd=%d,type=%d",AccepterUboxMsg->changeMoney,AccepterUboxMsg->Type); 
+						if(AccepterUboxMsg->Type==0)//硬币找零
+						{
+							//可以找零	
+							if(PayoutRecyAPI(AccepterUboxMsg->Type)>(AccepterUboxMsg->changeMoney))
+							{
+								ChangeMoneyInd(AccepterUboxMsg->changeMoney,AccepterUboxMsg->Type,payAllMoney);
+							}
+							//不可以找零
+							else
+							{
+								ChangeMoneyIndFail(0,AccepterUboxMsg->changeMoney,AccepterUboxMsg->Type,payAllMoney);
+							}
+						}
+						else if(AccepterUboxMsg->Type==1)//纸币找零
+						{
+							//可以找零	
+							if(//金额足够
+								(PayoutRecyAPI(AccepterUboxMsg->Type)>=(AccepterUboxMsg->changeMoney))
+								//可以用这个面值进行找币
+								&&((AccepterUboxMsg->changeMoney)%SystemPara.RecyclerMoney==0)
+
+							)
+							{
+								ChangerRecyclerInd(AccepterUboxMsg->changeMoney,AccepterUboxMsg->Type,payAllMoney);
+							}
+							//不可以找零
+							else
+							{
+								ChangeMoneyIndFail(0,AccepterUboxMsg->changeMoney,AccepterUboxMsg->Type,payAllMoney);
+							}
+						}						
 						break;
 					//cost_ind扣款
 					case MBOX_PCTOVMC_COSTIND:
@@ -1488,16 +1715,10 @@ void PollAPI(uint32_t payAllMoney)
 						//ACK
 						//MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_ACK;	
 						//OSQPost(g_Ubox_PCTOVMCBackQ,&MsgUboxPack[g_Ubox_Index]);
-						//UpdateIndex();
-							
-						//1.系统进入故障状态时，返回NAK_RPT  
-						if(IsErrorState())
-						{
-							TracePC("\r\n MiddUbox vendE3");
-							ComReturn = 24;		
-						}	
+						//UpdateIndex();							
+						//1	
 						//2.用户投币金额小于扣款金额时，返回NAK_RPT    
-					    else if( AccepterUboxMsg->costMoney > payAllMoney ) 
+					    if( AccepterUboxMsg->costMoney > payAllMoney ) 
 						{
 							TracePC("\r\n MiddUbox vendE5");
 							ComReturn = 0;
@@ -1558,6 +1779,11 @@ void PollAPI(uint32_t payAllMoney)
 							//5上报cost_report
 							CostRPTAPI(0,0,GetAmountMoney());
                 	   			 }							
+						break;	
+					//reset_ind重新复位
+					case MBOX_PCTOVMC_RESETIND:
+						TracePC("\r\n MiddUbox resetInd");
+						ResetInd();						
 						break;	
 				}
 			}	

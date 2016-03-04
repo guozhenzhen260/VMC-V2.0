@@ -1534,6 +1534,30 @@ uint32_t GetAmountMoney()
 }
 
 /*********************************************************************************************************
+** Function name:     	GetHoldMoney
+** Descriptions:	    暂存纸币金额
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+uint32_t GetHoldMoney()
+{	
+	return g_holdValue;
+}
+
+/*********************************************************************************************************
+** Function name:     	ClearHoldMoney
+** Descriptions:	    清除纸币金额
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void ClearHoldMoney()
+{	
+	g_holdValue=0;
+}
+
+/*********************************************************************************************************
 ** Function name:     	GetReaderAmount
 ** Descriptions:	    刷卡总金额总金额
 ** input parameters:    无
@@ -2067,7 +2091,7 @@ uint8_t GetMoney()
 				}
 			}
 			if((g_billAmount + InValue) >= MoneyMaxin)
-				BillCoinCtr(2,0,2);	
+			{}	//BillCoinCtr(2,0,2);	
 			else
 				BillCoinCtr(0,0,2);		
 			return 1;
@@ -2090,7 +2114,7 @@ uint8_t GetMoney()
 		else if(readerType == 2)
 		{		
 			TraceReader("\r\n AppReader OUTPUT card");
-			PayoutRPTAPI(2,0,GetAmountMoney(),0);
+			PayoutRPTAPI(2,0,GetAmountMoney(),0,0);
 			readerType = 0;
 			g_readerAmount = 0;
 			return 2;
@@ -2136,7 +2160,7 @@ void ChangerRecycler(void)
 						TraceBill("\r\n Apppay=%ld",paymoney);
 						if(SystemPara.EasiveEnable == 1)
 						{
-							PayoutRPTAPI(1,0,RecyPayoutMoneyBack,paymoney);
+							PayoutRPTAPI(1,0,RecyPayoutMoneyBack,0,paymoney);
 						}
 					}
 					break;
@@ -2164,7 +2188,7 @@ void ChangerRecycler(void)
 				print_fs("\r\n Apppay=%ld",paymoney);
 				if(SystemPara.EasiveEnable == 1)
 				{
-					PayoutRPTAPI(1,0,RecyPayoutMoneyBack,paymoney);
+					PayoutRPTAPI(1,0,RecyPayoutMoneyBack,0,paymoney);
 				}
 			}				
 			
@@ -2220,7 +2244,7 @@ uint32_t ChangerMoney(void)
 		{		
 			TracePC("\r\n Appchange Fail=%ld,%ld",GetAmountMoney(),backmoney);
 			LogChangeAPI(GetAmountMoney()-backmoney,backmoney);//记录日志
-			PayoutRPTAPI(0,0,GetAmountMoney()-backmoney,0);
+			PayoutRPTAPI(0,0,GetAmountMoney()-backmoney,0,0);
 			//OSTimeDly(OS_TICKS_PER_SEC);
 			//PayinRPTAPI(2,0,0);//上报PC端
 			g_coinAmount = 0;
@@ -2232,7 +2256,7 @@ uint32_t ChangerMoney(void)
 		{
 			TracePC("\r\n Appchange succ=%ld",GetAmountMoney());
 			LogChangeAPI(GetAmountMoney(),0);//记录日志
-			PayoutRPTAPI(0,0,GetAmountMoney(),0);
+			PayoutRPTAPI(0,0,GetAmountMoney(),0,0);
 			g_coinAmount = 0;
 			g_billAmount = 0;
 			return 0;
@@ -2245,7 +2269,7 @@ uint32_t ChangerMoney(void)
 		{		
 			TracePC("\r\n Appchange Fail");
 			LogChangeAPI(tempmoney-backmoney,backmoney);//记录日志
-			PayoutRPTAPI(0,0,tempmoney-backmoney,0);
+			PayoutRPTAPI(0,0,tempmoney-backmoney,0,0);
 			//OSTimeDly(OS_TICKS_PER_SEC);
 			//PayinRPTAPI(2,0,0);//上报PC端
 			g_coinAmount = 0;
@@ -2257,7 +2281,7 @@ uint32_t ChangerMoney(void)
 		{
 			TracePC("\r\n Appchange succ%d",OSTimeGet());
 			LogChangeAPI(tempmoney,0);//记录日志
-			PayoutRPTAPI(0,0,tempmoney,0);
+			PayoutRPTAPI(0,0,tempmoney,0,0);
 			g_coinAmount = 0;
 			g_billAmount = 0;
 			return 0;
@@ -2939,25 +2963,41 @@ void VendoutIndFail(uint16_t columnNo, uint32_t PriceSale,uint8_t Type,uint8_t s
 *********************************************************************************************************/
 void ResetInd()
 {
-	if(GetAmountMoney())
+	if(SystemPara.PcEnable==CRUBOX_PC)
 	{
-		ChangerMoney();
-		OSTimeDly(OS_TICKS_PER_SEC*2);
-		channelInput = 0;
-		channelMode = 0;
-		memset(BinNum,0,sizeof(BinNum));
-		memset(ChannelNum,0,sizeof(ChannelNum));
-		//Trace("\r\n 3money=%ld",GetAmountMoney());
-		OSMboxAccept(g_CoinMoneyBackMail);
-		LCDClrScreen();
-		DispEndPage();
-		vmcStatus = VMC_END;
+		//暂存退币
+		if(g_holdValue)
+		{
+			if(ReturnBillDevMoneyInAPI())
+			{
+				PayinRPTAPI(4,g_holdValue,GetAmountMoney()-g_holdValue);//上报PC端
+				g_holdValue = 0;			
+			}
+			TracePC("\r\n AppHoldRet%d",OSTimeGet());
+			OSTimeDly(OS_TICKS_PER_SEC/2);
+		}
 	}
-	BillCoinCtr(2,2,0);
-	OSTimeDly(OS_TICKS_PER_SEC);
+	else
+	{
+		if(GetAmountMoney())
+		{
+			ChangerMoney();
+			OSTimeDly(OS_TICKS_PER_SEC*2);
+			channelInput = 0;
+			channelMode = 0;
+			memset(BinNum,0,sizeof(BinNum));
+			memset(ChannelNum,0,sizeof(ChannelNum));
+			//Trace("\r\n 3money=%ld",GetAmountMoney());
+			OSMboxAccept(g_CoinMoneyBackMail);
+			LCDClrScreen();
+			DispEndPage();
+			vmcStatus = VMC_END;
+		}
+	}
+	ResetRPTAPI();
 	MdbBusHardwareReset();
-	OSTimeDly(OS_TICKS_PER_SEC*2);
-	BillCoinCtr(1,1,0);
+      OSTimeDly(OS_TICKS_PER_SEC*2);
+	zyReset(ZY_HARD_RESET);
 }
 
 
@@ -2999,7 +3039,7 @@ void TuiMoneyInd()
 		LogChangeAPI(0,0);//记录日志
 		if(SystemPara.EasiveEnable == 1)
 		{
-			PayoutRPTAPI(0,0,0,0);
+			PayoutRPTAPI(0,0,0,0,0);
 		}
 		//OSTimeDly(OS_TICKS_PER_SEC);
 		//PayinRPTAPI(2,0,0);//上报PC端
@@ -3260,7 +3300,7 @@ void BusinessProcess(void *pvData)
 #endif
 
 	//5.是否进入维护状态
-	if(ReadMaintainKeyValue())
+	if(ReturnMaintainKeyValue(1))
 	{
 		BillCoinCtr(2,2,2);
 		vmcStatus = VMC_WEIHU;
@@ -3338,13 +3378,16 @@ void BusinessProcess(void *pvData)
 					CheckDeviceState();					
 					if(IsErrorState())
 					{
-						Timer.DispFreeTimer=0;
-						StatusRPTAPI();
-						OSTimeDly(OS_TICKS_PER_SEC/2);
-						LCDClrScreen();
-						BillCoinCtr(2,2,2);
-						rstTime();
-						vmcStatus = VMC_ERROR;
+						if(SystemPara.PcEnable!=CRUBOX_PC)
+						{
+							Timer.DispFreeTimer=0;
+							StatusRPTAPI();
+							OSTimeDly(OS_TICKS_PER_SEC/2);
+							LCDClrScreen();
+							BillCoinCtr(2,2,2);
+							rstTime();
+							vmcStatus = VMC_ERROR;
+						}
 					}
 					else
 					{
@@ -3352,7 +3395,7 @@ void BusinessProcess(void *pvData)
 					}
 				}
 				//5.是否进入维护状态
-				if(ReadMaintainKeyValue())
+				if(ReturnMaintainKeyValue(1))
 				{
 					BillCoinCtr(2,2,2);
 					vmcStatus = VMC_WEIHU;
@@ -3462,8 +3505,11 @@ void BusinessProcess(void *pvData)
 					&&(g_readerAmount == 0)
 				)
 				{
-					BillCoinCtr(2,2,0);
-					vmcStatus = VMC_PAYOUT;					
+					if(SystemPara.PcEnable!=CRUBOX_PC)
+					{
+						BillCoinCtr(2,2,0);
+						vmcStatus = VMC_PAYOUT;
+					}
 				}
 				//Trace("\r\n u=%d",i++);
 				//显示倒计时
@@ -3485,6 +3531,8 @@ void BusinessProcess(void *pvData)
 				PollAPI(GetAmountMoney());
 				//8.轮询游戏按键
 				ReadGameKeyValueAPI();
+				//9.轮询设备故障状态
+				CheckDeviceState();
 				break;
 			case VMC_OVERVALUE:
 				break;
@@ -3716,7 +3764,7 @@ void BusinessProcess(void *pvData)
 					PollAPI(GetAmountMoney());
 				}
 				//3.是否进入维护状态
-				if(ReadMaintainKeyValue())
+				if(ReturnMaintainKeyValue(1))
 				{
 					vmcStatus = VMC_WEIHU;
 				}
@@ -3814,13 +3862,13 @@ void BusinessProcess(void *pvData)
 					}
 				}
 				
-				do
+				//do
 				{
 					//7.检查pc机轮询
 					PollAPI(GetAmountMoney());
 					MaintainUserProcess((void*)0);
 				}
-				while(ReadMaintainKeyValue());
+				//while(ReadMaintainKeyValue());
 				Timer.DispFreeTimer=0;
 				LCDClrScreen();
 				BillCoinCtr(1,1,1);

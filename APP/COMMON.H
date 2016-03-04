@@ -606,8 +606,9 @@ typedef struct
 	uint8_t Billromchk;//1代表rom出错
 	uint8_t Billjam;//1代表投币卡币
 	uint8_t BillremoveCash;//1移除纸币钞箱
-	uint8_t BillcashErr;//1纸币钞箱故障
+	uint8_t BillcashErr;//1纸币钞箱故障,以及钞箱满
 	uint8_t Billdisable;//1纸币因为各种原因被禁能了
+	uint8_t recyErr;//找零模块异常
 
 	//MDB硬币器
 	uint8_t CoinCommunicate;//1代表硬币器通讯不上
@@ -880,7 +881,8 @@ extern MESSAGE_ZHIHUI zh_vmc_mbox;
 #define MBOX_VMCTOPC_INFORPT     		    0x17
 //pc上发给vmc机PAYININD指令
 #define MBOX_PCTOVMC_PAYININD     	           0x18
-
+//向PC机上传重新复位指令
+#define MBOX_PCTOVMC_RESETRPT     		    0x19
 
 
 typedef struct
@@ -891,6 +893,7 @@ typedef struct
 	
 	uint16_t payInMoney;                //vmc下发给PC投币金额
 	uint16_t payoutMoney;                //vmc下发给PC找零总金额
+	uint16_t payoutRemain;                //vmc下发给PC找零欠款金额
 	uint32_t payAllMoney;               //vmc下发给PC总共投入的金额
 	uint8_t  payoutDev;					//vmc下发给PC找零设备
 	
@@ -1117,6 +1120,7 @@ typedef struct
 	uint8_t		offLinePCTimer;				    //UBOX的离线模式下定时器
 	uint8_t     printTimer;                     //打印交易记录计时器
 	uint8_t		selTimer;						//选货按键接收定时器
+	uint16_t		weiTimer;						//退出维护定时器
 
 	//add by yoc zhihui 2013.12.16
 	uint8_t    	zhihui_recv_timeout;

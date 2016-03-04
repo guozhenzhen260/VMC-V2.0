@@ -281,6 +281,7 @@ void Uart2TaskDevice(void *pvData)
 					break;					
 				case 5:
 					TraceBill("\r\n TaskRecPayoutFail");
+					PayoutRPTAPI(0,getTypeInd(),0,getchangeMoneyInd(),getpayAllMoneyInd());
 					MsgAccepterPack.BillBackCmd = MBOX_BILLRECYPAYOUTFAIL;						
 					OSMboxPost(g_BillMoneyBackMail,&MsgAccepterPack);
 					billOptBack = 0;
@@ -293,7 +294,7 @@ void Uart2TaskDevice(void *pvData)
 		OSTimeDly(7);
 
 		//HopperÕÒÁãÆ÷Í¨Ñ¶º¯Êý
-		if(NowChangerDev == CHANGEDEV_HOPPER)
+		if(SystemPara.CoinChangerType == HOPPER_CHANGER)
 		{
 			//ÂÖÑ¯µÃµ½Ó²±ÒÆ÷¿ÉÕÒÁãÓ²±Ò
 			if(getHopper++ >= 10)
@@ -613,6 +614,7 @@ void Uart2TaskDevice(void *pvData)
 			DeviceStatePack.BillremoveCash = MdbBillErr.removeCash;
 			DeviceStatePack.BillcashErr = MdbBillErr.cashErr;
 			DeviceStatePack.Billdisable = MdbBillErr.disable;
+			DeviceStatePack.recyErr = MdbBillErr.recyErr;
 			//MDBÓ²±ÒÆ÷¹ÊÕÏ×´Ì¬
 			DeviceStatePack.CoinCommunicate = MdbCoinErr.Communicate;
 			DeviceStatePack.Coinsensor = MdbCoinErr.sensor;

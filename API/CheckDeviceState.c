@@ -53,7 +53,7 @@ void CheckDeviceState()
 			memcpy(&DeviceStateBusiness,DeviceMsg,sizeof(DeviceStateBusiness));
 			DeviceStateBusiness.ErrorInit = 1;
 			TraceBill("\r\n Middlebill=%d,%d,%d,%d,%d,%d,%d,%d",DeviceStateBusiness.BillCommunicate,DeviceStateBusiness.Billmoto,DeviceStateBusiness.Billsensor,DeviceStateBusiness.Billromchk,
-				DeviceStateBusiness.Billjam,DeviceStateBusiness.BillremoveCash,DeviceStateBusiness.BillcashErr,DeviceStateBusiness.Billdisable);
+				DeviceStateBusiness.Billjam,DeviceStateBusiness.BillremoveCash,DeviceStateBusiness.BillcashErr,DeviceStateBusiness.Billdisable,DeviceStateBusiness.recyErr);
 			TraceCoin("\r\n Middlecoin=%d,%d,%d,%d,%d,%d,%d,%d,%d",DeviceStateBusiness.CoinCommunicate,DeviceStateBusiness.Coinsensor,DeviceStateBusiness.Cointubejam,DeviceStateBusiness.Coinromchk,
 				DeviceStateBusiness.Coinrouting,DeviceStateBusiness.Coinjam,DeviceStateBusiness.CoinremoveTube,DeviceStateBusiness.Coindisable,DeviceStateBusiness.CoinunknowError);
 			TraceChange("\r\n MiddleHopper2=%d,%d,%d",DeviceStateBusiness.Hopper1State,DeviceStateBusiness.Hopper2State,DeviceStateBusiness.Hopper3State);
@@ -101,13 +101,14 @@ uint8_t GetScaleError()
 uint8_t IsErrorState()
 { 
 	uint8_t coinError = 0,hopperError = 0,GOCError = 0,ColBoardError = 0,PcErr=0;
-	static uint8_t billError = 0,status=0;
+	static uint8_t billError = 0;
+	static uint8_t status=0,coinstatus=0,changestatus=0;
 	//纸币器	
 	if(SystemPara.BillValidatorType==MDB_BILLACCEPTER)
 	{
 		if(
 			(DeviceStateBusiness.BillCommunicate)||(DeviceStateBusiness.Billmoto)||(DeviceStateBusiness.Billsensor)||(DeviceStateBusiness.Billromchk)
-			||(DeviceStateBusiness.Billjam)||(DeviceStateBusiness.BillremoveCash)||(DeviceStateBusiness.BillcashErr)
+			||(DeviceStateBusiness.Billjam)||(DeviceStateBusiness.BillremoveCash)||(DeviceStateBusiness.BillcashErr)||(DeviceStateBusiness.recyErr)
 		  )
 		{
 			billError = 1;
@@ -134,6 +135,17 @@ uint8_t IsErrorState()
 		  )
 		{
 			coinError = 1;
+			//故障时，只发送一次status
+			if(coinstatus==0)
+			{
+				StatusRPTAPI();
+				coinstatus=1;
+			}
+		}
+		else if(coinstatus == 1)
+		{
+			StatusRPTAPI();
+			coinstatus=0;
 		}
 	}
 	//Hopper找零器
@@ -142,6 +154,27 @@ uint8_t IsErrorState()
 		if(DeviceStateBusiness.Hopper1State == 2)
 		{
 			hopperError = 1;
+			//故障时，只发送一次status
+			if(changestatus==0)
+			{
+				StatusRPTAPI();
+				changestatus=1;
+			}
+		}
+		//只是上报一次，不作为故障点
+		else if(DeviceStateBusiness.Hopper1State == 1)
+		{
+			//故障时，只发送一次status
+			if(changestatus==0)
+			{
+				StatusRPTAPI();
+				changestatus=1;
+			}
+		}
+		else if(changestatus == 1)
+		{
+			StatusRPTAPI();
+			changestatus=0;
 		}
 	}
 	if(SystemPara.GeziDeviceType==0)
@@ -289,7 +322,7 @@ uint8_t BillIsErr()
 	{
 		if(
 			(DeviceStateBusiness.BillCommunicate)||(DeviceStateBusiness.Billmoto)||(DeviceStateBusiness.Billsensor)||(DeviceStateBusiness.Billromchk)
-			||(DeviceStateBusiness.Billjam)||(DeviceStateBusiness.BillremoveCash)||(DeviceStateBusiness.BillcashErr)
+			||(DeviceStateBusiness.Billjam)||(DeviceStateBusiness.BillremoveCash)||(DeviceStateBusiness.BillcashErr)||(DeviceStateBusiness.recyErr)
 		  )
 		{
 			return 1;
@@ -401,12 +434,12 @@ uint8_t ErrorStatus(uint8_t type)
 		{
 			if(
 				(DeviceStateBusiness.BillCommunicate)||(DeviceStateBusiness.Billmoto)||(DeviceStateBusiness.Billsensor)||(DeviceStateBusiness.Billromchk)
-				||(DeviceStateBusiness.Billjam)||(DeviceStateBusiness.BillremoveCash)||(DeviceStateBusiness.BillcashErr)
+				||(DeviceStateBusiness.Billjam)||(DeviceStateBusiness.BillremoveCash)||(DeviceStateBusiness.BillcashErr)||(DeviceStateBusiness.recyErr)
 			  )
 			{
 				return 2;
 			}	
-			if(GetBillCoinStatus(1)==0)
+			if((GetBillCoinStatus(1)==0)||(DeviceStateBusiness.Billdisable==1))
 				return 1;
 			
 			return 0;

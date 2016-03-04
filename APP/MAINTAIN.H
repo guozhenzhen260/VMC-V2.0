@@ -32,7 +32,7 @@ uint8_t AdminRPTWeihu(uint8_t adminType,uint8_t Column,uint8_t ColumnSum);
 uint8_t AdminRPTSIMPLE(uint8_t adminType,uint8_t Column,uint8_t ColumnSum);
 uint8_t TubeMoneyEnough(void);
 uint8_t PCError(uint8_t PCType);
-
+extern uint8_t ReturnMaintainKeyValue(uint8_t type);
 
 
 #endif

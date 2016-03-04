@@ -35,6 +35,54 @@ char * ChooseSet(uint8_t flag);
 
 
 /*********************************************************************************************************
+** Function name:     	ReturnMaintainKeyValue
+** Descriptions:	   进入和退出维护
+** input parameters:    type=1进入,0退出
+** output parameters:   无
+** Returned value:      1退出维护
+*********************************************************************************************************/
+uint8_t ReturnMaintainKeyValue(uint8_t type)
+{
+	uint8_t ret=0;
+	//判断是否进入维护模式
+      if(type==1)
+      	{
+      		if(ReadMaintainKeyValue())
+      		{
+      			Buzzer();
+      			ret=1;
+			Timer.weiTimer=60*3;	
+      		}
+      	}
+	  //判断是否退出维护模式
+	else if(type==2)
+	{
+		//Trace("UboxTimer=%d \r\n",Timer.weiTimer);
+		if(ReadMaintainKeyValue())
+		{
+			Buzzer();
+			ret=1;
+		}
+		else if(Timer.weiTimer==0)
+		{
+			Buzzer();
+			ret=1;
+		}
+	}	
+	return ret;
+}
+/*********************************************************************************************************
+** Function name:     	SetWeihuTimer
+** Descriptions:	   进入和退出维护
+** input parameters:    type=1进入,0退出
+** output parameters:   无
+** Returned value:      1退出维护
+*********************************************************************************************************/
+void SetWeihuTimer()
+{
+	Timer.weiTimer=60*3;	
+}
+/*********************************************************************************************************
 ** Function name:     	PasswordCheck
 ** Descriptions:	    密码验证页面
 ** input parameters:    无
@@ -1912,6 +1960,13 @@ void UserTradeMaintainProcess(void)
 			{
 				break;
 			}
+			if(SystemPara.PcEnable==CRUBOX_PC)
+			{
+				if(ReturnMaintainKeyValue(2))
+				{
+					return;
+				}
+			}
 		}	
 		//退出
 		if(UserTradeMainMenu.ExtSelfCheck == 0x01)
@@ -2687,7 +2742,10 @@ void MaintainUserProcess(void *pvData)
 
 	str=stMacSn.id;
 	Trace("\r\n SN=%s",str);
-	
+	 if(SystemPara.PcEnable==CRUBOX_PC)
+	 {
+	 	TestBillValidator();
+	 }
 	while(1)
 	{
 		LCDClrScreen();
@@ -2918,6 +2976,13 @@ void MaintainUserProcess(void *pvData)
 				TestFunctonPtr = UserMaintainMainMenu.TestOperate;
 				(*TestFunctonPtr)();//由此进入各个设备的自检函数
 				break;	
+			}
+			if(SystemPara.PcEnable==CRUBOX_PC)
+			{
+				if(ReturnMaintainKeyValue(2))
+				{
+					return;
+				}
 			}
 		}	
 		if(UserMaintainMainMenu.ExtSelfCheck == 0x01)
@@ -4121,7 +4186,9 @@ void TestBillValidator(void)
 	char    *pstr;
 	char	strMoney[10];
 	uint8_t KeyValue=0,i;
+
 	
+	SetWeihuTimer();
 	LCDClrScreen();
 	LCDPrintf(0,LINE1,0,0,"TestBillValidator=MDB");
 	LCDPrintf(0,LINE3,0,0,"Level=%d,Scale=%ld",stDevValue.BillLevel,stDevValue.BillScale);
@@ -4142,12 +4209,14 @@ void TestBillValidator(void)
 		
 	}
 	Trace("TestBillValidator\r\n");
+	OSTimeDly(OS_TICKS_PER_SEC * 3);
 	BillDevEnableAPI();
 	while(1)
 	{
 		InValue=GetBillDevMoneyInAPI();
 		if(InValue>0)
 		{
+			SetWeihuTimer();
 			//Trace("2.bill=%ld\r\n",InValue);			
 			SumValue += InValue;
 			pstr = PrintfMoney(SumValue);
@@ -4165,6 +4234,7 @@ void TestBillValidator(void)
 			//4.显示输入的数字
 			if( (KeyValue >= 0x01)&&(KeyValue <= 0x09) )
 			{
+				SetWeihuTimer();
 				if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
 				{
 					for(i=0;i<7;i++)
@@ -4191,11 +4261,13 @@ void TestBillValidator(void)
 					SumValue=0;
 				}
 			}
-			else if(KeyValue == 0x0e)//取消按键
+			else if((KeyValue == 0x0e))//取消按键
 			{
 				break;						
 			}
 		}
+		if(ReturnMaintainKeyValue(2))
+			break;
 		OSTimeDly(10);		
 	}
 	BillDevDisableAPI();
@@ -4206,7 +4278,8 @@ void TestCoinAcceptor(void)
 	uint32_t SumValue = 0;
 	char    *pstr;
 	char	strMoney[10];
-	
+
+	SetWeihuTimer();
 	LCDClrScreen();
 	switch(SystemPara.CoinAcceptorType)
 	{
@@ -4243,6 +4316,7 @@ void TestCoinAcceptor(void)
 		InValue=GetCoinDevMoneyInAPI();
 		if(InValue>0)
 		{
+			SetWeihuTimer();
 			//Trace("2.coin=%ld\r\n",InValue);
 			SumValue += InValue;
 			pstr = PrintfMoney(SumValue);
@@ -4260,7 +4334,7 @@ void TestCoinAcceptor(void)
 			}
 		}
 		
-		if(ReadKeyValue() == 'C')
+		if((ReadKeyValue() == 'C')||(ReturnMaintainKeyValue(2)))
 			break;
 		OSTimeDly(10);		
 	}
@@ -4271,7 +4345,8 @@ void TestChanger(void)
 	uint32_t backmoney,scaleMoney,InValue;
 	char    *pstr;
 	char	strMoney[10];
-	
+
+	SetWeihuTimer();
 	LCDClrScreen();	
 	switch(SystemPara.CoinChangerType)
 	{		
@@ -4310,6 +4385,7 @@ void TestChanger(void)
 		switch(ReadKeyValue())
 		{
 			case '1':
+				SetWeihuTimer();
 				if(SystemPara.CoinChangerType == MDB_CHANGER)
 				{
 					pstr = PrintfMoney(scaleMoney*1);
@@ -4331,6 +4407,7 @@ void TestChanger(void)
 				}
 				break;
 			case '2':
+				SetWeihuTimer();
 				if(SystemPara.CoinChangerType == MDB_CHANGER)
 				{
 					pstr = PrintfMoney(scaleMoney*2);
@@ -4352,6 +4429,7 @@ void TestChanger(void)
 				}
 				break;
 			case '3':
+				SetWeihuTimer();
 				if(SystemPara.CoinChangerType == MDB_CHANGER)
 				{
 					pstr = PrintfMoney(scaleMoney*3);
@@ -4373,6 +4451,7 @@ void TestChanger(void)
 				}
 				break;
 			case '4':
+				SetWeihuTimer();
 				pstr = PrintfMoney(scaleMoney*4);
 				strcpy(strMoney, pstr);
 				LCDPrintf(0,LINE15,0,SystemPara.Language,"%s%s",SelfCheckText.Change[SystemPara.Language],strMoney);
@@ -4386,6 +4465,7 @@ void TestChanger(void)
 				LCDPrintf(0,LINE13,0,0,"Total Money=%s",strMoney);
 				break;	
 			case '5':
+				SetWeihuTimer();
 				pstr = PrintfMoney(scaleMoney*5);
 				strcpy(strMoney, pstr);
 				LCDPrintf(0,LINE15,0,SystemPara.Language,"%s%s",SelfCheckText.Change[SystemPara.Language],strMoney);
@@ -4399,6 +4479,7 @@ void TestChanger(void)
 				LCDPrintf(0,LINE13,0,0,"Total Money=%s",strMoney);
 				break;
 			case '6':
+				SetWeihuTimer();
 				pstr = PrintfMoney(scaleMoney*6);
 				strcpy(strMoney, pstr);
 				LCDPrintf(0,LINE15,0,SystemPara.Language,"%s%s",SelfCheckText.Change[SystemPara.Language],strMoney);
@@ -4412,6 +4493,7 @@ void TestChanger(void)
 				LCDPrintf(0,LINE13,0,0,"Total Money=%s",strMoney);
 				break;
 			case '7':
+				SetWeihuTimer();
 				pstr = PrintfMoney(scaleMoney*7);
 				strcpy(strMoney, pstr);
 				LCDPrintf(0,LINE15,0,SystemPara.Language,"%s%s",SelfCheckText.Change[SystemPara.Language],strMoney);
@@ -4425,6 +4507,7 @@ void TestChanger(void)
 				LCDPrintf(0,LINE13,0,0,"Total Money=%s",strMoney);
 				break;
 			case '8':
+				SetWeihuTimer();
 				pstr = PrintfMoney(scaleMoney*8);
 				strcpy(strMoney, pstr);
 				LCDPrintf(0,LINE15,0,SystemPara.Language,"%s%s",SelfCheckText.Change[SystemPara.Language],strMoney);
@@ -4438,6 +4521,7 @@ void TestChanger(void)
 				LCDPrintf(0,LINE13,0,0,"Total Money=%s",strMoney);
 				break;	
 			case '9':
+				SetWeihuTimer();
 				pstr = PrintfMoney(scaleMoney*9);
 				strcpy(strMoney, pstr);
 				LCDPrintf(0,LINE15,0,SystemPara.Language,"%s%s",SelfCheckText.Change[SystemPara.Language],strMoney);
@@ -4453,6 +4537,8 @@ void TestChanger(void)
 			case 'C':
 				return;
 		}
+		if(ReturnMaintainKeyValue(2))
+			return;
 		OSTimeDly(10);		
 	}
 }
