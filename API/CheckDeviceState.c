@@ -53,7 +53,7 @@ void CheckDeviceState()
 			memcpy(&DeviceStateBusiness,DeviceMsg,sizeof(DeviceStateBusiness));
 			DeviceStateBusiness.ErrorInit = 1;
 			TraceBill("\r\n Middlebill=%d,%d,%d,%d,%d,%d,%d,%d",DeviceStateBusiness.BillCommunicate,DeviceStateBusiness.Billmoto,DeviceStateBusiness.Billsensor,DeviceStateBusiness.Billromchk,
-				DeviceStateBusiness.Billjam,DeviceStateBusiness.BillremoveCash,DeviceStateBusiness.BillcashErr,DeviceStateBusiness.Billdisable);
+				DeviceStateBusiness.Billjam,DeviceStateBusiness.BillremoveCash,DeviceStateBusiness.BillcashErr,DeviceStateBusiness.Billdisable,DeviceStateBusiness.recyErr);
 			TraceCoin("\r\n Middlecoin=%d,%d,%d,%d,%d,%d,%d,%d,%d",DeviceStateBusiness.CoinCommunicate,DeviceStateBusiness.Coinsensor,DeviceStateBusiness.Cointubejam,DeviceStateBusiness.Coinromchk,
 				DeviceStateBusiness.Coinrouting,DeviceStateBusiness.Coinjam,DeviceStateBusiness.CoinremoveTube,DeviceStateBusiness.Coindisable,DeviceStateBusiness.CoinunknowError);
 			TraceChange("\r\n MiddleHopper2=%d,%d,%d",DeviceStateBusiness.Hopper1State,DeviceStateBusiness.Hopper2State,DeviceStateBusiness.Hopper3State);
@@ -108,7 +108,7 @@ uint8_t IsErrorState()
 	{
 		if(
 			(DeviceStateBusiness.BillCommunicate)||(DeviceStateBusiness.Billmoto)||(DeviceStateBusiness.Billsensor)||(DeviceStateBusiness.Billromchk)
-			||(DeviceStateBusiness.Billjam)||(DeviceStateBusiness.BillremoveCash)||(DeviceStateBusiness.BillcashErr)
+			||(DeviceStateBusiness.Billjam)||(DeviceStateBusiness.BillremoveCash)||(DeviceStateBusiness.BillcashErr)||(DeviceStateBusiness.recyErr)
 		  )
 		{
 			billError = 1;
@@ -322,7 +322,7 @@ uint8_t BillIsErr()
 	{
 		if(
 			(DeviceStateBusiness.BillCommunicate)||(DeviceStateBusiness.Billmoto)||(DeviceStateBusiness.Billsensor)||(DeviceStateBusiness.Billromchk)
-			||(DeviceStateBusiness.Billjam)||(DeviceStateBusiness.BillremoveCash)||(DeviceStateBusiness.BillcashErr)
+			||(DeviceStateBusiness.Billjam)||(DeviceStateBusiness.BillremoveCash)||(DeviceStateBusiness.BillcashErr)||(DeviceStateBusiness.recyErr)
 		  )
 		{
 			return 1;
@@ -434,12 +434,12 @@ uint8_t ErrorStatus(uint8_t type)
 		{
 			if(
 				(DeviceStateBusiness.BillCommunicate)||(DeviceStateBusiness.Billmoto)||(DeviceStateBusiness.Billsensor)||(DeviceStateBusiness.Billromchk)
-				||(DeviceStateBusiness.Billjam)||(DeviceStateBusiness.BillremoveCash)||(DeviceStateBusiness.BillcashErr)
+				||(DeviceStateBusiness.Billjam)||(DeviceStateBusiness.BillremoveCash)||(DeviceStateBusiness.BillcashErr)||(DeviceStateBusiness.recyErr)
 			  )
 			{
 				return 2;
 			}	
-			if(GetBillCoinStatus(1)==0)
+			if((GetBillCoinStatus(1)==0)||(DeviceStateBusiness.Billdisable==1))
 				return 1;
 			
 			return 0;

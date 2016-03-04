@@ -21,6 +21,7 @@ extern void CostMoneyInd(uint32_t PriceSale);
 extern uint8_t CostReaderRPT(uint32_t PriceSale);
 extern uint32_t GetAmountMoney(void);
 extern uint32_t GetHoldMoney(void);
+extern void ClearHoldMoney(void);
 extern void VendoutInd(uint16_t columnNo, uint32_t PriceSale,uint8_t Type);
 extern void VendoutIndFail(uint16_t columnNo, uint32_t PriceSale,uint8_t Type,uint8_t status);
 extern void ResetInd(void);

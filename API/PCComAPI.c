@@ -660,7 +660,7 @@ void ChangerRecyclerInd(uint32_t changeMoney,uint8_t Type,uint32_t payAllMoney)
 	{
 		ComStatus = 1;
 	}
-	if(SystemPara.BillValidatorType==FS_BILLRECYCLER)
+	if(SystemPara.BillRecyclerType==FS_BILLRECYCLER)
 	{
 		//’“¡„ ß∞‹
 		if(!ComStatus)

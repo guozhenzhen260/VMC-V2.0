@@ -614,6 +614,7 @@ void Uart2TaskDevice(void *pvData)
 			DeviceStatePack.BillremoveCash = MdbBillErr.removeCash;
 			DeviceStatePack.BillcashErr = MdbBillErr.cashErr;
 			DeviceStatePack.Billdisable = MdbBillErr.disable;
+			DeviceStatePack.recyErr = MdbBillErr.recyErr;
 			//MDBÓ²±ÒÆ÷¹ÊÕÏ×´Ì¬
 			DeviceStatePack.CoinCommunicate = MdbCoinErr.Communicate;
 			DeviceStatePack.Coinsensor = MdbCoinErr.sensor;

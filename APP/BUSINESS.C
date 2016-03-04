@@ -1546,6 +1546,18 @@ uint32_t GetHoldMoney()
 }
 
 /*********************************************************************************************************
+** Function name:     	ClearHoldMoney
+** Descriptions:	    清除纸币金额
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void ClearHoldMoney()
+{	
+	g_holdValue=0;
+}
+
+/*********************************************************************************************************
 ** Function name:     	GetReaderAmount
 ** Descriptions:	    刷卡总金额总金额
 ** input parameters:    无
@@ -2079,7 +2091,7 @@ uint8_t GetMoney()
 				}
 			}
 			if((g_billAmount + InValue) >= MoneyMaxin)
-				BillCoinCtr(2,0,2);	
+			{}	//BillCoinCtr(2,0,2);	
 			else
 				BillCoinCtr(0,0,2);		
 			return 1;
@@ -2983,7 +2995,8 @@ void ResetInd()
 		}
 	}
 	ResetRPTAPI();
-	OSTimeDly(OS_TICKS_PER_SEC/2);
+	MdbBusHardwareReset();
+      OSTimeDly(OS_TICKS_PER_SEC*2);
 	zyReset(ZY_HARD_RESET);
 }
 
@@ -3518,6 +3531,8 @@ void BusinessProcess(void *pvData)
 				PollAPI(GetAmountMoney());
 				//8.轮询游戏按键
 				ReadGameKeyValueAPI();
+				//9.轮询设备故障状态
+				CheckDeviceState();
 				break;
 			case VMC_OVERVALUE:
 				break;

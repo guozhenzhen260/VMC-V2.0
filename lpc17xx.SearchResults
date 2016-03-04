@@ -1,6 +1,6 @@
----- BillRecyclerPayoutValueExpanseAPI 匹配 (5 in 4 文件) ----
-BillAccepterAPI.c (api):unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney,uint32_t  *RecyPayoutMoneyBack)
-BillAccepterAPI.h (api):extern unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney,uint32_t  *RecyPayoutMoneyBack);
-Business.c (app):					status=BillRecyclerPayoutValueExpanseAPI(stDevValue.RecyclerValue[i]*num,&RecyPayoutMoneyBack);
-Business.c (app):			status=BillRecyclerPayoutValueExpanseAPI(SystemPara.RecyclerMoney*num,&RecyPayoutMoneyBack);
-PCComAPI.c (api):		ComStatus=BillRecyclerPayoutValueExpanseAPI(changeMoney,&backmoney);		
+---- MBOX_VMCTOPC_PAYINESCROWOUT 匹配 (5 in 3 文件) ----
+Common.h (app):#define MBOX_VMCTOPC_PAYINESCROWOUT		    0x05
+PCComAPI.c (api):				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINESCROWOUT;	
+PCComAPI.c (api):				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINESCROWOUT;				
+Taskuart3device.c (uart3driver):					case MBOX_VMCTOPC_PAYINESCROWOUT:
+Taskuart3device.c (uart3driver):					case MBOX_VMCTOPC_PAYINESCROWOUT:

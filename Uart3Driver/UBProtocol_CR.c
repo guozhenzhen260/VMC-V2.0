@@ -720,7 +720,19 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 								sysVPMissionCR.send.msg[i++] = 0x17;
 								sysVPMissionCR.send.msg[i++] = 0x78;
 							}								
-						}												
+						}	
+						//纸币找零模块
+						if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
+						{
+							if(DeviceStateBusiness.recyErr)
+							{
+								sysVPMissionCR.send.msg[i++] = 0x0f;
+								sysVPMissionCR.send.msg[i++] = 0xa6;
+							}
+						}
+						else if(SystemPara.BillRecyclerType==FS_BILLRECYCLER)
+						{
+						}
 						break;
 					case VP_INFO_TOTALVALUE:
 						//Total_Value：表示当前交易投币后，或者出货后，屏幕上显示的金额数 
@@ -1530,15 +1542,27 @@ unsigned char VP_Reset_Ind_CR( void )
 {
 	//MessageUboxPCPack *AccepterUboxMsg;
 	//unsigned char ComStatus;
-        MdbBusHardwareReset();
-    OSTimeDly(OS_TICKS_PER_SEC*10);
-		zyReset(ZY_HARD_RESET);
+       //暂存退币
+	if(GetHoldMoney())
+	{
+		if(ReturnBillDevMoneyInAPI())
+		{
+			VPMission_Payin_RPT_CR(4,GetHoldMoney(),GetAmountMoney()-GetHoldMoney());//上报PC端
+			ClearHoldMoney();			
+		}
+		TracePC("\r\n AppHoldRet%d",OSTimeGet());
+		OSTimeDly(OS_TICKS_PER_SEC/2);
+	}
+	VP_Reset_Rpt_CR();
+	MdbBusHardwareReset();
+      OSTimeDly(OS_TICKS_PER_SEC*2);
+	zyReset(ZY_HARD_RESET);
     //发送邮箱给vmc
-	MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_RESETIND;				
-	OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
-	UpdateIndex();
-	OSTimeDly(OS_TICKS_PER_SEC/10);
-	TracePC("\r\n Drv Reset_Ind"); 	
+	//MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_PCTOVMC_RESETIND;				
+	//OSQPost(g_Ubox_PCTOVMCQ,&MsgUboxPack[g_Ubox_Index]);	
+	//UpdateIndex();
+	//OSTimeDly(OS_TICKS_PER_SEC/10);
+	//TracePC("\r\n Drv Reset_Ind"); 	
     return VP_ERR_NULL;	
 }
 

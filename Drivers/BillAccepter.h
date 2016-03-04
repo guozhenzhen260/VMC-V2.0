@@ -11,6 +11,7 @@ typedef struct
 	uint8_t removeCash;//1移除纸币钞箱
 	uint8_t cashErr;//1纸币钞箱故障，以及钞箱满
 	uint8_t disable;//1纸币因为各种原因被禁能了
+	uint8_t recyErr;//找零模块异常
 }MDBBILLERROR;
 extern MDBBILLERROR MdbBillErr;
 

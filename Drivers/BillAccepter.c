@@ -466,7 +466,7 @@ uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char
 		MdbBillErr.Communicate = 0;
 		billrec=0;
 		TraceBill("\r\nDrvBill= %02d-",BillRdLen);
-		for(i=0;i<16;i++)
+		for(i=0;i<BillRdLen;i++)
 		{
 			TraceBill(" %02x ",BillRdBuff[i]);
 		}
@@ -533,6 +533,7 @@ uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char
 			
 			        case 0x03:			                 //validator busy
 			        	TraceBill("\r\n Drvbil busy");
+					MdbBillErr.disable = 1;
 			        	break;
 			
 			        case 0x04:			                 //rom chksum err
@@ -575,7 +576,10 @@ uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char
 			        	TraceBill("\r\n Drvbill cashErr");
 					    MdbBillErr.cashErr = 1;	
 				        break;
-			
+				 case 0x29:
+				 	TraceBill("\r\n Drvbill recyclerErr");
+					   MdbBillErr.recyErr=1;
+				 	break;
 			        default:
 						TraceBill("\r\n Drvbill default");	
 						memset(&MdbBillErr,0,sizeof(MdbBillErr));
@@ -627,6 +631,95 @@ uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char
 		//BillDevReject();
 	}*/
 	return 0;
+}
+
+void PayoutProcess(uint8_t BillBuffstatus)
+{
+	if((BillBuffstatus & 0xF0) == 0) 
+	{   
+		//validator status
+	    switch(BillBuffstatus) 
+		{
+            case 0x01:			                 //defective motor    
+            	TraceBill("\r\n Drvbill motor");
+		        MdbBillErr.moto = 1;
+		        break;
+	
+	        case 0x02:			                 //sensor problem
+	        	TraceBill("\r\n Drvbill sensor");
+			    MdbBillErr.sensor = 1;
+		        break;
+	
+	        case 0x03:			                 //validator busy
+	        	TraceBill("\r\n Drvbil busy");
+			MdbBillErr.disable = 1;
+	        	break;
+	
+	        case 0x04:			                 //rom chksum err
+	        	TraceBill("\r\n Drvbill chksum");
+		    	MdbBillErr.romchk = 1;
+	        break;
+	
+	        case 0x05:			                 //validator jammed
+	        	TraceBill("\r\n Drvbill jammed");
+			    MdbBillErr.jam = 1;			       
+		        break;
+	
+	        case 0x06:			                 //validator was reset
+	        	TraceBill("\r\n Drvbil reset");
+				break;
+		 
+	        case 0x07:			                 //bill removed	
+	        	TraceBill("\r\n Drvbil removed");
+	        	break;
+	 
+	        case 0x08:			                 //cash box out of position
+	        	TraceBill("\r\n Drvbill removeCash");
+			    MdbBillErr.removeCash = 1;	
+		        break;
+	
+	        case 0x09:			                 //validator disabled	
+	        	TraceBill("\r\n Drvbill disabled");
+	        	MdbBillErr.disable = 1;
+				break;
+	
+	        case 0x0A:			                 //invalid escrow request
+	        	TraceBill("\r\n Drvbil invalid");
+	       		break;
+	
+	        case 0x0B:			                 //bill rejected
+	        	TraceBill("\r\n Drvbil rejected");
+	        	break;
+	
+	        case 0x0C:			                 //possible credited bill removal
+	        	TraceBill("\r\n Drvbill cashErr");
+			    MdbBillErr.cashErr = 1;	
+		        break;
+		 case 0x29:
+		 	TraceBill("\r\n Drvbill recyclerErr");
+			   MdbBillErr.recyErr=1;
+		 	break;
+	        default:
+				TraceBill("\r\n Drvbill default");	
+				memset(&MdbBillErr,0,sizeof(MdbBillErr));
+			    break;
+	    	}
+         }
+}
+
+void updateBillErr()
+{
+	//MDBÖ½±ÒÆ÷¹ÊÕÏ×´Ì¬
+	DeviceStatePack.BillCommunicate = MdbBillErr.Communicate;
+	DeviceStatePack.Billmoto = MdbBillErr.moto;
+	DeviceStatePack.Billsensor = MdbBillErr.sensor;
+	DeviceStatePack.Billromchk = MdbBillErr.romchk;
+	DeviceStatePack.Billjam = MdbBillErr.jam;
+	DeviceStatePack.BillremoveCash = MdbBillErr.removeCash;
+	DeviceStatePack.BillcashErr = MdbBillErr.cashErr;
+	DeviceStatePack.Billdisable = MdbBillErr.disable;
+	DeviceStatePack.recyErr = MdbBillErr.recyErr;
+	memcpy(&DeviceStateBusiness,&DeviceStatePack,sizeof(DeviceStateBusiness));
 }
 
 
@@ -1221,6 +1314,12 @@ unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney,unsign
 			//2·¢ËÍpollÖ¸Áî
 			ComStatus = MdbConversation(0x33,NULL,0x00,&BillRdBuff[0],&BillRdLen);
 			BillBuffstatus=0;
+			if(BillRdLen==0)
+			{
+				TraceBill("\r\n Drvbill default");	
+				OSTimeDly(OS_TICKS_PER_SEC / 100);
+				memset(&MdbBillErr,0,sizeof(MdbBillErr));
+			}
 			TraceBill("\r\nDrvBillPoll= %02d-",BillRdLen);
 			for(i=0;i<BillRdLen;i++)
 			{
@@ -1231,13 +1330,16 @@ unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney,unsign
 				  ||(BillRdBuff[i]==0x24)||(BillRdBuff[i]==0x26)
 				  ||(BillRdBuff[i]==0x28)||(BillRdBuff[i]==0x29)
 				  //¿¨±Ò
-				  ||(BillRdBuff[i]==0x27)||((BillRdBuff[i]&0xf0)==0xf0)
+				  ||(BillRdBuff[i]==0x27)
 				  )
 				{
 					BillBuffstatus=BillRdBuff[i];
 				}
+				PayoutProcess(BillRdBuff[i]);
+				
 			}
 			TraceBill("\r\n");
+			updateBillErr();
 			//·¢ËÍ³ö±Ò³É¹¦
 			if(BillBuffstatus==0x2a)
 			{
@@ -1258,16 +1360,12 @@ unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney,unsign
 			  (BillBuffstatus==0x24)||(BillBuffstatus==0x26)
 			  ||(BillBuffstatus==0x28)||(BillBuffstatus==0x29)
 			  //¿¨±Ò
-			  ||(BillBuffstatus==0x27)||((BillBuffstatus&0xf0)==0xf0)
+			  ||(BillBuffstatus==0x27)
 			  )
 			{
 				if(rptStatusfail==0)
 				{
-					rptStatusfail=1;
-					if((BillBuffstatus&0xf0)==0xf0)
-					{
-						setchangeMoneyInd(SystemPara.RecyclerMoney);
-					}
+					rptStatusfail=1;					
 					PayoutRPTAPI(0,getTypeInd(),0,getchangeMoneyInd(),getpayAllMoneyInd());
 				}
 			}
