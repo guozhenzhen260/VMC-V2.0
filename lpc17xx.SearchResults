@@ -1,6 +1,19 @@
----- MBOX_VMCTOPC_PAYINESCROWOUT 匹配 (5 in 3 文件) ----
-Common.h (app):#define MBOX_VMCTOPC_PAYINESCROWOUT		    0x05
-PCComAPI.c (api):				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINESCROWOUT;	
-PCComAPI.c (api):				MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYINESCROWOUT;				
-Taskuart3device.c (uart3driver):					case MBOX_VMCTOPC_PAYINESCROWOUT:
-Taskuart3device.c (uart3driver):					case MBOX_VMCTOPC_PAYINESCROWOUT:
+---- DeviceStateBusiness.Hopper1State 匹配 (18 in 6 文件) ----
+CheckDeviceState.c (api):			TraceChange("\r\n MiddleHopper2=%d,%d,%d",DeviceStateBusiness.Hopper1State,DeviceStateBusiness.Hopper2State,DeviceStateBusiness.Hopper3State);
+CheckDeviceState.c (api):		if(DeviceStateBusiness.Hopper1State == 2)
+CheckDeviceState.c (api):		else if(DeviceStateBusiness.Hopper1State == 1)
+CheckDeviceState.c (api):        if(DeviceStateBusiness.Hopper1State == 1)
+CheckDeviceState.c (api):		if((DeviceStateBusiness.Hopper1State != 0)&&(DeviceStateBusiness.Hopper2State != 0)&&(DeviceStateBusiness.Hopper3State != 0))
+CheckDeviceState.c (api):			if(DeviceStateBusiness.Hopper1State == 2)
+Maintain.c (app):					if(DeviceStateBusiness.Hopper1State)
+Maintain.c (app):						LCDPrintf(5,lineNum+=2,0,SystemPara.Language,"%s%s[%#02x]",UserMaintainErrorMenuList.Hopper1State[SystemPara.Language],ErrorState(DeviceStateBusiness.Hopper1State),DeviceStatePack.Hopper1StateChk);
+Maintain.c (app):					if((DeviceStateBusiness.Hopper1State==0)&&(DeviceStateBusiness.Hopper2State==0)&&(DeviceStateBusiness.Hopper3State==0))
+Maintain.c (app):		    if(DeviceStateBusiness.Hopper1State)
+Maintain.c (app):				LCDPrintf(0,LINE7,0,SystemPara.Language,"%s%s[%#02x]",UserMaintainErrorMenuList.Hopper1State[SystemPara.Language],ErrorState(DeviceStateBusiness.Hopper1State),DeviceStatePack.Hopper1StateChk);
+PCComAPI.c (api):				if(DeviceStateBusiness.Hopper1State==0)
+taskUart0Device.c (uart0driver):				rst[index1+ 1] = ((DeviceStateBusiness.Hopper1State == 1) & 0x01) |
+taskUart0Device.c (uart0driver):				(((DeviceStateBusiness.Hopper1State == 2) & 0x01)<< 1) |
+UBProtocol.c (uart3driver):										if(DeviceStateBusiness.Hopper1State==0)
+UBProtocol.c (uart3driver):										if(DeviceStateBusiness.Hopper1State==1)
+UBProtocol.c (uart3driver):										if(DeviceStateBusiness.Hopper1State==2)
+UBProtocol_CR.c (uart3driver):								if(DeviceStateBusiness.Hopper1State==2)

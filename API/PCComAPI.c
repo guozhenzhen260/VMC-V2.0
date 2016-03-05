@@ -1697,6 +1697,7 @@ void PollAPI(uint32_t payAllMoney)
 								(PayoutRecyAPI(AccepterUboxMsg->Type)>=(AccepterUboxMsg->changeMoney))
 								//可以用这个面值进行找币
 								&&((AccepterUboxMsg->changeMoney)%SystemPara.RecyclerMoney==0)
+								&&(AccepterUboxMsg->changeMoney>0)
 
 							)
 							{
