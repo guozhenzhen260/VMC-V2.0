@@ -51,7 +51,7 @@ uint8_t ReturnMaintainKeyValue(uint8_t type)
       		{
       			Buzzer();
       			ret=1;
-			Timer.weiTimer=60*3;	
+			Timer.weiTimer=60*10;	
       		}
       	}
 	  //判断是否退出维护模式
@@ -80,7 +80,7 @@ uint8_t ReturnMaintainKeyValue(uint8_t type)
 *********************************************************************************************************/
 void SetWeihuTimer()
 {
-	Timer.weiTimer=60*3;	
+	Timer.weiTimer=60*10;	
 }
 /*********************************************************************************************************
 ** Function name:     	PasswordCheck
