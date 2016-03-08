@@ -1,2 +1,3 @@
----- HpOutNum= 匹配 (1 in 1 文件) ----
-HopperDriver.c (drivers):			Trace("\r\n HpOutNum=%d,res=%d",stEvbHp[HpNum-1].OutPutCount,res);
+---- MiddBillState 匹配 (2 in 1 文件) ----
+CheckDeviceState.c (api):		TraceBill("\r\n MiddBillState=%d",billError);
+CheckDeviceState.c (api):			TraceBill("\r\n MiddBillState2=%d",billError);
