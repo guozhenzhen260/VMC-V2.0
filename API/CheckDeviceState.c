@@ -138,13 +138,19 @@ uint8_t IsErrorState()
 			//故障时，只发送一次status
 			if(coinstatus==0)
 			{
-				StatusRPTAPI();
+				if(SystemPara.PcEnable==CRUBOX_PC)
+				{
+					StatusRPTAPI();
+				}
 				coinstatus=1;
 			}
 		}
 		else if(coinstatus == 1)
 		{
-			StatusRPTAPI();
+			if(SystemPara.PcEnable==CRUBOX_PC)
+			{
+				StatusRPTAPI();
+			}
 			coinstatus=0;
 		}
 	}
@@ -157,7 +163,10 @@ uint8_t IsErrorState()
 			//故障时，只发送一次status
 			if(changestatus==0)
 			{
-				StatusRPTAPI();
+				if(SystemPara.PcEnable==CRUBOX_PC)
+				{
+					StatusRPTAPI();
+				}
 				changestatus=1;
 			}
 		}
@@ -167,13 +176,19 @@ uint8_t IsErrorState()
 			//故障时，只发送一次status
 			if(changestatus==0)
 			{
-				StatusRPTAPI();
+				if(SystemPara.PcEnable==CRUBOX_PC)
+				{
+					StatusRPTAPI();
+				}
 				changestatus=1;
 			}
 		}
 		else if(changestatus == 1)
 		{
-			StatusRPTAPI();
+			if(SystemPara.PcEnable==CRUBOX_PC)
+			{
+				StatusRPTAPI();
+			}
 			changestatus=0;
 		}
 	}
