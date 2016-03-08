@@ -171,9 +171,9 @@ void Hopper_Init()
 ** output parameters:   无
 ** Returned value:      1：配币成功；0：配备失败
 *********************************************************************************************************/
-uint8_t Hopper_Distribute(uint32_t nMoney,uint8_t *tHp1,uint8_t *tHp2,uint8_t *tHp3)
+uint8_t Hopper_Distribute(uint32_t nMoney,uint32_t *tHp1,uint32_t *tHp2,uint32_t *tHp3)
 {
-	uint8_t Count = 0;
+	uint32_t Count = 0;
 	uint32_t i,nMoney1=0,nMoney2=0;
 	uint8_t ln1=0,ln2=0,ln3=0;
 
@@ -265,14 +265,14 @@ uint8_t Hopper_Distribute(uint32_t nMoney,uint8_t *tHp1,uint8_t *tHp2,uint8_t *t
 *********************************************************************************************************/
 uint32_t Hopper_Dispence(uint32_t ChangeMoney,uint32_t *SurplusMoney,uint8_t *Hp1OutNum,uint8_t *Hp2OutNum,uint8_t *Hp3OutNum)
 {
-	uint8_t Hp1Out=0,Hp2Out=0,Hp3Out=0;
+	uint32_t Hp1Out=0,Hp2Out=0,Hp3Out=0;
 	uint8_t res,mErrFlag = 5,err;
 	uint8_t ln1=0,ln2=0,ln3=0,i;
 	MessagePack *HpBackMsg;
 	uint8_t hpoutcount = 0;
 	uint32_t LastMoney = 0;
 
-	//确定三个Hopper的单位面值大小顺序
+	//1.确定三个Hopper的单位面值大小顺序
 	for(i=0;i<3;i++)
 	{
 		if(stEvbHp[i].Num == 1)
@@ -290,11 +290,15 @@ uint32_t Hopper_Dispence(uint32_t ChangeMoney,uint32_t *SurplusMoney,uint8_t *Hp
 			ln3 = i;
 		}
 	}
+	//2.如果找零金额小于最小面值，则直接退出
 	if(ChangeMoney < stEvbHp[ln1].Price)
 	{
 		*SurplusMoney = ChangeMoney; 
 		return 0;
 	}
+
+
+	
 	while(mErrFlag)
 	{
 		//对Hopper进行配币

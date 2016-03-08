@@ -2982,7 +2982,7 @@ unsigned char VPMission_Status_RPT( uint8_t check_st,uint8_t bv_st,uint8_t cc_st
 	{
 		sysVPMission.check_st = 0;
 		sysVPMission.bv_st = bv_st;
-		sysVPMission.cc_st = 0; 
+		sysVPMission.cc_st = ErrorStatus(1); 
 		sysVPMission.vmc_st = vmc_st;
 		if(change>0)
 			sysVPMission.change = 50000;
@@ -2995,11 +2995,11 @@ unsigned char VPMission_Status_RPT( uint8_t check_st,uint8_t bv_st,uint8_t cc_st
 		sysVPMission.recyclerSum[3] = 0xfe;
 		sysVPMission.recyclerSum[4] = 0xfd;
 		sysVPMission.recyclerSum[5] = SystemPara.SaleTime;
+		sysVPMission.coinSum[0] = 0;
 		if(sysVPMission.change>0)
-			sysVPMission.coinSum[0] = 50;
+			sysVPMission.coinSum[1] = 50;
 		else
-			sysVPMission.coinSum[0] = 0;
-		sysVPMission.coinSum[1] = 0;
+			sysVPMission.coinSum[1] = 0;		
 		sysVPMission.coinSum[2] = 0;
 		sysVPMission.coinSum[3] = 0;
 		sysVPMission.coinSum[4] = 0;
