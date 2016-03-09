@@ -296,8 +296,9 @@ uint32_t Hopper_Dispence(uint32_t ChangeMoney,uint32_t *SurplusMoney,uint8_t *Hp
 		*SurplusMoney = ChangeMoney; 
 		return 0;
 	}
+	TraceChange("\r\nMidddprice=%d,%d,%d\r\n",stEvbHp[ln1].Price,stEvbHp[ln2].Price,stEvbHp[ln3].Price);
 
-
+	
 	
 	while(mErrFlag)
 	{
@@ -324,7 +325,7 @@ uint32_t Hopper_Dispence(uint32_t ChangeMoney,uint32_t *SurplusMoney,uint8_t *Hp
 				OSMboxPost(g_ChangeMoneyMail,&MsgAccepterPack);
 				TraceChange("\r\nMidd 2.1=%d,%d",MsgAccepterPack.PayoutType,MsgAccepterPack.PayoutNum);
 				//等待DeviceTask任务返回应答邮箱，得到指定Hopper的出币情况
-				HpBackMsg = OSMboxPend(g_ChangeBackMoneyMail,12000,&err);
+				HpBackMsg = OSMboxPend(g_ChangeBackMoneyMail,200*60*10,&err);
 				if(err == OS_NO_ERR)
 				{
 					TraceChange("\r\nMidd 2.1BackCmd=%d",HpBackMsg->PayoutBackCmd);
@@ -379,7 +380,7 @@ uint32_t Hopper_Dispence(uint32_t ChangeMoney,uint32_t *SurplusMoney,uint8_t *Hp
 				OSMboxPost(g_ChangeMoneyMail,&MsgAccepterPack);
 				TraceChange("\r\nMidd 2.2=%d,%d",MsgAccepterPack.PayoutType,MsgAccepterPack.PayoutNum);
 				//等待DeviceTask任务返回应答邮箱，得到指定Hopper的出币情况
-				HpBackMsg = OSMboxPend(g_ChangeBackMoneyMail,12000,&err);
+				HpBackMsg = OSMboxPend(g_ChangeBackMoneyMail,200*60*10,&err);
 				if(err == OS_NO_ERR)
 				{
 					TraceChange("\r\nMidd 2.2BackCmd=%d",HpBackMsg->PayoutBackCmd);
@@ -434,7 +435,7 @@ uint32_t Hopper_Dispence(uint32_t ChangeMoney,uint32_t *SurplusMoney,uint8_t *Hp
 				OSMboxPost(g_ChangeMoneyMail,&MsgAccepterPack);
 				TraceChange("\r\nMidd 2.3=%d,%d",MsgAccepterPack.PayoutType,MsgAccepterPack.PayoutNum);
 				//等待DeviceTask任务返回应答邮箱，得到指定Hopper的出币情况
-				HpBackMsg = OSMboxPend(g_ChangeBackMoneyMail,12000,&err);
+				HpBackMsg = OSMboxPend(g_ChangeBackMoneyMail,200*60*10,&err);
 				if(err == OS_NO_ERR)
 				{
 					TraceChange("\r\nMidd 2.3BackCmd=%d",HpBackMsg->PayoutBackCmd);
@@ -507,7 +508,94 @@ uint32_t Hopper_Dispence(uint32_t ChangeMoney,uint32_t *SurplusMoney,uint8_t *Hp
 }
 
 
+/*********************************************************************************************************
+** Function name:     	Hopper_DispenceAPI
+** Descriptions:	    Hopper设备兑零操作函数
+** input parameters:    ChangeMoney——需要兑零的金额
+** output parameters:   SurplusMoney——兑零失败后剩余的金额
+						Hp1OutNum——00地址Hopper的出币个数
+						Hp2OutNum——01地址Hopper的出币个数
+						Hp3OutNum——10地址Hopper的出币个数
+** Returned value:      1：兑币成功；0：失败
+*********************************************************************************************************/
+uint32_t Hopper_DispenceAPI(uint32_t ChangeMoneyall,uint32_t *SurplusMoneyall,uint8_t *Hp1OutNum,uint8_t *Hp2OutNum,uint8_t *Hp3OutNum)
+{
+	uint8_t Hp1Out=0,Hp2Out=0,Hp3Out=0;
+	uint8_t res,mErrFlag = 5,err;	
+	uint8_t ln1=0,ln2=0,ln3=0,i;
+	MessagePack *HpBackMsg;
+	uint8_t hpoutcount = 0;
+	uint32_t LastMoney = 0;
 
+	uint32_t ChangeMoney = 0,SurplusMoney=0,minprice=0,dispenseValue=0,tempdispenseValue=0;
+	uint8_t temp=0,j=0,hpprice[3]={0};
+
+	//1.确定三个Hopper的单位面值大小顺序
+	for(i=0;i<3;i++)
+	{
+		if(stEvbHp[i].Num == 1)
+		{
+			ln1 = i;
+		}
+		else
+		if(stEvbHp[i].Num == 2)
+		{
+			ln2 = i;
+		}
+		else
+		if(stEvbHp[i].Num == 3)
+		{
+			ln3 = i;
+		}
+	}
+	//2.如果找零金额小于最小面值，则直接退出
+	if(ChangeMoneyall < stEvbHp[ln1].Price)
+	{
+		*SurplusMoneyall = ChangeMoney; 
+		return 0;
+	}
+	
+	//3.计算最小找零面值
+	if(stEvbHp[ln1].Price>0)
+		hpprice[temp++]=stEvbHp[ln1].Price;
+	if(stEvbHp[ln2].Price>0)
+		hpprice[temp++]=stEvbHp[ln2].Price;
+	if(stEvbHp[ln3].Price>0)
+		hpprice[temp++]=stEvbHp[ln3].Price;	
+	minprice=hpprice[0];
+	for(j=0;j<temp;j++)
+	{
+		//TraceChange("\r\n%dhpprice=%ld,min=%ld",j,hpprice[j],minprice);
+		if(minprice>hpprice[j])
+		{
+			minprice=hpprice[j];
+			//TraceChange("\r\nnowmin=%ld",minprice);
+		}
+	}	
+	//4.计算本次可找零数量
+	dispenseValue = ChangeMoneyall / minprice;//发送找零基准数量	
+	TraceChange("\r\nMidddprice=%d,%d,%d,min=%ld,change=%ld,dispense=%ld\r\n",stEvbHp[ln1].Price,stEvbHp[ln2].Price,stEvbHp[ln3].Price,minprice,ChangeMoneyall,dispenseValue);
+	
+	while(dispenseValue>0)
+	{
+		tempdispenseValue=(dispenseValue>250)?250:dispenseValue;
+		dispenseValue-=tempdispenseValue;
+
+		ChangeMoney=tempdispenseValue*minprice;	
+		TraceChange("\r\nMiddChangeAPI=%ld",ChangeMoney);
+		Hopper_Dispence(ChangeMoney,&SurplusMoney, &Hp1Out, &Hp2Out, &Hp3Out);
+		if(SurplusMoney > 0)
+		{
+			*SurplusMoneyall += SurplusMoney;
+			TraceChange("\r\nMiddChangeAPI outfail=%ld",SurplusMoney);			
+		}
+		else
+		{
+			TraceChange("\r\nMiddChangeAPI outsucc");			
+		}
+		
+	}
+}
 
 /*********************************************************************************************************
 ** Function name:       ChangeGetTubes
@@ -839,7 +927,7 @@ uint8_t ChangerDevPayoutAPI(uint32_t money,uint32_t *debtMoney)
 	else if(SystemPara.CoinChangerType == HOPPER_CHANGER)
 	{
 		TraceChange("\r\nMiddChange 1.out=%ld",money);
-		Hopper_Dispence(money, &backmoney, &HopperoutNum[0], &HopperoutNum[1], &HopperoutNum[2]);
+		Hopper_DispenceAPI(money, &backmoney, &HopperoutNum[0], &HopperoutNum[1], &HopperoutNum[2]);
 		if(backmoney > 0)
 		{
 			*debtMoney = backmoney;

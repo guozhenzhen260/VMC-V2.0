@@ -1,3 +1,5 @@
----- MiddBillState 匹配 (2 in 1 文件) ----
-CheckDeviceState.c (api):		TraceBill("\r\n MiddBillState=%d",billError);
-CheckDeviceState.c (api):			TraceBill("\r\n MiddBillState2=%d",billError);
+---- Hopper_Dispence 匹配 (4 in 1 文件) ----
+ChangerAPI.c (api):uint32_t Hopper_DispenceAPI(uint32_t ChangeMoneyall,uint32_t *SurplusMoneyall,uint8_t *Hp1OutNum,uint8_t *Hp2OutNum,uint8_t *Hp3OutNum)
+ChangerAPI.c (api):		Hopper_Dispence(ChangeMoney,&SurplusMoney, &Hp1Out, &Hp2Out, &Hp3Out);
+ChangerAPI.c (api):uint32_t Hopper_Dispence(uint32_t ChangeMoney,uint32_t *SurplusMoney,uint8_t *Hp1OutNum,uint8_t *Hp2OutNum,uint8_t *Hp3OutNum)
+ChangerAPI.c (api):		Hopper_DispenceAPI(money, &backmoney, &HopperoutNum[0], &HopperoutNum[1], &HopperoutNum[2]);
