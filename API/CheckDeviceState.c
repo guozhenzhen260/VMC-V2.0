@@ -115,6 +115,7 @@ uint8_t IsErrorState()
 			//故障时，只发送一次status
 			if(status==0)
 			{
+				TracePC(">>status6");
 				StatusRPTAPI();
 				status=1;
 			}
@@ -262,6 +263,7 @@ uint8_t IsErrorState()
 			billError = 0;
 			ResetBill();
 			TraceBill("\r\n MiddBillState2=%d",billError);
+			TracePC(">>status7");
 			StatusRPTAPI();
 			status=0;
 		}

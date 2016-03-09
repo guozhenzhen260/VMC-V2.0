@@ -1346,8 +1346,11 @@ unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney,unsign
 				if(rptStatus==0)
 				{
 					rptStatus=1;
-					setchangeMoneyInd(SystemPara.RecyclerMoney);
-					PayoutRPTAPI(0,getTypeInd(),SystemPara.RecyclerMoney,getchangeMoneyInd(),getpayAllMoneyInd());
+					if(SystemPara.PcEnable==CRUBOX_PC)
+					{
+						setchangeMoneyInd(SystemPara.RecyclerMoney);
+						PayoutRPTAPI(0,getTypeInd(),SystemPara.RecyclerMoney,getchangeMoneyInd(),getpayAllMoneyInd());
+					}
 				}
 			}
 			else
@@ -1365,8 +1368,11 @@ unsigned char BillRecyclerPayoutValueExpanse(unsigned int RecyPayoutMoney,unsign
 			{
 				if(rptStatusfail==0)
 				{
-					rptStatusfail=1;					
-					PayoutRPTAPI(0,getTypeInd(),0,getchangeMoneyInd(),getpayAllMoneyInd());
+					rptStatusfail=1;	
+					if(SystemPara.PcEnable==CRUBOX_PC)
+					{
+						PayoutRPTAPI(0,getTypeInd(),0,getchangeMoneyInd(),getpayAllMoneyInd());
+					}
 				}
 			}
 			else

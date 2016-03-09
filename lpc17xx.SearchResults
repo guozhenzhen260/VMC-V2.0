@@ -1,5 +1,21 @@
----- Hopper_Dispence 匹配 (4 in 1 文件) ----
-ChangerAPI.c (api):uint32_t Hopper_DispenceAPI(uint32_t ChangeMoneyall,uint32_t *SurplusMoneyall,uint8_t *Hp1OutNum,uint8_t *Hp2OutNum,uint8_t *Hp3OutNum)
-ChangerAPI.c (api):		Hopper_Dispence(ChangeMoney,&SurplusMoney, &Hp1Out, &Hp2Out, &Hp3Out);
-ChangerAPI.c (api):uint32_t Hopper_Dispence(uint32_t ChangeMoney,uint32_t *SurplusMoney,uint8_t *Hp1OutNum,uint8_t *Hp2OutNum,uint8_t *Hp3OutNum)
-ChangerAPI.c (api):		Hopper_DispenceAPI(money, &backmoney, &HopperoutNum[0], &HopperoutNum[1], &HopperoutNum[2]);
+---- StatusRPTAPI 匹配 (20 in 5 文件) ----
+Business.c (app):		StatusRPTAPI();
+Business.c (app):							StatusRPTAPI();
+Business.c (app):						StatusRPTAPI();
+Business.c (app):						StatusRPTAPI();
+Business.c (app):						StatusRPTAPI();
+CheckDeviceState.c (api):				StatusRPTAPI();
+CheckDeviceState.c (api):					StatusRPTAPI();
+CheckDeviceState.c (api):				StatusRPTAPI();
+CheckDeviceState.c (api):					StatusRPTAPI();
+CheckDeviceState.c (api):					StatusRPTAPI();
+CheckDeviceState.c (api):				StatusRPTAPI();
+CheckDeviceState.c (api):			StatusRPTAPI();
+PCComAPI.c (api):void BillStatusRPTAPI()
+PCComAPI.c (api):					StatusRPTAPI();
+PCComAPI.c (api):					StatusRPTAPI();
+PCComAPI.c (api):void StatusRPTAPI()
+PCComAPI.c (api):							StatusRPTAPI();
+PCComAPI.h (api):extern void BillStatusRPTAPI(void);
+PCComAPI.h (api):extern void StatusRPTAPI(void);
+UBProtocol.c (uart3driver):	StatusRPTAPI();

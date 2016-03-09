@@ -575,7 +575,7 @@ uint32_t Hopper_DispenceAPI(uint32_t ChangeMoneyall,uint32_t *SurplusMoneyall,ui
 	//4.计算本次可找零数量
 	dispenseValue = ChangeMoneyall / minprice;//发送找零基准数量	
 	TraceChange("\r\nMidddprice=%d,%d,%d,min=%ld,change=%ld,dispense=%ld\r\n",stEvbHp[ln1].Price,stEvbHp[ln2].Price,stEvbHp[ln3].Price,minprice,ChangeMoneyall,dispenseValue);
-	
+	*SurplusMoneyall=0;
 	while(dispenseValue>0)
 	{
 		tempdispenseValue=(dispenseValue>250)?250:dispenseValue;

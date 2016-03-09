@@ -1655,6 +1655,7 @@ void BillCoinEnable(uint8_t enable)
 	//有做纸币器操作之后，需要上报设备状态
 	if(billCtr>0)
 	{
+		TracePC(">>status1");
 		StatusRPTAPI();
 	}
 }
@@ -3381,6 +3382,7 @@ void BusinessProcess(void *pvData)
 						if(SystemPara.PcEnable!=CRUBOX_PC)
 						{
 							Timer.DispFreeTimer=0;
+							TracePC(">>status2");
 							StatusRPTAPI();
 							OSTimeDly(OS_TICKS_PER_SEC/2);
 							LCDClrScreen();
@@ -3388,11 +3390,7 @@ void BusinessProcess(void *pvData)
 							rstTime();
 							vmcStatus = VMC_ERROR;
 						}
-					}
-					else
-					{
-						BillStatusRPTAPI();//判断纸币器是否故障或恢复，上报给pc
-					}
+					}					
 				}
 				//5.是否进入维护状态
 				if(ReturnMaintainKeyValue(1))
@@ -3757,6 +3755,7 @@ void BusinessProcess(void *pvData)
 						LCDClrScreen();
 						BillCoinCtr(1,1,1);
 						OSTimeDly(OS_TICKS_PER_SEC/2);
+						TracePC(">>status3");
 						StatusRPTAPI();
 						rstTime();
 						vmcStatus = VMC_FREE;
@@ -3857,6 +3856,7 @@ void BusinessProcess(void *pvData)
 					if(SystemPara.EasiveEnable == 0)
 					{
 						OSTimeDly(OS_TICKS_PER_SEC);
+						TracePC(">>status4");
 						StatusRPTAPI();
 						OSTimeDly(OS_TICKS_PER_SEC);
 					}
@@ -3881,6 +3881,7 @@ void BusinessProcess(void *pvData)
 					if(SystemPara.EasiveEnable == 0)
 					{
 						OSTimeDly(OS_TICKS_PER_SEC);
+						TracePC(">>status5");
 						StatusRPTAPI();
 						OSTimeDly(OS_TICKS_PER_SEC);
 					}
