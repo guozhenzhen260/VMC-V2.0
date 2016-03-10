@@ -612,7 +612,7 @@ unsigned char VPBusFrameUnPack( void )
 unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 {
     
-    uint8_t i=0,j=0,k=0,index=0,tempcan=0;
+    uint8_t i=0,j=0,k=0,index=0,tempcan=0,dex=0,dexind=0,strdex[20] = {0};	
 	uint8_t issnup=0;//1时不升级sn,0时需要升级sn
 	uint16_t tempMoney;
 	uint8_t tempSend=0;
@@ -1377,40 +1377,35 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 						sysVPMission.send.msg[3]  = COLUMN_NUM_SET + 1;
 						break;
 					case VP_INFO_VER:
-						sysVPMission.send.datLen  = 32;
-						sysVPMission.send.msg[0]  = VP_INFO_VER;
+						i = 0;						
+						sysVPMission.send.msg[i++]  = VP_INFO_VER;
 						// unpeng-zonghe-2.00(2012-11-07)
-						sysVPMission.send.msg[1]  = 'J'; 	 
-						sysVPMission.send.msg[2]  = 'u'; 	 
-						sysVPMission.send.msg[3]  = 'n'; 	 
-						sysVPMission.send.msg[4]  = 'p';
-						sysVPMission.send.msg[5]  = 'e'; 	 
-						sysVPMission.send.msg[6]  = 'n'; 	 
-						sysVPMission.send.msg[7]  = 'g'; 	 
-						sysVPMission.send.msg[8]  = '-';
-						sysVPMission.send.msg[9]  = 'z'; 	 
-						sysVPMission.send.msg[10]  = 'o'; 	 
-						sysVPMission.send.msg[11]  = 'n';
-						sysVPMission.send.msg[12]  = 'g'; 	 
-						sysVPMission.send.msg[13]  = 'h'; 	 
-						sysVPMission.send.msg[14]  = 'e'; 	 
-						sysVPMission.send.msg[15]  = '-';
-						sysVPMission.send.msg[16]  = '2'; 	 
-						sysVPMission.send.msg[17]  = '.'; 	 
-						sysVPMission.send.msg[18]  = '0';
-						sysVPMission.send.msg[19]  = '3';
-						sysVPMission.send.msg[20]  = '('; 	 
-						sysVPMission.send.msg[21]  = '2'; 	 
-						sysVPMission.send.msg[22]  = '0'; 	 
-						sysVPMission.send.msg[23]  = '1';
-						sysVPMission.send.msg[24]  = '4'; 	 
-						sysVPMission.send.msg[25]  = '-'; 	 
-						sysVPMission.send.msg[26]  = '0';
-						sysVPMission.send.msg[27]  = '4'; 	 
-						sysVPMission.send.msg[28]  = '-'; 	 
-						sysVPMission.send.msg[29]  = '0'; 	 
-						sysVPMission.send.msg[30]  = '3';
-						sysVPMission.send.msg[31]  = ')';
+						sysVPMission.send.msg[i++]  = 'J'; 	 
+						sysVPMission.send.msg[i++]  = 'u'; 	 
+						sysVPMission.send.msg[i++]  = 'n'; 	 
+						sysVPMission.send.msg[i++]  = 'p';
+						sysVPMission.send.msg[i++]  = 'e'; 	 
+						sysVPMission.send.msg[i++]  = 'n'; 	 
+						sysVPMission.send.msg[i++]  = 'g'; 	 
+						sysVPMission.send.msg[i++]  = '-';
+						sysVPMission.send.msg[i++]  = 'z'; 	 
+						sysVPMission.send.msg[i++]  = 'o'; 	 
+						sysVPMission.send.msg[i++]  = 'n';
+						sysVPMission.send.msg[i++]  = 'g'; 	 
+						sysVPMission.send.msg[i++]  = 'h'; 	 
+						sysVPMission.send.msg[i++]  = 'e'; 	 
+						sysVPMission.send.msg[i++]  = '-';
+						sysVPMission.send.msg[i++]  = '2'; 	 
+						sysVPMission.send.msg[i++]  = '.'; 	 
+						sysVPMission.send.msg[i++]  = '0';
+						sysVPMission.send.msg[i++]  = '3';
+						sysVPMission.send.msg[i++]  = '('; 	 
+						dexind=sprintf(strdex,"%s",__DATE__);
+						for(dex=0;dex<dexind;dex++)
+							sysVPMission.send.msg[i++]  = strdex[dex]; 
+						TracePC("\r\n Drv Uboxdata=%s",__DATE__ );
+						sysVPMission.send.msg[i++]  = ')';
+						sysVPMission.send.datLen  = i;
 						break;
 					case VP_INFO_HARD:
 						sysVPMission.send.datLen  = 18;
@@ -4810,14 +4805,14 @@ unsigned char VPMission_Payout_RPT( uint8_t payoutDev,unsigned char Type, unsign
     sysVPMission.type = Type;
 	sysVPMission.payoutMoney = payoutMoney;
 	sysVPMission.payAllMoney = payAllMoney;
-	//===========================================	
+	//===========================================		
+	flag = VPMsgPackSend( VP_PAYOUT_RPT, 1);
+      if( flag != VP_ERR_NULL )
+      {
+		return VP_ERR_PAR;
+	}
 	while( retry )
 	{
-		flag = VPMsgPackSend( VP_PAYOUT_RPT, 1);
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
 		Timer.PCRecTimer = VP_TIME_OUT;
 		while( Timer.PCRecTimer )
 		{

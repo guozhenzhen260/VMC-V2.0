@@ -1,21 +1,19 @@
----- StatusRPTAPI 匹配 (20 in 5 文件) ----
-Business.c (app):		StatusRPTAPI();
-Business.c (app):							StatusRPTAPI();
-Business.c (app):						StatusRPTAPI();
-Business.c (app):						StatusRPTAPI();
-Business.c (app):						StatusRPTAPI();
-CheckDeviceState.c (api):				StatusRPTAPI();
-CheckDeviceState.c (api):					StatusRPTAPI();
-CheckDeviceState.c (api):				StatusRPTAPI();
-CheckDeviceState.c (api):					StatusRPTAPI();
-CheckDeviceState.c (api):					StatusRPTAPI();
-CheckDeviceState.c (api):				StatusRPTAPI();
-CheckDeviceState.c (api):			StatusRPTAPI();
-PCComAPI.c (api):void BillStatusRPTAPI()
-PCComAPI.c (api):					StatusRPTAPI();
-PCComAPI.c (api):					StatusRPTAPI();
-PCComAPI.c (api):void StatusRPTAPI()
-PCComAPI.c (api):							StatusRPTAPI();
-PCComAPI.h (api):extern void BillStatusRPTAPI(void);
-PCComAPI.h (api):extern void StatusRPTAPI(void);
-UBProtocol.c (uart3driver):	StatusRPTAPI();
+---- PayoutRPTAPI 匹配 (18 in 5 文件) ----
+BillAccepter.c (drivers):						PayoutRPTAPI(0,getTypeInd(),SystemPara.RecyclerMoney,getchangeMoneyInd(),getpayAllMoneyInd());
+BillAccepter.c (drivers):						PayoutRPTAPI(0,getTypeInd(),0,getchangeMoneyInd(),getpayAllMoneyInd());
+Business.c (app):			PayoutRPTAPI(2,0,GetAmountMoney(),0,0);
+Business.c (app):							PayoutRPTAPI(1,0,RecyPayoutMoneyBack,0,paymoney);
+Business.c (app):					PayoutRPTAPI(1,0,RecyPayoutMoneyBack,0,paymoney);
+Business.c (app):			PayoutRPTAPI(0,0,GetAmountMoney()-backmoney,0,0);
+Business.c (app):			PayoutRPTAPI(0,0,GetAmountMoney(),0,0);
+Business.c (app):			PayoutRPTAPI(0,0,tempmoney-backmoney,0,0);
+Business.c (app):			PayoutRPTAPI(0,0,tempmoney,0,0);
+Business.c (app):			PayoutRPTAPI(0,0,0,0,0);
+PCComAPI.c (api):void PayoutRPTAPI(uint8_t payoutDev,uint8_t payoutType,uint16_t payoutMoney,uint16_t payoutRemain,uint32_t payAllMoney)
+PCComAPI.c (api):		PayoutRPTAPI(0,Type,changeMoney-backmoney,backmoney,payAllMoney);
+PCComAPI.c (api):		PayoutRPTAPI(0,Type,changeMoney,0,payAllMoney);
+PCComAPI.c (api):			PayoutRPTAPI(0,Type,backmoney,changeMoney-backmoney,payAllMoney);
+PCComAPI.c (api):			PayoutRPTAPI(0,Type,backmoney,changeMoney-backmoney,payAllMoney);
+PCComAPI.c (api):	PayoutRPTAPI(0,Type,changeMoney,remainMoney,payAllMoney);	 	
+PCComAPI.h (api):extern void PayoutRPTAPI(uint8_t payoutDev,uint8_t payoutType,uint16_t payoutMoney,uint16_t payoutRemain,uint32_t payAllMoney);
+Taskdevice.c (drivers):					PayoutRPTAPI(0,getTypeInd(),0,getchangeMoneyInd(),getpayAllMoneyInd());
