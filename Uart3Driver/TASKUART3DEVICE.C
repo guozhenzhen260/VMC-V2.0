@@ -184,6 +184,7 @@ void Uart3TaskDevice(void *pvData)
 
 	while(1)
 	{
+		TracePC("\r\n Task PcEnable=%d",SystemPara.PcEnable); 
 		if(SystemPara.PcEnable == ZHIHUI_PC)
 		{
 			task3_zh_poll();

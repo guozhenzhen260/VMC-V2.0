@@ -115,10 +115,11 @@ void Uart1TaskDevice(void *pvData)
 	
 	
 	while(1)
-	{		
+	{	
 		if(SystemPara.UserSelectKeyBoard==SELECT_KEY)
 		{
 			//Trace("\r\n UART1TASK");
+			TraceSelection("\r\n Taskpkey=%d",SELECT_KEY); 
 			//1.poll选货按键
 			key=GetSelectKey();
 			//有按键，上报按键值
@@ -178,10 +179,11 @@ void Uart1TaskDevice(void *pvData)
 		//检查格子柜
 		else if(SystemPara.hefangGui==SERIAL_GEZI)
 		{
+			TraceChannel("Task_hefang==%d\r\n",SERIAL_GEZI);
 			//接收盒饭柜控制邮箱  Add by liya 2014-01-20
 			GeziMsg = OSMboxPend(g_HeFanGuiMail,OS_TICKS_PER_SEC/100,&ComStatus);
 			if(ComStatus == OS_NO_ERR)
-			{
+			{				
 				switch(GeziMsg->HeFanGuiHandle)	
 				{
 					case HEFANGUI_KAIMEN:
@@ -206,6 +208,7 @@ void Uart1TaskDevice(void *pvData)
 		//检查富士找零器
 		else if(SystemPara.BillRecyclerType == FS_BILLRECYCLER)
 		{
+			print_fs("Task_FS==%d\r\n",FS_BILLRECYCLER);
 			FS_poll();
 			msleep(10);
 		}
