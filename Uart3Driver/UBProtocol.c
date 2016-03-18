@@ -2380,6 +2380,34 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 }
 
 /*********************************************************************************************************
+** Function name:     	VPMission_PackOpt
+** Descriptions:	    收发操作
+** input parameters:    
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+unsigned char VPMission_PackOpt(  unsigned char msgType, unsigned char flag  )
+{
+	VPMsgPackSend( msgType,flag);
+	if(flag==1)
+	{
+		Timer.PCRecTimer = VP_TIME_OUT;
+		while( Timer.PCRecTimer )
+		{
+			if( VPBusFrameUnPack() )
+			{				
+				break;				
+			}
+		}
+		if( Timer.PCRecTimer==0 )
+		{			
+	       	return VP_ERR_COM;
+		}
+	}
+	return VP_ERR_NULL;
+}
+
+/*********************************************************************************************************
 ** Function name:     	VPMission_Setup_RPT
 ** Descriptions:	    启动时上报配置信息
 ** input parameters:    
@@ -2393,53 +2421,8 @@ unsigned char VPMission_Setup_RPT( void )
 	unsigned char flag = 0;
 
     retry = VP_COM_RETRY;   
-	flag = VPMsgPackSend( VP_VMC_SETUP,1);
-	//DisplayStr( 0, 0, 1, "2", 1 );  
-	//WaitForWork(2000,NULL);
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-
-	while( retry )
-	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
-		{
-			//DisplayStr( 0, 0, 1, "3", 1 );  
-			//WaitForWork(1000,NULL);
-			if( VPBusFrameUnPack() )
-			{
-				//DisplayStr( 0, 0, 1, "4", 1 );  
-				//WaitForWork(2000,NULL);
-			    //sysVPMission.comErrNum = 0;
-				recRes = 1;
-				break;				
-			}
-		}
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
-		}
-	}	
-	if( retry== 0 )
-	{
-		//sysVPMission.comErrNum++;
-		//
-        return VP_ERR_COM;
-	}
-    switch( sysVPMission.receive.msgType )
-	{
-		default:
-		    break;
-	}
-	
-	return VP_ERR_NULL;
+	flag = VPMission_PackOpt( VP_VMC_SETUP,1);		
+	return flag;
 }
 
 
@@ -2461,14 +2444,14 @@ unsigned char VP_CMD_HuodaoPar( void )
 			{
 				if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 		        {
-			    	VPMsgPackSend( VP_ACK_RPT, 0);
+			    	VPMission_PackOpt( VP_ACK_RPT, 0);
 		        }
 			}
 			else
 			{
 				if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 			    {
-					VPMsgPackSend( VP_ACK_RPT, 0 );
+					VPMission_PackOpt( VP_ACK_RPT, 0 );
 				}
 			}
 			TracePC("\r\n DrvHuodaoIDSet changed by yoc");
@@ -2501,7 +2484,7 @@ unsigned char VP_CMD_HuodaoPar( void )
 		}
 		else
 		{
-			VPMsgPackSend( VP_NAK_RPT, 0);  
+			VPMission_PackOpt( VP_NAK_RPT, 0);  
 			return VP_ERR_PAR;
 		}
 	}
@@ -2511,14 +2494,14 @@ unsigned char VP_CMD_HuodaoPar( void )
 		{
 			if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 	        {
-		    	VPMsgPackSend( VP_ACK_RPT, 0);
+		    	VPMission_PackOpt( VP_ACK_RPT, 0);
 	        }
 		}
 		else
 		{
 			if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 		    {
-				VPMsgPackSend( VP_ACK_RPT, 0 );
+				VPMission_PackOpt( VP_ACK_RPT, 0 );
 			}
 		}
 	}
@@ -2546,14 +2529,14 @@ unsigned char VP_CMD_HuodaoNo( void )
 			{
 				if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 		        {
-			    	VPMsgPackSend( VP_ACK_RPT, 0);
+			    	VPMission_PackOpt( VP_ACK_RPT, 0);
 		        }
 			}
 			else
 			{
 				if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 			    {
-					VPMsgPackSend( VP_ACK_RPT, 0 );
+					VPMission_PackOpt( VP_ACK_RPT, 0 );
 				}
 			}	
 			TracePC("\r\n DrvHuodaoNOSet");
@@ -2573,7 +2556,7 @@ unsigned char VP_CMD_HuodaoNo( void )
 		}
 		else
 		{
-			VPMsgPackSend( VP_NAK_RPT, 0 );  //1,0
+			VPMission_PackOpt( VP_NAK_RPT, 0 );  //1,0
 			return VP_ERR_PAR;
 		}
 	}
@@ -2583,14 +2566,14 @@ unsigned char VP_CMD_HuodaoNo( void )
 		{
 			if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 	        {
-		    	VPMsgPackSend( VP_ACK_RPT, 0);
+		    	VPMission_PackOpt( VP_ACK_RPT, 0);
 	        }
 		}
 		else
 		{
 			if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 		    {
-				VPMsgPackSend( VP_ACK_RPT, 0 );
+				VPMission_PackOpt( VP_ACK_RPT, 0 );
 			}
 		}
 	}
@@ -2621,14 +2604,14 @@ unsigned char VP_CMD_GoodsPar( void )
 			{
 				if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 		        {
-			    	VPMsgPackSend( VP_ACK_RPT, 0);
+			    	VPMission_PackOpt( VP_ACK_RPT, 0);
 		        }
 			}
 			else
 			{
 				if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 			    {
-					VPMsgPackSend( VP_ACK_RPT, 0 );
+					VPMission_PackOpt( VP_ACK_RPT, 0 );
 				}
 			}	
 			Binunm = sysVPMission.receive.msg[0];
@@ -2710,7 +2693,7 @@ unsigned char VP_CMD_GoodsPar( void )
 		}
 		else
 		{
-			VPMsgPackSend( VP_NAK_RPT, 0);  
+			VPMission_PackOpt( VP_NAK_RPT, 0);  
 			return VP_ERR_PAR;
 		}
 	}
@@ -2720,14 +2703,14 @@ unsigned char VP_CMD_GoodsPar( void )
 		{
 			if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 	        {
-		    	VPMsgPackSend( VP_ACK_RPT, 0);
+		    	VPMission_PackOpt( VP_ACK_RPT, 0);
 	        }
 		}
 		else
 		{
 			if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 		    {
-				VPMsgPackSend( VP_ACK_RPT, 0 );
+				VPMission_PackOpt( VP_ACK_RPT, 0 );
 			}
 		}
 	}
@@ -2753,14 +2736,14 @@ unsigned char VP_CMD_Position( void )
 			{
 				if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 		        {
-			    	VPMsgPackSend( VP_ACK_RPT, 0);
+			    	VPMission_PackOpt( VP_ACK_RPT, 0);
 		        }
 			}
 			else
 			{
 			    if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 		        {
-			    	VPMsgPackSend( VP_ACK_RPT, 0);
+			    	VPMission_PackOpt( VP_ACK_RPT, 0);
 		        }
 			}
 			TracePC("\r\n DrvPosIDSet");
@@ -2774,7 +2757,7 @@ unsigned char VP_CMD_Position( void )
 		}
 		else
 		{
-		    VPMsgPackSend( VP_NAK_RPT, 0 );	 //1, 0
+		    VPMission_PackOpt( VP_NAK_RPT, 0 );	 //1, 0
 			return VP_ERR_PAR;
 		}
     }
@@ -2784,14 +2767,14 @@ unsigned char VP_CMD_Position( void )
 		{
 			if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 	        {
-		    	VPMsgPackSend( VP_ACK_RPT, 0);
+		    	VPMission_PackOpt( VP_ACK_RPT, 0);
 	        }
 		}
 		else
 		{
 			if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 		    {
-				VPMsgPackSend( VP_ACK_RPT, 0 );
+				VPMission_PackOpt( VP_ACK_RPT, 0 );
 			}
 		}
 	}
@@ -2826,67 +2809,19 @@ unsigned char VPMission_ColumnSta_RPT( void )
 		}
 		sysVPMission.send.msg[0] = bin;
 		hd_huodao_rpt_vp(bin,&sysVPMission.send.msg[1]);
-		flag = VPMsgPackSend( VP_HUODAO_RPT, 0);   //Not need ACK
-		if( flag != VP_ERR_NULL )
-		{
-			return VP_ERR_PAR;
-		}	
-		/*
-		while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack() )
-				{			
-					if(LogPara.offLineFlag == 1)
-					{
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}
-					recRes = 1;
-					break;
-				}
-			}
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-		}	
-		if( retry== 0 ) 
-		{
-			OSTimeDly(10);		
-			LogPara.offLineFlag = 1;	
-			return VP_ERR_COM;
-		}
-		*/
-
-		switch( sysVPMission.receive.msgType )
-		{
-			default:
-				break;
-		}
+		flag = VPMission_PackOpt( VP_HUODAO_RPT, 0);   //Not need ACK		
 	}	
 	else
 	{
 		sysVPMission.send.msg[0] = bin;
 		sysVPMission.send.msg[1] = bin;
-		flag = VPMsgPackSend( VP_HUODAO_RPT, 0);   //Not need ACK
-		if( flag != VP_ERR_NULL )
-		{
-			return VP_ERR_PAR;
-		}
+		flag = VPMission_PackOpt( VP_HUODAO_RPT, 0);   //Not need ACK		
 	}
 	
 		
 	
 	
-	return VP_ERR_NULL;
+	return flag;
 
 }
 
@@ -2899,32 +2834,21 @@ unsigned char VPMission_ColumnSta_RPT( void )
 *********************************************************************************************************/
 unsigned char VP_CMD_GetColumnSta( void )
 {
-	/*
-	//1.Check the data	
-    if( sysVPMission.receive.datLen == 0  )
-	{
-	    VPMsgPackSend( VP_NAK_RPT, 0  );	 
-		//return VP_ERR_PAR;
-	}
-	if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK  )
-	{
-		VPMsgPackSend( VP_ACK_RPT, 0  );
-	}
-	*/
+	
 	//2.ACK	
 	/**/
 	if(SystemPara.EasiveEnable == 1)
 	{
 		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 		{
-			VPMsgPackSend( VP_ACK_RPT, 0);
+			VPMission_PackOpt( VP_ACK_RPT, 0);
 		}
 	}
 	else
 	{
 		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 		{
-			VPMsgPackSend( VP_ACK_RPT, 0 );
+			VPMission_PackOpt( VP_ACK_RPT, 0 );
 		}
 	}
 	OSTimeDly(OS_TICKS_PER_SEC / 10);
@@ -3003,366 +2927,15 @@ unsigned char VPMission_Status_RPT( uint8_t check_st,uint8_t bv_st,uint8_t cc_st
 	if(SystemPara.EasiveEnable == 1)
 	{
 		//==============================================================
-		flag = VPMsgPackSend( VP_STATUS_RPT, 1);  //1-0, not need ACK
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack() )
-				{			
-					if(LogPara.offLineFlag == 1)
-					{
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}
-					recRes = 1;
-					break;
-				}
-			}
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-		}	
-		if( retry== 0 )	
-		{
-			OSTimeDly(10);	
-			if(LogPara.offLineFlag == 0)
-			{
-				LogPara.offLineFlag = 1;
-				LogPara.offDetailPage = LogPara.LogDetailPage;
-			}
-	        return VP_ERR_COM;
-		}
-
-	    switch( sysVPMission.receive.msgType )
-		{
-			default:
-			    break;
-		}
+		flag = VPMission_PackOpt( VP_STATUS_RPT, 1);  //1-0, not need ACK	    
 	}
 	else
 	{
 		//==============================================================
-		flag = VPMsgPackSend( VP_STATUS_RPT, 0);  //1-0, not need ACK
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-	}
-	//------------------------------------------------------
-    /*//1.硬币器状态cc_st
-	//if( DeviceStatus.CoinAccepter != 0 )
-	if(sysVPMission.billCoinEnable == 0)
-	{
-        sysVPMission.STA_CoinA = 1;
-    }	
-    else if( sysMDBMission.coinDeviceStatus != 0 )
-	{
-        sysVPMission.STA_CoinA = 2;
-    }
-    //币管没关紧，上报故障;by gzz 20110902
-	else if( sysMDBMission.tubeRemoved == 1 )
-	{
-		sysVPMission.STA_CoinA = 2;
-	}
-	else if(sysMDBMission.coinIsEnable == 0)
-	{
-        sysVPMission.STA_CoinA = 1;
-    }	
-	else
-	{
-		sysVPMission.STA_CoinA = 0;
-	}
-
-    //2.机器中当前可用于找零的5角硬币量cnt5j
-    //if( DeviceStatus.ChangeUnit1 == 0 )
-    if( ( sysMDBMission.coinDeviceStatus == 0x00 )&&(sysMDBMission.coin5jNum > 0) )
-    	sysVPMission.STA_ChangeNum1 = sysMDBMission.coin5jNum;   //VP_STA_CHANGE_ENOUGH;
-    else
-	    sysVPMission.STA_ChangeNum1 = 0;
-
-    //3.机器中当前可用于找零的1元硬币量cnt1y
-    //if( DeviceStatus.ChangeUnit2 == 0 )
-    if( ( sysMDBMission.coinDeviceStatus == 0x00 )&&(sysMDBMission.coin1yNum > 0) )
-    	sysVPMission.STA_ChangeNum2 = sysMDBMission.coin1yNum;   //VP_STA_CHANGE_ENOUGH;
-    else
-	    sysVPMission.STA_ChangeNum2 = 0;
-
-    //4.纸币器状态bv_st
-	//1. 
-	if( SystemParameter.BillNo == 1 )
-	{
-	    //if( DeviceStatus.BillAccepter == 0 )
-	    if(sysVPMission.billCoinEnable == 0)
-		{
-	        sysVPMission.STA_BillA = 1;
-	    }	
-		else if(sysMDBMission.billCashBuf == 1)//钞箱移除报故障;by gzz 20121224
-	    {
-			if( sysITLMission.billHoldingFlag == 1 )
-			{
-				CurrentMoney = CurrentPayed + sysITLMission.billHoldingValue;
-			}
-			else
-			{
-				CurrentMoney = CurrentPayed;
-			}
-			if( (CurrentMoney == 0)&&( sysITLMission.billHoldingFlag == 0 ) )
-			{
-				sysVPMission.STA_BillA = 2;	
-			}
-			else
-			{
-				sysVPMission.STA_BillA = 0;	
-			}				
-		}		
-	    else if( sysMDBMission.billDeviceStatus == 0 )
-		{
-			if(sysMDBMission.billIsEnable == 0)
-			{
-				sysVPMission.STA_BillA = 1;			
-			}
-			else
-			{
-				sysVPMission.STA_BillA = 0;
-			}
-            
-			sysVPMission.STA_BillCount = 0;//by gzz 20110905
-		}
-        //1)如果发现此次纸币器和硬币器同时故障，则全部上报
-        //2)pc轮询时，如果只有纸币器故障，给予累加，只有连续故障次数大于5次时，才上报
-		//by gzz 20110905
-		else if(( sysMDBMission.coinDeviceStatus != 0 )||( sysVPMission.STA_BillCount >= 1 ))
-		{
-			sysVPMission.STA_BillA = 2;			
-		}		
-		else//by gzz 20110905 
-		{
-		    sysVPMission.STA_BillA = 0;
-			sysVPMission.STA_BillCount ++;
-		}
-	}
-	else
-	{
-		sysVPMission.STA_BillA = 3;
-	}
-
-    //5.找零设备状态ch1_st,ch2_st
-	//2.
-    if( SystemParameter.HopperCoinPrice1 > 0 )
-	{
-		//if( DeviceStatus.ChangeUnit1 == 1 )
-        if( sysMDBMission.coinDeviceStatus != 0 )
-		{
-			sysVPMission.STA_Changer1 = 2;
-		}
-		//币管没关紧，上报故障;by gzz 20110901
-		else if( sysMDBMission.tubeRemoved == 1 )
-		{
-			sysVPMission.STA_Changer1 = 2;
-		}
-		else
-		{
-			sysVPMission.STA_Changer1 = 0;
-		}
-	}
-	else
-	{
-		sysVPMission.STA_Changer1 = 3;
-	}
-    //
-	if( SystemParameter.HopperCoinPrice2 > 0 )
-	{
-	    
-		//if( DeviceStatus.ChangeUnit2 == 1 )
-        if( sysMDBMission.coinDeviceStatus != 0 )
-		{
-			sysVPMission.STA_Changer2 = 2;
-		}
-		//币管没关紧，上报故障;by gzz 20110901
-		else if( sysMDBMission.tubeRemoved == 1 )
-		{
-			sysVPMission.STA_Changer2 = 2;
-		}
-		else
-		{
-			sysVPMission.STA_Changer2 = 0;
-		}
-
-	}
-	else
-	{
-		sysVPMission.STA_Changer2 = 3;
-	}
-    
-    //6.主控器状态vmc_st
-	//只有机器因故障而不能工作后，才上报故障信息;by gzz 20110902
-	//if( HardWareErr == 0 )
-	if(( HardWareErr & 0x0010 )||( HardWareErr & 0x0080 ))
-    {
-	    sysVPMission.STA_VMC = 1;
-	}
-	//else if(( HardWareErr & 0x0020 )||( HardWareErr & 0x0040 )||( HardWareErr & 0x0100 )
-	//	   ||( HardWareErr & 0x0200 )||( HardWareErr & 0x1000 )||( HardWareErr & 0x2000 ))
-	else if( HardWareErr != 0)
-    {
-	    sysVPMission.STA_VMC = 2;
-	}
-	else if(sysVPMission.adminType == 1)
-	{
-		sysVPMission.STA_VMC = 3;
-	}
-    else
-	{
-		sysVPMission.STA_VMC = 0;
+		flag = VPMission_PackOpt( VP_STATUS_RPT, 0);  //1-0, not need ACK	    
 	}
 	
-	
-	
-    //7.选货1,选货2,选货3状态
-	//sysVPMission.STA_Tep1    = 0x7f;
-    //sysVPMission.STA_Tep2    = 0x7f;
-	if( DeviceStatus.Selection[0] == 0 )
-	{
-		sysVPMission.STA_Tep1 = 0;
-	}
-	else
-	{
-		sysVPMission.STA_Tep1 = 2;	
-	}
-    //
-    if( DeviceStatus.Selection[1] == 0 )
-	{
-		sysVPMission.STA_Tep2 = 0;
-	}
-	else
-	{
-		sysVPMission.STA_Tep2 = 2;	
-	}
-    
-	//sysVPMission.STA_Bank   = 3;
-	if( DeviceStatus.Selection[2] == 0 )
-	{
-		sysVPMission.STA_Tep3 = 0;
-	}
-	else
-	{
-		sysVPMission.STA_Tep3 = 2;	
-	}
-    
-
-    
-
-	//8.出货检测
-	//sysVPMission.STA_ICCard    = 3;
-	if( SystemParameter.GOCOn == 1 )
-	{
-        //只有确认出货检测故障，才发送故障信息给pc端;by cq 20110815
-        / *	            
-        if( DeviceStatus.GOCStatus & 0x01 )
-		{
-			sysVPMission.STA_ICCard = 2;
-		}
-		else 
-		{
-			sysVPMission.STA_ICCard = 0;
-		} 
-        * /
-        if( DeviceStatus.GOCStatus == 0 )
-        {
-        	sysVPMission.STA_ICCard = 0;
-            sysVPMission.STA_ICCardCount = 0;//by gzz 20111012
-        }
-        else if(( DeviceStatus.GOCStatus & 0x01 )&&( sysVPMission.STA_ICCardCount > 5 ))
-        {
-			sysVPMission.STA_ICCard = 2;
-		}
-        else 
-		{
-			sysVPMission.STA_ICCard = 0;
-            sysVPMission.STA_ICCardCount ++;
-		} 
-	}
-	else
-	{
-		sysVPMission.STA_ICCard = 1;
-	}	
-	//9.货仓1状态
-	if(sysVPMission.ACDCCompressorCtr == 1)
-		sysVPMission.ESTA_Tem1 = 1;
-	else
-		sysVPMission.ESTA_Tem1 = 0;
-	//10.货仓1温度tem1
-	if( SystemParameter.ACDCModule == 1 )
-	{
-        if( DeviceStatus.ACDCModule == 0x00 )
-		{
-			sysVPMission.E_Tem1 = 0xfd;//0xfd表示温度无意义;by gzz 20110721
-		}
-		else
-		{
-			sysVPMission.E_Tem1 = 0xff;//故障
-		}
-	}
-	else
-	{  
-		sysVPMission.E_Tem1 = 0xfe;//不存在此货仓
-	}
-	//11.货仓2,3,4状态
-	sysVPMission.ESTA_Tem2 = 3;//不存在此货仓
-	//12，货仓2,3,4温度tem2,表示
-	sysVPMission.E_Tem2 = 0xfe;//不存在此货仓
-
-    //13交易时间
-	sysVPMission.Payout_Time = SystemParameter.tradeTime;
-
-	//==============================================================
-//TAB_VPM_STATUS_RETRY:
-    flag = VPMsgPackSend( VP_STATUS_RPT, 0, 1);  //1-0, not need ACK
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	*/
-	/*
-	sysVPMission.msTimer2 = VP_TIME_OUT;
-	while( sysVPMission.msTimer2 )
-	{
-		if( VPBusFrameUnPack() )
-		{
-		    sysVPMission.comErrNum = 0;
-			goto TAB_VPM_STATUS_COM_OK;
-		}
-	}
-	if( retry-- )
-	{
-		goto TAB_VPM_STATUS_RETRY;
-	}
-	else
-	{
-		sysVPMission.comErrNum++;
-		//? 
-        return VP_ERR_COM;
-	}
-TAB_VPM_STATUS_COM_OK:
-    switch( sysVPMission.receive.msgType )
-	{
-		default:
-		    break;
-	}
-	*/
-	return VP_ERR_NULL;
+	return flag;
 
 }
 
@@ -3382,7 +2955,7 @@ unsigned char VP_CMD_GetStatus( void )
 	//1.Check the data
     if( sysVPMission.receive.datLen != 0  )
 	{
-	    VPMsgPackSend( VP_NAK_RPT, 0 );	 
+	    VPMission_PackOpt( VP_NAK_RPT, 0 );	 
 		return VP_ERR_PAR;
 	}
 	//发送邮箱给vmc
@@ -3395,14 +2968,14 @@ unsigned char VP_CMD_GetStatus( void )
 	{
 		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 		{
-			VPMsgPackSend( VP_ACK_RPT, 0);
+			VPMission_PackOpt( VP_ACK_RPT, 0);
 		}
 	}
 	else
 	{
 		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 		{
-			VPMsgPackSend( VP_ACK_RPT, 0 );
+			VPMission_PackOpt( VP_ACK_RPT, 0 );
 		}
 	}
 	
@@ -3410,24 +2983,7 @@ unsigned char VP_CMD_GetStatus( void )
 	//VPMsgPackSend( VP_ACK_RPT, 0  );
 	OSTimeDly(OS_TICKS_PER_SEC/10);
 	StatusRPTAPI();
-	/*
-	//取得返回值
-	AccepterUboxMsg = OSMboxPend(g_Ubox_PCTOVMCBackCMail,OS_TICKS_PER_SEC*10,&ComStatus);
-	if(ComStatus == OS_NO_ERR)
-	{
-		switch(AccepterUboxMsg->PCCmd)
-		{
-			case MBOX_VMCTOPC_ACK:
-				TracePC("\r\n Drv Payout_Ind ACK"); 
-				VPMsgPackSend( VP_ACK_RPT, 0  );	
-				break;
-			case MBOX_VMCTOPC_NAK:
-				TracePC("\r\n Drv Payout_Ind NAK"); 
-				VPMsgPackSend( VP_NAK_RPT, 0  );	
-				break;	
-		}
-	}	
-	*/
+	
     return VP_ERR_NULL;	
 }
 
@@ -3465,64 +3021,14 @@ unsigned char VPMission_Info_RPT( unsigned char type, unsigned int payAllMoney,u
 	if(SystemPara.EasiveEnable == 1)
 	{
 		//===========================================
-		flag = VPMsgPackSend( VP_INFO_RPT, 1);
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack() )
-				{
-					if(LogPara.offLineFlag == 1)
-					{
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}
-					recRes = 1;
-					break;
-				}
-			}
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-			
-		}
-		if( retry== 0 )
-		{
-			OSTimeDly(10);		
-			if(LogPara.offLineFlag == 0)
-			{
-				LogPara.offLineFlag = 1;
-				LogPara.offDetailPage = LogPara.LogDetailPage;
-			}
-	        return VP_ERR_COM;
-		}
-	    switch( sysVPMission.receive.msgType )
-		{
-			default:
-			    break;
-		}
+		flag = VPMission_PackOpt( VP_INFO_RPT, 1);	   
 	}
 	else
 	{
 		//===========================================
-		flag = VPMsgPackSend( VP_INFO_RPT, 0);
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
+		flag = VPMission_PackOpt( VP_INFO_RPT, 0);	   
 	}
-	return VP_ERR_NULL;
+	return flag;
 }
 
 
@@ -3541,7 +3047,7 @@ unsigned char VP_CMD_GetInfo( void )
 	//1.Check the data
     if( sysVPMission.receive.datLen != 1  )
 	{
-	    VPMsgPackSend( VP_NAK_RPT, 0 );	 
+	    VPMission_PackOpt( VP_NAK_RPT, 0 );	 
 		return VP_ERR_PAR;
 	}
 	//2.ACK	
@@ -3550,14 +3056,14 @@ unsigned char VP_CMD_GetInfo( void )
 	{
 		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 		{
-			VPMsgPackSend( VP_ACK_RPT, 0);
+			VPMission_PackOpt( VP_ACK_RPT, 0);
 		}
 	}
 	else
 	{
 		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 		{
-			VPMsgPackSend( VP_ACK_RPT, 0 );
+			VPMission_PackOpt( VP_ACK_RPT, 0 );
 		}
 	}
 	
@@ -3619,7 +3125,7 @@ unsigned char VP_CMD_GetInfoExp( void )
 	//1.Check the data
     if( sysVPMission.receive.datLen > 2  )
 	{
-	    VPMsgPackSend( VP_NAK_RPT, 0 );	 
+	    VPMission_PackOpt( VP_NAK_RPT, 0 );	 
 		return VP_ERR_PAR;
 	}
 	//2.ACK	
@@ -3628,14 +3134,14 @@ unsigned char VP_CMD_GetInfoExp( void )
 	{
 		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 		{
-			VPMsgPackSend( VP_ACK_RPT, 0);
+			VPMission_PackOpt( VP_ACK_RPT, 0);
 		}
 	}
 	else
 	{
 		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 		{
-			VPMsgPackSend( VP_ACK_RPT, 0 );
+			VPMission_PackOpt( VP_ACK_RPT, 0 );
 		}
 	}
 	
@@ -3702,14 +3208,14 @@ unsigned char VP_CMD_SetHuodao( void )
 		{
 			if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 			{
-				VPMsgPackSend( VP_ACK_RPT, 0);
+				VPMission_PackOpt( VP_ACK_RPT, 0);
 			}
 		}
 		else
 		{
 			if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 			{
-				VPMsgPackSend( VP_ACK_RPT, 0 );
+				VPMission_PackOpt( VP_ACK_RPT, 0 );
 			}
 		}
 		TracePC("\r\n DrvHuodaoAttrSet");
@@ -3757,7 +3263,7 @@ unsigned char VP_CMD_SetHuodao( void )
 	}
 	else
 	{
-		VPMsgPackSend( VP_NAK_RPT, 0);	
+		VPMission_PackOpt( VP_NAK_RPT, 0);	
 		return VP_ERR_PAR;
 	}
 	
@@ -3845,52 +3351,8 @@ unsigned char VPMission_OfflineData_RPT( void )
 	//上报总交易记录
 	retry = VP_COM_RETRY;
 	sysVPMission.type = 1;
-	flag = VPMsgPackSend( VP_OFFLINEDATA_RPT, 1);
-	if( flag != VP_ERR_NULL )
-	{
-		return VP_ERR_PAR;
-	}
 	
-	while( retry )
-	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
-		{
-			if( VPBusFrameUnPack() )
-			{
-				if(LogPara.offLineFlag == 1)
-				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-				}
-				recRes = 1;
-				break;
-			}
-		}
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
-		}
-	}
-	if( retry== 0 )	
-	{
-		OSTimeDly(10);		
-		LogPara.offLineFlag = 1;
-		//LogPara.offDetailPage = LogPara.LogDetailPage;
-		return VP_ERR_COM;
-	}
-
-	switch( sysVPMission.receive.msgType )
-	{
-		default:
-			break;
-	}	
-	
+	flag = VPMission_PackOpt( VP_OFFLINEDATA_RPT, 1);	
 	return VP_ERR_NULL;
 }
 
@@ -3909,7 +3371,7 @@ unsigned char VP_Payout_Ind( void )
     //1.Check the data
     if( sysVPMission.receive.datLen != 4  )
 	{
-	    VPMsgPackSend( VP_NAK_RPT, 0  );	 
+	    VPMission_PackOpt( VP_NAK_RPT, 0  );	 
 		return VP_ERR_PAR;
 	}
 	//2.ACK
@@ -3917,14 +3379,14 @@ unsigned char VP_Payout_Ind( void )
 	{
 		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
         {
-	    	VPMsgPackSend( VP_ACK_RPT, 0);
+	    	VPMission_PackOpt( VP_ACK_RPT, 0);
         }
 	}
 	else
 	{
 		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 	    {
-			VPMsgPackSend( VP_ACK_RPT, 0 );
+			VPMission_PackOpt( VP_ACK_RPT, 0 );
 		}
 	}
 	    
@@ -3938,48 +3400,7 @@ unsigned char VP_Payout_Ind( void )
 	UpdateIndex();
 	OSTimeDly(OS_TICKS_PER_SEC/10);
 	TracePC("\r\n Drv Payout_Ind"); 
-	/*
-	//取得返回值
-	AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*10,&ComStatus);
-	if(ComStatus == OS_NO_ERR)
-	{
-		switch(AccepterUboxMsg->PCCmd)
-		{
-			case MBOX_VMCTOPC_ACK:
-				TracePC("\r\n Drv Payout_Ind ACK"); 
-				VPMsgPackSend( VP_ACK_RPT, 0  );	
-				break;
-			case MBOX_VMCTOPC_NAK:
-				TracePC("\r\n Drv Payout_Ind NAK"); 
-				VPMsgPackSend( VP_NAK_RPT, 0  );	
-				break;	
-		}
-	}
-	*/
-	/*//if( (sysVPMission.changeDev != 0) || (sysVPMission.changeMoney < SystemParameter.HopperCoinPrice1 ) )
-    if( (sysVPMission.changeDev != 0) || (sysVPMission.changeMoney > sysMDBMission.coinAllValue ) || (sysMDBMission.coinDeviceStatus!=0) )
-	{
-    	VPMsgPackSend( VP_NAK_RPT, 0, 0  );	 
-		return VP_ERR_PAR;
-	}
-	//扣钱后不能找零
-	tempPrice = sysVPMission.changeMoney/10;
-	if(!(changeCNY2(resultdisp,tempPrice)))
-	{
-    	VPMsgPackSend( VP_NAK_RPT, 0, 0  );	 
-		return VP_ERR_PAR;
-	}
 	
-
-	//2.ACK
-	if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
-	{
-    	VPMsgPackSend( VP_ACK_RPT, 0, 0 );
-	}
-
-    //3.Set command flag
-	sysVPMission.changeCmd = 1;
-	*/
     return VP_ERR_NULL;	
 }
 
@@ -4001,7 +3422,7 @@ unsigned char VP_Cost_Ind( void )
     //1.Check the data
     if( sysVPMission.receive.datLen != 4  )
 	{
-	    VPMsgPackSend( VP_NAK_RPT, 0 );	 
+	    VPMission_PackOpt( VP_NAK_RPT, 0 );	 
 		return VP_ERR_PAR;
 	}
 	//2.ACK
@@ -4009,14 +3430,14 @@ unsigned char VP_Cost_Ind( void )
 	{
 		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
         {
-	    	VPMsgPackSend( VP_ACK_RPT, 0);
+	    	VPMission_PackOpt( VP_ACK_RPT, 0);
         }
 	}
 	else
 	{
 		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 	    {
-			VPMsgPackSend( VP_ACK_RPT, 0 );
+			VPMission_PackOpt( VP_ACK_RPT, 0 );
 		}
 	}
 		
@@ -4031,64 +3452,7 @@ unsigned char VP_Cost_Ind( void )
 	UpdateIndex();
 	OSTimeDly(OS_TICKS_PER_SEC/10);
 	TracePC("\r\n Drv Cost_Ind"); 
-	/*
-	//取得返回值
-	AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*5,&ComStatus);
-	if(ComStatus == OS_NO_ERR)
-	{
-		switch(AccepterUboxMsg->PCCmd)
-		{
-			case MBOX_VMCTOPC_ACK:
-				TracePC("\r\n Drv Cost_Ind ACK"); 
-				VPMsgPackSend( VP_ACK_RPT, 0  );	
-				break;
-			case MBOX_VMCTOPC_NAK:
-				TracePC("\r\n Drv Cost_Ind NAK"); 
-				VPMsgPackSend( VP_NAK_RPT, 0  );	
-				break;	
-		}
-	}	
-	*/
 	
-	/*
-	//2.得到当前投入的金额
-	if( sysITLMission.billHoldingFlag == 1 )
-	{
-		CurrentMoney = CurrentPayed + sysITLMission.billHoldingValue;
-	}
-	else
-	{
-		CurrentMoney = CurrentPayed;
-	}
-	//3.用户投币金额小于扣款金额时，返回NAK_RPT    
-    if( (sysVPMission.costDev != 0) || (sysVPMission.costMoney > CurrentMoney ) )
-	{
-		//len = sprintf( str, "1=%lu,%lu", sysVPMission.costMoney,CurrentMoney );
-		//DisplayStr( 0, 0, 1, str, strlen(str) );  
-		//WaitForWork(2000,NULL);
-    	VPMsgPackSend( VP_NAK_RPT, 0, 0  );	 
-		return VP_ERR_PAR;
-	}
-	//扣钱后不能找零
-	if(!(IsCanChange(sysVPMission.costMoney)))
-	{
-		//DisplayStr( 0, 0, 1, "2", 1 );  
-		//WaitForWork(2000,NULL);
-    	VPMsgPackSend( VP_NAK_RPT, 0, 0  );	 
-		return VP_ERR_PAR;
-	}
-	sysVPMission.costType = sysVPMission.receive.msg[3];
-
-	//2.ACK
-	if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
-	{
-    	VPMsgPackSend( VP_ACK_RPT, 0, 0 );
-	}
-	
-
-    //3.Set command flag
-	sysVPMission.costCmd = 1;
-	*/
     return VP_ERR_NULL;	
 }
 
@@ -4110,7 +3474,7 @@ unsigned char VP_Vendout_Ind( void )
 	//1.Check the data
     if( sysVPMission.receive.datLen != 6  )
 	{
-	    VPMsgPackSend( VP_NAK_RPT, 0  );	 
+	    VPMission_PackOpt( VP_NAK_RPT, 0  );	 
 		return VP_ERR_PAR;
 	}
 	//2.ACK	
@@ -4119,14 +3483,14 @@ unsigned char VP_Vendout_Ind( void )
 	{
 		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 		{
-			VPMsgPackSend( VP_ACK_RPT, 0);
+			VPMission_PackOpt( VP_ACK_RPT, 0);
 		}
 	}
 	else
 	{
 		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 		{
-			VPMsgPackSend( VP_ACK_RPT, 0 );
+			VPMission_PackOpt( VP_ACK_RPT, 0 );
 		}
 	}
 	
@@ -4140,7 +3504,7 @@ unsigned char VP_Vendout_Ind( void )
 	method = sysVPMission.receive.msg[1];
 	if((method==0)||(method>2))
 	{
-	    VPMsgPackSend( VP_NAK_RPT, 0  );	 
+	    VPMission_PackOpt( VP_NAK_RPT, 0  );	 
 		return VP_ERR_PAR;
 	}	
 	sysVPMission.device = sysVPMission.receive.msg[0];
@@ -4160,179 +3524,7 @@ unsigned char VP_Vendout_Ind( void )
 	OSTimeSet(0);
 	TracePC("\r\n Drv %dVendout_Ind",OSTimeGet()); 
 	OSTimeDly(OS_TICKS_PER_SEC/10);	
-	/*
-	//取得返回值
-	AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*5,&ComStatus);
-	if(ComStatus == OS_NO_ERR)
-	{
-		switch(AccepterUboxMsg->PCCmd)
-		{
-			case MBOX_VMCTOPC_ACK:
-				TracePC("\r\n Drv %dVendout_Ind ACK",OSTimeGet()); 
-				VPMsgPackSend( VP_ACK_RPT, 0  );	
-				break;
-			case MBOX_VMCTOPC_NAK:
-				TracePC("\r\n Drv Vendout_Ind NAK"); 
-				VPMsgPackSend( VP_NAK_RPT, 0  );	
-				break;	
-		}
-	}	
-	*/
-	/*
-
-	if(method == 1)
-	{
-		for( i=0; i<sysVPMission.GoodsRev; i++ )
-		{
-			if( sysVPMission.receive.msg[2] == sysGoodsMatrix[i].GoodsType )
-			{
-		    	sel = i;
-			    break;
-			}
-		}
-
-	    if( sel == 0xffff )
-		{
-	    	//VPMsgPackSend( VP_NAK_RPT, 0, 0  );	
-			//return VP_ERR_PAR;
-			//The goods code isn't in the goods window, find in the column matrix
-			for( i=0; i<COLUMN_NUM_SET; i++  )
-			{
-				if( GoodsWaySetVal[i].GoodsType == sysVPMission.receive.msg[2] )
-	     	    {
-					if( (GoodsWaySetVal[i].GoodsCurrentSum >= 1) && ( GoodsWaySetVal[i].WayState == 0x01 ) )
-					{
-						col = i;
-	                    break;
-					}
-				}
-			}
-			if( i >= COLUMN_NUM_SET )
-			{
-				VPMsgPackSend( VP_NAK_RPT, 0, 0  );	
-			    return VP_ERR_PAR;
-			}
-	        sysVPMission.goodsType2 = GOODSTYPEMAX;
-
-		}
-	    else
-		{
-			if( ( sysGoodsMatrix[sel].ColumnNum == 0 )||( sysGoodsMatrix[sel].NextColumn == GOODS_MATRIX_NONE ) )
-			{
-				VPMsgPackSend( VP_NAK_RPT, 0, 0  );	 
-				return VP_ERR_PAR;		
-			}
-		    else
-			{
-				col = sysGoodsMatrix[sel].NextColumn;
-				sysVPMission.goodsType2 = sel;
-			}    
-		}
-	}
-	else if(method == 2)
-	{
-		col = sysVPMission.receive.msg[2]-1;
-		
-		if( (!(GoodsWaySetVal[col].WayState & 0x01))||( GoodsWaySetVal[col].WayState & 0x0A )||( GoodsWaySetVal[col].GoodsCurrentSum == 0 ) )
-		{
-			VPMsgPackSend( VP_NAK_RPT, 0, 0  );	 
-			return VP_ERR_PAR;			
-		}
-	}
-
-    //3.Check the column's status
-    
-	//4.ACK
-    sysVPMission.vendGoods = sysVPMission.receive.msg[2];
-    sysVPMission.vendType  = sysVPMission.receive.msg[3];
-    sysVPMission.vendCost  = MoneyRec(sysVPMission.receive.msg[4], sysVPMission.receive.msg[5]);
-    sysVPMission.vendColumn = col;
-	if(( sysVPMission.vendType > 0 )&&(sysVPMission.vendCost > 0))
-	{
-		//DisplayStr( 0, 0, 1, "1", 1 ); 
-		//WaitForWork(5000,NULL);
-		VPMsgPackSend( VP_NAK_RPT, 0, 0  );	 
-		return VP_ERR_PAR;			
-	}
-	if(( sysVPMission.vendType == 0 )&&(sysVPMission.vendCost == 0))
-	{
-		//DisplayStr( 0, 0, 1, "2", 1 ); 
-		//WaitForWork(5000,NULL);
-		VPMsgPackSend( VP_NAK_RPT, 0, 0  );	 
-		return VP_ERR_PAR;			
-	}
-    
-    //---------------------------------------------------
-    //2011.7.19 changed for 
-    moneyBuf = CurrentPayed;
-    if( sysITLMission.billHoldingFlag == 1 )
-    {
-        moneyBuf += sysITLMission.billHoldingValue;
-    }
-    //if( sysVPMission.vendCost > CurrentPayed )
-    if( sysVPMission.vendCost > moneyBuf )
-	{
-		//DisplayStr( 0, 0, 1, "3", 1 ); 
-		//WaitForWork(5000,NULL);
-		VPMsgPackSend( VP_NAK_RPT, 0, 0  );	 
-		return VP_ERR_PAR;			
-	}
-	//扣钱后不能找零
-	if(!(IsCanChange(sysVPMission.vendCost)))
-	{
-		//DisplayStr( 0, 0, 1, "4", 1 ); 
-		//WaitForWork(5000,NULL);
-    	VPMsgPackSend( VP_NAK_RPT, 0, 0  );	 
-		return VP_ERR_PAR;
-	}
-    //
-    if( ( sysITLMission.billHoldingFlag == 1 )&&(sysVPMission.vendCost > CurrentPayed) )
-    {
-        StackTheBillAPI();
-        dspUpdate = 1;			
-    }
-    if( sysVPMission.vendCost > CurrentPayed )
-    {
-    	//DisplayStr( 0, 0, 1, "5", 1 ); 
-		//WaitForWork(5000,NULL);
-		VPMsgPackSend( VP_NAK_RPT, 0, 0  );	 
-		return VP_ERR_PAR;	    
-	}
-	if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
-	{
-    	VPMsgPackSend( VP_ACK_RPT, 0, 0 );
-	}
-	if( dspUpdate == 1 )
-	{
-		  //payin report
-		  if( sysVPMission.payInCoinFlag == 1 )
-		  {
-		      VPMission_Payin_RPT( VP_DEV_COIN, sysVPMission.payInCoinMoney );
-		      sysVPMission.payInCoinFlag = 0;
-		      sysVPMission.payInCoinMoney = 0;
-						        
-		  }
-		  if( sysVPMission.payInBillFlag == 1 )
-		  {
-		      VPMission_Payin_RPT( VP_DEV_BILL, sysVPMission.payInBillMoney );
-		      sysVPMission.payInBillFlag = 0;
-		      sysVPMission.payInBillMoney = 0;      
-		  }
-		  //
-		  if( sysVPMission.escrowOutFlag == 1 )
-		  {
-		      VPMission_Payin_RPT( VP_DEV_ESCROWOUT, sysVPMission.escrowMoney );
-		      sysVPMission.escrowOutFlag = 0;
-		      sysVPMission.escrowMoney = 0;     
-		  }
-		  DisplayCurrentMoney( CurrentPayed );
-	}
-    //5.Vendout
-    //OutGoods(1);
-	sysVPMission.vendCmd = 1;
-	//6.Vendout_RPT
-    //VPMission_Vendout_RPT( sysVPMission.vendSta, sysVPMission.vendColumn, sysVPMission.vendType, sysVPMission.vendCost );
-    */
+	
     return VP_ERR_NULL;	
 }
 
@@ -4351,7 +3543,7 @@ unsigned char VP_Reset_Ind( void )
 	//1.Check the data
     if( sysVPMission.receive.datLen != 1  )
 	{
-	    VPMsgPackSend( VP_NAK_RPT, 0  );	 
+	    VPMission_PackOpt( VP_NAK_RPT, 0  );	 
 		return VP_ERR_PAR;
 	}
 	//2.ACK	
@@ -4360,14 +3552,14 @@ unsigned char VP_Reset_Ind( void )
 	{
 		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
 		{
-			VPMsgPackSend( VP_ACK_RPT, 0);
+			VPMission_PackOpt( VP_ACK_RPT, 0);
 		}
 	}
 	else
 	{
 		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 		{
-			VPMsgPackSend( VP_ACK_RPT, 0 );
+			VPMission_PackOpt( VP_ACK_RPT, 0 );
 		}
 	}
 	
@@ -4377,24 +3569,7 @@ unsigned char VP_Reset_Ind( void )
 	UpdateIndex();
 	OSTimeDly(OS_TICKS_PER_SEC/10);
 	TracePC("\r\n Drv Reset_Ind"); 
-	/*
-	//取得返回值
-	AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCBackQ,OS_TICKS_PER_SEC*10,&ComStatus);
-	if(ComStatus == OS_NO_ERR)
-	{
-		switch(AccepterUboxMsg->PCCmd)
-		{
-			case MBOX_VMCTOPC_ACK:
-				TracePC("\r\n Drv Reset_Ind ACK"); 
-				VPMsgPackSend( VP_ACK_RPT, 0  );	
-				break;
-			case MBOX_VMCTOPC_NAK:
-				TracePC("\r\n Drv Reset_Ind NAK"); 
-				VPMsgPackSend( VP_NAK_RPT, 0  );	
-				break;	
-		}
-	}	
-	*/
+	
     return VP_ERR_NULL;	
 }
 
@@ -4419,14 +3594,14 @@ unsigned char VP_Control_Ind( void )
 	{
 		if( sysVPMission.receive.verFlag & VP_PROEASIV_ACK )
         {
-	    	VPMsgPackSend( VP_ACK_RPT, 0);
+	    	VPMission_PackOpt( VP_ACK_RPT, 0);
         }
 	}
 	else
 	{
 		if( sysVPMission.receive.verFlag & VP_PROTOCOL_ACK )
 	    {
-			VPMsgPackSend( VP_ACK_RPT, 0 );
+			VPMission_PackOpt( VP_ACK_RPT, 0 );
 		}
 	}
 	
@@ -4485,26 +3660,7 @@ unsigned char VP_Control_Ind( void )
 	OSTimeSet(0);
 	OSTimeDly(OS_TICKS_PER_SEC/10);
 	TracePC("\r\n Drv %dControl_Ind",OSTimeGet()); 
-	//TracePC("\r\n Drv Control_Ind ACK"); 
-	//VPMsgPackSend( VP_ACK_RPT, 0  );
-	/*
-	//取得返回值
-	AccepterUboxMsg = OSMboxPend(g_Ubox_PCTOVMCBackCMail,OS_TICKS_PER_SEC*10,&ComStatus);
-	if(ComStatus == OS_NO_ERR)
-	{		
-		switch(AccepterUboxMsg->PCCmd)
-		{
-			case MBOX_VMCTOPC_ACK:
-				TracePC("\r\n Drv Control_Ind ACK"); 
-				VPMsgPackSend( VP_ACK_RPT, 0  );	
-				break;
-			case MBOX_VMCTOPC_NAK:
-				TracePC("\r\n Drv Control_Ind NAK"); 
-				VPMsgPackSend( VP_NAK_RPT, 0  );	
-				break;	
-		}		
-	}	    
-	*/
+	
     return VP_ERR_NULL;	
 }
 
@@ -4519,105 +3675,53 @@ unsigned char VP_Control_Ind( void )
 *********************************************************************************************************/
 unsigned char VPMission_Poll( uint8_t *isInit )
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
-	unsigned char flag = 0;
+      unsigned char recRes=0;
+		
 
-	if(LogPara.offLineFlag == 1)
-	{		
-		if(Timer.offLinePCTimer)
-		{	
-			return VP_ERR_NULL;
-		}
-		Timer.offLinePCTimer = 5;
-	}		
-
-	retry = VP_COM_RETRY;	
-
-	while( retry )
+	VPMsgPackSend( VP_POLL, 1);
+	Timer.PCRecTimer = VP_TIME_OUT;
+	while( Timer.PCRecTimer )
 	{
-		flag = VPMsgPackSend( VP_POLL, 1);
-		//DisplayStr( 0, 0, 1, "2", 1 );  
-		//WaitForWork(2000,NULL);
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
-		{
-			//DisplayStr( 0, 0, 1, "System 1", 10 );  
-			//WaitForWork(2000,NULL);
-			if( VPBusFrameUnPack() )
+		if( VPBusFrameUnPack() )
+		{		
+			TracePC("\r\n Drv rec=ok"); 
+			recRes = 1;
+			if(SystemPara.EasiveEnable == 0)
 			{
-				TracePC("\r\n Drv PollLine=%d",LogPara.offLineFlag); 
-			    if(LogPara.offLineFlag == 1)
-				{
-					TracePC("\r\n Drv PollLineOK"); 
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-				}	
+				if(globalSys.pcInitFlag == 0)
+					globalSys.pcInitFlag = 1;
+			}
+			break;				
+		}
+	}
+	if( Timer.PCRecTimer==0 )
+	{		
+		TracePC("\r\n Drv failretry"); 
+       	return VP_ERR_COM;
+	}
+
+	
+		
+	if(recRes)
+	{
+		//如果发现接收有延后，可以超前一步再接收一次数据	
+		if(sysVPMission.receive.msgType==VP_ACK)
+		{
+			if( VPBusFrameUnPack() )
+			{		
 				TracePC("\r\n Drv rec=ok"); 
 				recRes = 1;
 				if(SystemPara.EasiveEnable == 0)
 				{
 					if(globalSys.pcInitFlag == 0)
 						globalSys.pcInitFlag = 1;
-				}
-				break;
-			}			
-		}
-		if(Timer.PCRecTimer==0)
-		{
-			if(LogPara.offLineFlag == 1)//离线退出
-				retry=0;
-			else
-				retry--;
-			TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			//如果发现接收有延后，可以超前一步再接收一次数据	
-			if(sysVPMission.receive.msgType==VP_ACK)
-			{
-				if( VPBusFrameUnPack() )
-				{
-					TracePC("\r\n Drv PollLine2=%d",LogPara.offLineFlag); 
-				    if(LogPara.offLineFlag == 1)
-					{
-						TracePC("\r\n Drv PollLine2OK"); 
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}	
-					TracePC("\r\n Drv rec2=ok"); 
-					recRes = 1;
-					if(SystemPara.EasiveEnable == 0)
-					{
-						if(globalSys.pcInitFlag == 0)
-							globalSys.pcInitFlag = 1;
-					}
-				}
+				}			
 			}
-			break;//接收到数据退出
 		}
 	}
-	//TracePC("\r\n Drv retry=%d",retry); 
-	if( retry== 0 )
-	{
-		TracePC("\r\n Drv rec=fail"); 
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
-		}
-        return VP_ERR_COM;
-	}
-
-	//DisplayStr( 0, 0, 1, "System 2", 10 );  
-	//WaitForWork(2000,NULL);
-	//TracePC("\r\n Drv rec=result"); 
-    switch( sysVPMission.receive.msgType )
+	
+	
+	switch( sysVPMission.receive.msgType )
 	{
 		case VP_GET_SETUP_IND: 
 			VPMission_Setup_RPT();
@@ -4719,64 +3823,14 @@ unsigned char VPMission_Payin_RPT(uint8_t dev,uint16_t payInMoney,uint32_t payAl
 	if(SystemPara.EasiveEnable == 1)
 	{
 		//===========================================
-		flag = VPMsgPackSend( VP_PAYIN_RPT, 1);
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack() )
-				{			
-					if(LogPara.offLineFlag == 1)
-					{
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}
-					recRes = 1;
-					break;
-				}
-			}
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-		}	
-		if( retry== 0 )	
-		{
-			OSTimeDly(10);		
-			if(LogPara.offLineFlag == 0)
-			{
-				LogPara.offLineFlag = 1;
-				LogPara.offDetailPage = LogPara.LogDetailPage;
-			}
-	        return VP_ERR_COM;
-		}
-
-	    switch( sysVPMission.receive.msgType )
-		{
-			default:
-			    break;
-		}
+		flag =VPMission_PackOpt( VP_PAYIN_RPT, 1);	   
 	}
 	else
 	{
 		//===========================================
-		flag = VPMsgPackSend( VP_PAYIN_RPT, 0);
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
+		flag = VPMission_PackOpt( VP_PAYIN_RPT, 0);	    
 	}
-	return VP_ERR_NULL;
+	return flag;
 }
 
 /*********************************************************************************************************
@@ -4806,53 +3860,8 @@ unsigned char VPMission_Payout_RPT( uint8_t payoutDev,unsigned char Type, unsign
 	sysVPMission.payoutMoney = payoutMoney;
 	sysVPMission.payAllMoney = payAllMoney;
 	//===========================================		
-	flag = VPMsgPackSend( VP_PAYOUT_RPT, 1);
-      if( flag != VP_ERR_NULL )
-      {
-		return VP_ERR_PAR;
-	}
-	while( retry )
-	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
-		{
-			if( VPBusFrameUnPack() )
-			{
-				if(LogPara.offLineFlag == 1)
-				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-				}
-				recRes = 1;
-				break;
-			}
-		}
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
-		}
-	}
-	if( retry== 0 )		
-	{
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
-		}
-        return VP_ERR_COM;
-	}
-	switch( sysVPMission.receive.msgType )
-	{
-		default:
-		    break;
-	}
-	return VP_ERR_NULL;
+	flag = VPMission_PackOpt( VP_PAYOUT_RPT, 1);      
+	return flag;
 }
 
 
@@ -4883,54 +3892,8 @@ unsigned char VPMission_Cost_RPT( unsigned char Type, uint32_t costMoney, unsign
 	sysVPMission.costMoney = costMoney;
 	sysVPMission.payAllMoney = payAllMoney;
 	//===========================================
-	flag = VPMsgPackSend( VP_COST_RPT, 1);
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	while( retry )
-	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
-		{
-			if( VPBusFrameUnPack() )
-			{
-				if(LogPara.offLineFlag == 1)
-				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-				}
-				recRes = 1;
-				break;
-			}
-		}
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
-		}
-		
-	}
-	if( retry== 0 )
-	{
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
-		}
-        return VP_ERR_COM;
-	}
-    switch( sysVPMission.receive.msgType )
-	{
-		default:
-		    break;
-	}
-	return VP_ERR_NULL;
+	flag = VPMission_PackOpt( VP_COST_RPT, 1);    
+	return flag;
 }
 
 /*********************************************************************************************************
@@ -4968,64 +3931,14 @@ unsigned char VPMission_Button_RPT( unsigned char type, unsigned char value,uint
 	{
 		//===========================================
 	    //1-0: button message, not need ACK
-		flag = VPMsgPackSend( VP_BUTTON_RPT, 1);   
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		
-	    while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack() )
-				{
-					if(LogPara.offLineFlag == 1)
-					{
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}
-					recRes = 1;
-					break;
-				}
-			}	
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-		}
-		if( retry== 0 )
-		{
-			OSTimeDly(10);		
-			if(LogPara.offLineFlag == 0)
-			{
-				LogPara.offLineFlag = 1;
-				LogPara.offDetailPage = LogPara.LogDetailPage;
-			}
-	        return VP_ERR_COM;
-		}
-		switch( sysVPMission.receive.msgType )
-		{
-			default:
-			    break;
-		}
+		flag = VPMission_PackOpt( VP_BUTTON_RPT, 1);   	    
     }
 	else
 	{
 		//1-0: button message, not need ACK
-		flag = VPMsgPackSend( VP_BUTTON_RPT, 0);   
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
+		flag = VPMission_PackOpt( VP_BUTTON_RPT, 0);   	    
 	}
-	return VP_ERR_NULL;
+	return flag;
 
 }
 
@@ -5078,53 +3991,8 @@ unsigned char VPMission_Vendout_RPT( unsigned char status, unsigned char device,
 	sysVPMission.ColumnSum = columnLeft;
 	
 	//===========================================	
-	while( retry )
-	{
-		flag = VPMsgPackSend( VP_VENDOUT_RPT, 1);
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
-		{
-			if( VPBusFrameUnPack() )
-			{
-				if(LogPara.offLineFlag == 1)
-				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-				}
-				recRes = 1;
-				break;
-			}
-		}	
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
-		}
-	}
-	if( retry== 0 )
-	{
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
-		}
-        return VP_ERR_COM;
-	}
-	switch( sysVPMission.receive.msgType )
-	{
-		default:
-		    break;
-	}
-	return VP_ERR_NULL;
+	flag = VPMission_PackOpt( VP_VENDOUT_RPT, 1);
+	return flag;
 }
 
 
@@ -5165,52 +4033,8 @@ unsigned char VPMission_Act_RPT( unsigned char action, uint8_t value,uint8_t sec
 	//===========================================
 	if(SystemPara.EasiveEnable == 1)
 	{
-	    flag = VPMsgPackSend( VP_ACTION_RPT, 1);   
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		
-		while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack() )
-				{
-					TracePC("\r\n Drv ActLine=%d",LogPara.offLineFlag); 
-					if(LogPara.offLineFlag == 1)
-					{
-						TracePC("\r\n Drv ActLineOK"); 
-						LogPara.offLineFlag = 0;					
-						VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-					}
-					recRes = 1;
-					//Trace("\r\n getaction1");
-					break;
-				}
-			}	
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-		}
-		if( retry== 0 )
-		{
-			OSTimeDly(10);		
-			if(LogPara.offLineFlag == 0)
-			{
-				LogPara.offLineFlag = 1;
-				LogPara.offDetailPage = LogPara.LogDetailPage;
-			}
-	        return VP_ERR_COM;
-		}
-		
+	    flag = VPMission_PackOpt( VP_ACTION_RPT, 1);   
+	   		
 		//Trace("\r\n getaction2=%d",sysVPMission.receive.msgType);
 		switch( sysVPMission.receive.msgType )
 		{		
@@ -5269,13 +4093,10 @@ unsigned char VPMission_Act_RPT( unsigned char action, uint8_t value,uint8_t sec
 	}
 	else
 	{
-	    flag = VPMsgPackSend( VP_ACTION_RPT, 0);   
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
+	    flag = VPMission_PackOpt( VP_ACTION_RPT, 0);   
+	    
 	}
-	return VP_ERR_NULL;
+	return flag;
 }
 
 
@@ -5317,50 +4138,8 @@ unsigned char VPMission_Admin_RPT( unsigned char type,uint8_t Column,uint8_t Col
 	sysVPMission.ColumnSum = ColumnSum;
 	
 	//===========================================
-	flag = VPMsgPackSend( VP_ADMIN_RPT, 1);
-	//DisplayStr( 0, 0, 1, "01", 2 );  
-	if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	while( retry )
-	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
-		{
-			if( VPBusFrameUnPack() )
-			{
-				if(LogPara.offLineFlag == 1)
-				{
-					LogPara.offLineFlag = 0;					
-					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
-				}
-				recRes = 1;
-				break;
-			}
-		}	
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
-		}
-	}
-	if( retry== 0 )
-	{
-		OSTimeDly(10);		
-		if(LogPara.offLineFlag == 0)
-		{
-			LogPara.offLineFlag = 1;
-			LogPara.offDetailPage = LogPara.LogDetailPage;
-		}
-		TracePC("\r\n Drv UboxAdminFail");
-        return VP_ERR_COM;
-	}
-	
+	flag = VPMission_PackOpt( VP_ADMIN_RPT, 1);
+		
     switch( sysVPMission.receive.msgType )
 	{   		
         case VP_NAK:
@@ -5386,7 +4165,7 @@ unsigned char VPMission_Admin_RPT( unsigned char type,uint8_t Column,uint8_t Col
 		    break;
 	}	
 	TracePC("\r\n Drv UboxAdminSuc");
-	return VP_ERR_NULL;
+	return flag;
 
 }
 

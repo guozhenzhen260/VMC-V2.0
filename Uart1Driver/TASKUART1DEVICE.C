@@ -113,10 +113,10 @@ void Uart1TaskDevice(void *pvData)
 		FS_init();
 	}
 	
-	
-	while(1)
-	{	
-		if(SystemPara.UserSelectKeyBoard==SELECT_KEY)
+			
+	if(SystemPara.UserSelectKeyBoard==SELECT_KEY)
+	{
+		while(1)
 		{
 			//Trace("\r\n UART1TASK");
 			TraceSelection("\r\n Taskpkey=%d",SELECT_KEY); 
@@ -144,9 +144,12 @@ void Uart1TaskDevice(void *pvData)
 				}
 			}	
 		}
-		//ÎÂ¿ØÆ÷
-		else if(SystemPara.XMTTemp==1)
-		{	
+	}
+	//ÎÂ¿ØÆ÷
+	else if(SystemPara.XMTTemp==1)
+	{	
+		while(1)
+		{
 			if(Timer.getTempTimer==0)
 			{
 				Timer.getTempTimer = 10;
@@ -176,8 +179,11 @@ void Uart1TaskDevice(void *pvData)
 				}
 			}
 		}
-		//¼ì²é¸ñ×Ó¹ñ
-		else if(SystemPara.hefangGui==SERIAL_GEZI)
+	}
+	//¼ì²é¸ñ×Ó¹ñ
+	else if(SystemPara.hefangGui==SERIAL_GEZI)
+	{
+		while(1)
 		{
 			TraceChannel("Task_hefang==%d\r\n",SERIAL_GEZI);
 			//½ÓÊÕºÐ·¹¹ñ¿ØÖÆÓÊÏä  Add by liya 2014-01-20
@@ -205,33 +211,24 @@ void Uart1TaskDevice(void *pvData)
 			}
 			OSTimeDly(2);	
 		}
-		//¼ì²é¸»Ê¿ÕÒÁãÆ÷
-		else if(SystemPara.BillRecyclerType == FS_BILLRECYCLER)
+	}
+	//¼ì²é¸»Ê¿ÕÒÁãÆ÷
+	else if(SystemPara.BillRecyclerType == FS_BILLRECYCLER)
+	{
+		while(1)
 		{
 			print_fs("Task_FS==%d\r\n",FS_BILLRECYCLER);
 			FS_poll();
 			msleep(10);
 		}
-		else	
+	}
+	else	
+	{
+		while(1)
 		{
 			OSTimeDly(2);
 		}
-
-		//¼ì²éÖ½±ÒÆ÷¿ØÖÆ
-		/*FSBillRecyclerMsg = OSMboxPend(g_FSBillRecyclerMail,1,&ComStatus);
-		if(ComStatus == OS_NO_ERR)
-		{
-			//Ö½±ÒÆ÷°´ÕÅÊýÕÒ±Ò
-			if(FSBillRecyclerMsg->BillBack == MBOX_FSBILLRECYPAYOUTNUM)
-			{
-				print_fs("\r\n TaskFSPay=%ld,Num=%d",FSBillRecyclerMsg->RecyPayoutMoney,FSBillRecyclerMsg->RecyPayoutNum);
-                          PayoutMoney=(FSBillRecyclerMsg->RecyPayoutMoney)*(FSBillRecyclerMsg->RecyPayoutNum);
-				//PayouBacktMoney=FS_dispense(PayoutMoney);
-				MsgFSBillRecyclerPack.BillBackCmd = MBOX_FSBILLRECYPAYOUTSUCC;	
-				MsgFSBillRecyclerPack.RecyPayoutMoneyBack=PayouBacktMoney;
-				OSMboxPost(g_FSBillRecyclerBackMail,&MsgFSBillRecyclerPack);
-			}
-		}*/
+	}		
 		//OSTimeDly(50/5);
-	}	
+	
 }
