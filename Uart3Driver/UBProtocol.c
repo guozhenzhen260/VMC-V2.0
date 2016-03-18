@@ -1397,8 +1397,8 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 						sysVPMission.send.msg[i++]  = '-';
 						sysVPMission.send.msg[i++]  = '2'; 	 
 						sysVPMission.send.msg[i++]  = '.'; 	 
-						sysVPMission.send.msg[i++]  = '0';
-						sysVPMission.send.msg[i++]  = '3';
+						sysVPMission.send.msg[i++]  = '1';
+						sysVPMission.send.msg[i++]  = '7';
 						sysVPMission.send.msg[i++]  = '('; 	 
 						dexind=sprintf(strdex,"%s",__DATE__);
 						for(dex=0;dex<dexind;dex++)
@@ -3691,12 +3691,22 @@ unsigned char VPMission_Poll( uint8_t *isInit )
 				if(globalSys.pcInitFlag == 0)
 					globalSys.pcInitFlag = 1;
 			}
+			//恢复在线
+			  if(LogPara.offLineFlag == 1)
+                    {
+                        LogPara.offLineFlag = 0;      
+                    }
 			break;				
 		}
 	}
 	if( Timer.PCRecTimer==0 )
 	{		
 		TracePC("\r\n Drv failretry"); 
+		//离线
+	     if(LogPara.offLineFlag == 0)
+            {
+                LogPara.offLineFlag = 1;      
+            }
        	return VP_ERR_COM;
 	}
 
@@ -3715,7 +3725,12 @@ unsigned char VPMission_Poll( uint8_t *isInit )
 				{
 					if(globalSys.pcInitFlag == 0)
 						globalSys.pcInitFlag = 1;
-				}			
+				}
+				//恢复在线
+				  if(LogPara.offLineFlag == 1)
+	                    {
+	                        LogPara.offLineFlag = 0;      
+	                    }
 			}
 		}
 	}

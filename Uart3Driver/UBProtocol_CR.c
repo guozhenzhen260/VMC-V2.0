@@ -1492,12 +1492,22 @@ unsigned char VPMission_Poll_CR()
 		{		
 			TracePC("\r\n Drv rec2=ok"); 
 			recRes = 1;
+			//恢复在线
+			 if(LogPara.offLineFlag == 1)
+                    {
+                        LogPara.offLineFlag = 0;      
+                    }
 			break;				
 		}
 	}	
 	if( Timer.PCRecTimer==0 )
 	{		
 		TracePC("\r\n Drv failretry"); 
+		//离线
+		  if(LogPara.offLineFlag == 0)
+                {
+                    LogPara.offLineFlag = 1;      
+                }
        	return VP_ERR_COM;
 	}
 	if(recRes)
@@ -1508,7 +1518,12 @@ unsigned char VPMission_Poll_CR()
 			if( VPBusFrameUnPack_CR() )
 			{
 				TracePC("\r\n Drv rec2=ok"); 
-				recRes = 1;					
+				recRes = 1;	
+				//恢复在线
+				  if(LogPara.offLineFlag == 1)
+	                    {
+	                        LogPara.offLineFlag = 0;      
+	                    }
 			}
 		}		
 	}

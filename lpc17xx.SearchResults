@@ -1,13 +1,6 @@
----- Timer.ActionPCTimer 匹配 (12 in 2 文件) ----
-Taskuart3device.c (uart3driver):						if(Timer.ActionPCTimer==0)
-Taskuart3device.c (uart3driver):							Timer.ActionPCTimer = 5;
-Taskuart3device.c (uart3driver):						if(Timer.ActionPCTimer==0)
-Taskuart3device.c (uart3driver):							Timer.ActionPCTimer = 10;
-Taskuart3device.c (uart3driver):				if(Timer.ActionPCTimer==0)
-Taskuart3device.c (uart3driver):					Timer.ActionPCTimer = 1;
-Taskuart3device.c (uart3driver):				if(Timer.ActionPCTimer==0)
-Taskuart3device.c (uart3driver):					Timer.ActionPCTimer = 10;
-Taskuart3device.c (uart3driver):				if(Timer.ActionPCTimer==0)
-Taskuart3device.c (uart3driver):					Timer.ActionPCTimer = 10;
-Timer.c (drivers):		if(Timer.ActionPCTimer)
-Timer.c (drivers):			Timer.ActionPCTimer--;
+---- PCError 匹配 (6 in 2 文件) ----
+Maintain.c (app):uint8_t PCError(uint8_t PCType)
+Maintain.c (app):				if(PCError(1))
+Maintain.c (app):				if(PCError(2))
+Maintain.c (app):				if((PCError(1)==0)&&(PCError(2)==0))
+Maintain.h (app):uint8_t PCError(uint8_t PCType);
