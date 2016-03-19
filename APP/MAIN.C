@@ -52,6 +52,7 @@ void DispVersionText()
 	LCDNumberFontPrintf(40,LINE15,2,"version%d.%02d",2,17);	
 }
 
+
 /*********************************************************************************************************
 ** Function name:       mainTask
 ** Descriptions:        主任务
@@ -66,6 +67,7 @@ void MainTask(void *pvData)
 	
 	//unsigned char Id[4];
 	pvData = pvData;
+	WDT_Init(30);
 	InitKeyboard();//初始化拨码(不在这里做的话，硬币器拨码就需要拨了，不然机器蓝屏)
 	InitUart0();
 	//InitUart1();

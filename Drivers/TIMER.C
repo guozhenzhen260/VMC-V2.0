@@ -88,6 +88,7 @@ void TIMER0_IRQHandler (void)
 {  	
 	OSIntEnter();
 	T0IR = 1;
+	WDT_Feed();
 	//10ms¼¶¶¨Ê±Æ÷
 	if(EVBCONVERSATIONWAITACKTIMEOUT)
 		EVBCONVERSATIONWAITACKTIMEOUT--;
