@@ -3380,7 +3380,10 @@ void BusinessProcess(void *pvData)
 					CheckDeviceState();					
 					if(IsErrorState())
 					{
-						if(SystemPara.PcEnable!=CRUBOX_PC)
+						if((SystemPara.PcEnable==CRUBOX_PC)&&(LogPara.offLineFlag == 0))
+						{
+						}
+						else
 						{
 							Timer.DispFreeTimer=0;
 							TracePC(">>status2");

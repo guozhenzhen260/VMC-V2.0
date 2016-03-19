@@ -56,7 +56,7 @@ void checkTaskDevSignal()
 	static uint8_t dogUart1=0,dogUart2=0,dogUart3=0;
 	if(Timer.WatchDogTimer==0)
 	{
-		Timer.WatchDogTimer = 10;
+		Timer.WatchDogTimer = 60*2;
 		//Trace("\r\ntaskDevSignal=%ld,%ld,%ld",temptaskDevSignal.Uart1TaskDevice,temptaskDevSignal.Uart2TaskDevice,temptaskDevSignal.Uart3TaskDevice);
 		if(temptaskDevSignal.Uart1TaskDevice!=taskDevSignal.Uart1TaskDevice)
 		{

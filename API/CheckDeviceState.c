@@ -248,7 +248,7 @@ uint8_t IsErrorState()
 		//}
 	}
 
-	if(SystemPara.PcEnable == UBOX_PC)
+	if((SystemPara.PcEnable == UBOX_PC)||(SystemPara.PcEnable == CRUBOX_PC))
 	{
 		if(LogPara.offLineFlag == 1)
 			PcErr = 1;

@@ -1,13 +1,6 @@
----- updateTaskDevSignal 匹配 (12 in 5 文件) ----
-Common.c (app):void updateTaskDevSignal(uint8 dev)
-Common.h (app):extern void updateTaskDevSignal(uint8 dev);
-Taskdevice.c (drivers):		updateTaskDevSignal(UART2TASKSIG);
-Taskuart1device.c (uart1driver):			updateTaskDevSignal(UART1TASKSIG);
-Taskuart1device.c (uart1driver):			updateTaskDevSignal(UART1TASKSIG);
-Taskuart1device.c (uart1driver):			updateTaskDevSignal(UART1TASKSIG);
-Taskuart1device.c (uart1driver):			updateTaskDevSignal(UART1TASKSIG);
-Taskuart1device.c (uart1driver):			updateTaskDevSignal(UART1TASKSIG);
-Taskuart3device.c (uart3driver):			updateTaskDevSignal(UART3TASKSIG);
-Taskuart3device.c (uart3driver):			updateTaskDevSignal(UART3TASKSIG);
-Taskuart3device.c (uart3driver):			updateTaskDevSignal(UART3TASKSIG);
-Taskuart3device.c (uart3driver):			updateTaskDevSignal(UART3TASKSIG);
+---- PCError 匹配 (6 in 2 文件) ----
+Maintain.c (app):uint8_t PCError(uint8_t PCType)
+Maintain.c (app):				if(PCError(1))
+Maintain.c (app):				if(PCError(2))
+Maintain.c (app):				if((PCError(1)==0)&&(PCError(2)==0))
+Maintain.h (app):uint8_t PCError(uint8_t PCType);
