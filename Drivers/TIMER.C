@@ -114,6 +114,8 @@ void TIMER0_IRQHandler (void)
 	if(Tick >= 100)
 	{
 		Tick = 0;
+		if(Timer.WatchDogTimer)
+			Timer.WatchDogTimer--;
 		if(Timer.PayoutTimer)
 			Timer.PayoutTimer--;
 		if(Timer.EscrowTimer)

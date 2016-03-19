@@ -188,6 +188,7 @@ void Uart2TaskDevice(void *pvData)
 	/**/
 	while(1)
 	{	
+		updateTaskDevSignal(UART2TASKSIG);
 		//Trace("\r\n 1");
 		TraceCoin("\r\n Taskcoin1Enable=%d\r\n",NowCoinDev);//第一次使能是否成功
 		if(SystemPara.CoinAcceptorType==MDB_COINACCEPTER)

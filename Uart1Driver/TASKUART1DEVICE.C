@@ -118,6 +118,7 @@ void Uart1TaskDevice(void *pvData)
 	{
 		while(1)
 		{
+			updateTaskDevSignal(UART1TASKSIG);
 			//Trace("\r\n UART1TASK");
 			TraceSelection("\r\n Taskpkey=%d",SELECT_KEY); 
 			//1.poll选货按键
@@ -150,6 +151,7 @@ void Uart1TaskDevice(void *pvData)
 	{	
 		while(1)
 		{
+			updateTaskDevSignal(UART1TASKSIG);
 			if(Timer.getTempTimer==0)
 			{
 				Timer.getTempTimer = 10;
@@ -185,6 +187,7 @@ void Uart1TaskDevice(void *pvData)
 	{
 		while(1)
 		{
+			updateTaskDevSignal(UART1TASKSIG);
 			TraceChannel("Task_hefang==%d\r\n",SERIAL_GEZI);
 			//接收盒饭柜控制邮箱  Add by liya 2014-01-20
 			GeziMsg = OSMboxPend(g_HeFanGuiMail,OS_TICKS_PER_SEC/100,&ComStatus);
@@ -217,6 +220,7 @@ void Uart1TaskDevice(void *pvData)
 	{
 		while(1)
 		{
+			updateTaskDevSignal(UART1TASKSIG);
 			print_fs("Task_FS==%d\r\n",FS_BILLRECYCLER);
 			FS_poll();
 			msleep(10);
@@ -226,7 +230,8 @@ void Uart1TaskDevice(void *pvData)
 	{
 		while(1)
 		{
-			OSTimeDly(2);
+			updateTaskDevSignal(UART1TASKSIG);
+			OSTimeDly(OS_TICKS_PER_SEC/2);
 		}
 	}		
 		//OSTimeDly(50/5);

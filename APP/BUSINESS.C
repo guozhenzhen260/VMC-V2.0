@@ -3324,6 +3324,7 @@ void BusinessProcess(void *pvData)
 		switch(vmcStatus)
 		{
 			case VMC_FREE:
+				checkTaskDevSignal();
 				if(GOCCHECKTIMEOUT>200)
 				{
 					GOCCHECKTIMEOUT = 0;

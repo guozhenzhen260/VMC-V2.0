@@ -77,6 +77,20 @@ extern RTC_DATE RTCData;
 #define LINE15                   14
 #define LINE16                   15
 
+/******************************************任务看门狗系统参数*****************************************************/
+typedef struct
+{
+	unsigned int Uart2TaskDevice;//设备任务
+	unsigned int Uart1TaskDevice;//展示位任务
+	unsigned int Uart3TaskDevice;//PC通讯任务
+}TASKDEVICESIGNAL;
+extern TASKDEVICESIGNAL taskDevSignal;
+extern TASKDEVICESIGNAL temptaskDevSignal;
+#define UART1TASKSIG                   1
+#define UART2TASKSIG                   2
+#define UART3TASKSIG                   3
+extern void updateTaskDevSignal(uint8 dev);
+extern void checkTaskDevSignal(void);
 /******************************************工程系统参数*****************************************************/
 typedef struct	
 {
@@ -1108,6 +1122,7 @@ typedef struct
 /******************************************定时器设置*****************************************************/
 typedef struct	
 {
+	uint16_t		WatchDogTimer;					//看门狗定时器
 	uint8_t		PayoutTimer;					//出币等待定时器
 	uint8_t		EscrowTimer;					//压抄等待定时器
 	uint8_t		DispFreeTimer;					//交易界面空闲界面刷新定时器

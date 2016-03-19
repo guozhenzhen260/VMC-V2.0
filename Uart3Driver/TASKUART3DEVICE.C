@@ -123,6 +123,7 @@ void Uart3TaskDevice(void *pvData)
 	{
 		while(1)
 		{
+			updateTaskDevSignal(UART3TASKSIG);
 			TracePC("\r\n Task PcEnable=%d",SystemPara.PcEnable); 
 			if(GetWeihuStatus()==0)
 			{
@@ -276,6 +277,7 @@ void Uart3TaskDevice(void *pvData)
 	{
 		while(1)
 		{
+			updateTaskDevSignal(UART3TASKSIG);
 			TracePC("\r\n Task PcEnable=%d",SystemPara.PcEnable); 
 			VPMissionSIMPLESIMPLE_Poll();
 			//OSTimeDly(OS_TICKS_PER_SEC/4);
@@ -311,6 +313,7 @@ void Uart3TaskDevice(void *pvData)
 	{
 		while(1)
 		{
+			updateTaskDevSignal(UART3TASKSIG);
 			TracePC("\r\n Task PcEnable=%d",SystemPara.PcEnable); 
 			if(GetWeihuStatus()==0)
 			{
@@ -404,10 +407,11 @@ void Uart3TaskDevice(void *pvData)
 		}
 
 	}
-	else if(NowPCDev == 0)
+	else if(SystemPara.PcEnable == 0)
 	{
 		while(1)
 		{
+			updateTaskDevSignal(UART3TASKSIG);
 			OSTimeDly(OS_TICKS_PER_SEC/2);
 		}
 		//OSTimeDly(OS_TICKS_PER_SEC/2);

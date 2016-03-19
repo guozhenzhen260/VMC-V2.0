@@ -115,10 +115,12 @@ void MainTask(void *pvData)
 	SelectInitAPI();
 	OSTimeDly(OS_TICKS_PER_SEC/100);
 	//pcÍ¨Ñ¶´®¿Ú
-	OSTaskCreate(Uart3TaskDevice,(void *)0,&Uart3DeviceTaskStk[sizeof(Uart3DeviceTaskStk)/4 - 1],7);
+	OSTaskCreate(Uart3TaskDevice,(void *)0,&Uart3DeviceTaskStk[sizeof(Uart3DeviceTaskStk)/4 - 1],8);
 	OSTimeDly(OS_TICKS_PER_SEC/100);
 	PCInitAPI();
 	OSTimeDly(OS_TICKS_PER_SEC);
+
+	memset(&taskDevSignal,0,sizeof(taskDevSignal));
 	
 	//err = ChannelGetGocState(1);
 	//Trace("GOCState=%d\r\n",err);
@@ -130,11 +132,7 @@ void MainTask(void *pvData)
 		//if(ReadMaintainKeyValue())
 		//	MaintainUserProcess((void*)0);
 		//else
-		BusinessProcess((void*)0);
-		while(1)
-		{
-			OSTimeDly(50);
-		}
+		BusinessProcess((void*)0);		
 	}
 }
 /*********************************************************************************************************
@@ -149,7 +147,7 @@ int main(void)
     targetInit();																
     pinInit();      															                                                                    
     OSInit();                                                                                                       
-	OSTaskCreateExt(MainTask,(void *)0,&MainTaskStk[sizeof(MainTaskStk)/4 - 1],8,8,&MainTaskStk[0],256,(void *)0,OS_TASK_OPT_STK_CHK);
+	OSTaskCreateExt(MainTask,(void *)0,&MainTaskStk[sizeof(MainTaskStk)/4 - 1],7,7,&MainTaskStk[0],256,(void *)0,OS_TASK_OPT_STK_CHK);
     OSStart();
 	return 0;
 }
