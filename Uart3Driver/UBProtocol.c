@@ -3695,6 +3695,7 @@ unsigned char VPMission_Poll( uint8_t *isInit )
 			  if(LogPara.offLineFlag == 1)
                     {
                         LogPara.offLineFlag = 0;      
+			     VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
                     }
 			break;				
 		}
@@ -3730,6 +3731,7 @@ unsigned char VPMission_Poll( uint8_t *isInit )
 				  if(LogPara.offLineFlag == 1)
 	                    {
 	                        LogPara.offLineFlag = 0;      
+					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
 	                    }
 			}
 		}
