@@ -1,21 +1,5 @@
----- StatusRPTAPI 匹配 (20 in 5 文件) ----
-Business.c (app):		StatusRPTAPI();
-Business.c (app):							StatusRPTAPI();
-Business.c (app):						StatusRPTAPI();
-Business.c (app):						StatusRPTAPI();
-Business.c (app):						StatusRPTAPI();
-CheckDeviceState.c (api):				StatusRPTAPI();
-CheckDeviceState.c (api):					StatusRPTAPI();
-CheckDeviceState.c (api):				StatusRPTAPI();
-CheckDeviceState.c (api):					StatusRPTAPI();
-CheckDeviceState.c (api):					StatusRPTAPI();
-CheckDeviceState.c (api):				StatusRPTAPI();
-CheckDeviceState.c (api):			StatusRPTAPI();
-PCComAPI.c (api):void BillStatusRPTAPI()
-PCComAPI.c (api):					StatusRPTAPI();
-PCComAPI.c (api):					StatusRPTAPI();
-PCComAPI.c (api):void StatusRPTAPI()
-PCComAPI.c (api):							StatusRPTAPI();
-PCComAPI.h (api):extern void BillStatusRPTAPI(void);
-PCComAPI.h (api):extern void StatusRPTAPI(void);
-UBProtocol.c (uart3driver):	StatusRPTAPI();
+---- WDT_Feed 匹配 (4 in 3 文件) ----
+Timer.c (drivers):	WDT_Feed();
+WDTDog.C (drivers):	WDT_Feed();
+WDTDog.C (drivers):void WDT_Feed( void )
+WDTDog.H (drivers):extern void WDT_Feed( void );

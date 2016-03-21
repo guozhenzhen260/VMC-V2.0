@@ -19,6 +19,107 @@
 /*********************************************************************************************************
 ** 通讯机制
 *********************************************************************************************************/
+TASKDEVICESIGNAL taskDevSignal,temptaskDevSignal;
+
+/*********************************************************************************************************
+** Function name:     	updateTaskDevSignal
+** Descriptions:	    更新看门狗信号量
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void updateTaskDevSignal(uint8 dev)
+{
+	switch(dev)
+	{
+		case UART1TASKSIG:
+			taskDevSignal.Uart1TaskDevice++;
+			break;
+		case UART2TASKSIG:
+			taskDevSignal.Uart2TaskDevice++;
+			break;
+		case UART3TASKSIG:
+			taskDevSignal.Uart3TaskDevice++;
+			break;	
+	}
+}
+
+/*********************************************************************************************************
+** Function name:     	checkTaskDevSignal
+** Descriptions:	    检测看门狗信号量，如果出异常，复位系统
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void checkTaskDevSignal()
+{
+	static uint8_t dogUart1=0,dogUart2=0,dogUart3=0;
+	if(Timer.WatchDogTimer==0)
+	{
+		Timer.WatchDogTimer = 60*2;
+		//Trace("\r\ntaskDevSignal=%ld,%ld,%ld",temptaskDevSignal.Uart1TaskDevice,temptaskDevSignal.Uart2TaskDevice,temptaskDevSignal.Uart3TaskDevice);
+		if(temptaskDevSignal.Uart1TaskDevice!=taskDevSignal.Uart1TaskDevice)
+		{
+			temptaskDevSignal.Uart1TaskDevice=taskDevSignal.Uart1TaskDevice;
+			dogUart1=0;
+			//Trace("\r\nUart1TaskDiff=%ld,dog=%d",taskDevSignal.Uart1TaskDevice,dogUart1);			
+		}
+		else
+		{
+			dogUart1++;
+			//Trace("\r\nUart1TaskSame=%ld,dog=%d",taskDevSignal.Uart1TaskDevice,dogUart1);
+		}
+		if(temptaskDevSignal.Uart2TaskDevice!=taskDevSignal.Uart2TaskDevice)
+		{
+			temptaskDevSignal.Uart2TaskDevice=taskDevSignal.Uart2TaskDevice;
+			//
+			dogUart2=0;
+			//Trace("\r\nUart2TaskDiff=%ld,dog=%d",taskDevSignal.Uart2TaskDevice,dogUart2);
+		}
+		else
+		{
+			//
+			dogUart2++;
+			//Trace("\r\nUart2TaskSame=%ld,dog=%d",taskDevSignal.Uart2TaskDevice,dogUart2);
+		}
+		if(temptaskDevSignal.Uart3TaskDevice!=taskDevSignal.Uart3TaskDevice)
+		{
+			temptaskDevSignal.Uart3TaskDevice=taskDevSignal.Uart3TaskDevice;
+			//
+			dogUart3=0;
+			//Trace("\r\nUart3TaskDiff=%ld,dog=%d",taskDevSignal.Uart3TaskDevice,dogUart3);
+		}
+		else
+		{
+			//
+			dogUart3++;
+			//Trace("\r\nUart3TaskSame=%ld,dog=%d",taskDevSignal.Uart3TaskDevice,dogUart3);
+		}
+
+		//复位
+		if((dogUart1>5)||(dogUart2>5)||(dogUart3>5))
+		{
+			if(dogUart1>5)
+			{
+				Trace("\r\nUart1TaskReset");
+			}
+			if(dogUart2>5)
+			{
+				Trace("\r\nUart2TaskReset");
+			}
+			if(dogUart3>5)
+			{
+				Trace("\r\nUart3TaskReset");
+			}
+			MdbBusHardwareReset();
+		      OSTimeDly(OS_TICKS_PER_SEC*2);
+			zyReset(ZY_HARD_RESET);
+		}
+	}	
+}
+
+
+
 //等待设备初始化完成信号量
 OS_EVENT	*g_DeviceSem;
 //纸币器通信队列

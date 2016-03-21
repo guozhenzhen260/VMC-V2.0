@@ -3324,6 +3324,7 @@ void BusinessProcess(void *pvData)
 		switch(vmcStatus)
 		{
 			case VMC_FREE:
+				checkTaskDevSignal();
 				if(GOCCHECKTIMEOUT>200)
 				{
 					GOCCHECKTIMEOUT = 0;
@@ -3379,7 +3380,10 @@ void BusinessProcess(void *pvData)
 					CheckDeviceState();					
 					if(IsErrorState())
 					{
-						if(SystemPara.PcEnable!=CRUBOX_PC)
+						if((SystemPara.PcEnable==CRUBOX_PC)&&(LogPara.offLineFlag == 0))
+						{
+						}
+						else
 						{
 							Timer.DispFreeTimer=0;
 							TracePC(">>status2");
@@ -3408,6 +3412,8 @@ void BusinessProcess(void *pvData)
 				pollDoorAPI(0);
 				//10.轮询游戏按键
 				ReadGameKeyValueAPI();
+				//11.轮询退币按钮，有按下蜂鸣器响一下
+				IsTuibiAPI();
 				break;
 			case VMC_CHAXUN:
 				//1.轮询按键

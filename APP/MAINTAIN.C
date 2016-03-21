@@ -269,7 +269,20 @@ uint8_t PCError(uint8_t PCType)
 		if(PCType == 1)//小数点位数scale故障
 		{			
 			state = GetScaleError();
-			TracePC("\r\n App PCErrorScale=%d",state,GetScaleError());
+			TracePC("\r\n App PCErrorScale=%d",state);
+		}
+		else if(PCType == 2)//离线故障
+		{
+			state = LogPara.offLineFlag;
+			TracePC("\r\n App PCErrorOffLine=%d",LogPara.offLineFlag);
+		}
+	}
+	else if(SystemPara.PcEnable == CRUBOX_PC)
+	{
+		if(PCType == 1)//小数点位数scale故障
+		{			
+			state = 0;
+			TracePC("\r\n App PCErrorScale=%d",state);
 		}
 		else if(PCType == 2)//离线故障
 		{

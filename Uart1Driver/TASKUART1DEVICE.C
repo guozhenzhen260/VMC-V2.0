@@ -113,12 +113,14 @@ void Uart1TaskDevice(void *pvData)
 		FS_init();
 	}
 	
-	
-	while(1)
-	{		
-		if(SystemPara.UserSelectKeyBoard==SELECT_KEY)
+			
+	if(SystemPara.UserSelectKeyBoard==SELECT_KEY)
+	{
+		while(1)
 		{
+			updateTaskDevSignal(UART1TASKSIG);
 			//Trace("\r\n UART1TASK");
+			TraceSelection("\r\n Taskpkey=%d",SELECT_KEY); 
 			//1.poll选货按键
 			key=GetSelectKey();
 			//有按键，上报按键值
@@ -143,9 +145,13 @@ void Uart1TaskDevice(void *pvData)
 				}
 			}	
 		}
-		//温控器
-		else if(SystemPara.XMTTemp==1)
-		{	
+	}
+	//温控器
+	else if(SystemPara.XMTTemp==1)
+	{	
+		while(1)
+		{
+			updateTaskDevSignal(UART1TASKSIG);
 			if(Timer.getTempTimer==0)
 			{
 				Timer.getTempTimer = 10;
@@ -175,13 +181,18 @@ void Uart1TaskDevice(void *pvData)
 				}
 			}
 		}
-		//检查格子柜
-		else if(SystemPara.hefangGui==SERIAL_GEZI)
+	}
+	//检查格子柜
+	else if(SystemPara.hefangGui==SERIAL_GEZI)
+	{
+		while(1)
 		{
+			updateTaskDevSignal(UART1TASKSIG);
+			TraceChannel("Task_hefang==%d\r\n",SERIAL_GEZI);
 			//接收盒饭柜控制邮箱  Add by liya 2014-01-20
 			GeziMsg = OSMboxPend(g_HeFanGuiMail,OS_TICKS_PER_SEC/100,&ComStatus);
 			if(ComStatus == OS_NO_ERR)
-			{
+			{				
 				switch(GeziMsg->HeFanGuiHandle)	
 				{
 					case HEFANGUI_KAIMEN:
@@ -203,32 +214,26 @@ void Uart1TaskDevice(void *pvData)
 			}
 			OSTimeDly(2);	
 		}
-		//检查富士找零器
-		else if(SystemPara.BillRecyclerType == FS_BILLRECYCLER)
+	}
+	//检查富士找零器
+	else if(SystemPara.BillRecyclerType == FS_BILLRECYCLER)
+	{
+		while(1)
 		{
+			updateTaskDevSignal(UART1TASKSIG);
+			print_fs("Task_FS==%d\r\n",FS_BILLRECYCLER);
 			FS_poll();
 			msleep(10);
 		}
-		else	
+	}
+	else	
+	{
+		while(1)
 		{
-			OSTimeDly(2);
+			updateTaskDevSignal(UART1TASKSIG);
+			OSTimeDly(OS_TICKS_PER_SEC/2);
 		}
-
-		//检查纸币器控制
-		/*FSBillRecyclerMsg = OSMboxPend(g_FSBillRecyclerMail,1,&ComStatus);
-		if(ComStatus == OS_NO_ERR)
-		{
-			//纸币器按张数找币
-			if(FSBillRecyclerMsg->BillBack == MBOX_FSBILLRECYPAYOUTNUM)
-			{
-				print_fs("\r\n TaskFSPay=%ld,Num=%d",FSBillRecyclerMsg->RecyPayoutMoney,FSBillRecyclerMsg->RecyPayoutNum);
-                          PayoutMoney=(FSBillRecyclerMsg->RecyPayoutMoney)*(FSBillRecyclerMsg->RecyPayoutNum);
-				//PayouBacktMoney=FS_dispense(PayoutMoney);
-				MsgFSBillRecyclerPack.BillBackCmd = MBOX_FSBILLRECYPAYOUTSUCC;	
-				MsgFSBillRecyclerPack.RecyPayoutMoneyBack=PayouBacktMoney;
-				OSMboxPost(g_FSBillRecyclerBackMail,&MsgFSBillRecyclerPack);
-			}
-		}*/
+	}		
 		//OSTimeDly(50/5);
-	}	
+	
 }

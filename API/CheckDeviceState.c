@@ -115,8 +115,10 @@ uint8_t IsErrorState()
 			//故障时，只发送一次status
 			if(status==0)
 			{
-				TracePC(">>status6");
-				StatusRPTAPI();
+				if(SystemPara.PcEnable==CRUBOX_PC)
+				{
+					StatusRPTAPI();
+				}
 				status=1;
 			}
 		}
@@ -246,7 +248,7 @@ uint8_t IsErrorState()
 		//}
 	}
 
-	if(SystemPara.PcEnable == UBOX_PC)
+	if((SystemPara.PcEnable == UBOX_PC)||(SystemPara.PcEnable == CRUBOX_PC))
 	{
 		if(LogPara.offLineFlag == 1)
 			PcErr = 1;
@@ -263,8 +265,10 @@ uint8_t IsErrorState()
 			billError = 0;
 			ResetBill();
 			TraceBill("\r\n MiddBillState2=%d",billError);
-			TracePC(">>status7");
-			StatusRPTAPI();
+			if(SystemPara.PcEnable==CRUBOX_PC)
+			{
+				StatusRPTAPI();
+			}
 			status=0;
 		}
 		return 0;

@@ -49,8 +49,9 @@ static OS_STK Uart1DeviceTaskStk[256];
 void DispVersionText()
 {	
 	LCDPutLOGOBmp(24,LINE2,SystemPara.Logo);
-	LCDNumberFontPrintf(40,LINE15,2,"version%d.%02d",2,16);	
+	LCDNumberFontPrintf(40,LINE15,2,"version%d.%02d",2,17);	
 }
+
 
 /*********************************************************************************************************
 ** Function name:       mainTask
@@ -66,6 +67,7 @@ void MainTask(void *pvData)
 	
 	//unsigned char Id[4];
 	pvData = pvData;
+	WDT_Init(2*60);//开启看门狗，设置120s超时
 	InitKeyboard();//初始化拨码(不在这里做的话，硬币器拨码就需要拨了，不然机器蓝屏)
 	InitUart0();
 	//InitUart1();
@@ -119,6 +121,8 @@ void MainTask(void *pvData)
 	OSTimeDly(OS_TICKS_PER_SEC/100);
 	PCInitAPI();
 	OSTimeDly(OS_TICKS_PER_SEC);
+
+	memset(&taskDevSignal,0,sizeof(taskDevSignal));
 	
 	//err = ChannelGetGocState(1);
 	//Trace("GOCState=%d\r\n",err);
@@ -130,11 +134,7 @@ void MainTask(void *pvData)
 		//if(ReadMaintainKeyValue())
 		//	MaintainUserProcess((void*)0);
 		//else
-		BusinessProcess((void*)0);
-		while(1)
-		{
-			OSTimeDly(50);
-		}
+		BusinessProcess((void*)0);		
 	}
 }
 /*********************************************************************************************************

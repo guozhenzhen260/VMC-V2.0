@@ -88,6 +88,7 @@ void TIMER0_IRQHandler (void)
 {  	
 	OSIntEnter();
 	T0IR = 1;
+	WDT_Feed();
 	//10ms¼¶¶¨Ê±Æ÷
 	if(EVBCONVERSATIONWAITACKTIMEOUT)
 		EVBCONVERSATIONWAITACKTIMEOUT--;
@@ -114,6 +115,8 @@ void TIMER0_IRQHandler (void)
 	if(Tick >= 100)
 	{
 		Tick = 0;
+		if(Timer.WatchDogTimer)
+			Timer.WatchDogTimer--;
 		if(Timer.PayoutTimer)
 			Timer.PayoutTimer--;
 		if(Timer.EscrowTimer)

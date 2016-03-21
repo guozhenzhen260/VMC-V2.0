@@ -975,6 +975,48 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 	return VP_ERR_NULL;
 }
 
+
+/*********************************************************************************************************
+** Function name:     	VPMission_PackOpt
+** Descriptions:	    收发操作
+** input parameters:    
+** output parameters:   无
+** Returned value:      
+*********************************************************************************************************/
+unsigned char VPMission_PackOpt_CR(  unsigned char msgType, unsigned char flag  )
+{
+	unsigned char ressend=1;
+
+	if(flag==0)
+	{
+		VPMsgPackSend_CR( msgType,flag);
+	}
+	else
+	{
+		while(ressend)
+		{
+			VPMsgPackSend_CR( msgType,flag);
+			Timer.PCRecTimer = VP_TIME_OUT;
+			while( Timer.PCRecTimer )
+			{
+				if( VPBusFrameUnPack_CR() )
+				{				
+					break;				
+				}
+			}
+			if( Timer.PCRecTimer==0 )
+			{			
+		       	OSTimeDly(10);	
+				issnup=1;
+			}	
+			else
+			{
+				ressend=0;			
+			}
+		}
+	}
+	return VP_ERR_NULL;
+}
 /*********************************************************************************************************
 ** Function name:     	VPMission_Setup_RPT_CR
 ** Descriptions:	    启动时上报配置信息
@@ -989,53 +1031,8 @@ unsigned char VPMission_Setup_RPT_CR( void )
 	unsigned char flag = 0;
 
     retry = VP_COM_RETRY;   
-	flag = VPMsgPackSend_CR( VP_VMC_SETUP,0);
-	//DisplayStr( 0, 0, 1, "2", 1 );  
-	//WaitForWork(2000,NULL);
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-
-	/*while( retry )
-	{
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
-		{
-			//DisplayStr( 0, 0, 1, "3", 1 );  
-			//WaitForWork(1000,NULL);
-			if( VPBusFrameUnPack_CR() )
-			{
-				//DisplayStr( 0, 0, 1, "4", 1 );  
-				//WaitForWork(2000,NULL);
-			    //sysVPMissionCR.comErrNum = 0;
-				recRes = 1;
-				break;				
-			}
-		}
-		if(Timer.PCRecTimer==0)
-		{
-			retry--;
-			//TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			break;
-		}
-	}	
-	if( retry== 0 )
-	{
-		//sysVPMissionCR.comErrNum++;
-		//
-        return VP_ERR_COM;
-	}
-    switch( sysVPMissionCR.receive.msgType )
-	{
-		default:
-		    break;
-	}
-	*/
-	return VP_ERR_NULL;
+	flag = VPMission_PackOpt_CR( VP_VMC_SETUP,0);	
+	return flag;
 }
 
 /*********************************************************************************************************
@@ -1114,12 +1111,8 @@ unsigned char VPMission_Status_RPT_CR()
 	sysVPMissionCR.recychange = change;
 	
 	//==============================================================
-	flag = VPMsgPackSend_CR( VP_STATUS_RPT, 0);  //1-0, not need ACK
-      if( flag != VP_ERR_NULL )
-      {
-		return VP_ERR_PAR;
-	}	
-	return VP_ERR_NULL;
+	flag = VPMission_PackOpt_CR( VP_STATUS_RPT, 0);  //1-0, not need ACK      	
+	return flag;
 
 }
 
@@ -1137,22 +1130,13 @@ unsigned char VPMission_Info_RPT_CR(uint8_t type)
 	unsigned char recRes=0;
 	unsigned char flag = 0;
 
-	if(LogPara.offLineFlag == 1)
-	{
-		return VP_ERR_NULL;
-	}
-	//
-    retry = VP_COM_RETRY;
+	retry = VP_COM_RETRY;
 	//-------------------------------------------
     sysVPMissionCR.type = type;		
 	//===========================================
-	flag = VPMsgPackSend_CR( VP_INFO_RPT, 0);
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	
-	return VP_ERR_NULL;
+	flag = VPMission_PackOpt_CR( VP_INFO_RPT, 0);
+   	
+	return flag;
 }
 
 
@@ -1216,12 +1200,9 @@ unsigned char VPMission_Act_RPT_CR( unsigned char action)
       sysVPMissionCR.action   = action;	
 	//===========================================
 		
-    flag = VPMsgPackSend_CR( VP_ACTION_RPT, 0);   
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}	
-	return VP_ERR_NULL;
+    flag = VPMission_PackOpt_CR( VP_ACTION_RPT, 0);   
+    	
+	return flag;
 }
 
 
@@ -1250,12 +1231,8 @@ unsigned char VPMission_Button_RPT_CR()
     retry = VP_COM_RETRY;
     //-------------------------------------------  
 	//1-0: button message, not need ACK
-    flag = VPMsgPackSend_CR( VP_BUTTON_RPT, 0);   
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}	
-	return VP_ERR_NULL;
+    flag = VPMission_PackOpt_CR( VP_BUTTON_RPT, 0);   
+    return flag;
 
 }
 
@@ -1298,12 +1275,8 @@ unsigned char VPMission_Payin_RPT_CR(uint8_t dev,uint16_t payInMoney,uint32_t pa
 	sysVPMissionCR.payAllMoney = payAllMoney;
 		
 	//===========================================
-	flag = VPMsgPackSend_CR( VP_PAYIN_RPT, 0);
-    if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}	
-	return VP_ERR_NULL;
+	flag = VPMission_PackOpt_CR( VP_PAYIN_RPT, 0);
+      return flag;
 }
 
 /*********************************************************************************************************
@@ -1355,52 +1328,9 @@ unsigned char VPMission_Cost_RPT_CR( unsigned char Type, uint32_t costMoney, uns
 	sysVPMissionCR.costMoney = costMoney;
 	sysVPMissionCR.payAllMoney = payAllMoney;
 	//===========================================
-	while(ressend)
-	{
-	    retry = VP_COM_RETRY;
-	    flag = VPMsgPackSend_CR( VP_COST_RPT, 1);
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
-		}
-		while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack_CR() )
-				{
-					recRes = 1;
-					break;
-				}
-			}
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-			
-		}
-		if( retry== 0 )
-		{
-			OSTimeDly(10);	
-			issnup=1;
-		}
-		else
-		{
-			ressend=0;			
-		}
-	}
-    switch( sysVPMissionCR.receive.msgType )
-	{
-		default:
-		    break;
-	}
-	return VP_ERR_NULL;
+	flag = VPMission_PackOpt_CR( VP_COST_RPT, 1);
+	
+	return flag;
 }
 
 /*********************************************************************************************************
@@ -1481,52 +1411,8 @@ unsigned char VPMission_Payout_RPT_CR( uint8_t payoutDev,unsigned char Type, uns
 	sysVPMissionCR.payremainMoney=payremainMoney;
 	sysVPMissionCR.payAllMoney = payAllMoney;
 	//===========================================	
-	while(ressend)
-	{
-		retry = VP_COM_RETRY;
-		flag = VPMsgPackSend_CR( VP_PAYOUT_RPT, 1);
-		 if( flag != VP_ERR_NULL )
-	      {
-			return VP_ERR_PAR;
-		}
-		while( retry )
-		{
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
-			{
-				if( VPBusFrameUnPack_CR() )
-				{
-					recRes = 1;
-					break;
-				}
-			}
-			if(Timer.PCRecTimer==0)
-			{
-				retry--;
-				//TracePC("\r\n Drv failretry=%d",retry); 
-			}	
-			if(recRes)
-			{
-				break;
-			}
-			
-		}
-		if( retry== 0 )
-		{
-			OSTimeDly(10);	
-			issnup=1;
-		}
-		else
-		{
-			ressend=0;			
-		}
-	}
-      switch( sysVPMissionCR.receive.msgType )
-	{
-		default:
-		    break;
-	}
-	return VP_ERR_NULL;
+	flag = VPMission_PackOpt_CR( VP_PAYOUT_RPT, 1);	
+	return flag;
 }
 
 
@@ -1577,13 +1463,9 @@ unsigned char VP_Reset_Rpt_CR( void )
 {
 	unsigned char flag = 0;
 	
-	flag = VPMsgPackSend_CR( VP_RESET_RPT, 0);
-	 if( flag != VP_ERR_NULL )
-    {
-		return VP_ERR_PAR;
-	}
-	
-	return VP_ERR_NULL;	
+	flag = VPMission_PackOpt_CR( VP_RESET_RPT, 0);
+	 
+	return flag;	
 }
 
 
@@ -1602,60 +1484,51 @@ unsigned char VPMission_Poll_CR()
 
 		
 
-	retry = VP_COM_RETRY;	
-
-	while( retry )
+	VPMsgPackSend_CR( VP_POLL, 1);
+	Timer.PCRecTimer = VP_TIME_OUT;
+	while( Timer.PCRecTimer )
 	{
-		flag = VPMsgPackSend_CR( VP_POLL, 1);
-		//DisplayStr( 0, 0, 1, "2", 1 );  
-		//WaitForWork(2000,NULL);
-	    if( flag != VP_ERR_NULL )
-	    {
-			return VP_ERR_PAR;
+		if( VPBusFrameUnPack_CR() )
+		{		
+			TracePC("\r\n Drv rec2=ok"); 
+			recRes = 1;
+			//恢复在线
+			 if(LogPara.offLineFlag == 1)
+                    {
+                        LogPara.offLineFlag = 0;      
+                    }
+			break;				
 		}
-		Timer.PCRecTimer = VP_TIME_OUT;
-		while( Timer.PCRecTimer )
+	}	
+	if( Timer.PCRecTimer==0 )
+	{		
+		TracePC("\r\n Drv failretry"); 
+		//离线
+		  if(LogPara.offLineFlag == 0)
+                {
+                    LogPara.offLineFlag = 1;      
+                }
+       	return VP_ERR_COM;
+	}
+	if(recRes)
+	{
+		//如果发现接收有延后，可以超前一步再接收一次数据	
+		if(sysVPMissionCR.receive.msgType==VP_ACK)
 		{
-			//DisplayStr( 0, 0, 1, "System 1", 10 );  
-			//WaitForWork(2000,NULL);
 			if( VPBusFrameUnPack_CR() )
 			{
-				TracePC("\r\n Drv rec=ok"); 
-				recRes = 1;				
-				break;
-			}			
-		}
-		if(Timer.PCRecTimer==0)
-		{			
-			retry--;
-			TracePC("\r\n Drv failretry=%d",retry); 
-		}	
-		if(recRes)
-		{
-			//如果发现接收有延后，可以超前一步再接收一次数据	
-			if(sysVPMissionCR.receive.msgType==VP_ACK)
-			{
-				if( VPBusFrameUnPack_CR() )
-				{
-					TracePC("\r\n Drv rec2=ok"); 
-					recRes = 1;					
-				}
+				TracePC("\r\n Drv rec2=ok"); 
+				recRes = 1;	
+				//恢复在线
+				  if(LogPara.offLineFlag == 1)
+	                    {
+	                        LogPara.offLineFlag = 0;      
+	                    }
 			}
-			break;//接收到数据退出
-		}
+		}		
 	}
-	//TracePC("\r\n Drv retry=%d",retry); 
-	if( retry== 0 )
-	{
-		TracePC("\r\n Drv rec=fail"); 
-		OSTimeDly(10);	
-        return VP_ERR_COM;
-	}
-
-	//DisplayStr( 0, 0, 1, "System 2", 10 );  
-	//WaitForWork(2000,NULL);
-	//TracePC("\r\n Drv rec=result"); 
-    switch( sysVPMissionCR.receive.msgType )
+	
+      switch( sysVPMissionCR.receive.msgType )
 	{
 		case VP_GET_SETUP_IND: 
 			VPMission_Setup_RPT_CR();						
@@ -1687,7 +1560,5 @@ unsigned char VPMission_Poll_CR()
 	
 	return VP_ERR_NULL;
 }
-
-
 
 
