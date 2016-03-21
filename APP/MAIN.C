@@ -67,7 +67,7 @@ void MainTask(void *pvData)
 	
 	//unsigned char Id[4];
 	pvData = pvData;
-	WDT_Init(30);
+	WDT_Init(2*60);//开启看门狗，设置120s超时
 	InitKeyboard();//初始化拨码(不在这里做的话，硬币器拨码就需要拨了，不然机器蓝屏)
 	InitUart0();
 	//InitUart1();

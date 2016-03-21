@@ -3412,6 +3412,8 @@ void BusinessProcess(void *pvData)
 				pollDoorAPI(0);
 				//10.轮询游戏按键
 				ReadGameKeyValueAPI();
+				//11.轮询退币按钮，有按下蜂鸣器响一下
+				IsTuibiAPI();
 				break;
 			case VMC_CHAXUN:
 				//1.轮询按键

@@ -1,7 +1,5 @@
----- Timer.GetTubeTimer 匹配 (6 in 2 文件) ----
-Business.c (app):	Timer.GetTubeTimer = 0;
-Business.c (app):				if(Timer.GetTubeTimer==0)
-Business.c (app):					Timer.GetTubeTimer = 5;
-Business.c (app):				Timer.GetTubeTimer = 0;
-Timer.c (drivers):		if(Timer.GetTubeTimer)
-Timer.c (drivers):			Timer.GetTubeTimer--;	
+---- WDT_Feed 匹配 (4 in 3 文件) ----
+Timer.c (drivers):	WDT_Feed();
+WDTDog.C (drivers):	WDT_Feed();
+WDTDog.C (drivers):void WDT_Feed( void )
+WDTDog.H (drivers):extern void WDT_Feed( void );
