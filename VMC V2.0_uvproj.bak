@@ -715,6 +715,11 @@
               <FileType>1</FileType>
               <FilePath>.\Drivers\GPRS_UART.c</FilePath>
             </File>
+            <File>
+              <FileName>WDTDog.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Drivers\WDTDog.C</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
