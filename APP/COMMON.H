@@ -58,6 +58,35 @@
 
 extern RTC_DATE RTCData;
 
+//=============================================================================
+//宏函数及表达式
+//=============================================================================
+
+#define  HEC_to_ASC(n) ((n) + 48)//限数字
+#define  ASC_to_HEC(n) ((n) - 48)
+#define HUINT16(n)				(unsigned char)(((n) >> 8) & 0xff)//16位数值高8位
+#define LUINT16(n)				(unsigned char)((n) & 0xff)//16位数值低8位	
+#define H0UINT32(n)				(unsigned char)(((n) >> 24) & 0xff)//32位数值第一个高8位
+#define H1UINT32(n)				(unsigned char)(((n) >> 16) & 0xff)//32位数值第二个高8位
+#define L0UINT32(n)				(unsigned char)(((n) >> 8) & 0xff)//32位数值第一个低8位
+#define L1UINT32(n)				(unsigned char)((n) & 0xff)//32位数值第二个低8位
+#define yoffset_of(type,member) ({(INT32U & ((type*)(0)->member));})
+//32位处理器ptr结构体中member地址，type结构体类型member结构体成员
+#define ycontain_of(ptr,type,member) ({	\
+		(type*)((INT32U*)ptr - yoffset_of(type,member)); \
+		})
+	//两个unsigned char 数据整合成unsigned short型数据
+#define INTEG16(h,l)			(unsigned short)(((unsigned short)(h) << 8) | ((l) & 0xff))
+	//四个unsigned char 数据整合成unsigned int型数据
+#define INTEG32(h0,l0,h1,l1)	(unsigned int)(((unsigned int)(h0) << 24) | \
+									((unsigned int)(l0) << 16) | \
+									((unsigned int)(h1) << 8) | \
+									((l1) & 0xff))
+
+
+
+
+
 
 /******************************************屏幕显示行数*****************************************************/
 #define LINE1                    0
@@ -745,104 +774,6 @@ extern struct EvbHopper stEvbHp[3];
 extern unsigned char HpValueFlag;
 
 
-//add by yoc 2013.12.16
-/***********************************一鸣智慧*PC通讯结构体*****************************************************/
-
-//上发 表示VMC _PC  下发表示 PC_VMC
-//上发启动一鸣智慧
-#define MBOX_VMC_ZH_START		    	0x01
-//上发启动GPRS
-#define MBOX_VMC_GPRS_START		   		0x02
-//vmc上发给PC机投入硬币
-#define MBOX_VMC_ZH_COIN		        0x03
-//vmc上发给PC机投入纸币
-#define MBOX_VMC_ZH_BILL 		        0x04
-//vmc上发给PC机暂存纸币
-#define MBOX_VMC_ZH_ESCROWIN 		    0x05
-//vmc上发给PC机暂存纸币出币
-#define MBOX_VMC_ZH_ESCROWOUT		    0x06
-//vmc上发给PC机找零	  即 
-#define MBOX_VMC_ZH_PAYOUT     		    0x07
-
-//上发离线交易数据
-#define MBOX_VMC_ZH_OFFLINE_REPORT		0x08
-//上发出货信息
-#define MBOX_VMC_ZH_TRADE			 0x09
-
-//上发按键 选货
-#define MBOX_VMC_ZH_BUTTON			0x0B
-//上发进入维护模
-#define MBOX_VMC_ZH_WEIHU			0x0C
-//上发离开维护模式					
-#define MBOX_VMC_ZH_NORMAL			0x0D
-//清零
-#define MBOX_VMC_ZH_CLEAR 			0x0E
-//上发GPRS同步数据
-#define MBOX_VMC_GPRS_CLEAR			0x0F
-
-//上发ACK
-#define MBOX_VMC_ZH_ACK			0x10
-//上发NAK
-#define MBOX_VMC_ZH_NAK			0x11
-//一次交易结束
-#define MBOX_VMC_ZH_TRADE_OVER 	0x12
-//上发人体接近
-#define MBOX_VMC_ZH_HUMAN	   0x13
-//上发大门打开
-#define MBOX_VMC_ZH_DOOR_OPEN   0x14
-//上发大门关闭
-#define MBOX_VMC_ZH_DOOR_CLOSE   0x15
-
-
-
-//下发离线状态
-#define MBOX_ZH_VMC_OFFLINE			   0x01
-//下发在线状态
-#define MBOX_ZH_VMC_ONLINE			   0x02
-//下发出货指令
-#define MBOX_ZH_VMC_TRADE			   0x03
-//下发清零完成标志
-#define MBOX_ZH_VMC_CLEAR_OK		 0x04
-
-/****************************************************************************
-*
-*add by yoc 2013.8.29
-****************************************************************************/
-//一鸣智慧通信邮箱
-typedef struct _message_zhihui{
-
-	INT8U  vmc_type;//发给智慧的邮箱类型
-	INT8U  zh_type;//发给主控板的邮箱类型
-	//本次交易信息	
-	INT8U  zh_status;//一鸣智慧状态1表示在线 0 离线	
-	INT16U trade_index;//当前的交易记录保存索引
-	INT8U  usr_coming;//是否是第一次
-	INT8U  escrowInFlag;//暂存纸币
-	INT16U  recv_amount; //单次投入金额
-	INT16U  recv_all_amount;//总投入金额
-	INT16U 	changed;//本次交易找零的金额
-	INT8U  cur_logic_no;//本次交易的货道逻辑编号
-	INT16U  cur_goods_price;//本次交易的商品单价
-	INT8U  cur_goods_sn;//本次交易的商品编号
-	INT8U  cur_trade_state;//出货操作结果
-	
-	INT8U  pay_mode;//本次交易支付方式
-	
-	//设置商品序号
-	INT8U aisle_index;//物理货道 索引
-	INT8U goodsID;//商品序号 十进制
-	INT8U humanState;//人体感应状态
-	
-}MESSAGE_ZHIHUI;
-
-//extern MESSAGE_ZHIHUI vmc_msg_pc;//发送PC 的邮箱
-extern OS_EVENT *g_PCMail;
-extern OS_EVENT *g_PCBackMail;
-extern unsigned char ZhIndex;//add by yoc 2013.10.10
-extern MESSAGE_ZHIHUI vmc_zh_mbox[MBOX_ST_LEN];//add by yoc 2013.12.02
-extern MESSAGE_ZHIHUI zh_vmc_mbox;
-
-/******************************************end PC通讯结构体*****************************************************/
 
 
 

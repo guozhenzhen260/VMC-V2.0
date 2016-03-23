@@ -29,16 +29,16 @@ extern volatile unsigned int  UART3RECVACKMSGTIMEOUT;			//接收ACK数据包超时时间
 
 
 static unsigned char sendbuf[64] = {0};
-static unsigned char sendlen = 0;
+//static unsigned char sendlen = 0;
 static unsigned char recvbuf[64] = {0};
 static unsigned char index = 0;
 static unsigned char recvlen = 0;
 
 
-const static unsigned char I_SF = 0;
+//const static unsigned char I_SF = 0;
 const static unsigned char I_LEN = 1;
-const static unsigned char I_ADDR = 2;
-const static unsigned char I_VER = 3;
+//const static unsigned char I_ADDR = 2;
+//const static unsigned char I_VER = 3;
 const static unsigned char I_MT = 4;
 const static unsigned char I_DATA = 5;
 
@@ -61,13 +61,7 @@ typedef struct{
 ST_LIFT_MSG liftMsg;
 
 
-static void LIFT_initMsg(void)
-{
-	memset((void *)&liftMsg,0,sizeof(liftMsg));
-	
-	liftMsg.recvbuf = recvbuf;
-	liftMsg.sendbuf = sendbuf;
-}
+
 
 static void LIFT_clear(void)
 {
@@ -250,7 +244,7 @@ unsigned char LIFT_vmcVendingReq(unsigned char bin,unsigned char row,unsigned ch
 //0x1F 通信故障 0x10 正常 0x11 整机忙 0x12故障
 unsigned char LIFT_vmcStatusReq(unsigned char bin)
 {
-	unsigned char res,rst = 0;
+	unsigned char res;
 	ST_LIFT_MSG *msg = &liftMsg;
 	msg->addr = 0x40;
 	msg->bin = bin;
@@ -343,7 +337,7 @@ unsigned char LIFT_vmcVedingResult(unsigned char bin)
 		else{
 			return 9;
 		}
-		return 9;
+		//return 9;
 	}
 	else{
 		return 0;
@@ -370,7 +364,7 @@ unsigned char LIFT_vmcVendingResultByTime(unsigned char bin,unsigned int ms)
 
 unsigned char LIFT_vmcOpenLight(unsigned char bin)
 {
-	unsigned char res,temp;
+	unsigned char res;
 	ST_LIFT_MSG *msg = &liftMsg;
 	msg->addr = 0x40;
 	msg->bin = bin;
@@ -390,7 +384,7 @@ unsigned char LIFT_vmcOpenLight(unsigned char bin)
 
 unsigned char LIFT_vmcCloseLight(unsigned char bin)
 {
-	unsigned char res,temp;
+	unsigned char res;
 	ST_LIFT_MSG *msg = &liftMsg;
 	msg->addr = 0x40;
 	msg->bin = bin;
@@ -409,7 +403,7 @@ unsigned char LIFT_vmcCloseLight(unsigned char bin)
 
 unsigned char LIFT_vmcChuchou(unsigned char bin,unsigned char flag)
 {
-	unsigned char res,temp;
+	unsigned char res;
 	ST_LIFT_MSG *msg = &liftMsg;
 	msg->addr = 0x40;
 	msg->bin = bin;
@@ -430,7 +424,7 @@ unsigned char LIFT_vmcChuchou(unsigned char bin,unsigned char flag)
 //返回0:失败，1：成功，2：数据错误 3：无货 4：卡货 5：取货门未开启 6：货物未取走 7：未定义错误	0xff：通信失败
 unsigned char LIFT_vendout(unsigned char bin,unsigned char row,unsigned char column)
 {
-	unsigned char buf[36] = {0},res,flow,i,err;
+	unsigned char res,flow,err;
 	LIFTTABLETIMER = 3000;flow = 0;
 	while(LIFTTABLETIMER){
 		res = LIFT_vmcStatusReq(bin);
@@ -497,7 +491,7 @@ unsigned char LIFT_vendout(unsigned char bin,unsigned char row,unsigned char col
 
 unsigned char LiftTableDriver(unsigned char Binnum,unsigned char Cmd,unsigned char Add,unsigned char Level,unsigned char *Result)
 {
-	unsigned char res = 0,i;
+	unsigned char res = 0;
 	switch(Cmd){
 		case CHANNEL_OUTGOODS:
 			res = LIFT_vendout(Binnum,Level,Add);
@@ -529,6 +523,7 @@ unsigned char LiftTableDriver(unsigned char Binnum,unsigned char Cmd,unsigned ch
 		case VMC_CHUCHOU_REQ:
 			res = LIFT_vmcChuchou(Binnum,Level);
 			break;
+		default:break;	
 	}
 	return res;
 	

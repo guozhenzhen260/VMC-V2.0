@@ -40,7 +40,8 @@ void updateTaskDevSignal(uint8 dev)
 			break;
 		case UART3TASKSIG:
 			taskDevSignal.Uart3TaskDevice++;
-			break;	
+			break;
+		default:break;	
 	}
 }
 
@@ -165,15 +166,7 @@ DEVICESTATEPACK DeviceStatePack;
 DEVICESTATEPACK DeviceStateBusiness;
 CARDSTATEPACK CardStatePack;
 
-//一鸣智慧通信邮箱 add by yoc 2013.12.16 
-OS_EVENT *g_PCMail;//PC控制邮箱
-OS_EVENT *g_PCBackMail;//PC返回给vmc控制结果的邮箱
-unsigned char ZhIndex = 0;
-void *ZhSizeQ[MBOX_ST_LEN];
-#pragma arm section zidata = "RAM2" //add by yoc 2013.12.16
-MESSAGE_ZHIHUI vmc_zh_mbox[MBOX_ST_LEN];
-MESSAGE_ZHIHUI zh_vmc_mbox;
-#pragma arm section zidata
+
 
 
 //UBoxPC通讯队列
@@ -279,9 +272,7 @@ void CreateMBox(void)
 	g_HeFanGuiMail = OSMboxCreate(NULL);//压缩机展示灯邮箱
 	g_HeFanGuiBackMail = OSMboxCreate(NULL);//压缩机展示灯应答邮箱
 
-	//PC通讯
-	g_PCMail = OSQCreate(&ZhSizeQ[0],MBOX_ST_LEN);
-	g_PCBackMail = OSMboxCreate(NULL);
+
 	//UBoxPC通讯
 	g_Ubox_VMCTOPCQ = OSQCreate(&UboxSizeQ[0],UBOX_SIZE);
 	g_Ubox_VMCTOPCBackCMail = OSMboxCreate(NULL);
@@ -1087,6 +1078,7 @@ void ResetSystemPara(void)
 		  case 100://以元为单位
 			  SystemPara.DecimalNum  = 0;  
 			  break;
+		  default:break;	  
 	  	 }
 		                          //显示金额界面的小数点位数
 	}
@@ -1170,6 +1162,7 @@ char *PrintfMoney(uint32_t dispnum)
 	  case 0://以元为单位
 		  sprintf(strnum,"%d",dispnum/100);
 		  break;
+	 default:break;	  
    }
    //Trace("\r\n pp=%s",strnum);
    return &strnum[0];

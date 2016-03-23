@@ -33,7 +33,7 @@ unsigned char LiftTableHandle(unsigned char HandleType,unsigned char ChannelNum,
 {
 	MessagePack *RecvBoxPack;
 	uint8_t err,i;
-	unsigned int timeout1 = 0;
+
 
 	MsgAccepterPack.ChnlHandleType = HandleType;
 	MsgAccepterPack.ChannelNum = ChannelNum;
@@ -143,6 +143,7 @@ unsigned char TestLiftTablePost(unsigned char HandleType,unsigned char ChannelNu
 			//发送邮箱给DevieTask让其操作Hopper做出币操作
 			OSMboxPost(g_LiftTableMail,&MsgAccepterPack);
 			break;
+		default:break;	
 	}
 	return 1;
 }

@@ -496,24 +496,9 @@
               <FilePath>.\API\ReaderAPI.c</FilePath>
             </File>
             <File>
-              <FileName>ZhiHuiAPI.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\API\ZhiHuiAPI.c</FilePath>
-            </File>
-            <File>
-              <FileName>GprsAPI.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\API\GprsAPI.c</FilePath>
-            </File>
-            <File>
               <FileName>HeFanGuiAPI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\API\HeFanGuiAPI.c</FilePath>
-            </File>
-            <File>
-              <FileName>colApi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\API\colApi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -591,19 +576,9 @@
               <FilePath>.\Uart3Driver\TASKUART3DEVICE.C</FilePath>
             </File>
             <File>
-              <FileName>ZHIHUIPC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Uart3Driver\ZHIHUIPC.c</FilePath>
-            </File>
-            <File>
               <FileName>UBProtocol.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Uart3Driver\UBProtocol.c</FilePath>
-            </File>
-            <File>
-              <FileName>VMC_GPRS_PC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Uart3Driver\VMC_GPRS_PC.c</FilePath>
             </File>
             <File>
               <FileName>UBProtocol_SIMPLE.c</FileName>
@@ -709,11 +684,6 @@
               <FileName>AT45DB161D.C</FileName>
               <FileType>1</FileType>
               <FilePath>.\Drivers\AT45DB161D.C</FilePath>
-            </File>
-            <File>
-              <FileName>GPRS_UART.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Drivers\GPRS_UART.c</FilePath>
             </File>
             <File>
               <FileName>WDTDog.C</FileName>

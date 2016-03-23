@@ -21,6 +21,7 @@
 #include "TASKUART3DEVICE.H"
 #include "ZHIHUIPC.H"
 #include "UBProtocol.H"
+#include "UBProtocol_CR.H"
 #include "UBProtocol_SIMPLE.h"
 #include "VMC_GPRS_PC.h"
 
@@ -46,12 +47,10 @@
 *********************************************************************************************************/
 void Uart3TaskDevice(void *pvData)
 {
-	MESSAGE_ZHIHUI *accepter_msg;
+	
 	MessageUboxPCPack *AccepterUboxMsg;
 	MessageSIMPLEUboxPCPack *AccepterSIMPLEUboxMsg;
 	unsigned char ComStatus;
-	//当前PC设备的类型
-	uint8_t NowPCDev = 0;
 	uint8_t WeihuMode = 0;//1在维护模式下,0退出维护模式
 	uint8_t retRpt=0;
 	uint8_t isInit=0;//1系统已经开始响应,0系统还没响应
@@ -86,16 +85,13 @@ void Uart3TaskDevice(void *pvData)
 				{
 					VPMission_Act_RPT(VP_ACT_ONLINE,0,0,0,0,0,0);
 				}	
-				NowPCDev = PC_UBOX;	
 			}
 			else
 			{
-				NowPCDev = 0;
 			}
 		}	
 		else
 		{
-			NowPCDev = 0;
 		}
 		OSTimeDly(4);
 	}	
@@ -104,19 +100,16 @@ void Uart3TaskDevice(void *pvData)
 		TracePC("\r\n Taskpend SIMPLEUboxinit"); 
 		LCDNumberFontPrintf(40,LINE15,2,"SIMPLEAccepter-1");
 		SIMPLESIMPLEVPSerialInit();
-		NowPCDev = PC_SIMPUBOX;
 	}
 	else if( SystemPara.PcEnable == CRUBOX_PC )
 	{
 		TracePC("\r\n Taskpend CRUboxinit"); 
 		LCDNumberFontPrintf(40,LINE15,2,"CRAccepter-1");
 		VPSerialInit_CR();
-		VPMission_Setup_RPT_CR();
-		NowPCDev = PC_UBOXCR;
+		VPMission_Setup_RPT_CR();	 	
 	}
 	else
 	{
-		NowPCDev = 0;
 	}
 	
 	if(SystemPara.PcEnable == UBOX_PC)
@@ -226,7 +219,8 @@ void Uart3TaskDevice(void *pvData)
 					case MBOX_VMCTOPC_INFORPT:						
 						VPMission_Info_RPT(AccepterUboxMsg->Type,AccepterUboxMsg->payAllMoney,AccepterUboxMsg->check_st,AccepterUboxMsg->bv_st,AccepterUboxMsg->cc_st,AccepterUboxMsg->Control_Huodao,AccepterUboxMsg->value,AccepterUboxMsg->Control_device,AccepterUboxMsg->cabinetNums,AccepterUboxMsg->cabinetdata);						
 						TracePC("\r\n Taskpend UboxInfo=%d,%ld",AccepterUboxMsg->Type,AccepterUboxMsg->payAllMoney); 
-						break;		
+						break;
+					default:break;		
 				}
 				OSTimeDly(OS_TICKS_PER_SEC/4);
 			}	
@@ -305,6 +299,7 @@ void Uart3TaskDevice(void *pvData)
 						}
 						VPMissionSIMPLE_Get_Admin2(AccepterSIMPLEUboxMsg->admintype);
 						break;	
+					default:break;	
 				}
 			}
 		}
@@ -380,6 +375,7 @@ void Uart3TaskDevice(void *pvData)
 						VP_Reset_Rpt_CR();
 						TracePC("\r\n Taskpend UboxReset"); 
 						break;
+					default:break;	
 				}
 				OSTimeDly(OS_TICKS_PER_SEC/4);
 			}	

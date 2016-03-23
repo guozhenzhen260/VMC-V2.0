@@ -34,7 +34,7 @@ uint32 FS_dispense(uint32 payAmount);  //ÕÒÁã ²ÎÊıÎª½ğ¶î  ·µ»Ø ÒÑÕÒÁã½ğ¶î  ·ÖÎªµ
 FS_STATUS *FS_getStatus(void);	 //¶ÁÈ¡×´Ì¬ 
 
 
-
+ void msleep(unsigned int msec);
 extern unsigned char FS_poll(void);
 extern void FS_init(void);
 void FS_mainTask(void);

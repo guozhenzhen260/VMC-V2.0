@@ -57,12 +57,12 @@ void Uart1TaskDevice(void *pvData)
 	uint8_t key=0xff;
 	
 	//当前选货设备的类型
-	uint8_t NowSelectDev = 0;
+	//uint8_t NowSelectDev = 0;
 	//开启加热设备
-	uint8_t TempDev = 0,temp=0;
+	uint8_t temp=0;
 	uint8_t TempCtr = 1;
 	//开启格子柜
-	uint8_t GeziCtr = 0;
+	//uint8_t GeziCtr = 0;
 	uint8_t rst=0;
 	
 	
@@ -78,23 +78,23 @@ void Uart1TaskDevice(void *pvData)
 			memset(&selKey,0,sizeof(selKey));
 			SelectKey_InitProc();	
 			UpdateSelectionLed(AccepterMsg);
-			NowSelectDev = SELECT_KEY;			
+					
 		}
 		else
 		{
-			NowSelectDev = 0;
+		
 		}
 	}	
 	else
 	{
-		NowSelectDev = 0;
+	
 	}
 	OSTimeDly(2);
 	//检查温控器控制
 	if(SystemPara.XMTTemp==1)
 	{
 		LCDNumberFontPrintf(40,LINE15,2,"XMT-1");	
-		TempDev=TEMPERATURE;
+		
 		Timer.getTempTimer = 10;
 		OSTimeDly(2);
 	}
@@ -102,7 +102,7 @@ void Uart1TaskDevice(void *pvData)
 	if(SystemPara.hefangGui==SERIAL_GEZI)
 	{
 		LCDNumberFontPrintf(40,LINE15,2,"GEZI-1");	
-		GeziCtr = GEZIGUI;
+		
 		OSTimeDly(2);
 	}
 	//检查富士找零器
@@ -210,6 +210,7 @@ void Uart1TaskDevice(void *pvData)
 						MsgAccepterPack.HeFanGuiRst = rst;
 						OSMboxPost(g_HeFanGuiBackMail,&MsgAccepterPack);
 						break;
+					default:break;	
 				}
 			}
 			OSTimeDly(2);	

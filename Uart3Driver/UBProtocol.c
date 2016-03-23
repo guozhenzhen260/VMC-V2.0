@@ -310,6 +310,7 @@ uint8_t SendCoinDem()
 		case 0://以元为单位
 			  DecimalNum  = 100;  
 			  break;
+		default:break;	  
 	}
 	return DecimalNum;
 }
@@ -612,7 +613,8 @@ unsigned char VPBusFrameUnPack( void )
 unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 {
     
-    uint8_t i=0,j=0,k=0,index=0,tempcan=0,dex=0,dexind=0,strdex[20] = {0};	
+    uint8_t i=0,j=0,k=0,index=0,tempcan=0,dex=0,dexind=0;
+	char strdex[20] = {0};
 	uint8_t issnup=0;//1时不升级sn,0时需要升级sn
 	uint16_t tempMoney;
 	uint8_t tempSend=0;
@@ -2248,6 +2250,7 @@ unsigned char VPMsgPackSend( unsigned char msgType, unsigned char flag )
 						
 						sysVPMission.send.datLen = i; 
 						break;
+					default:break;	
 				}
 				/*
                 sysVPMission.send.datLen  = 9;
@@ -2416,11 +2419,8 @@ unsigned char VPMission_PackOpt(  unsigned char msgType, unsigned char flag  )
 *********************************************************************************************************/
 unsigned char VPMission_Setup_RPT( void )
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
-	unsigned char flag = 0;
-
-    retry = VP_COM_RETRY;   
+    	unsigned char flag = 0;
+	    
 	flag = VPMission_PackOpt( VP_VMC_SETUP,1);		
 	return flag;
 }
@@ -2868,12 +2868,8 @@ unsigned char VP_CMD_GetColumnSta( void )
 *********************************************************************************************************/
 unsigned char VPMission_Status_RPT( uint8_t check_st,uint8_t bv_st,uint8_t cc_st,uint8_t vmc_st,uint16_t change,uint8_t tem_st,uint16_t *recyclerSum,uint16_t *coinSum )
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
 
-	
-    retry = VP_COM_RETRY;
 	
 	
 	if(SystemPara.EasiveEnable == 1)
@@ -2997,8 +2993,6 @@ unsigned char VP_CMD_GetStatus( void )
 *********************************************************************************************************/
 unsigned char VPMission_Info_RPT( unsigned char type, unsigned int payAllMoney,uint8_t check_st,uint8_t bv_st,uint8_t cc_st,uint8_t Control_Huodao,uint8_t value,uint8_t Control_device,uint8_t  cabinetNums,uint8_t *cabinetdata )
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
 
 	if(LogPara.offLineFlag == 1)
@@ -3006,7 +3000,6 @@ unsigned char VPMission_Info_RPT( unsigned char type, unsigned int payAllMoney,u
 		return VP_ERR_NULL;
 	}
 	//
-    retry = VP_COM_RETRY;
 	//-------------------------------------------
     sysVPMission.type = type;	
 	sysVPMission.payAllMoney = payAllMoney;
@@ -3184,6 +3177,7 @@ unsigned char VP_CMD_GetInfoExp( void )
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);	
 			break;
+		default:break;	
 	}
 	
     return VP_ERR_NULL;	
@@ -3651,6 +3645,7 @@ unsigned char VP_Control_Ind( void )
 			MsgUboxPack[g_Ubox_Index].value  = sysVPMission.receive.msg[3];
 			TracePC("\r\n Drv HefangGui"); 
 			break;
+		default:break;	
     }
 	//TracePC("\r\n Drv Ctr=%d,%d",MsgUboxPack.Type,sysVPMission.receive.msg[1]); 
 	//发送邮箱给vmc
@@ -3805,8 +3800,6 @@ unsigned char VPMission_Poll( uint8_t *isInit )
 *********************************************************************************************************/
 unsigned char VPMission_Payin_RPT(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney)
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
 
 	if(LogPara.offLineFlag == 1)
@@ -3814,7 +3807,6 @@ unsigned char VPMission_Payin_RPT(uint8_t dev,uint16_t payInMoney,uint32_t payAl
 		return VP_ERR_NULL;
 	}
 	//
-    retry = VP_COM_RETRY;
 	//-------------------------------------------
 	switch(dev)
 	{
@@ -3833,6 +3825,7 @@ unsigned char VPMission_Payin_RPT(uint8_t dev,uint16_t payInMoney,uint32_t payAl
 		case 5:
 			sysVPMission.payInDev = VP_DEV_READER;
 			break;	
+		default:break;	
 			
 	}    
 	sysVPMission.payInMoney = payInMoney;
@@ -3861,8 +3854,6 @@ unsigned char VPMission_Payin_RPT(uint8_t dev,uint16_t payInMoney,uint32_t payAl
 *********************************************************************************************************/
 unsigned char VPMission_Payout_RPT( uint8_t payoutDev,unsigned char Type, unsigned int payoutMoney, unsigned int payAllMoney )
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
 
 	if(LogPara.offLineFlag == 1)
@@ -3870,7 +3861,6 @@ unsigned char VPMission_Payout_RPT( uint8_t payoutDev,unsigned char Type, unsign
 		return VP_ERR_NULL;
 	}	
 	//
-    retry = VP_COM_RETRY;
     //-------------------------------------------
     sysVPMission.payoutDev = payoutDev;
     sysVPMission.type = Type;
@@ -3894,8 +3884,6 @@ unsigned char VPMission_Payout_RPT( uint8_t payoutDev,unsigned char Type, unsign
 *********************************************************************************************************/
 unsigned char VPMission_Cost_RPT( unsigned char Type, uint32_t costMoney, unsigned int payAllMoney )
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
 
 	if(LogPara.offLineFlag == 1)
@@ -3903,7 +3891,6 @@ unsigned char VPMission_Cost_RPT( unsigned char Type, uint32_t costMoney, unsign
 		return VP_ERR_NULL;
 	}
 	//
-    retry = VP_COM_RETRY;
 	//-------------------------------------------
     sysVPMission.type = Type;
 	sysVPMission.costMoney = costMoney;
@@ -3922,8 +3909,6 @@ unsigned char VPMission_Cost_RPT( unsigned char Type, uint32_t costMoney, unsign
 *********************************************************************************************************/
 unsigned char VPMission_Button_RPT( unsigned char type, unsigned char value,uint8_t device )
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
 
 	if(LogPara.offLineFlag == 1)
@@ -3935,7 +3920,6 @@ unsigned char VPMission_Button_RPT( unsigned char type, unsigned char value,uint
 		return VP_ERR_NULL;
 	}
 	//
-    retry = VP_COM_RETRY;
     //-------------------------------------------
     sysVPMission.type   = type;
 	sysVPMission.Column  = value;
@@ -3975,8 +3959,6 @@ unsigned char VPMission_Button_RPT( unsigned char type, unsigned char value,uint
 *********************************************************************************************************/
 unsigned char VPMission_Vendout_RPT( unsigned char status, unsigned char device,unsigned char column, unsigned char type, unsigned int cost, unsigned int payAllMoney, unsigned char columnLeft )
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
 	
 	
@@ -3997,7 +3979,6 @@ unsigned char VPMission_Vendout_RPT( unsigned char status, unsigned char device,
 	{
 		return VP_ERR_NULL;
 	}
-    retry = VP_COM_RETRY;
     //-------------------------------------------
     sysVPMission.status = status;
 	sysVPMission.device = device;
@@ -4028,8 +4009,6 @@ unsigned char VPMission_Vendout_RPT( unsigned char status, unsigned char device,
 *********************************************************************************************************/
 unsigned char VPMission_Act_RPT( unsigned char action, uint8_t value,uint8_t second,uint8_t column,uint8_t type,uint32_t cost,uint32_t payAllMoney)
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
     
 	//离线不处理
@@ -4038,7 +4017,6 @@ unsigned char VPMission_Act_RPT( unsigned char action, uint8_t value,uint8_t sec
 	//	return VP_ERR_NULL;
 	//}
 	
-    retry = VP_COM_RETRY;
 	//-------------------------------------------
     sysVPMission.action   = action;
 	sysVPMission.value  = value; 
@@ -4136,8 +4114,6 @@ unsigned char VPMission_Act_RPT( unsigned char action, uint8_t value,uint8_t sec
 *********************************************************************************************************/
 unsigned char VPMission_Admin_RPT( unsigned char type,uint8_t Column,uint8_t ColumnSum)
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
 	//u_char xdata str[20];
 	//u_char xdata len = 0;
@@ -4147,8 +4123,6 @@ unsigned char VPMission_Admin_RPT( unsigned char type,uint8_t Column,uint8_t Col
 		return VP_ERR_NULL;
 	}
 	
-	//
-    retry = VP_COM_RETRY;
 	//-------------------------------------------
 	sysVPMission.type = type;
 	sysVPMission.Column = Column;

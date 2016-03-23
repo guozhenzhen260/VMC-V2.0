@@ -44,6 +44,7 @@ void CoinDevInitAPI()
 			TraceCoin("\r\nMiddchuangx\r\n");
 			InitSerialPluseCoinAcdeptor();
 			break;
+		default:break;	
 	}
 	return;
 }
@@ -99,6 +100,7 @@ uint32_t GetCoinDevMoneyInAPI(void)
 			else
 				ReturnBack = 0;
 			break;
+		default:break;	
 			
 	}
 	return ReturnBack;
@@ -129,6 +131,7 @@ void CoinDevDisableAPI(void)
 		case SERIAL_COINACCEPTER:	
 			DisableSerialPluseCoinAcceptor();
 			break;
+		default:break;	
 	}		
 	return;	
 }
@@ -159,6 +162,7 @@ void CoinDevEnableAPI(void)
 		case SERIAL_COINACCEPTER:
 			EnableSerialPluseCoinAcceptor();
 			break;
+		default:break;	
 	}
 	return;
 }

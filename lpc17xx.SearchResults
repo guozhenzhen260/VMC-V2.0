@@ -1,41 +1,7 @@
----- PCRecTimer 匹配 (12 in 3 文件) ----
-Common.h (app):	uint8_t		PCRecTimer;					    //PC串口接收定时器
-Timer.c (drivers):	if(Timer.PCRecTimer)
-Timer.c (drivers):			Timer.PCRecTimer--;
-UBProtocol.c (uart3driver):		Timer.PCRecTimer = VP_TIME_OUT;
-UBProtocol.c (uart3driver):		while( Timer.PCRecTimer )
-UBProtocol.c (uart3driver):		if( Timer.PCRecTimer==0 )
-UBProtocol.c (uart3driver):			Timer.PCRecTimer = VP_TIME_OUT;
-UBProtocol.c (uart3driver):			while( Timer.PCRecTimer )
-UBProtocol.c (uart3driver):			if(Timer.PCRecTimer==0)
-UBProtocol.c (uart3driver):	Timer.PCRecTimer = VP_TIME_OUT;
-UBProtocol.c (uart3driver):	while( Timer.PCRecTimer )
-UBProtocol.c (uart3driver):	if( Timer.PCRecTimer==0 )
----- PCRecTimerCR 匹配 (9 in 3 文件) ----
-Common.h (app):	uint8_t		PCRecTimerCR;					 //PC成人串口接收定时器
-Timer.c (drivers):	if(Timer.PCRecTimerCR)
-Timer.c (drivers):			Timer.PCRecTimerCR--;
-UBProtocol_CR.c (uart3driver):			Timer.PCRecTimerCR = VP_TIME_OUT;
-UBProtocol_CR.c (uart3driver):			while( Timer.PCRecTimerCR )
-UBProtocol_CR.c (uart3driver):			if( Timer.PCRecTimerCR==0 )
-UBProtocol_CR.c (uart3driver):	Timer.PCRecTimerCR = VP_TIME_OUT;
-UBProtocol_CR.c (uart3driver):	while( Timer.PCRecTimerCR )
-UBProtocol_CR.c (uart3driver):	if( Timer.PCRecTimerCR==0 )
----- PCRecTimerSIMPLE 匹配 (17 in 3 文件) ----
-Common.h (app):	uint8_t		PCRecTimerSIMPLE;				//PC简化版串口接收定时器
-Timer.c (drivers):	if(Timer.PCRecTimerSIMPLE)
-Timer.c (drivers):			Timer.PCRecTimerSIMPLE--;
-UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
-UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimerSIMPLE )
-UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
-UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimerSIMPLE )
-UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
-UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimerSIMPLE )
-UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
-UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimerSIMPLE )
-UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
-UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimerSIMPLE )
-UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
-UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimerSIMPLE )
-UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
-UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimerSIMPLE )
+---- strdex 匹配 (6 in 2 文件) ----
+UBProtocol.c (uart3driver):    uint8_t i=0,j=0,k=0,index=0,tempcan=0,dex=0,dexind=0,strdex[20] = {0};	
+UBProtocol.c (uart3driver):						dexind=sprintf(strdex,"%s",__DATE__);
+UBProtocol.c (uart3driver):							sysVPMission.send.msg[i++]  = strdex[dex]; 
+UBProtocol_CR.c (uart3driver):      uint8_t i=0,dex=0,dexind=0,strdex[20] = {0};	
+UBProtocol_CR.c (uart3driver):						dexind=sprintf(strdex,"%s",__DATE__);
+UBProtocol_CR.c (uart3driver):							sysVPMissionCR.send.msg[i++]  = strdex[dex]; 

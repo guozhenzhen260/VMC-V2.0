@@ -97,7 +97,7 @@ void LogTransactionAPI(uint32_t InValue,uint8_t transMul,char *ChannelNum,uint8_
 
 	//重新定义出货方式
 	// 0 现金  1 一卡通  2银联卡 3 PC出货 4支付宝 5游戏出货 6手机出货 。。。 
-	unsigned char logicNo,pay_mode;
+	unsigned char pay_mode;
 	//根据交易类型更新交易次数和金额
 	if(SystemPara.PcEnable == UBOX_PC)//友宝协议
 	{
@@ -132,65 +132,6 @@ void LogTransactionAPI(uint32_t InValue,uint8_t transMul,char *ChannelNum,uint8_
 			LogPara.vpOnlineNumTotal ++;
 			LogPara.vpOnlineMoneyTotal += InValue;
 			pay_mode = PAYMODE_PC;
-		}
-	}
-	else if((SystemPara.PcEnable == ZHIHUI_PC) || (SystemPara.PcEnable == GPRS_PC))//一鸣智慧 GPRS add by yoc zhihui
-	{
-		if(payMode == 0) payMode = 1;
-		if(payMode == 5) payMode = 2;
-		if(payMode == 0x01)//现金
-		{
-			LogPara.vpCashNum ++;
-			LogPara.vpCashMoney += InValue;
-			LogPara.vpCashNumTotal ++;
-			LogPara.vpCashMoneyTotal += InValue;
-			pay_mode = PAYMODE_CASH;
-		}
-		else if(payMode == 0x02)//一卡通
-		{
-			LogPara.vpCardNum++;
-			LogPara.vpCardMoney += InValue;
-			
-			LogPara.vpCardNumTotal ++;
-			LogPara.vpCardMoneyTotal += InValue;
-			LogPara.vpOneCardNumTotal++;
-			LogPara.vpOneCardMoneyTotal += InValue;
-			pay_mode = PAYMODE_ONECARD;
-		}
-		else if(payMode == 0x11)//银联卡
-		{
-			LogPara.vpCardNum++;
-			LogPara.vpCardMoney += InValue;
-
-			LogPara.vpCardNumTotal ++;
-			LogPara.vpCardMoneyTotal += InValue;
-			LogPara.vpUCardNumTotal ++;
-			LogPara.vpUCardMoneyTotal += InValue;
-			pay_mode = PAYMODE_UNIONPAY;
-		}
-		else if(payMode == 0x21)//PC 正常出货
-		{
-			LogPara.vpOnlineNum++;
-			LogPara.vpOnlineMoney += InValue;
-			LogPara.vpOnlineNumTotal ++;
-			LogPara.vpOnlineMoneyTotal += InValue;
-			pay_mode = PAYMODE_PC;
-		}
-		else if(payMode == 0x41)//支付宝
-		{
-			LogPara.vpOnlineNum++;
-			LogPara.vpOnlineMoney += InValue;
-			LogPara.vpPC2NumTotal ++;
-			LogPara.vpPC2MoneyTotal += InValue;
-			pay_mode = PAYMODE_ALIPAY;
-		}
-		else
-		{
-			LogPara.vpOnlineNum++;
-			LogPara.vpOnlineMoney += InValue;
-			LogPara.vpPC3NumTotal++;
-			LogPara.vpPC3MoneyTotal += InValue;
-			pay_mode = PAYMODE_OTHER;
 		}
 	}
 	else
@@ -234,18 +175,18 @@ void LogTransactionAPI(uint32_t InValue,uint8_t transMul,char *ChannelNum,uint8_
 			LogParaDetail.ColumnNo[transMul*3] = ChannelNum[0];
 			LogParaDetail.ColumnNo[transMul*3+1] = ChannelNum[1];
 			LogParaDetail.ColumnNo[transMul*3+2] = ChannelNum[2];
-			logicNo = (ChannelNum[1] - '0') * 10 + (ChannelNum[2] - '0');
+			//logicNo = (ChannelNum[1] - '0') * 10 + (ChannelNum[2] - '0');
 		}
 		else
 		{
 			LogParaDetail.ColumnNo[transMul*3] = 'A';
 			LogParaDetail.ColumnNo[transMul*3+1] = ChannelNum[0];
 			LogParaDetail.ColumnNo[transMul*3+2] = ChannelNum[1];	
-			logicNo = (ChannelNum[0] - '0') * 10 + (ChannelNum[1] - '0');
+			//logicNo = (ChannelNum[0] - '0') * 10 + (ChannelNum[1] - '0');
 		}
 		
 		//changed by yoc 2013.12.03
-		LogParaDetail.GoodsNo[transMul] = (unsigned char)(getAisleInfo(logicNo,AISLE_ID) & 0xFF);
+		LogParaDetail.GoodsNo[transMul] = 1;//(unsigned char)(getAisleInfo(logicNo,AISLE_ID) & 0xFF);
 		LogParaDetail.PriceNo[transMul] = InValue;
 		LogParaDetail.TransSucc[transMul] = 1;
 
@@ -365,8 +306,6 @@ void LogEndTransAPI(void)
 *********************************************************************************************************/
 void LogClearAPI(void)
 {
-
-	vmc_batch_info_write();	//add by yoc 2013.11.13
 	LogPara.Income = 0;
 	LogPara.NoteIncome = 0;
 	LogPara.CoinsIncome = 0;

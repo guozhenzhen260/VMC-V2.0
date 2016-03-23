@@ -68,11 +68,9 @@ extern "C" {
 #include ".\Drivers\TASKDEVICE.h"//串口1高层任务
 #include ".\Drivers\ACDCDriver.h"
 #include ".\Drivers\LiftTableDriver.h"
-#include ".\Drivers\GPRS_UART.h"
 /*********************************************************************************************************
   外设驱动高层件头文件-串口3任务
 *********************************************************************************************************/
-//#include ".\Uart3Driver\ZHIHUIPC.H" //changed by yoc 2013.12.16
 #include ".\Uart3Driver\TASKUART3DEVICE.H"
 /*********************************************************************************************************
   外设驱动高层件头文件-串口1任务
@@ -113,9 +111,6 @@ extern "C" {
 #include ".\API\LiftTableAPI.h"
 #include ".\API\SelectKeyAPI.h"
 #include ".\API\HeFanGuiAPI.h"
-#include ".\API\colApi.h"
-#include ".\API\ZhiHuiAPI.h" //add by yoc 2013.12.16
-#include ".\API\GprsAPI.h"
 /*********************************************************************************************************
   应用层头文件
 *********************************************************************************************************/

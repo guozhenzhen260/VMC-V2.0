@@ -714,6 +714,7 @@ void DispChaxunPage(uint8_t *keyValue,uint8_t *keyMode)
 					  sprintf(strlanguage,"%s %s,%s%d",BUSINESS[SystemPara.Language][7],ChannelNum,BUSINESS[SystemPara.Language][3],debtMoney/100);
 					  sprintf(streng,"%s %s,%s%d",BUSINESS[1][7],ChannelNum,BUSINESS[1][3],debtMoney/100);
 					  break;
+					default:break; 
 				}	
 				//strcpy(streng,BUSINESS[1][3]);
 				DispBusinessText(strlanguage,streng,"","");
@@ -731,6 +732,7 @@ void DispChaxunPage(uint8_t *keyValue,uint8_t *keyMode)
 					vmcStatus = VMC_FREE;
 				}
 				break;	
+			default:break;	
 		}
 		//strcpy(strlanguage,BUSINESS[SystemPara.Language][3]);
 		//strcpy(streng,BUSINESS[1][1]);	
@@ -1072,6 +1074,7 @@ void DispChaxunHefangPage(uint8_t *keyValue)
 					  sprintf(strlanguage,"%s %s,%s%d",BUSINESS[SystemPara.Language][7],ChannelNum,BUSINESS[SystemPara.Language][3],debtMoney/100);
 					  sprintf(streng,"%s %s,%s%d",BUSINESS[1][7],ChannelNum,BUSINESS[1][3],debtMoney/100);
 					  break;
+				 default:break;	  
 			    }	
 				//strcpy(streng,BUSINESS[1][3]);
 				DispBusinessText(strlanguage,streng,"","");
@@ -1088,7 +1091,8 @@ void DispChaxunHefangPage(uint8_t *keyValue)
 					CLrBusinessText();
 					vmcStatus = VMC_FREE;
 				}
-				break;	
+				break;
+			default:break;	
 		}		
 		channelInput = 0;
 		channelMode = 0;
@@ -1152,6 +1156,7 @@ void DispSalePage(uint8_t haveSale,uint8_t hefangMode)
 			  //sprintf(strnum,"%d",dispnum/100);
 			  LCDNumberFontPrintf(76,LINE5,4,"%d",dispnum/100);	
 			  break;
+		  default:break;	  
 	    }	/**/		
 		//交易提示
 		//盒饭柜输入提示
@@ -1198,6 +1203,7 @@ void DispSalePage(uint8_t haveSale,uint8_t hefangMode)
 			  //sprintf(strnum,"%d",dispnum/100);
 			  LCDNumberFontPrintf(76,LINE5,4,"%d",dispnum/100);	
 			  break;
+		 default:break;	  
 	    }		
 		//交易提示
 		//盒饭柜输入提示
@@ -1275,6 +1281,7 @@ void DispCannotBuyPage(uint32_t PriceSale)
 		  //LCDNumberFontPrintf(51,LINE5,4,"%d",debtMoney/100);	
 		  sprintf(strlanguage,"%d",PriceSale/100);
 		  break;
+	  default:break;	  
     }	
 	strcat(strlanguage2,strlanguage);
 	DispBusinessText(strlanguage2,streng,"","");
@@ -1489,6 +1496,7 @@ void DispIOUPage(uint32_t debtMoney)
 		  //LCDNumberFontPrintf(51,LINE5,4,"%d",debtMoney/100);	
 		  sprintf(strlanguage,"%s%d",BUSINESSCHANGE[SystemPara.Language][1],debtMoney/100);
 		  break;
+	  default:break;	  
     }	
 	strcpy(streng,BUSINESSCHANGE[1][1]);	
 	//sprintf(streng,"%ld",debtMoney);
@@ -1945,6 +1953,7 @@ void StackReturnBillDev(uint8_t type)
 				PayinRPTAPI(4,InValue,GetAmountMoney());//上报PC端
 			}
 			break;	
+		default:break;	
 	}	
 
 	//产生状态变化
@@ -2335,6 +2344,7 @@ void BillCoinCtr(uint8_t billCtr,uint8_t coinCtr,uint8_t readerCtr)
 				BillDevDisableAPI();
 				SetBillCoinStatus(1,0);
 				break;
+			default:break;	
 		}
 	}
 	//2.硬币器控制
@@ -2352,6 +2362,7 @@ void BillCoinCtr(uint8_t billCtr,uint8_t coinCtr,uint8_t readerCtr)
 				CoinDevDisableAPI();
 				SetBillCoinStatus(2,0);
 				break;
+			default:break;	
 		}
 	}
 	//3.读卡器控制
@@ -2365,6 +2376,7 @@ void BillCoinCtr(uint8_t billCtr,uint8_t coinCtr,uint8_t readerCtr)
 			case 2:
 				ReaderDevDisableAPI();
 				break;
+			default:break;	
 		}
 	}
 	OSTimeDly(OS_TICKS_PER_SEC / 10);
@@ -2845,36 +2857,7 @@ void VendoutInd(uint16_t columnNo, uint32_t PriceSale,uint8_t Type)
 	//ActionRPTAPI(1,0,30,columnNo%100, Type,PriceSale,GetAmountMoney());
 	ChuhuoRst = ChannelAPIProcess(columnNo%100,CHANNEL_OUTGOODS,columnNo/100);		
 	//add by yoc 2013.12.16
-	if((SystemPara.PcEnable == 1) || (SystemPara.PcEnable == 3))
-	{
-		if(ChuhuoRst == 1)
-		{
-			if(!GetAmountMoney())
-				LogBeginTransAPI();
-			if(Type == TRADE_CASH || Type == TRADE_ONE_CARD)
-			{
-				SaleCostMoney(PriceSale);//扣款
-				
-			}
-			ChannelNum[0] = 'A';
-			ChannelNum[1] = (columnNo%100/10) + '0';
-			ChannelNum[2] = (columnNo%100%10) + '0';
-			vmcPrice = PriceSale;
-			Trace("LogTransactionAPI logic=%c%c%c price=%d type=%x,tranNums=%d\r\n ",
-				ChannelNum[0],ChannelNum[1],ChannelNum[2],vmcPrice,Type,transMul);
-			LogTransactionAPI(vmcPrice,transMul++,ChannelNum,Type);//记录日志
-			VendoutRPTAPI(CHUHUO_OK, 1,columnNo%100, Type, PriceSale,GetAmountMoney(), ChannelGetParamValue(columnNo%100,2,columnNo/100) );		    					
-			vmcStatus = VMC_QUHUO;
-		}
-		else
-		{		
-			DispChhuoFailPage();//add by yoc 2013.12.02
-			VendoutRPTAPI(CHUHUO_ERR,1,columnNo%100, Type, PriceSale,GetAmountMoney(), ChannelGetParamValue(columnNo%100,2,columnNo/100) );		
-		}
-		
-			
-	}
-	else if(SystemPara.PcEnable == 2)
+	if(SystemPara.PcEnable == 2)
 	{
 		if(ChuhuoRst==1)
 		{
@@ -3198,6 +3181,7 @@ void PriceSIMPLEInd(uint16_t payInMoney)
 		  sprintf(strlanguage,"%s%d",BUSINESS[SystemPara.Language][3],debtMoney/100);
 		  sprintf(streng,"%s%d",BUSINESS[1][3],debtMoney/100);
 		  break;
+	 default:break;	  
 	}	
 	//strcpy(streng,BUSINESS[1][3]);
 	DispBusinessText(strlanguage,streng,"","");
@@ -3413,9 +3397,9 @@ void BusinessProcess(void *pvData)
 				//7.检查pc机轮询
 				PollAPI(GetAmountMoney());
 				//8.接近感应检测 add by yoc 2013.11.13
-				pollHuman(ReadCloseHumanKeyValue());
+				//pollHuman(ReadCloseHumanKeyValue());
 				//9轮询大门传感器 add by yoc 2013.11.13
-				pollDoorAPI(0);
+				//pollDoorAPI(0);
 				//10.轮询游戏按键
 				ReadGameKeyValueAPI();
 				//11.轮询退币按钮，有按下蜂鸣器响一下
@@ -3631,12 +3615,7 @@ void BusinessProcess(void *pvData)
 						TraceReader("\r\n AppCHuhuoFail");
 						ReaderDevVendoutResultAPI(2);
 					}	
-					if(SystemPara.PcEnable == 1 || SystemPara.PcEnable == 3)
-					{
-						VendoutRPTAPI( CHUHUO_ERR, 1,vmcColumn%100, 0, vmcPrice,GetAmountMoney(), ChannelGetParamValue(vmcColumn%100,2,vmcColumn/100) );
-					}
-					else
-						VendoutRPTAPI( 2, vmcColumn/100,vmcColumn%100, 0, vmcPrice,GetAmountMoney(), ChannelGetParamValue(vmcColumn%100,2,vmcColumn/100) );
+					VendoutRPTAPI( 2, vmcColumn/100,vmcColumn%100, 0, vmcPrice,GetAmountMoney(), ChannelGetParamValue(vmcColumn%100,2,vmcColumn/100) );
 					vmcStatus = VMC_CHUHUOFAIL;
 				}
 				vmcPrice = 0;
@@ -3911,6 +3890,7 @@ void BusinessProcess(void *pvData)
 				
 				vmcStatus = VMC_FREE;
 				break;
+			default:break;	
 		}		
 		OSTimeDly(OS_TICKS_PER_SEC / 5);
 	}	

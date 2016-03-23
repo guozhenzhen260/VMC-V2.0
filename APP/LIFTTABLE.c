@@ -325,9 +325,9 @@ unsigned char LiftTable1Process(unsigned char Binnum,unsigned char ChannelNum,un
 
 unsigned char LiftTable2Process(unsigned char Binnum,const unsigned char ChannelNum,unsigned char HandleType)
 {
-	uint8_t Result[36]={0},res=0,rcx = 5;
+	uint8_t Result[36]={0},res=0;
 	uint8_t PhysicNum=0xff,level=0;
-	unsigned short takeTimeOut = 10;
+	
 
 	if(!hd_get_by_logic(Binnum,ChannelNum,HUODAO_TYPE_OPEN))//货道不存在
 		return 0xFF;
@@ -345,9 +345,9 @@ unsigned char LiftTable2Process(unsigned char Binnum,const unsigned char Channel
 
 unsigned char LiftTable3Process(unsigned char Binnum,const unsigned char ChannelNum,unsigned char HandleType)
 {
-	uint8_t Result[36]={0},res=0,rcx = 5;
+	uint8_t Result[36]={0},res=0;
 	uint8_t PhysicNum=0xff,level=0;
-	unsigned short takeTimeOut = 10;
+
 
 	if(!hd_get_by_logic(Binnum,ChannelNum,HUODAO_TYPE_OPEN))//货道不存在
 	{
@@ -392,8 +392,7 @@ void LiftTableTest(unsigned char binnum)
 {
 	uint8_t key=0xff;
 	uint8_t rst=0;
-	DEVICESTATEPACK *RecvBoxPack;
-	uint8_t err;
+
 	//char mstr[2]={0};
 
 	unsigned char  topFlush = 1,topReturnFlag = 0,enterSub = 0; 

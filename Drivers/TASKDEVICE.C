@@ -64,8 +64,6 @@ void Uart2TaskDevice(void *pvData)
 	//当前纸币器设备的类型
 	uint8_t NowBillDev = 0;
 	uint8_t PayType,PayNum,PayoutHpNum;
-	//当前找零器设备的类型
-	uint8_t NowChangerDev = 0;
 	//当前读卡器设备的类型
 	uint8_t NowReaderDev = 0;
 	uint8_t ReaderMoney = 0;
@@ -359,6 +357,7 @@ void Uart2TaskDevice(void *pvData)
 					ReaderDevInit();
 					ReaderType = 0;
 					break;
+				default:break;	
 			}
 			
 		}		
@@ -406,7 +405,8 @@ void Uart2TaskDevice(void *pvData)
 				case MBOX_COINDISABLEDEV:
 					//Trace("disable coin\r\n");
 					CoinDevDisable();
-					break;				
+					break;	
+				default:break;	
 			}
 		}
 		//Trace("\r\n 6");
@@ -466,8 +466,8 @@ void Uart2TaskDevice(void *pvData)
 					break;
 				case MBOX_HOPPERINITSTATE:
 					HopperAccepter_CheckHPOk();
-					NowChangerDev = CHANGEDEV_HOPPER;
 					break;
+				default:break;	
 					
 			}
 			
@@ -554,6 +554,7 @@ void Uart2TaskDevice(void *pvData)
 					MsgAccepterPack.HandleResult = rst;
 					OSMboxPost(g_LiftTableBackMail,&MsgAccepterPack);
 					break;
+				default:break;	
 			}
 		}
 		//检查ACDC控制
@@ -569,32 +570,7 @@ void Uart2TaskDevice(void *pvData)
 			}
 		}
 		
-		//接收盒饭柜控制邮箱  Add by liya 2014-01-20
-		if(SystemPara.hefangGui==MDB_GEZI)
-		{
-			AccepterMsg = OSMboxPend(g_HeFanGuiMail,2,&ComStatus);
-			if(ComStatus == OS_NO_ERR)
-			{
-				switch(AccepterMsg->HeFanGuiHandle)	
-				{
-					case HEFANGUI_KAIMEN:
-					case HEFANGUI_CHAXUN:
-					case HEFANGUI_JIAREKAI:
-					case HEFANGUI_JIAREGUAN:
-					case HEFANGUI_ZHILENGKAI:
-					case HEFANGUI_ZHILENGGUAN:
-					case HEFANGUI_ZHAOMINGKAI:
-					case HEFANGUI_ZHAOMINGGUAN:
-						TraceChannel("recvMDBCMD    lvel=%d\r\n",AccepterMsg->HeFanGuiHandle);
-						rst = COL_driver(AccepterMsg->Binnum,AccepterMsg->HeFanGuiHandle,AccepterMsg->HeFanGuiNum,MsgAccepterPack.HeFanGuiBuf);
-						TraceChannel("Task_res==%d\r\n",rst);
-						MsgAccepterPack.HeFanGuiHandle = AccepterMsg->HeFanGuiHandle;
-						MsgAccepterPack.HeFanGuiRst = rst;
-						OSMboxPost(g_HeFanGuiBackMail,&MsgAccepterPack);
-						break;
-				}
-			}
-		}
+		
 		
 		//检查各个设备状态
 		OSMboxPend(g_DeviceStateMail,2,&ComStatus);
@@ -714,6 +690,7 @@ void Uart2TaskDevice(void *pvData)
 						DeviceStatePack.Hopper3StateChk = stEvbHp[j].StateChk;
 						TraceChange("\r\n TaskHopper3=%d",DeviceStatePack.Hopper3State);
 						break;
+					default:break;	
 				}
 			}
 			//Trace("\r\n Hopper1=%d,%d,%d,%d,%d,%d",stEvbHp[0].DevBadFlag,stEvbHp[0].State,stEvbHp[1].DevBadFlag,stEvbHp[1].State,stEvbHp[2].DevBadFlag,stEvbHp[2].State);

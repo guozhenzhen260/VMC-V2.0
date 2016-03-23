@@ -26,109 +26,65 @@
 //==========
 //协议包信息
 //==========
-#define VP_ERR_NULL     0
-#define VP_ERR_PAR      1   //mission parameter error
-#define VP_ERR_COM      2   //communication error
+#define CR_ERR_NULL     0
+#define CR_ERR_PAR      1   //mission parameter error
+#define CR_ERR_COM      2   //communication error
 
-#define VP_SF             0xAA
-#define VP_PROEASIV_SF    0xE5//骏鹏协议
-#define VP_PROTOCOL_VER   0x0//协议版本
-#define VP_PROEASIV_VER   0x40//骏鹏协议
-#define VP_PROTOCOL_ACK   0x80
-#define VP_PROEASIV_ACK   0x01//骏鹏协议
-#define VP_PROTOCOL_NAK   0x00
+#define CR_SF             0xAA
+#define CR_PROTOCOL_VER   0x0//协议版本
+#define CR_PROTOCOL_ACK   0x80
+#define CR_PROTOCOL_NAK   0x00
 
 //==========
 //VMC-->PC
 //==========
-#define VP_ACK_RPT       1
-#define VP_NAK_RPT       2
-#define VP_POLL          3
-#define VP_VMC_SETUP     4
-#define VP_STATUS_RPT   5
-#define VP_INFO_RPT      6
-#define VP_PAYIN_RPT     8
-#define VP_PAYOUT_RPT    9
-#define VP_COST_RPT      10//扣款后，返回扣款执行结果;by gzz 20110823
-#define VP_ACTION_RPT    11   //V2
-#define VP_BUTTON_RPT    12
-#define VP_RESET_RPT       13
-
-#define VP_MT_MIN_SEND  VP_TEXT_MSG
-//#define VP_MT_MAX_SEND  VP_DEBT_RPT
-#define VP_MT_MAX_SEND  VP_OFFLINEDATA_RPT//120419 by cq TotalSell 
-//#define VP_MT_MAX_SEND  VP_STARTUP_RPT_1//120419 by cq TotalSell 
+#define CR_ACK_RPT       1
+#define CR_NAK_RPT       2
+#define CR_POLL          3
+#define CR_VMC_SETUP     4
+#define CR_STATUS_RPT   5
+#define CR_INFO_RPT      6
+#define CR_PAYIN_RPT     8
+#define CR_PAYOUT_RPT    9
+#define CR_COST_RPT      10//扣款后，返回扣款执行结果;by gzz 20110823
+#define CR_ACTION_RPT    11   //V2
+#define CR_BUTTON_RPT    12
+#define CR_RESET_RPT       13
 
 //==========
 //PC-->VMC
 //==========
-#define VP_ACK             1
-#define VP_NAK             2
-#define VP_GET_SETUP_IND   4
-#define VP_GET_STATUS      5
-#define VP_GETINFO_IND     6
-#define VP_CONTROL_IND     7
-#define VP_PAYIN_IND     8
-#define VP_PAYOUT_IND      9    //V2
-#define VP_COST_IND        10//执行扣款命令;by gzz 20110823
-#define VP_RESET_IND       13
+#define CR_ACK             1
+#define CR_GET_SETUP_IND   4
+#define CR_GET_STATUS      5
+#define CR_GETINFO_IND     6
+#define CR_CONTROL_IND     7
+#define CR_PAYIN_IND     8
+#define CR_PAYOUT_IND      9    //V2
+#define CR_COST_IND        10//执行扣款命令;by gzz 20110823
+#define CR_RESET_IND       13
 
-#define VP_MT_MIN_RECEIVE  VP_ACK
-#define VP_MT_MAX_RECEIVE  VP_SET_HUODAO
+#define CR_MT_MIN_RECEIVE  CR_ACK
+#define CR_MT_MAX_RECEIVE  CR_RESET_IND
 
 //================
 //应用层的协议常量
 //================
-#define VP_MAC_SET_H        0
-#define VP_MAC_SET_L        1
-#define COLUMN_NUM_SET      80
-#define VP_DEV_COIN         0
-#define VP_DEV_BILL         1
-#define VP_DEV_ESCROWIN        2
-#define VP_DEV_ESCROWOUT       3
-#define VP_DEV_READER         2
-#define VP_BUT_GAME           0
-#define VP_BUT_NUMBER         1
-#define VP_BUT_GOODS          2
-#define VP_BUT_RETURN         4
+#define CR_DEV_COIN         0
+#define CR_DEV_BILL         1
+#define CR_DEV_ESCROWIN        2
+#define CR_DEV_ESCROWOUT       3
+#define CR_CONTROL_BILLCOIN   0
 
-#define VP_ACT_HEART          0
-#define VP_ACT_ADMIN         1
-#define VP_ACT_ADMINOUT    2
-
-
-
-#define VP_CONTROL_BILLCOIN   0
-#define VP_CONTROL_CABINETDEV 3
-#define VP_CONTROL_PAYOUT     6
-#define VP_CONTROL_GAMELED    16
-#define VP_CONTROL_CLOCK      17
-#define VP_CONTROL_SCALFACTOR 18
-#define VP_CONTROL_INITOK     19
-#define VP_CONTROL_HEFANGUI   21
-
-
-#define VP_ADMIN_GOODSADDALL  1
-#define VP_ADMIN_GOODSADDCOL  2
-#define VP_ADMIN_CHANGEADD    3
-#define VP_ADMIN_GOODSCOLUMN  4
-#define VP_ADMIN_GOODSADDTRAY 8
-#define VP_ADMIN_GETBILL      9
-#define VP_ADMIN_GOODSBUHUO  10
-
-#define VP_INFO_ERR           0
-#define VP_INFO_TOTALVALUE    1
-#define VP_INFO_VER           2
-#define VP_INFO_HARD          3
-#define VP_INFO_BILL          4
-#define VP_INFO_COIN          5
-#define VP_INFO_COINOUT    6
-#define VP_INFO_BILLOUT    7
-
-
-#define VP_TIME_OUT 150
-#define VP_COM_RETRY 3
-
+#define CR_INFO_ERR           0
+#define CR_INFO_TOTALVALUE    1
+#define CR_INFO_VER           2
+#define CR_INFO_HARD          3
+#define CR_INFO_BILL          4
+#define CR_INFO_COIN          5
+#define CR_INFO_COINOUT    6
+#define CR_INFO_BILLOUT    7
+#define CR_TIME_OUT 150
 
 
 #define VPM_LEN_MAX   250
@@ -186,5 +142,6 @@ extern unsigned char VPMission_Status_RPT_CR(void);
 extern unsigned char VPMission_Act_RPT_CR( unsigned char action);
 extern unsigned char VPMission_Info_RPT_CR( uint8_t type );
 extern unsigned char VP_Reset_Rpt_CR( void );
+extern unsigned char VPMission_Setup_RPT_CR( void );
 #endif
 
