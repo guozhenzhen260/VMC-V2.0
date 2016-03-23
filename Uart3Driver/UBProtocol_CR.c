@@ -996,15 +996,15 @@ unsigned char VPMission_PackOpt_CR(  unsigned char msgType, unsigned char flag  
 		while(ressend)
 		{
 			VPMsgPackSend_CR( msgType,flag);
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
+			Timer.PCRecTimerCR = VP_TIME_OUT;
+			while( Timer.PCRecTimerCR )
 			{
 				if( VPBusFrameUnPack_CR() )
 				{				
 					break;				
 				}
 			}
-			if( Timer.PCRecTimer==0 )
+			if( Timer.PCRecTimerCR==0 )
 			{			
 		       	OSTimeDly(10);	
 				issnup=1;
@@ -1485,10 +1485,10 @@ unsigned char VPMission_Poll_CR()
 		
 
 	VPMsgPackSend_CR( VP_POLL, 1);
-	Timer.PCRecTimer = VP_TIME_OUT;
-	while( Timer.PCRecTimer )
+	Timer.PCRecTimerCR = VP_TIME_OUT;
+	while( Timer.PCRecTimerCR )
 	{
-		//TracePC("\r\n Drv recwait=%d",Timer.PCRecTimer); 
+		//TracePC("\r\n Drv recwait=%d",Timer.PCRecTimerCR); 
 		if( VPBusFrameUnPack_CR() )
 		{		
 			TracePC("\r\n Drv rec2=ok"); 
@@ -1501,7 +1501,7 @@ unsigned char VPMission_Poll_CR()
 			break;				
 		}
 	}	
-	if( Timer.PCRecTimer==0 )
+	if( Timer.PCRecTimerCR==0 )
 	{		
 		TracePC("\r\n Drv failretry"); 
 		//¿Îœﬂ

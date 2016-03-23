@@ -1131,6 +1131,8 @@ typedef struct
 	uint8_t		ChaxunTimer;					//交易界面输入货道查询定时器
 	uint8_t		SaleTimer;					    //交易倒计时定时器
 	uint8_t		PCRecTimer;					    //PC串口接收定时器
+	uint8_t		PCRecTimerCR;					 //PC成人串口接收定时器
+	uint8_t		PCRecTimerSIMPLE;				//PC简化版串口接收定时器
 	uint8_t		ActionPCTimer;					//UBOX的维护模式下Action定时器
 	uint8_t		offLinePCTimer;				    //UBOX的离线模式下定时器
 	uint8_t     printTimer;                     //打印交易记录计时器

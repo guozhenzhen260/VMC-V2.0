@@ -886,8 +886,8 @@ unsigned char VPMissionSIMPLE_Get_Admin2( unsigned char admintype)
 			TracePC("\r\n Drv colget=%d",hdstart);
 			sysVPMissionSIMPLE.getadmincolumn = hdstart;
 			SIMPLESIMPLEVPMsgPackSend( SIMPLE_GET_ADMIN);
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
+			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
+			while( Timer.PCRecTimerSIMPLE )
 			{
 				if(VPMissionSIMPLESIMPLE_Poll()==VP_ERRSIMPLE_NULL)
 				{
@@ -909,8 +909,8 @@ unsigned char VPMissionSIMPLE_Get_Admin2( unsigned char admintype)
 		case 4:	//出货时间		
 			TracePC("\r\n Drv chuhuo",hdstart);
 			SIMPLESIMPLEVPMsgPackSend( SIMPLE_GET_ADMIN);
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
+			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
+			while( Timer.PCRecTimerSIMPLE )
 			{
 				if(VPMissionSIMPLESIMPLE_Poll()==VP_ERRSIMPLE_NULL)
 				{
@@ -932,8 +932,8 @@ unsigned char VPMissionSIMPLE_Get_Admin2( unsigned char admintype)
 		case 5:	//退币时间	
 			TracePC("\r\n Drv tuibi",hdstart);
 			SIMPLESIMPLEVPMsgPackSend( SIMPLE_GET_ADMIN);
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
+			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
+			while( Timer.PCRecTimerSIMPLE )
 			{
 				if(VPMissionSIMPLESIMPLE_Poll()==VP_ERRSIMPLE_NULL)
 				{
@@ -1036,8 +1036,8 @@ unsigned char VPMissionSIMPLE_Admin_RPT( unsigned char admintype,uint8_t adminco
 			sysVPMissionSIMPLE.admincolumnsum = admincolumnsum;
 			//TracePC("\r\n Drv Admin=%d,%d,%d",sysVPMissionSIMPLE.admintype,sysVPMissionSIMPLE.admincolumn,sysVPMissionSIMPLE.admincolumnsum);	
 			SIMPLESIMPLEVPMsgPackSend( SIMPLE_ADMIN_RPT);
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
+			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
+			while( Timer.PCRecTimerSIMPLE )
 			{
 				if(VPMissionSIMPLESIMPLE_Poll()==VP_ERRSIMPLE_NULL)
 				{
@@ -1061,8 +1061,8 @@ unsigned char VPMissionSIMPLE_Admin_RPT( unsigned char admintype,uint8_t adminco
 			sysVPMissionSIMPLE.admincolumnsum = admincolumnsum;
 			//TracePC("\r\n Drv Admin=%d,%d,%d",sysVPMissionSIMPLE.admintype,sysVPMissionSIMPLE.admincolumn,sysVPMissionSIMPLE.admincolumnsum);	
 			SIMPLESIMPLEVPMsgPackSend( SIMPLE_ADMIN_RPT);
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
+			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
+			while( Timer.PCRecTimerSIMPLE )
 			{
 				if(VPMissionSIMPLESIMPLE_Poll()==VP_ERRSIMPLE_NULL)
 				{
@@ -1086,8 +1086,8 @@ unsigned char VPMissionSIMPLE_Admin_RPT( unsigned char admintype,uint8_t adminco
 			sysVPMissionSIMPLE.admincolumnsum = admincolumnsum;
 			//TracePC("\r\n Drv Admin=%d,%d,%d",sysVPMissionSIMPLE.admintype,sysVPMissionSIMPLE.admincolumn,sysVPMissionSIMPLE.admincolumnsum);	
 			SIMPLESIMPLEVPMsgPackSend( SIMPLE_ADMIN_RPT);
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
+			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
+			while( Timer.PCRecTimerSIMPLE )
 			{
 				if(VPMissionSIMPLESIMPLE_Poll()==VP_ERRSIMPLE_NULL)
 				{
@@ -1152,8 +1152,8 @@ unsigned char VPMissionSIMPLE_Admin_RPT( unsigned char admintype,uint8_t adminco
 			sysVPMissionSIMPLE.admincolumnsum = admincolumnsum;
 			//TracePC("\r\n Drv Admin=%d,%d,%d",sysVPMissionSIMPLE.admintype,sysVPMissionSIMPLE.admincolumn,sysVPMissionSIMPLE.admincolumnsum);	
 			SIMPLESIMPLEVPMsgPackSend( SIMPLE_ADMIN_RPT);
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
+			Timer.PCRecTimerSIMPLE = VP_TIME_OUT;
+			while( Timer.PCRecTimerSIMPLE )
 			{
 				if(VPMissionSIMPLESIMPLE_Poll()==VP_ERRSIMPLE_NULL)
 				{
