@@ -1,5 +1,32 @@
----- WDT_Feed 匹配 (4 in 3 文件) ----
-Timer.c (drivers):	WDT_Feed();
-WDTDog.C (drivers):	WDT_Feed();
-WDTDog.C (drivers):void WDT_Feed( void )
-WDTDog.H (drivers):extern void WDT_Feed( void );
+---- Timer.PCRecTimer 匹配 (31 in 4 文件) ----
+Timer.c (drivers):	if(Timer.PCRecTimer)
+Timer.c (drivers):			Timer.PCRecTimer--;
+UBProtocol.c (uart3driver):		Timer.PCRecTimer = VP_TIME_OUT;
+UBProtocol.c (uart3driver):		while( Timer.PCRecTimer )
+UBProtocol.c (uart3driver):		if( Timer.PCRecTimer==0 )
+UBProtocol.c (uart3driver):			Timer.PCRecTimer = VP_TIME_OUT;
+UBProtocol.c (uart3driver):			while( Timer.PCRecTimer )
+UBProtocol.c (uart3driver):			if(Timer.PCRecTimer==0)
+UBProtocol.c (uart3driver):	Timer.PCRecTimer = VP_TIME_OUT;
+UBProtocol.c (uart3driver):	while( Timer.PCRecTimer )
+UBProtocol.c (uart3driver):	if( Timer.PCRecTimer==0 )
+UBProtocol_CR.c (uart3driver):			Timer.PCRecTimer = VP_TIME_OUT;
+UBProtocol_CR.c (uart3driver):			while( Timer.PCRecTimer )
+UBProtocol_CR.c (uart3driver):			if( Timer.PCRecTimer==0 )
+UBProtocol_CR.c (uart3driver):	Timer.PCRecTimer = VP_TIME_OUT;
+UBProtocol_CR.c (uart3driver):	while( Timer.PCRecTimer )
+UBProtocol_CR.c (uart3driver):	if( Timer.PCRecTimer==0 )
+UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimer = VP_TIME_OUT;
+UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimer )
+UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimer = VP_TIME_OUT;
+UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimer )
+UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimer = VP_TIME_OUT;
+UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimer )
+UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimer = VP_TIME_OUT;
+UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimer )
+UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimer = VP_TIME_OUT;
+UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimer )
+UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimer = VP_TIME_OUT;
+UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimer )
+UBProtocol_SIMPLE.c (uart3driver):			Timer.PCRecTimer = VP_TIME_OUT;
+UBProtocol_SIMPLE.c (uart3driver):			while( Timer.PCRecTimer )

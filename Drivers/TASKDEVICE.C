@@ -771,7 +771,7 @@ void Uart2TaskDevice(void *pvData)
 			OSMboxPost(g_DeviceStateBackMail,&DeviceStatePack);		
 			
 		}
-	
+		OSTimeDly(7);
 		
 	}
 	

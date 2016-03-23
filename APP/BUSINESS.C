@@ -3338,6 +3338,7 @@ void BusinessProcess(void *pvData)
 					DispFreePage();
 					WaitForPCInit();
 				}
+				OSTimeDly(7);
 				//2.轮询按键
 				keyValue = KeyValueAPI(0,&keyMode);
 				if(keyValue)
@@ -3354,12 +3355,14 @@ void BusinessProcess(void *pvData)
 						vmcStatus = VMC_CHAXUN;
 					}
 				}
+				OSTimeDly(7);
 				//3.轮询硬币器可找零硬币
 				if(Timer.GetTubeTimer==0)
 				{
 					Timer.GetTubeTimer = 5;
 					UnpdateTubeMoney();
 				}
+				OSTimeDly(7);
 				//3.轮询投纸币和硬币金额	
 				moneyGet = GetMoney();
 				if(moneyGet == 1)
@@ -3373,6 +3376,7 @@ void BusinessProcess(void *pvData)
 					SaleSelectionKeyAPI(GetAmountMoney());
 					vmcStatus = VMC_SALE;
 				}
+				OSTimeDly(7);
 				//4.检测设备故障状态
 				if(Timer.CheckDevStateTimer==0)
 				{
@@ -3396,12 +3400,14 @@ void BusinessProcess(void *pvData)
 						}
 					}					
 				}
+				OSTimeDly(7);
 				//5.是否进入维护状态
 				if(ReturnMaintainKeyValue(1))
 				{
 					BillCoinCtr(2,2,2);
 					vmcStatus = VMC_WEIHU;
 				}
+				OSTimeDly(7);
 				//6.自检压缩机和展示灯
 				ACDCTimingHandle(1);
 				//7.检查pc机轮询
@@ -3487,6 +3493,7 @@ void BusinessProcess(void *pvData)
 					SaleSelectionKeyAPI(GetAmountMoney());
 					TraceBill("\r\n App2amount=%ld",GetAmountMoney());	 				
 				}
+				OSTimeDly(7);
 				//2.轮询按键
 				//Trace("\r\n u=%d",i++);
 				keyValue = KeyValueAPI(0,&keyMode);
@@ -3498,6 +3505,7 @@ void BusinessProcess(void *pvData)
 					vmcStatus = VMC_CHAXUN;	
 					break;
 				}
+				OSTimeDly(7);
 				//Trace("\r\n u=%d",i++);
 				//有按下退币按键
 				if(
@@ -3515,6 +3523,7 @@ void BusinessProcess(void *pvData)
 						vmcStatus = VMC_PAYOUT;
 					}
 				}
+				OSTimeDly(7);
 				//Trace("\r\n u=%d",i++);
 				//显示倒计时
 				if( 
@@ -3903,7 +3912,7 @@ void BusinessProcess(void *pvData)
 				vmcStatus = VMC_FREE;
 				break;
 		}		
-		OSTimeDly(OS_TICKS_PER_SEC / 100);
+		OSTimeDly(OS_TICKS_PER_SEC / 5);
 	}	
 }
 /**************************************End Of File*******************************************************/

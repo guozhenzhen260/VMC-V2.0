@@ -1488,6 +1488,7 @@ unsigned char VPMission_Poll_CR()
 	Timer.PCRecTimer = VP_TIME_OUT;
 	while( Timer.PCRecTimer )
 	{
+		//TracePC("\r\n Drv recwait=%d",Timer.PCRecTimer); 
 		if( VPBusFrameUnPack_CR() )
 		{		
 			TracePC("\r\n Drv rec2=ok"); 
