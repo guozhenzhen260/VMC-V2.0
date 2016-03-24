@@ -55,6 +55,14 @@
 #define SERIAL_GEZI    			 1//串口格子柜
 #define MDB_GEZI         		 2//MDB格子柜
 
+/*********************************************************************************************************
+  ucOS-II系统参数
+*********************************************************************************************************/
+extern OS_STK MainTaskStk[2048];
+//static OS_STK_DATA MainTaskStkData;
+extern OS_STK Uart2DeviceTaskStk[512];
+extern OS_STK Uart3DeviceTaskStk[1024];
+extern OS_STK Uart1DeviceTaskStk[256];
 
 extern RTC_DATE RTCData;
 

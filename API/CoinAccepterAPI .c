@@ -77,7 +77,7 @@ uint32_t GetCoinDevMoneyInAPI(void)
 				ReturnBack = 0;
 			break;
 		case MDB_COINACCEPTER:
-			CoinMsg = OSQPend(g_CoinMoneyQ,10,&ComStatus);
+			CoinMsg = OSQPend(g_CoinMoneyQ,5,&ComStatus);
 			//TraceCoin("\r\nMiddmdb=%d\r\n",ComStatus);
 			if(ComStatus == OS_NO_ERR)
 			{

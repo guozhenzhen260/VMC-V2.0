@@ -57,7 +57,7 @@ uint32_t GetReaderDevMoneyInAPI(uint8_t *readerType)
 	switch(SystemPara.CashlessDeviceType)
 	{		
 		case MDB_READERACCEPTER:
-			ReaderMsg = OSMboxPend(g_ReaderMoneyMail,10,&ComStatus);
+			ReaderMsg = OSMboxPend(g_ReaderMoneyMail,5,&ComStatus);
 			//TraceReader("\r\nMiddReadermdb=%d\r\n",ComStatus);
 			if(ComStatus == OS_NO_ERR)
 			{

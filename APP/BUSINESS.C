@@ -3339,14 +3339,12 @@ void BusinessProcess(void *pvData)
 						vmcStatus = VMC_CHAXUN;
 					}
 				}
-				OSTimeDly(7);
 				//3.轮询硬币器可找零硬币
 				if(Timer.GetTubeTimer==0)
 				{
 					Timer.GetTubeTimer = 5;
 					UnpdateTubeMoney();
 				}
-				OSTimeDly(7);
 				//3.轮询投纸币和硬币金额	
 				moneyGet = GetMoney();
 				if(moneyGet == 1)
@@ -3383,19 +3381,18 @@ void BusinessProcess(void *pvData)
 							vmcStatus = VMC_ERROR;
 						}
 					}					
-				}
-				OSTimeDly(7);
+				}				
 				//5.是否进入维护状态
 				if(ReturnMaintainKeyValue(1))
 				{
 					BillCoinCtr(2,2,2);
 					vmcStatus = VMC_WEIHU;
 				}
-				OSTimeDly(7);
 				//6.自检压缩机和展示灯
 				ACDCTimingHandle(1);
 				//7.检查pc机轮询
 				PollAPI(GetAmountMoney());
+				OSTimeDly(7);
 				//8.接近感应检测 add by yoc 2013.11.13
 				//pollHuman(ReadCloseHumanKeyValue());
 				//9轮询大门传感器 add by yoc 2013.11.13
@@ -3465,6 +3462,7 @@ void BusinessProcess(void *pvData)
 				}
 				break;
 			case VMC_SALE:
+				checkTaskDevSignal();
 				//1.轮询投纸币和硬币金额
 				//i=0;
 				//Trace("\r\n u=%d",i++);
@@ -3526,6 +3524,7 @@ void BusinessProcess(void *pvData)
 				}
 				//7.检查pc机轮询
 				PollAPI(GetAmountMoney());
+				OSTimeDly(7);
 				//8.轮询游戏按键
 				ReadGameKeyValueAPI();
 				//9.轮询设备故障状态
@@ -3892,7 +3891,7 @@ void BusinessProcess(void *pvData)
 				break;
 			default:break;	
 		}		
-		OSTimeDly(OS_TICKS_PER_SEC / 5);
+		OSTimeDly(OS_TICKS_PER_SEC / 20);
 	}	
 }
 /**************************************End Of File*******************************************************/

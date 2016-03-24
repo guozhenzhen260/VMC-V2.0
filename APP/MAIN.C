@@ -29,14 +29,10 @@ LOGPARAMETERDETAIL LogParaDetail;
 SELECTKEYAPI selectKey;
 GLOBALSYS globalSys;
 
-/*********************************************************************************************************
-  ucOS-II系统参数
-*********************************************************************************************************/
-static OS_STK MainTaskStk[2048];
-//static OS_STK_DATA MainTaskStkData;
-static OS_STK Uart2DeviceTaskStk[512];
-static OS_STK Uart3DeviceTaskStk[1024];
-static OS_STK Uart1DeviceTaskStk[256];
+//static OS_STK MainTaskStk[2048];
+//static OS_STK Uart2DeviceTaskStk[512];
+//static OS_STK Uart3DeviceTaskStk[1024];
+//static OS_STK Uart1DeviceTaskStk[256];
 
 
 /*********************************************************************************************************

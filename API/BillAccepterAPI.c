@@ -136,7 +136,7 @@ uint32_t GetBillDevMoneyUnStackInAPI(void)
 	switch(SystemPara.BillValidatorType)
 	{		
 		case MDB_BILLACCEPTER:
-			BillMsg = OSQPend(g_BillMoneyQ,10,&ComStatus);
+			BillMsg = OSQPend(g_BillMoneyQ,5,&ComStatus);
 			//Trace("mdb=%d\r\n",ComStatus);
 			if(ComStatus == OS_NO_ERR)
 			{

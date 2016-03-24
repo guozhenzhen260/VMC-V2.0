@@ -396,7 +396,7 @@ uint8_t GetSelectKeyAPI()
 	{
 		case SELECT_KEY:			
 			//OSTimeDly(OS_TICKS_PER_SEC/2);
-			AccepterMsg = OSMboxPend(g_KEYBackMail,10,&ComStatus);
+			AccepterMsg = OSMboxPend(g_KEYBackMail,5,&ComStatus);
 			if(ComStatus == OS_NO_ERR)
 			{
 				//Trace("\r\n MiddKeykey1=%d,%d",AccepterMsg->KeyBackCmd,AccepterMsg->selectInput);
