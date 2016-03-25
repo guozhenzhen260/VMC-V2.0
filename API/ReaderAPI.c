@@ -35,7 +35,8 @@ void ReaderDevInitAPI()
 			//1.Æô¶¯Ö½±ÒÆ÷
 			MsgAccepterPack.ReaderBack = MBOX_READERINITDEV;			
 			OSMboxPost(g_ReaderBackMoneyMail,&MsgAccepterPack);
-			break;		
+			break;	
+		default:break;	
 	}
 	return;
 }
@@ -56,7 +57,7 @@ uint32_t GetReaderDevMoneyInAPI(uint8_t *readerType)
 	switch(SystemPara.CashlessDeviceType)
 	{		
 		case MDB_READERACCEPTER:
-			ReaderMsg = OSMboxPend(g_ReaderMoneyMail,10,&ComStatus);
+			ReaderMsg = OSMboxPend(g_ReaderMoneyMail,5,&ComStatus);
 			//TraceReader("\r\nMiddReadermdb=%d\r\n",ComStatus);
 			if(ComStatus == OS_NO_ERR)
 			{
@@ -77,7 +78,8 @@ uint32_t GetReaderDevMoneyInAPI(uint8_t *readerType)
 			}
 			else
 				ReturnBack = 0;	
-			break;					
+			break;		
+		default:break;	
 	}
 	return ReturnBack;
 	
@@ -100,7 +102,8 @@ void ReaderDevDisableAPI(void)
 		case MDB_READERACCEPTER:			
 			MsgAccepterPack.ReaderBack = MBOX_READERDISABLEDEV;			
 			OSMboxPost(g_ReaderBackMoneyMail,&MsgAccepterPack);
-			break;					
+			break;
+		default:break;	
 	}
 	return;	
 }
@@ -124,7 +127,8 @@ void ReaderDevEnableAPI(void)
 		case MDB_READERACCEPTER:			
 			MsgAccepterPack.ReaderBack = MBOX_READERENABLEDEV;			
 			OSMboxPost(g_ReaderBackMoneyMail,&MsgAccepterPack);
-			break;					
+			break;	
+		default:break;	
 	}
 	return;
 }
@@ -220,7 +224,8 @@ uint8_t ReaderDevVendoutTestAPI(uint16_t money,uint8_t vendrst)
 				returnvalue = 0;
 			}	
 									
-			break;					
+			break;	
+		default:break;	
 	}
 	return returnvalue;	
 }
@@ -289,7 +294,8 @@ uint8_t ReaderDevVendoutRPTAPI(uint16_t money)
 				returnvalue = 0;
 			}	
 									
-			break;					
+			break;
+		default:break;	
 	}
 	return returnvalue;	
 }
@@ -334,6 +340,7 @@ void ReaderDevVendoutResultAPI(uint8_t result)
 				OSMboxPost(g_ReaderBackMoneyMail,&MsgAccepterPack);
 			}
 			break;
+		default:break;	
 	}
 }
 
@@ -376,7 +383,8 @@ void ReaderDevCashSaleAPI(uint16_t money)
 				MsgAccepterPack.ReaderPrice = money;
 				OSMboxPost(g_ReaderBackMoneyMail,&MsgAccepterPack); 
 			}
-			break;					
+			break;	
+		default:break;	
 	}
 }
 

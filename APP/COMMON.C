@@ -15,6 +15,14 @@
 #include "..\config.h"
 #include "CHANNEL.h"
 
+/*********************************************************************************************************
+  ucOS-II系统参数
+*********************************************************************************************************/
+OS_STK MainTaskStk[2048];
+//static OS_STK_DATA MainTaskStkData;
+OS_STK Uart2DeviceTaskStk[512];
+OS_STK Uart3DeviceTaskStk[1024];
+OS_STK Uart1DeviceTaskStk[256];
 
 /*********************************************************************************************************
 ** 通讯机制
@@ -40,7 +48,8 @@ void updateTaskDevSignal(uint8 dev)
 			break;
 		case UART3TASKSIG:
 			taskDevSignal.Uart3TaskDevice++;
-			break;	
+			break;
+		default:break;	
 	}
 }
 
@@ -56,65 +65,150 @@ void checkTaskDevSignal()
 	static uint8_t dogUart1=0,dogUart2=0,dogUart3=0;
 	if(Timer.WatchDogTimer==0)
 	{
-		Timer.WatchDogTimer = 60*2;
-		//Trace("\r\ntaskDevSignal=%ld,%ld,%ld",temptaskDevSignal.Uart1TaskDevice,temptaskDevSignal.Uart2TaskDevice,temptaskDevSignal.Uart3TaskDevice);
-		if(temptaskDevSignal.Uart1TaskDevice!=taskDevSignal.Uart1TaskDevice)
+		//处于交易状态时
+		if(GetAmountMoney())
 		{
-			temptaskDevSignal.Uart1TaskDevice=taskDevSignal.Uart1TaskDevice;
-			dogUart1=0;
-			//Trace("\r\nUart1TaskDiff=%ld,dog=%d",taskDevSignal.Uart1TaskDevice,dogUart1);			
-		}
-		else
-		{
-			dogUart1++;
-			//Trace("\r\nUart1TaskSame=%ld,dog=%d",taskDevSignal.Uart1TaskDevice,dogUart1);
-		}
-		if(temptaskDevSignal.Uart2TaskDevice!=taskDevSignal.Uart2TaskDevice)
-		{
-			temptaskDevSignal.Uart2TaskDevice=taskDevSignal.Uart2TaskDevice;
-			//
-			dogUart2=0;
-			//Trace("\r\nUart2TaskDiff=%ld,dog=%d",taskDevSignal.Uart2TaskDevice,dogUart2);
-		}
-		else
-		{
-			//
-			dogUart2++;
-			//Trace("\r\nUart2TaskSame=%ld,dog=%d",taskDevSignal.Uart2TaskDevice,dogUart2);
-		}
-		if(temptaskDevSignal.Uart3TaskDevice!=taskDevSignal.Uart3TaskDevice)
-		{
-			temptaskDevSignal.Uart3TaskDevice=taskDevSignal.Uart3TaskDevice;
-			//
-			dogUart3=0;
-			//Trace("\r\nUart3TaskDiff=%ld,dog=%d",taskDevSignal.Uart3TaskDevice,dogUart3);
-		}
-		else
-		{
-			//
-			dogUart3++;
-			//Trace("\r\nUart3TaskSame=%ld,dog=%d",taskDevSignal.Uart3TaskDevice,dogUart3);
-		}
+			Timer.WatchDogTimer = 10;
+			//Trace("\r\ntaskDevSignal=%ld,%ld,%ld",temptaskDevSignal.Uart1TaskDevice,temptaskDevSignal.Uart2TaskDevice,temptaskDevSignal.Uart3TaskDevice);
+			if(temptaskDevSignal.Uart1TaskDevice!=taskDevSignal.Uart1TaskDevice)
+			{
+				temptaskDevSignal.Uart1TaskDevice=taskDevSignal.Uart1TaskDevice;
+				dogUart1=0;
+				//Trace("\r\nUart1TaskDiff=%ld,dog=%d",taskDevSignal.Uart1TaskDevice,dogUart1);			
+			}
+			else
+			{
+				dogUart1++;
+				//Trace("\r\nUart1TaskSame=%ld,dog=%d",taskDevSignal.Uart1TaskDevice,dogUart1);
+			}
+			if(temptaskDevSignal.Uart2TaskDevice!=taskDevSignal.Uart2TaskDevice)
+			{
+				temptaskDevSignal.Uart2TaskDevice=taskDevSignal.Uart2TaskDevice;
+				//
+				dogUart2=0;
+				//Trace("\r\nUart2TaskDiff=%ld,dog=%d",taskDevSignal.Uart2TaskDevice,dogUart2);
+			}
+			else
+			{
+				//
+				dogUart2++;
+				//Trace("\r\nUart2TaskSame=%ld,dog=%d",taskDevSignal.Uart2TaskDevice,dogUart2);
+			}
+			if(temptaskDevSignal.Uart3TaskDevice!=taskDevSignal.Uart3TaskDevice)
+			{
+				temptaskDevSignal.Uart3TaskDevice=taskDevSignal.Uart3TaskDevice;
+				//
+				dogUart3=0;
+				//Trace("\r\nUart3TaskDiff=%ld,dog=%d",taskDevSignal.Uart3TaskDevice,dogUart3);
+			}
+			else
+			{
+				//
+				dogUart3++;
+				//Trace("\r\nUart3TaskSame=%ld,dog=%d",taskDevSignal.Uart3TaskDevice,dogUart3);
+			}
 
-		//复位
-		if((dogUart1>5)||(dogUart2>5)||(dogUart3>5))
-		{
-			if(dogUart1>5)
+			//重置任务
+			//复位
+			if((dogUart1>5)||(dogUart2>5)||(dogUart3>5))
 			{
-				Trace("\r\nUart1TaskReset");
+				if(dogUart1>5)
+				{
+					Trace("\r\nUart1TaskReset");
+					OSTaskDel(9);
+					OSTimeDly(OS_TICKS_PER_SEC*2);
+					//展示位通讯串口
+					OSTaskCreate(Uart1TaskDevice,(void *)0,&Uart1DeviceTaskStk[sizeof(Uart1DeviceTaskStk)/4 - 1],9);
+					OSTimeDly(OS_TICKS_PER_SEC/100);
+					SelectInitAPI();
+					OSTimeDly(OS_TICKS_PER_SEC/100);
+					dogUart1=0;
+				}
+				if(dogUart2>5)
+				{
+					Trace("\r\nUart2TaskReset");
+					dogUart2=0;
+				}
+				if(dogUart3>5)
+				{
+					Trace("\r\nUart3TaskReset");
+					OSTaskDel(8);
+					OSTimeDly(OS_TICKS_PER_SEC*2);
+					//pc通讯串口
+					OSTaskCreate(Uart3TaskDevice,(void *)0,&Uart3DeviceTaskStk[sizeof(Uart3DeviceTaskStk)/4 - 1],8);
+					OSTimeDly(OS_TICKS_PER_SEC/100);
+					PCInitAPI();
+					OSTimeDly(OS_TICKS_PER_SEC);
+					dogUart3=0;
+				}
+				
 			}
-			if(dogUart2>5)
-			{
-				Trace("\r\nUart2TaskReset");
-			}
-			if(dogUart3>5)
-			{
-				Trace("\r\nUart3TaskReset");
-			}
-			MdbBusHardwareReset();
-		      OSTimeDly(OS_TICKS_PER_SEC*2);
-			zyReset(ZY_HARD_RESET);
 		}
+		
+		//处于空闲状态时
+		else
+		{
+			Timer.WatchDogTimer = 60;
+			//Trace("\r\ntaskDevSignal=%ld,%ld,%ld",temptaskDevSignal.Uart1TaskDevice,temptaskDevSignal.Uart2TaskDevice,temptaskDevSignal.Uart3TaskDevice);
+			if(temptaskDevSignal.Uart1TaskDevice!=taskDevSignal.Uart1TaskDevice)
+			{
+				temptaskDevSignal.Uart1TaskDevice=taskDevSignal.Uart1TaskDevice;
+				dogUart1=0;
+				//Trace("\r\nUart1TaskDiff=%ld,dog=%d",taskDevSignal.Uart1TaskDevice,dogUart1);			
+			}
+			else
+			{
+				dogUart1++;
+				//Trace("\r\nUart1TaskSame=%ld,dog=%d",taskDevSignal.Uart1TaskDevice,dogUart1);
+			}
+			if(temptaskDevSignal.Uart2TaskDevice!=taskDevSignal.Uart2TaskDevice)
+			{
+				temptaskDevSignal.Uart2TaskDevice=taskDevSignal.Uart2TaskDevice;
+				//
+				dogUart2=0;
+				//Trace("\r\nUart2TaskDiff=%ld,dog=%d",taskDevSignal.Uart2TaskDevice,dogUart2);
+			}
+			else
+			{
+				//
+				dogUart2++;
+				//Trace("\r\nUart2TaskSame=%ld,dog=%d",taskDevSignal.Uart2TaskDevice,dogUart2);
+			}
+			if(temptaskDevSignal.Uart3TaskDevice!=taskDevSignal.Uart3TaskDevice)
+			{
+				temptaskDevSignal.Uart3TaskDevice=taskDevSignal.Uart3TaskDevice;
+				//
+				dogUart3=0;
+				//Trace("\r\nUart3TaskDiff=%ld,dog=%d",taskDevSignal.Uart3TaskDevice,dogUart3);
+			}
+			else
+			{
+				//
+				dogUart3++;
+				//Trace("\r\nUart3TaskSame=%ld,dog=%d",taskDevSignal.Uart3TaskDevice,dogUart3);
+			}
+			
+			//复位
+			if((dogUart1>5)||(dogUart2>5)||(dogUart3>5))
+			{
+				if(dogUart1>5)
+				{
+					Trace("\r\nUart1TaskReset");
+				}
+				if(dogUart2>5)
+				{
+					Trace("\r\nUart2TaskReset");
+				}
+				if(dogUart3>5)
+				{
+					Trace("\r\nUart3TaskReset");
+				}
+				MdbBusHardwareReset();
+			      OSTimeDly(OS_TICKS_PER_SEC*2);
+				zyReset(ZY_HARD_RESET);				
+			}
+		}
+		
 	}	
 }
 
@@ -165,15 +259,7 @@ DEVICESTATEPACK DeviceStatePack;
 DEVICESTATEPACK DeviceStateBusiness;
 CARDSTATEPACK CardStatePack;
 
-//一鸣智慧通信邮箱 add by yoc 2013.12.16 
-OS_EVENT *g_PCMail;//PC控制邮箱
-OS_EVENT *g_PCBackMail;//PC返回给vmc控制结果的邮箱
-unsigned char ZhIndex = 0;
-void *ZhSizeQ[MBOX_ST_LEN];
-#pragma arm section zidata = "RAM2" //add by yoc 2013.12.16
-MESSAGE_ZHIHUI vmc_zh_mbox[MBOX_ST_LEN];
-MESSAGE_ZHIHUI zh_vmc_mbox;
-#pragma arm section zidata
+
 
 
 //UBoxPC通讯队列
@@ -279,9 +365,7 @@ void CreateMBox(void)
 	g_HeFanGuiMail = OSMboxCreate(NULL);//压缩机展示灯邮箱
 	g_HeFanGuiBackMail = OSMboxCreate(NULL);//压缩机展示灯应答邮箱
 
-	//PC通讯
-	g_PCMail = OSQCreate(&ZhSizeQ[0],MBOX_ST_LEN);
-	g_PCBackMail = OSMboxCreate(NULL);
+
 	//UBoxPC通讯
 	g_Ubox_VMCTOPCQ = OSQCreate(&UboxSizeQ[0],UBOX_SIZE);
 	g_Ubox_VMCTOPCBackCMail = OSMboxCreate(NULL);
@@ -1087,6 +1171,7 @@ void ResetSystemPara(void)
 		  case 100://以元为单位
 			  SystemPara.DecimalNum  = 0;  
 			  break;
+		  default:break;	  
 	  	 }
 		                          //显示金额界面的小数点位数
 	}
@@ -1170,6 +1255,7 @@ char *PrintfMoney(uint32_t dispnum)
 	  case 0://以元为单位
 		  sprintf(strnum,"%d",dispnum/100);
 		  break;
+	 default:break;	  
    }
    //Trace("\r\n pp=%s",strnum);
    return &strnum[0];

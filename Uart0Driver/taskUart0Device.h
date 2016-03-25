@@ -38,7 +38,7 @@
 
 //=============================================================================================
 
-#define PC_CONTROL_TASK_STK_SIZE  1024
+#define PC_CONTROL_TASK_STK_SIZE  512
 #define PC_CONTROL_TASK_PRIO       20
 
 

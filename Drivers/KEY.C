@@ -143,7 +143,7 @@ unsigned char ReadKeyValue(void)
 	
 	if(KeyBoardStatus == 0)
 		return 0x00;
-	KeyMsg = OSQPend(QKey,10,&err);
+	KeyMsg = OSQPend(QKey,5,&err);
 	if(err == OS_NO_ERR)
 	{
 		TraceSelection("\r\n btnPend=%d",KeyMsg->Keynum);

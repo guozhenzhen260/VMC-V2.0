@@ -537,6 +537,7 @@ void pcShcReq(unsigned char type,unsigned short len,unsigned char *data)
 		case HUODAO_REQ:
 			pcHuodaoReq(len,data);
 			break;
+		default:break;	
 	}
 	
 }
@@ -1004,15 +1005,6 @@ static void pcClearReq(unsigned char len,unsigned char data)
 		return ;
 
 	mode = data;
-	if(mode == 0)
-	{
-		pc_trade_info_clear(2);
-	}
-	else if(mode == 1)
-	{
-		pc_trade_info_clear(1);
-	}
-
 	PC_DELAY_500MS;
 	sbuf[0] = mode;
 	sbuf[1] = 0x01;
@@ -1321,6 +1313,7 @@ static unsigned char pcSysParaReq(unsigned char len,unsigned char *data)
 		case 0x01:
 			pcSetSysPara(1,&data[1]);
 			break;
+		default:break;	
 	}
 
 	return len;
@@ -2245,7 +2238,7 @@ static void pcIdSetReq(unsigned char buflen,unsigned char *buf)
 
 static void pcIdReadReq(void)
 {
-	unsigned char rst = 1,buf[64] = {0},in = 0;
+	unsigned char buf[64] = {0},in = 0;
 	unsigned char i,len;
 
 	len = sizeof(stMacSn.id);

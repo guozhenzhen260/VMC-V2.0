@@ -98,6 +98,10 @@ void TIMER0_IRQHandler (void)
 		UART3RECVACKMSGTIMEOUT--;
 	if(Timer.PCRecTimer)
 			Timer.PCRecTimer--;
+	if(Timer.PCRecTimerCR)
+			Timer.PCRecTimerCR--;
+	if(Timer.PCRecTimerSIMPLE)
+			Timer.PCRecTimerSIMPLE--;
 	if(Timer.printTimer)
 			Timer.printTimer--;
 	if(Timer.selTimer)

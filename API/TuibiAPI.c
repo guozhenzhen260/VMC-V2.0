@@ -36,7 +36,7 @@ uint8_t IsTuibiAPI()
 	if(ReadPayBackKeyValue())
 		returnvalue = 1;
 	//Õë¶ÔMDBÍË±Ò°´¼ü
-	TuibiMsg = OSMboxPend(g_CoinMoneyBackMail,10,&err);//·µ»ØÊÇ·ñÍË±Ò		
+	TuibiMsg = OSMboxPend(g_CoinMoneyBackMail,5,&err);//·µ»ØÊÇ·ñÍË±Ò		
 	if(err == OS_NO_ERR) 
 	{
 		if(TuibiMsg->CoinBackCmd == MBOX_COINRETURN)

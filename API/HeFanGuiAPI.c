@@ -362,7 +362,7 @@ const HEFAN_CABINET_LCD st_hefan_cabinet =
 *******************************************************************************/
 unsigned char save_hefan_huodao_info(unsigned char cabinetNo)
 {
-	unsigned char buf[512] = {0},rst,*st_ptr,i;
+	unsigned char buf[512] = {0},rst,*st_ptr;
 	unsigned short crc,len_th,len_lh;
 	len_th = sizeof(HEFAN_CABINET) / 2;
 	len_lh = sizeof(HEFAN_CABINET) - len_th;
@@ -431,7 +431,7 @@ void save_hefan_huodao_by_flash(void)
 *******************************************************************************/
 unsigned char read_hefan_huodao_info(unsigned char cabinetNo)
 {
-	unsigned char buf[512] = {0},*st_ptr,i;
+	unsigned char buf[512] = {0},*st_ptr;
 	unsigned short len_th = 0,len_lh = 0,crc;
 	
 	len_th = sizeof(HEFAN_CABINET) / 2;

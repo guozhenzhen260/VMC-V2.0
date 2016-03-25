@@ -455,6 +455,7 @@ uint8_t GetSelectKey()
 			case 5:
 				pStatus = SelectKeySet(j, selKey.sel6ReadyLed,selKey.sel6ErrLed,selKey.selectMode);
 				break;	
+			default:break;	
 		}
 		
 		

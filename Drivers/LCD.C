@@ -631,6 +631,7 @@ void LCDClearLineDraw(uint8_t x,unsigned char row, uint8_t font)
 				UC1608EPutData(0x00);	
 			}	
 			break;
+		default:break;	
 	}	
 }
 
@@ -793,6 +794,7 @@ void LCDNumberFontPrintf(uint8_t x,uint8_t y,uint8_t font,char *format,...)
 					//x=x+24+24/4;								//下一个字符列地址
 					x=x+24;
 					break;
+				default:break;	
 			}	
 		}		
 	}
@@ -820,6 +822,7 @@ void LCDSpecialPicPrintf(uint8_t x,uint8_t y,uint8_t mode,uint8_t font)
 			
 			LCDPutBmp(x,y,32,32,SpecialPic_32_32_font[mode],0);
 			break;
+		default:break;	
 	}	
 	/*
 	switch(mode)
@@ -947,6 +950,7 @@ void LCDPutLOGOBmp(unsigned char x,unsigned char y,unsigned char mode)
 		case 4:
 			LCDPutBmp(x,y,155,40,MalaysiaLOGO,0);				
 			break;	
+		default:break;	
 	}		
 	/*
 	//GetLOGO(mode,str);

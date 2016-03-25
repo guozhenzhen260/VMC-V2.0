@@ -108,7 +108,8 @@ void FreeSelectionKeyAPI( uint8_t mode )
 			FreeSelectionKey(mode);
 			MsgKEYPack.KeyCmd = MBOX_SELECTLIGHT;			
 			OSMboxPost(g_KEYMail,&MsgKEYPack);
-			break;		
+			break;	
+		default:break;	
 	}
 }
 
@@ -219,7 +220,8 @@ void FreeSelectionKeyValueAPI()
 			
 			MsgKEYPack.KeyCmd = MBOX_SELECTLIGHT;			
 			OSMboxPost(g_KEYMail,&MsgKEYPack);
-			break;		
+			break;	
+		default:break;	
 	}
 }
 
@@ -312,7 +314,8 @@ void SaleSelectionKeyAPI( uint32_t price )
 			
 			MsgKEYPack.KeyCmd = MBOX_SELECTLIGHT;			
 			OSMboxPost(g_KEYMail,&MsgKEYPack);
-			break;		
+			break;
+		default:break;	
 	}
 }
 
@@ -361,14 +364,16 @@ void HuodaoSetSelectionKeyAPI( uint8_t keyID )
 					selectKey.sel5ReadyLed |= 1<<(keyID%10-1);	
 				case 6:
 					selectKey.sel6ReadyLed |= 1<<(keyID%10-1);		
-					break;	
+					break;
+				default:break;	
 			}
 			//将值传给邮箱
 			SelectionKeyMBox(1);
 			TraceSelection("\r\n MiddLed=%d,%x,%x,%x,%x,%x,%x",MsgKEYPack.selectMode,MsgKEYPack.sel1ReadyLed,MsgKEYPack.sel2ReadyLed,MsgKEYPack.sel3ReadyLed,MsgKEYPack.sel4ReadyLed,MsgKEYPack.sel5ReadyLed,MsgKEYPack.sel6ReadyLed);
 			MsgKEYPack.KeyCmd = MBOX_SELECTLIGHT;			
 			OSMboxPost(g_KEYMail,&MsgKEYPack);
-			break;		
+			break;	
+		default:break;	
 	}
 }
 
@@ -391,7 +396,7 @@ uint8_t GetSelectKeyAPI()
 	{
 		case SELECT_KEY:			
 			//OSTimeDly(OS_TICKS_PER_SEC/2);
-			AccepterMsg = OSMboxPend(g_KEYBackMail,10,&ComStatus);
+			AccepterMsg = OSMboxPend(g_KEYBackMail,5,&ComStatus);
 			if(ComStatus == OS_NO_ERR)
 			{
 				//Trace("\r\n MiddKeykey1=%d,%d",AccepterMsg->KeyBackCmd,AccepterMsg->selectInput);
@@ -401,7 +406,8 @@ uint8_t GetSelectKeyAPI()
 					key = AccepterMsg->selectInput;	
 				}
 			}
-			break;		
+			break;	
+		default:break;	
 	}
 	
 	
@@ -427,7 +433,8 @@ void SelectInitAPI()
 			MsgKEYPack.KeyCmd = MBOX_SELECTKEYINIT;			
 			OSMboxPost(g_KEYMail,&MsgKEYPack);
 			OSTimeDly(OS_TICKS_PER_SEC);
-			break;		
+			break;	
+		default:break;	
 	}
 	return;
 }
@@ -553,7 +560,8 @@ unsigned char SetTemperatureAPI( unsigned int temparater )
 					key = 0;	
 				}
 			}
-			break;		
+			break;
+		default:break;	
 	}
 	return key;
 }

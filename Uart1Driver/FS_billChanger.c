@@ -58,7 +58,7 @@ const unsigned char FS = 0x1C;
 #define FS_STATUS_TIMEOUT		0xEE
 
 static volatile unsigned char flowStatus = FS_STATUS_IDLE; // 0空闲  1 准备握手  2 准备发送数据 3准备接收结果
-static unsigned char retry = 0;
+
 
 #if 0
 const unsigned char fs_testdata[] = {0x10,0x02,0x00,0x08,0x60,0x01,0xFF,0x00,0x00,0x01,0x00,0x1C,0x10,0x03,0xC8,0x72};
@@ -160,7 +160,7 @@ volatile unsigned int fs_taskTimer = 0;
 ** Returned value:      CRC检验结果
 *********************************************************************************************************/
 
-static void msleep(unsigned int msec)
+void msleep(unsigned int msec)
 {
 	unsigned int temp;
 	temp = (msec > 10) ? msec/5 : 2;
@@ -257,28 +257,10 @@ static unsigned char FS_isTaskTimeout(void)
 static void FS_setReqTimer(unsigned int ms)
 {
 	fs_reqTimer = ms / 10;
-	if(ms == 0){ //重置
-		retry = 0;
-	}
-}
-
-// 1 超时 0不超时  2 超时上限
-static unsigned char FS_getReqTimer(void)
-{
-	if(fs_reqTimer == 0){
-		if(retry++ > 3){
-			retry = 0;
-			return 2;
-		}
-		else{
-			return 1;
-		}
-	}
-	else{
-		return 0;
-	}
 	
 }
+
+
 
 
 
@@ -987,12 +969,13 @@ static uint32 FS_distribution(uint32 payAmount)
 }
 
 
-
+#if 0
 static void FS_dispenseReset(void)
 {
 	FS_distribution(0);
 	FS_billDispense(&fsBill);
 }
+#endif
 
 //返回已找零金额
 uint32 FS_dispense(uint32 payAmount)
@@ -1000,7 +983,6 @@ uint32 FS_dispense(uint32 payAmount)
 	uint8 i,k;
 	uint32 temp32 = 0;
 	FS_BILL_REQ *req;
-	FS_BOX *box;
 	req = &fsBill.req;
 
 	req->amount = payAmount;
@@ -1090,7 +1072,6 @@ void FS_mainTask(void)
 {
 	static uint8 err = 0;
 	uint8 res;
-	uint32 payAmount;
 	if(SystemPara.BillRecyclerType != FS_BILLRECYCLER)
 	{
 		return;

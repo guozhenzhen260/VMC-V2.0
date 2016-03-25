@@ -599,7 +599,8 @@ void ErrorCheck(void)
 					LCDPrintf(5,7,0,SystemPara.Language,UserMaintainErrorMenuList.DeviceOK[SystemPara.Language]);
 				}
 				LCDPrintf(231-8*strlen(UserMaintainErrorMenuList.PageUp[SystemPara.Language]),13,0,SystemPara.Language,UserMaintainErrorMenuList.PageUp[SystemPara.Language]);//翻页提示
-				break;	
+				break;
+			default:break;	
 			
 		}
 		while(1)
@@ -689,6 +690,7 @@ void LogTransaction(void)
 				}
 				LCDPrintf(231-8*strlen(LogTransMenuList.PageDown[SystemPara.Language]),13,0,SystemPara.Language,LogTransMenuList.PageUp[SystemPara.Language]);//翻页提示
 				break;
+			default:break;	
 			
 		}
 		while(1)
@@ -786,6 +788,7 @@ void LogTransactionTotal(void)
 				}
 				LCDPrintf(231-8*strlen(LogTransMenuList.PageDown[SystemPara.Language]),13,0,SystemPara.Language,LogTransMenuList.PageUp[SystemPara.Language]);//翻页提示
 				break;
+			default:break;	
 
 		}
 		while(1)
@@ -837,7 +840,7 @@ void LogClearRecord(void)
 		LCDClrArea(1,4,238,14);
 		if(SelectOKCheck())
 		{
-			pc_trade_info_clear(3);//add by yoc 2013.12.16
+			
 			LogClearAPI();
 			ChannelClearSuccesCount();
 		}
@@ -1413,7 +1416,8 @@ void RTCParaMenu(void)
 							break;
 						case 1: 	
 							LCDPrintf(5,5,1,SystemPara.Language,"%s%02d",RtcMenuList.week[SystemPara.Language],keyValue);
-							break;						
+							break;	
+						default:break;	
 					}
 					
 					break;
@@ -1424,7 +1428,8 @@ void RTCParaMenu(void)
 							LCDPrintf(5,7,1,SystemPara.Language,"%s%02d",RtcMenuList.month[SystemPara.Language],keyValue);
 							break;
 						case 1: 								
-							break;						
+							break;	
+						default:break;	
 					}
 					break;	
 				case 3:					
@@ -1434,7 +1439,8 @@ void RTCParaMenu(void)
 							LCDPrintf(5,9,1,SystemPara.Language,"%s%02d",RtcMenuList.day[SystemPara.Language],keyValue);
 							break;
 						case 1: 								
-							break;						
+							break;	
+						default:break;	
 					}
 					break;	
 				case 4:					
@@ -1444,7 +1450,8 @@ void RTCParaMenu(void)
 							LCDPrintf(5,11,1,SystemPara.Language,"%s%02d",RtcMenuList.hour[SystemPara.Language],keyValue);
 							break;
 						case 1: 								
-							break;						
+							break;	
+						default:break;	
 					}
 					break;	
 				case 5:
@@ -1454,7 +1461,8 @@ void RTCParaMenu(void)
 							LCDPrintf(5,13,1,SystemPara.Language,"%s%02d",RtcMenuList.minute[SystemPara.Language],keyValue);
 							break;
 						case 1: 								
-							break;						
+							break;	
+						default:break;	
 					}							
 					break;	
 				default:
@@ -1487,7 +1495,8 @@ void RTCParaMenu(void)
 										break;
 									case 1: 	
 										RTCData.week=keyValue;
-										break;						
+										break;	
+									default:break;	
 								}								
 								break;
 							case 2:
@@ -1577,6 +1586,7 @@ void RstUserPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;	
 				case 4:
 					break;	
+				default:break;	
 				
 			}	
 			break;	
@@ -1595,6 +1605,7 @@ void RstUserPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;	
 				case 4:
 					break;	
+				default:break;	
 				
 			}	
 			break;	
@@ -1612,7 +1623,8 @@ void RstUserPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					SystemPara.BillEnableValue = keyValue;	
 					break;	
 				case 4:
-					break;	
+					break;
+				default:break;	
 				
 			}	
 			break;	
@@ -1632,6 +1644,7 @@ void RstUserPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;	
 				case 4:
 					break;	
+				default:break;	
 				
 			}	
 			break;	
@@ -1650,6 +1663,7 @@ void RstUserPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;	
 				case 4:
 					break;	
+				default:break;	
 				
 			}	
 			break;	
@@ -2076,6 +2090,7 @@ void UserTradeMaintainProcess(void)
 							break;	
 					}
 					break;
+				default:break;	
 			}
 			//输入数字
 			while(1)
@@ -2208,6 +2223,7 @@ void RstTracePara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;	
 				case 4:
 					break;	
+				default:break;	
 				
 			}	
 			break;
@@ -2226,6 +2242,7 @@ void RstTracePara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;	
 				case 4:
 					break;	
+				default:break;	
 				
 			}	
 			break;
@@ -2244,6 +2261,7 @@ void RstTracePara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;	
 				case 4:
 					break;	
+				default:break;	
 				
 			}	
 			break;	
@@ -2262,6 +2280,7 @@ void RstTracePara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;	
 				case 4:
 					break;	
+				default:break;	
 				
 			}	
 			break;	
@@ -2280,6 +2299,7 @@ void RstTracePara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;	
 				case 4:
 					break;	
+				default:break;	
 				
 			}	
 			break;	
@@ -2296,6 +2316,7 @@ void RstTracePara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;	
 				case 4:
 					break;	
+				default:break;	
 				
 			}	
 			break;	
@@ -2311,7 +2332,8 @@ void RstTracePara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 				case 3:
 					break;	
 				case 4:
-					break;	
+					break;
+				default:break;	
 				
 			}	
 			break;	
@@ -2370,7 +2392,8 @@ void TraceMaintainProcess(void)
 				case 3:								
 					break;	
 				case 4:					
-					break;	
+					break;
+				default:break;	
 				
 			}
 		}
@@ -2452,7 +2475,8 @@ void TraceMaintainProcess(void)
 						case 3:
 							break;	
 						case 4:
-							break;	
+							break;
+						default:break;	
 					}
 					break;
 				case 2:
@@ -2470,6 +2494,7 @@ void TraceMaintainProcess(void)
 							break;	
 						case 4:
 							break;	
+						default:break;	
 						
 					}	
 					break;	
@@ -2488,6 +2513,7 @@ void TraceMaintainProcess(void)
 							break;	
 						case 4:
 							break;	
+						default:break;	
 						
 					}	
 					break;	
@@ -2506,6 +2532,7 @@ void TraceMaintainProcess(void)
 							break;	
 						case 4:
 							break;	
+						default:break;	
 						
 					}	
 					break;	
@@ -2524,6 +2551,7 @@ void TraceMaintainProcess(void)
 							break;	
 						case 4:
 							break;	
+						default:break;	
 						
 					}	
 					break;	
@@ -2540,6 +2568,7 @@ void TraceMaintainProcess(void)
 							break;	
 						case 4:
 							break;	
+						default:break;	
 						
 					}	
 					break;	
@@ -2556,6 +2585,7 @@ void TraceMaintainProcess(void)
 							break;	
 						case 4:
 							break;	
+						default:break;	
 						
 					}	
 					break;	
@@ -2572,9 +2602,11 @@ void TraceMaintainProcess(void)
 							break;	
 						case 4:
 							break;	
+						default:break;	
 						
 					}	
-					break;						
+					break;
+				default:break;	
 			}
 			//输入数字
 			while(1)
@@ -3458,6 +3490,7 @@ void RstSystemPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 				case 7:
 					SystemPara.XMTTemp = keyValue;								
 					break;	
+				default:break;	
 			}
 			break;
 		case 2:
@@ -3484,6 +3517,7 @@ void RstSystemPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 				case 7:
 					SystemPara.DecimalNumExt = keyValue;								
 					break;	
+				default:break;	
 				
 			}	
 			break;	
@@ -3510,7 +3544,8 @@ void RstSystemPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;	
 				case 7:
 					SystemPara.GeziDeviceType = keyValue;								
-					break;		
+					break;	
+				default:break;	
 				
 			}	
 			break;	
@@ -3537,7 +3572,8 @@ void RstSystemPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;	
 				case 7:	
 					SystemPara.BillEnableValue = keyValue;	
-					break;		
+					break;	
+				default:break;	
 				
 			}	
 			break;	
@@ -3563,7 +3599,8 @@ void RstSystemPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;
 				case 7:			
 					SystemPara.ColumnTime = keyValue;
-					break;		
+					break;	
+				default:break;	
 				
 			}	
 			break;	
@@ -3586,7 +3623,8 @@ void RstSystemPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;
 				case 5:	
 					SystemPara.threeSelectKey = keyValue;		
-					break;		
+					break;	
+				default:break;	
 				
 			}	
 			break;	
@@ -3611,7 +3649,8 @@ void RstSystemPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 					break;	
 				case 5:		
 					SystemPara.hefangGui = keyValue;	
-					break;		
+					break;
+				default:break;	
 				
 			}	
 			break;	
@@ -3653,10 +3692,12 @@ void RstSystemPara(uint8_t pageNum,uint8_t flag,uint32_t keyValue)
 								SystemPara.RecyclerMoney = keyValue;	
 						}
 					}
-					break;		
+					break;	
+				default:break;	
 				
 			}	
-			break;						
+			break;
+		default:break;
 	}
 }
 
@@ -3759,6 +3800,7 @@ void DefaultSystemParaMenu(void)
 					LCDPrintf(0,6,0,SystemPara.Language,"%s%d.%02d",SysMenuList.BillEnableValue[SystemPara.Language],SystemPara.BillEnableValue/100,SystemPara.BillEnableValue%100);
 					LCDPrintf(0,8,0,SystemPara.Language,"%s%d",SysMenuList.ColumnTime[SystemPara.Language],SystemPara.ColumnTime);
 					break;
+				default:break;	
 			}
 		}
 		//2.捕捉按键
@@ -3856,6 +3898,7 @@ void DefaultSystemParaMenu(void)
 						case 7:	
 							LCDPrintf(0,0,1,SystemPara.Language,"%s%d",SysMenuList.XMTTemp[SystemPara.Language],keyValue);	
 							break;
+						default:break;	
 					}
 					break;
 				case 2:
@@ -3882,6 +3925,7 @@ void DefaultSystemParaMenu(void)
 						case 7:	
 							LCDPrintf(0,2,1,SystemPara.Language,"%s%d",SysMenuList.DecimalNumExt[SystemPara.Language],keyValue);
 							break;	
+						default:break;	
 						
 					}	
 					break;	
@@ -3909,6 +3953,7 @@ void DefaultSystemParaMenu(void)
 						case 7:
 							LCDPrintf(0,4,1,SystemPara.Language,"%s%d",SysMenuList.GeziDeviceType[SystemPara.Language],keyValue);
 							break;
+						default:break;	
 						
 					}	
 					break;	
@@ -3936,6 +3981,7 @@ void DefaultSystemParaMenu(void)
 						case 7:
 							LCDPrintf(0,6,1,SystemPara.Language,"%s%ld",SysMenuList.BillEnableValue[SystemPara.Language],keyValue);
 							break;
+						default:break;	
 						
 					}	
 					break;	
@@ -3963,7 +4009,8 @@ void DefaultSystemParaMenu(void)
 							break;	
 						case 7:	
 							LCDPrintf(0,8,1,SystemPara.Language,"%s%d",SysMenuList.ColumnTime[SystemPara.Language],keyValue);
-							break;		
+							break;	
+						default:break;	
 						
 					}	
 					break;	
@@ -3989,6 +4036,7 @@ void DefaultSystemParaMenu(void)
 						case 5:	
 							LCDPrintf(0,10,1,SystemPara.Language,"%s%d",SysMenuList.threeSelectKey[SystemPara.Language],keyValue);
 							break;	
+						default:break;	
 						
 					}	
 					break;	
@@ -4013,7 +4061,8 @@ void DefaultSystemParaMenu(void)
 							break;	
 						case 5:	
 							LCDPrintf(0,12,1,SystemPara.Language,"%s%d",SysMenuList.hefangGui[SystemPara.Language],keyValue);
-							break;	
+							break;
+						default:break;	
 						
 					}	
 					break;	
@@ -4041,10 +4090,12 @@ void DefaultSystemParaMenu(void)
 							break;
 						case 6:	
 							LCDPrintf(0,14,1,SystemPara.Language,"%s%ld",SysMenuList.RecyclerMoney[SystemPara.Language],keyValue);
-							break;		
+							break;	
+						default:break;	
 						
 					}	
-					break;						
+					break;	
+				default:break;	
 			}
 			//输入数字
 			while(1)
@@ -4319,6 +4370,7 @@ void TestCoinAcceptor(void)
 			LCDPrintf(0,LINE5,0,0,"value=%ld,%ld,%ld,%ld",stDevValue.CoinValue[0],stDevValue.CoinValue[1],stDevValue.CoinValue[2],stDevValue.CoinValue[3]);
 			LCDPrintf(0,LINE7,0,0,"     =%ld,%ld,%ld,%ld",stDevValue.CoinValue[4],stDevValue.CoinValue[5],stDevValue.CoinValue[6],stDevValue.CoinValue[7]);
 			break;
+		default:break;	
 			
 	}
 			
@@ -4388,6 +4440,7 @@ void TestChanger(void)
 			//得到最小找零金额
 			scaleMoney = stDevValue.CoinValue[0];
 			break;
+		default:break;	
 	}
 	Trace("TestChanger\r\n");
 	//ChangerDevPayoutAPI(250);
@@ -4549,6 +4602,7 @@ void TestChanger(void)
 				break;	
 			case 'C':
 				return;
+			default:break;	
 		}
 		if(ReturnMaintainKeyValue(2))
 			return;
@@ -4641,6 +4695,7 @@ void TestCashless(void)
 							else
 								LCDPrintf(0,LINE6,0,SystemPara.Language,"Failure of the transaction");
 							break;	
+						default:break;	
 					}
 					
 					ClearKey();		

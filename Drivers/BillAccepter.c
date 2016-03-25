@@ -454,6 +454,7 @@ uint8_t BillDevProcess(uint32_t *RecvMoney,unsigned char *BillType,unsigned char
 				BillDevEnable();
 			}
 			break;
+		default:break;	
 	}
 	OSTimeDly(OS_TICKS_PER_SEC / 100);
 	//Trace("6\r\n");

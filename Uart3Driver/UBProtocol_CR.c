@@ -286,6 +286,7 @@ uint8_t SendCoinDem_CR()
 		case 0://以元为单位
 			  DecimalNum  = 100;  
 			  break;
+		default:break;	  
 	}
 	return DecimalNum;
 }
@@ -359,7 +360,6 @@ unsigned char VPBusFrameUnPack_CR( void )
 	uint8_t datalen=0,dataindex=0,isft=0;
 	unsigned char i=0, k=0, m=0;
 	unsigned char len = 0;
-	unsigned int  sum = 0;
 	unsigned char reclen=0;
 	
 
@@ -384,7 +384,7 @@ unsigned char VPBusFrameUnPack_CR( void )
 		while(Uart3BuffIsNotEmpty() == 1)
 		{
 			//TracePC("\r\n Drv <<dat3");
-			if( Uart3GetCh() != VP_SF ) 
+			if( Uart3GetCh() != CR_SF ) 
 			{
 				//TracePC("\r\n Drv <<dat4");
 				continue;
@@ -392,7 +392,7 @@ unsigned char VPBusFrameUnPack_CR( void )
 			else
 			{
 				TracePC("\r\n Drv <<dat=");
-				VPMsgBufCR[i++]=VP_SF;
+				VPMsgBufCR[i++]=CR_SF;
 				TracePC("[%02x]",VPMsgBufCR[i-1]);	
 				datalen=Uart3pcGetChWhile_CR();//length
 				VPMsgBufCR[i++]=datalen;
@@ -425,7 +425,7 @@ unsigned char VPBusFrameUnPack_CR( void )
 			
 			//TracePC("\r\n Drv i=%d",i);
 		    //Check the SF
-			if( VPMsgBufCR[i] != VP_SF ) 
+			if( VPMsgBufCR[i] != CR_SF ) 
 				continue;
 			//TracePC("\r\n Drv rec=sf"); 
 			//TracePC( "\n Bus Return Str = ");
@@ -440,8 +440,8 @@ unsigned char VPBusFrameUnPack_CR( void )
 			    break;	
 			//TracePC("\r\n Drv rec=len"); 
 			//Check the CHK
-			sum = 0;
-			sum = calc_crc69(VPMsgBufCR + i, len);
+			//sum = calc_crc69(VPMsgBufCR + i, len);
+			calc_crc69(VPMsgBufCR + i, len);
 		//	if( (VPMsgBufCR[i+len] != sum/256)||(VPMsgBufCR[i+len+1] != sum%256)	)
 		//	{
 		//		continue;
@@ -449,7 +449,7 @@ unsigned char VPBusFrameUnPack_CR( void )
 			//TracePC("\r\n Drv rec=chk"); 
 			//OSTimeDly(20);
 			//Check the message type
-	        if( !((VPMsgBufCR[i+3]>=VP_MT_MIN_RECEIVE) && (VPMsgBufCR[i+3]<=VP_MT_MAX_RECEIVE)) )   
+	        if( !((VPMsgBufCR[i+3]>=CR_MT_MIN_RECEIVE) && (VPMsgBufCR[i+3]<=CR_MT_MAX_RECEIVE)) )   
 	            continue;  
 			//TracePC("\r\n Drv rec=type"); 
 			//OSTimeDly(20);
@@ -490,19 +490,16 @@ unsigned char VPBusFrameUnPack_CR( void )
 unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 {
     
-      uint8_t i=0,j=0,k=0,index=0,tempcan=0,dex=0,dexind=0,strdex[20] = {0};	
+      uint8_t i=0,dex=0,dexind=0;	
 	uint16_t tempMoney;
-	uint8_t tempSend=0;
-	uint32_t tradeMoney=0;
-	uint8_t cabinet=0,cabno=0;
+	uint8_t tempSend=0;	   
+	char strdex[20] = {0};
 	
-
     
     
-	if( msgType>VP_MT_MAX_SEND )
-		return VP_ERR_PAR;
+	
     if(flag>1)
-	    return VP_ERR_PAR;
+	    return CR_ERR_PAR;
 
 	switch( msgType )
 	{
@@ -510,29 +507,29 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 			{
 			}
 			break;
-		case VP_ACK_RPT:
+		case CR_ACK_RPT:
             {
-				sysVPMissionCR.send.msgType = VP_ACK_RPT;
+				sysVPMissionCR.send.msgType = CR_ACK_RPT;
                 sysVPMissionCR.send.datLen = 0;
 				issnup=1;
 			}
 			break;
-		case VP_NAK_RPT:
+		case CR_NAK_RPT:
 		    {
-				sysVPMissionCR.send.msgType = VP_NAK_RPT;
+				sysVPMissionCR.send.msgType = CR_NAK_RPT;
                 sysVPMissionCR.send.datLen = 0;
 				issnup=1;
 			}
 			break;
-		case VP_POLL:
+		case CR_POLL:
 		    {
-			    sysVPMissionCR.send.msgType = VP_POLL;
+			    sysVPMissionCR.send.msgType = CR_POLL;
                 sysVPMissionCR.send.datLen = 0;
 			}
 			break;
-		case VP_VMC_SETUP:
+		case CR_VMC_SETUP:
 		    {
-			    sysVPMissionCR.send.msgType = VP_VMC_SETUP;                
+			    sysVPMissionCR.send.msgType = CR_VMC_SETUP;                
                 	    i = 0;				
 				sysVPMissionCR.send.msg[i++]  = 0;
 				sysVPMissionCR.send.msg[i++]  = 0;
@@ -545,9 +542,9 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 				
 			}
 			break;
-		case VP_STATUS_RPT:
+		case CR_STATUS_RPT:
 		    {
-			    sysVPMissionCR.send.msgType = VP_STATUS_RPT;
+			    sysVPMissionCR.send.msgType = CR_STATUS_RPT;
                 	    i=0;
 
 				tempSend |= sysVPMissionCR.vmc_st;
@@ -590,14 +587,14 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 				sysVPMissionCR.send.datLen  = i;
 			}
 			break;
-		case VP_INFO_RPT://120419 by cq TotalSell 
+		case CR_INFO_RPT://120419 by cq TotalSell 
 			{
-                		sysVPMissionCR.send.msgType = VP_INFO_RPT; 
+                		sysVPMissionCR.send.msgType = CR_INFO_RPT; 
 				i=0;		
 				sysVPMissionCR.send.msg[i++]  = sysVPMissionCR.type;				
 				switch(sysVPMissionCR.type)
 				{
-					case VP_INFO_ERR:
+					case CR_INFO_ERR:
 						//找零器状态
 						//MDB找零器
 						if(SystemPara.CoinChangerType==MDB_CHANGER)
@@ -734,7 +731,7 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 						{
 						}
 						break;
-					case VP_INFO_TOTALVALUE:
+					case CR_INFO_TOTALVALUE:
 						//Total_Value：表示当前交易投币后，或者出货后，屏幕上显示的金额数 
 						//by gzz 20110721						
 						tempMoney = MoneySend_CR(GetAmountMoney());
@@ -742,7 +739,7 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 				                sysVPMissionCR.send.msg[i++] = tempMoney/256;
 				                sysVPMissionCR.send.msg[i++] = tempMoney%256;
 						break;	
-					case VP_INFO_VER:
+					case CR_INFO_VER:
 						//easivend-duligui-Jun 14 2009 
 						sysVPMissionCR.send.msg[i++]  = 'e'; 	 
 						sysVPMissionCR.send.msg[i++]  = 'a'; 	 
@@ -770,7 +767,7 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 							sysVPMissionCR.send.msg[i++]  = strdex[dex]; 
 						TracePC("\r\n Drv Uboxdata=%s",__DATE__ );
 						break;
-					case VP_INFO_HARD:						
+					case CR_INFO_HARD:						
 						sysVPMissionCR.send.msg[i++]  = stMacSn.id[0]; 	 
 						sysVPMissionCR.send.msg[i++]  = stMacSn.id[1];	 
 						sysVPMissionCR.send.msg[i++]  = stMacSn.id[2];	 
@@ -790,14 +787,14 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 						sysVPMissionCR.send.msg[i++]  = stMacSn.id[16];			
 						
 						break;	
-					case VP_INFO_BILL:
+					case CR_INFO_BILL:
 						if(SystemPara.BillValidatorType>OFF_BILLACCEPTER)					
 						{
 							for(dex=0;dex<29;dex++)
 								sysVPMissionCR.send.msg[i++]  = stDevValue.billIDENTITYBuf[dex];  
 						}
 						break;
-					case VP_INFO_COIN:
+					case CR_INFO_COIN:
 						if(SystemPara.CoinAcceptorType>OFF_COINACCEPTER)					
 						{
 							sysVPMissionCR.send.msg[i++]  = 'e'; 	 
@@ -816,7 +813,7 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 							sysVPMissionCR.send.msg[i++]  = 'n';
 						}
 						break;
-					case VP_INFO_COINOUT:
+					case CR_INFO_COINOUT:
 						if(SystemPara.CoinChangerType>OFF_CHANGER)					
 						{
 							sysVPMissionCR.send.msg[i++]  = 'e'; 	 
@@ -838,7 +835,7 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 							sysVPMissionCR.send.msg[i++]  = 't';
 						}
 						break;
-					case VP_INFO_BILLOUT:
+					case CR_INFO_BILLOUT:
 						if(SystemPara.BillRecyclerType>OFF_BILLRECYCLER)					
 						{
 							if(SystemPara.BillRecyclerType==MDB_BILLRECYCLER)
@@ -857,14 +854,15 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 								sysVPMissionCR.send.msg[i++]  = 'l';
 							}
 						}
-						break;	
+						break;
+					default:break;	
 				}	
 				sysVPMissionCR.send.datLen  = i;
 				break;
 			}
-		case VP_PAYIN_RPT:
+		case CR_PAYIN_RPT:
 		    {
-			    sysVPMissionCR.send.msgType = VP_PAYIN_RPT;
+			    sysVPMissionCR.send.msgType = CR_PAYIN_RPT;
 			    i=0;
 				sysVPMissionCR.send.msg[i++] = sysVPMissionCR.payInDev;
 				TracePC("\r\n Drv Uboxbill=%d,all=%ld",sysVPMissionCR.payInMoney,sysVPMissionCR.payAllMoney); 				
@@ -879,9 +877,9 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 			    sysVPMissionCR.send.datLen = i;      //3,5
 			}
 			break;
-		case VP_PAYOUT_RPT:
+		case CR_PAYOUT_RPT:
 		    {
-			    sysVPMissionCR.send.msgType = VP_PAYOUT_RPT;
+			    sysVPMissionCR.send.msgType = CR_PAYOUT_RPT;
 				i=0;					 
                 sysVPMissionCR.send.msg[i++] = sysVPMissionCR.type;
 				tempMoney = MoneySend_CR(sysVPMissionCR.payoutMoney);
@@ -899,9 +897,9 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 				sysVPMissionCR.send.datLen = i;  
 			}
 			break;	
-		case VP_COST_RPT://扣款操作;by gzz 20110823
+		case CR_COST_RPT://扣款操作;by gzz 20110823
 		    {
-			    sysVPMissionCR.send.msgType = VP_COST_RPT;
+			    sysVPMissionCR.send.msgType = CR_COST_RPT;
 				i=0;				
                	      tempMoney = MoneySend_CR(sysVPMissionCR.costMoney);
 				sysVPMissionCR.send.msg[i++] = tempMoney/256;
@@ -915,25 +913,25 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 				sysVPMissionCR.send.datLen = i;   
 			}
 			break;	
-		case VP_ACTION_RPT:	
+		case CR_ACTION_RPT:	
 			{
-				sysVPMissionCR.send.msgType = VP_ACTION_RPT;	
+				sysVPMissionCR.send.msgType = CR_ACTION_RPT;	
 				i=0;		
 				sysVPMissionCR.send.msg[i++]  = sysVPMissionCR.action;	
 				sysVPMissionCR.send.datLen  = i;
 			}				
 			break; 
-		case VP_BUTTON_RPT:	
+		case CR_BUTTON_RPT:	
 			{
-				sysVPMissionCR.send.msgType = VP_BUTTON_RPT;	
+				sysVPMissionCR.send.msgType = CR_BUTTON_RPT;	
 				i=0;		
 				sysVPMissionCR.send.msg[i++]  = 0;	
 				sysVPMissionCR.send.datLen  = i;
 			}				
 			break; 	
-		case VP_RESET_RPT:
+		case CR_RESET_RPT:
 			{
-				sysVPMissionCR.send.msgType = VP_RESET_RPT;	
+				sysVPMissionCR.send.msgType = CR_RESET_RPT;	
 				i=0;		
 				sysVPMissionCR.send.datLen  = i;
 			}
@@ -942,19 +940,19 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 		default: break;
 	}
 	//	
-	sysVPMissionCR.send.sf  = VP_SF;
+	sysVPMissionCR.send.sf  = CR_SF;
 	
 	//
     sysVPMissionCR.send.len = sysVPMissionCR.send.datLen + 5;
 	//
-    sysVPMissionCR.send.verFlag = VP_PROTOCOL_VER;
+    sysVPMissionCR.send.verFlag = CR_PROTOCOL_VER;
 	if( flag == 1 )
 	{
-	    sysVPMissionCR.send.verFlag += VP_PROTOCOL_ACK;
+	    sysVPMissionCR.send.verFlag += CR_PROTOCOL_ACK;
 	}
 	else
 	{
-		sysVPMissionCR.send.verFlag += VP_PROTOCOL_NAK;
+		sysVPMissionCR.send.verFlag += CR_PROTOCOL_NAK;
 	}
 	
 	
@@ -972,7 +970,7 @@ unsigned char VPMsgPackSend_CR( unsigned char msgType, unsigned char flag )
 	
 	
     VPBusTxMsg_CR();    
-	return VP_ERR_NULL;
+	return CR_ERR_NULL;
 }
 
 
@@ -996,15 +994,15 @@ unsigned char VPMission_PackOpt_CR(  unsigned char msgType, unsigned char flag  
 		while(ressend)
 		{
 			VPMsgPackSend_CR( msgType,flag);
-			Timer.PCRecTimer = VP_TIME_OUT;
-			while( Timer.PCRecTimer )
+			Timer.PCRecTimerCR = CR_TIME_OUT;
+			while( Timer.PCRecTimerCR )
 			{
 				if( VPBusFrameUnPack_CR() )
 				{				
 					break;				
 				}
 			}
-			if( Timer.PCRecTimer==0 )
+			if( Timer.PCRecTimerCR==0 )
 			{			
 		       	OSTimeDly(10);	
 				issnup=1;
@@ -1015,7 +1013,7 @@ unsigned char VPMission_PackOpt_CR(  unsigned char msgType, unsigned char flag  
 			}
 		}
 	}
-	return VP_ERR_NULL;
+	return CR_ERR_NULL;
 }
 /*********************************************************************************************************
 ** Function name:     	VPMission_Setup_RPT_CR
@@ -1026,12 +1024,9 @@ unsigned char VPMission_PackOpt_CR(  unsigned char msgType, unsigned char flag  
 *********************************************************************************************************/
 unsigned char VPMission_Setup_RPT_CR( void )
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
-
-    retry = VP_COM_RETRY;   
-	flag = VPMission_PackOpt_CR( VP_VMC_SETUP,0);	
+ 
+	flag = VPMission_PackOpt_CR( CR_VMC_SETUP,0);	
 	return flag;
 }
 
@@ -1044,12 +1039,9 @@ unsigned char VPMission_Setup_RPT_CR( void )
 *********************************************************************************************************/
 unsigned char VPMission_Status_RPT_CR()
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
 	uint32_t change;
-	
-    retry = VP_COM_RETRY;	
+		
 	
 	sysVPMissionCR.bv_st = ErrorStatus(2);
 	sysVPMissionCR.check_st = ErrorStatus(2);
@@ -1111,7 +1103,7 @@ unsigned char VPMission_Status_RPT_CR()
 	sysVPMissionCR.recychange = change;
 	
 	//==============================================================
-	flag = VPMission_PackOpt_CR( VP_STATUS_RPT, 0);  //1-0, not need ACK      	
+	flag = VPMission_PackOpt_CR( CR_STATUS_RPT, 0);  //1-0, not need ACK      	
 	return flag;
 
 }
@@ -1126,15 +1118,12 @@ unsigned char VPMission_Status_RPT_CR()
 *********************************************************************************************************/
 unsigned char VPMission_Info_RPT_CR(uint8_t type)
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
 
-	retry = VP_COM_RETRY;
 	//-------------------------------------------
     sysVPMissionCR.type = type;		
 	//===========================================
-	flag = VPMission_PackOpt_CR( VP_INFO_RPT, 0);
+	flag = VPMission_PackOpt_CR( CR_INFO_RPT, 0);
    	
 	return flag;
 }
@@ -1157,10 +1146,11 @@ unsigned char VP_Control_Ind_CR( void )
 	//sysVPMissionCR.ctrValue = sysVPMissionCR.receive.msg[1];
     switch(MsgUboxPack[g_Ubox_Index].Type)
     {    
-    	case VP_CONTROL_BILLCOIN:
+    	case CR_CONTROL_BILLCOIN:
 		MsgUboxPack[g_Ubox_Index].value  = sysVPMissionCR.receive.msg[1];
 		TracePC("\r\n Drv CtrBillcoin"); 
-		break;		
+		break;	
+	default:break;	
     }
 	//TracePC("\r\n Drv Ctr=%d,%d",MsgUboxPack.Type,sysVPMissionCR.receive.msg[1]); 
 	//发送邮箱给vmc
@@ -1171,7 +1161,7 @@ unsigned char VP_Control_Ind_CR( void )
 	OSTimeDly(OS_TICKS_PER_SEC/10);
 	TracePC("\r\n Drv %dControl_Ind",OSTimeGet()); 
 	
-    return VP_ERR_NULL;	
+    return CR_ERR_NULL;	
 }
 
 
@@ -1189,18 +1179,15 @@ unsigned char VP_Control_Ind_CR( void )
 *********************************************************************************************************/
 unsigned char VPMission_Act_RPT_CR( unsigned char action)
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
     
 	
 	
-    retry = VP_COM_RETRY;
 	//-------------------------------------------
       sysVPMissionCR.action   = action;	
 	//===========================================
 		
-    flag = VPMission_PackOpt_CR( VP_ACTION_RPT, 0);   
+    flag = VPMission_PackOpt_CR( CR_ACTION_RPT, 0);   
     	
 	return flag;
 }
@@ -1215,8 +1202,6 @@ unsigned char VPMission_Act_RPT_CR( unsigned char action)
 *********************************************************************************************************/
 unsigned char VPMission_Button_RPT_CR()
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
 
 	if(LogPara.offLineFlag == 1)
@@ -1225,13 +1210,12 @@ unsigned char VPMission_Button_RPT_CR()
 	    //{   
 	    	//Buzzer();
 	    //}
-		return VP_ERR_NULL;
+		return CR_ERR_NULL;
 	}
 	//
-    retry = VP_COM_RETRY;
     //-------------------------------------------  
 	//1-0: button message, not need ACK
-    flag = VPMission_PackOpt_CR( VP_BUTTON_RPT, 0);   
+    flag = VPMission_PackOpt_CR( CR_BUTTON_RPT, 0);   
     return flag;
 
 }
@@ -1248,34 +1232,32 @@ unsigned char VPMission_Button_RPT_CR()
 *********************************************************************************************************/
 unsigned char VPMission_Payin_RPT_CR(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney)
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
 
 	//
-    retry = VP_COM_RETRY;
 	//-------------------------------------------
 	switch(dev)
 	{
 		case 1:
-			sysVPMissionCR.payInDev = VP_DEV_COIN;
+			sysVPMissionCR.payInDev = CR_DEV_COIN;
 			break;
 		case 2:
-			sysVPMissionCR.payInDev = VP_DEV_BILL;
+			sysVPMissionCR.payInDev = CR_DEV_BILL;
 			break;
 		case 3:
-			sysVPMissionCR.payInDev = VP_DEV_ESCROWIN;
+			sysVPMissionCR.payInDev = CR_DEV_ESCROWIN;
 			break;
 		case 4:
-			sysVPMissionCR.payInDev = VP_DEV_ESCROWOUT;
-			break;				
+			sysVPMissionCR.payInDev = CR_DEV_ESCROWOUT;
+			break;	
+		default:break;	
 			
 	}    
 	sysVPMissionCR.payInMoney = payInMoney;
 	sysVPMissionCR.payAllMoney = payAllMoney;
 		
 	//===========================================
-	flag = VPMission_PackOpt_CR( VP_PAYIN_RPT, 0);
+	flag = VPMission_PackOpt_CR( CR_PAYIN_RPT, 0);
       return flag;
 }
 
@@ -1303,7 +1285,7 @@ unsigned char VP_Payin_Ind_CR( void )
 	OSTimeDly(OS_TICKS_PER_SEC/10);
 	TracePC("\r\n Drv %dPayin_Ind",OSTimeGet()); 
 	
-    return VP_ERR_NULL;	
+    return CR_ERR_NULL;	
 }
 
 /*********************************************************************************************************
@@ -1317,10 +1299,7 @@ unsigned char VP_Payin_Ind_CR( void )
 *********************************************************************************************************/
 unsigned char VPMission_Cost_RPT_CR( unsigned char Type, uint32_t costMoney, unsigned int payAllMoney )
 {
-    unsigned char retry = 0;
-	unsigned char recRes=0;
 	unsigned char flag = 0;
-	unsigned char ressend=1;
 
 	 
 	//-------------------------------------------
@@ -1328,7 +1307,7 @@ unsigned char VPMission_Cost_RPT_CR( unsigned char Type, uint32_t costMoney, uns
 	sysVPMissionCR.costMoney = costMoney;
 	sysVPMissionCR.payAllMoney = payAllMoney;
 	//===========================================
-	flag = VPMission_PackOpt_CR( VP_COST_RPT, 1);
+	flag = VPMission_PackOpt_CR( CR_COST_RPT, 1);
 	
 	return flag;
 }
@@ -1358,7 +1337,7 @@ unsigned char VP_Cost_Ind_CR( void )
 	OSTimeDly(OS_TICKS_PER_SEC/10);
 	TracePC("\r\n Drv Cost_Ind"); 
 	
-    return VP_ERR_NULL;	
+    return CR_ERR_NULL;	
 }
 
 /*********************************************************************************************************
@@ -1384,7 +1363,7 @@ unsigned char VP_Payout_Ind_CR( void )
 	OSTimeDly(OS_TICKS_PER_SEC/10);
 	TracePC("\r\n Drv Payout_Ind"); 
 	
-    return VP_ERR_NULL;	
+    return CR_ERR_NULL;	
 }
 
 /*********************************************************************************************************
@@ -1397,11 +1376,8 @@ unsigned char VP_Payout_Ind_CR( void )
 ** Returned value:      
 *********************************************************************************************************/
 unsigned char VPMission_Payout_RPT_CR( uint8_t payoutDev,unsigned char Type, unsigned int payoutMoney,  unsigned int payremainMoney, unsigned int payAllMoney )
-{
-    unsigned char retry = 0;
-	unsigned char recRes=0;
+{  
 	unsigned char flag = 0;
-	unsigned char ressend=1;
 
 	
     //-------------------------------------------
@@ -1411,7 +1387,7 @@ unsigned char VPMission_Payout_RPT_CR( uint8_t payoutDev,unsigned char Type, uns
 	sysVPMissionCR.payremainMoney=payremainMoney;
 	sysVPMissionCR.payAllMoney = payAllMoney;
 	//===========================================	
-	flag = VPMission_PackOpt_CR( VP_PAYOUT_RPT, 1);	
+	flag = VPMission_PackOpt_CR( CR_PAYOUT_RPT, 1);	
 	return flag;
 }
 
@@ -1449,7 +1425,7 @@ unsigned char VP_Reset_Ind_CR( void )
 	//UpdateIndex();
 	//OSTimeDly(OS_TICKS_PER_SEC/10);
 	//TracePC("\r\n Drv Reset_Ind"); 	
-    return VP_ERR_NULL;	
+    return CR_ERR_NULL;	
 }
 
 /*********************************************************************************************************
@@ -1463,7 +1439,7 @@ unsigned char VP_Reset_Rpt_CR( void )
 {
 	unsigned char flag = 0;
 	
-	flag = VPMission_PackOpt_CR( VP_RESET_RPT, 0);
+	flag = VPMission_PackOpt_CR( CR_RESET_RPT, 0);
 	 
 	return flag;	
 }
@@ -1477,17 +1453,17 @@ unsigned char VP_Reset_Rpt_CR( void )
 ** Returned value:      
 *********************************************************************************************************/
 unsigned char VPMission_Poll_CR()
-{
-    unsigned char retry = 0;
+{			     
 	unsigned char recRes=0;
-	unsigned char flag = 0;
+
 
 		
 
-	VPMsgPackSend_CR( VP_POLL, 1);
-	Timer.PCRecTimer = VP_TIME_OUT;
-	while( Timer.PCRecTimer )
+	VPMsgPackSend_CR( CR_POLL, 1);
+	Timer.PCRecTimerCR = CR_TIME_OUT;
+	while( Timer.PCRecTimerCR )
 	{
+		//TracePC("\r\n Drv recwait=%d",Timer.PCRecTimerCR); 
 		if( VPBusFrameUnPack_CR() )
 		{		
 			TracePC("\r\n Drv rec2=ok"); 
@@ -1500,7 +1476,7 @@ unsigned char VPMission_Poll_CR()
 			break;				
 		}
 	}	
-	if( Timer.PCRecTimer==0 )
+	if( Timer.PCRecTimerCR==0 )
 	{		
 		TracePC("\r\n Drv failretry"); 
 		//离线
@@ -1508,12 +1484,12 @@ unsigned char VPMission_Poll_CR()
                 {
                     LogPara.offLineFlag = 1;      
                 }
-       	return VP_ERR_COM;
+       	return CR_ERR_COM;
 	}
 	if(recRes)
 	{
 		//如果发现接收有延后，可以超前一步再接收一次数据	
-		if(sysVPMissionCR.receive.msgType==VP_ACK)
+		if(sysVPMissionCR.receive.msgType==CR_ACK)
 		{
 			if( VPBusFrameUnPack_CR() )
 			{
@@ -1530,35 +1506,35 @@ unsigned char VPMission_Poll_CR()
 	
       switch( sysVPMissionCR.receive.msgType )
 	{
-		case VP_GET_SETUP_IND: 
+		case CR_GET_SETUP_IND: 
 			VPMission_Setup_RPT_CR();						
 			break;
- 	      case VP_GET_STATUS:
+ 	      case CR_GET_STATUS:
 		    VPMission_Status_RPT_CR();
 		    break;	
-		case VP_GETINFO_IND:			
+		case CR_GETINFO_IND:			
 			VPMission_Info_RPT_CR(sysVPMissionCR.receive.msg[0]);
 			break;	
-		case VP_CONTROL_IND:
+		case CR_CONTROL_IND:
 		    VP_Control_Ind_CR();
 		    break;
-		case VP_PAYIN_IND:
+		case CR_PAYIN_IND:
 			VP_Payin_Ind_CR();
 			break;
-		case VP_PAYOUT_IND:
+		case CR_PAYOUT_IND:
 		    VP_Payout_Ind_CR();
 		    break; 	
-		case VP_COST_IND://添加扣款函数;by gzz 20110823
+		case CR_COST_IND://添加扣款函数;by gzz 20110823
 		    VP_Cost_Ind_CR();
 		    break;		
-		case VP_RESET_IND:
+		case CR_RESET_IND:
 		    VP_Reset_Ind_CR();
 		    break;		
 		default:
 		    break;
 	}
 	
-	return VP_ERR_NULL;
+	return CR_ERR_NULL;
 }
 
 

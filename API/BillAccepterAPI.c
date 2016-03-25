@@ -48,7 +48,8 @@ void BillDevInitAPI()
 			}
 			OSMboxPost(g_BillMoneyMail,&MsgAccepterPack);
 			
-			break;		
+			break;	
+		default:break;	
 	}
 	return;
 }
@@ -111,7 +112,8 @@ uint32_t GetBillDevMoneyInAPI(void)
 			{
 				ReturnBack = 0;
 			}
-			break;					
+			break;	
+		default:break;	
 	}
 	return ReturnBack;
 	
@@ -134,7 +136,7 @@ uint32_t GetBillDevMoneyUnStackInAPI(void)
 	switch(SystemPara.BillValidatorType)
 	{		
 		case MDB_BILLACCEPTER:
-			BillMsg = OSQPend(g_BillMoneyQ,10,&ComStatus);
+			BillMsg = OSQPend(g_BillMoneyQ,5,&ComStatus);
 			//Trace("mdb=%d\r\n",ComStatus);
 			if(ComStatus == OS_NO_ERR)
 			{
@@ -145,7 +147,8 @@ uint32_t GetBillDevMoneyUnStackInAPI(void)
 			{
 				ReturnBack = 0;
 			}
-			break;					
+			break;
+		default:break;	
 	}
 	return ReturnBack;
 	
@@ -204,7 +207,8 @@ uint8_t StackedBillDevMoneyInAPI(void)
 					ReturnBack = 0;
 				}	
 			}
-			break;					
+			break;	
+		default:break;	
 	}
 	return ReturnBack;
 	
@@ -262,7 +266,8 @@ uint8_t ReturnBillDevMoneyInAPI(void)
 					ReturnBack = 0;
 				}	
 			}
-			break;					
+			break;	
+		default:break;	
 	}
 	return ReturnBack;
 	
@@ -285,7 +290,8 @@ void BillDevDisableAPI(void)
 			TraceBill("\r\n MddBILLDISABLEDEV post");
 			MsgAccepterPack.BillBack = MBOX_BILLDISABLEDEV;			
 			OSMboxPost(g_BillMoneyMail,&MsgAccepterPack);
-			break;					
+			break;
+		default:break;	
 	}
 	return;	
 }
@@ -309,7 +315,8 @@ void BillDevEnableAPI(void)
 		case MDB_BILLACCEPTER:			
 			MsgAccepterPack.BillBack = MBOX_BILLENABLEDEV;			
 			OSMboxPost(g_BillMoneyMail,&MsgAccepterPack);
-			break;					
+			break;
+		default:break;	
 	}
 	return;
 }
@@ -328,7 +335,8 @@ void BillDevResetAPI(void)
 		case MDB_BILLACCEPTER:			
 			MsgAccepterPack.BillBack = MBOX_BILLRESETDEV;			
 			OSMboxPost(g_BillMoneyMail,&MsgAccepterPack);
-			break;					
+			break;	
+		default:break;	
 	}
 	return;
 }
@@ -421,7 +429,8 @@ unsigned char BillRecyclerPayoutNumExpanseAPI(unsigned int RecyPayoutMoney,unsig
 				PayouBacktMoney=FS_dispense(PayoutMoney);		
 				print_fs("\r\n MddFSPay=%ld,MddFSBackPay=%ld",PayoutMoney,PayouBacktMoney);
 			}
-			break;					
+			break;	
+		default:break;	
 	}	
 	TraceBill("\r\n MddRECPaySuc=%d",ReturnBack);
 	return ReturnBack;
@@ -513,7 +522,8 @@ unsigned char BillRecyclerPayoutValueExpanseAPI(unsigned int RecyPayoutMoney,uin
 					ReturnBack = 1;
 				}
 			}
-			break;					
+			break;
+		default:break;	
 	}	
 	TraceBill("\r\n MddRECPaySuc=%d",ReturnBack);
 	return ReturnBack;

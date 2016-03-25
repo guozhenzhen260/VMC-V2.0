@@ -325,7 +325,7 @@ uint32_t Hopper_Dispence(uint32_t ChangeMoney,uint32_t *SurplusMoney,uint8_t *Hp
 				OSMboxPost(g_ChangeMoneyMail,&MsgAccepterPack);
 				TraceChange("\r\nMidd 2.1=%d,%d",MsgAccepterPack.PayoutType,MsgAccepterPack.PayoutNum);
 				//等待DeviceTask任务返回应答邮箱，得到指定Hopper的出币情况
-				HpBackMsg = OSMboxPend(g_ChangeBackMoneyMail,200*60*10,&err);
+				HpBackMsg = OSMboxPend(g_ChangeBackMoneyMail,65500,&err);  //2 bytes  
 				if(err == OS_NO_ERR)
 				{
 					TraceChange("\r\nMidd 2.1BackCmd=%d",HpBackMsg->PayoutBackCmd);
@@ -380,7 +380,7 @@ uint32_t Hopper_Dispence(uint32_t ChangeMoney,uint32_t *SurplusMoney,uint8_t *Hp
 				OSMboxPost(g_ChangeMoneyMail,&MsgAccepterPack);
 				TraceChange("\r\nMidd 2.2=%d,%d",MsgAccepterPack.PayoutType,MsgAccepterPack.PayoutNum);
 				//等待DeviceTask任务返回应答邮箱，得到指定Hopper的出币情况
-				HpBackMsg = OSMboxPend(g_ChangeBackMoneyMail,200*60*10,&err);
+				HpBackMsg = OSMboxPend(g_ChangeBackMoneyMail,65500,&err);
 				if(err == OS_NO_ERR)
 				{
 					TraceChange("\r\nMidd 2.2BackCmd=%d",HpBackMsg->PayoutBackCmd);
@@ -435,7 +435,7 @@ uint32_t Hopper_Dispence(uint32_t ChangeMoney,uint32_t *SurplusMoney,uint8_t *Hp
 				OSMboxPost(g_ChangeMoneyMail,&MsgAccepterPack);
 				TraceChange("\r\nMidd 2.3=%d,%d",MsgAccepterPack.PayoutType,MsgAccepterPack.PayoutNum);
 				//等待DeviceTask任务返回应答邮箱，得到指定Hopper的出币情况
-				HpBackMsg = OSMboxPend(g_ChangeBackMoneyMail,200*60*10,&err);
+				HpBackMsg = OSMboxPend(g_ChangeBackMoneyMail,65500,&err);
 				if(err == OS_NO_ERR)
 				{
 					TraceChange("\r\nMidd 2.3BackCmd=%d",HpBackMsg->PayoutBackCmd);
@@ -520,12 +520,8 @@ uint32_t Hopper_Dispence(uint32_t ChangeMoney,uint32_t *SurplusMoney,uint8_t *Hp
 *********************************************************************************************************/
 uint32_t Hopper_DispenceAPI(uint32_t ChangeMoneyall,uint32_t *SurplusMoneyall,uint8_t *Hp1OutNum,uint8_t *Hp2OutNum,uint8_t *Hp3OutNum)
 {
-	uint8_t Hp1Out=0,Hp2Out=0,Hp3Out=0;
-	uint8_t res,mErrFlag = 5,err;	
+	uint8_t Hp1Out=0,Hp2Out=0,Hp3Out=0;	
 	uint8_t ln1=0,ln2=0,ln3=0,i;
-	MessagePack *HpBackMsg;
-	uint8_t hpoutcount = 0;
-	uint32_t LastMoney = 0;
 
 	uint32_t ChangeMoney = 0,SurplusMoney=0,minprice=0,dispenseValue=0,tempdispenseValue=0;
 	uint8_t temp=0,j=0,hpprice[3]={0};
@@ -595,6 +591,10 @@ uint32_t Hopper_DispenceAPI(uint32_t ChangeMoneyall,uint32_t *SurplusMoneyall,ui
 		}
 		
 	}
+	if(*SurplusMoneyall>0)
+		return 0;
+	else
+		return 1;
 }
 
 /*********************************************************************************************************
@@ -961,7 +961,8 @@ void ChangerDevInitAPI()
 			TraceChange("\r\nMiddChangeinit %d,%d,%d,%d,%d,%d",stEvbHp[0].Index,stEvbHp[0].Num,stEvbHp[0].State,stEvbHp[0].Price,stEvbHp[0].Add,stEvbHp[0].DevBadFlag);
 			TraceChange("\r\nMiddChangeinit %d,%d,%d,%d,%d,%d",stEvbHp[1].Index,stEvbHp[1].Num,stEvbHp[1].State,stEvbHp[1].Price,stEvbHp[1].Add,stEvbHp[1].DevBadFlag);
 			TraceChange("\r\nMiddChangeinit %d,%d,%d,%d,%d,%d",stEvbHp[2].Index,stEvbHp[2].Num,stEvbHp[2].State,stEvbHp[2].Price,stEvbHp[2].Add,stEvbHp[2].DevBadFlag);
-			break;		
+			break;	
+		default:break;	
 	}
 	return;
 }

@@ -110,28 +110,7 @@ void PayinRPTAPI(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney)
 {
 	switch(SystemPara.PcEnable)
 	{
-		case ZHIHUI_PC:
-			//add by yoc zhihui 2013.12.16				
-			vmc_zh_mbox[ZhIndex].recv_all_amount = (uint16_t)payAllMoney;
-			vmc_zh_mbox[ZhIndex].recv_amount = payInMoney;
-			vmc_zh_mbox[ZhIndex].pay_mode = 0x01;	
-			if(dev==1)
-			{
-				zh_task3_post(MBOX_VMC_ZH_COIN);	
-			}	
-			else if(dev==2)
-			{		
-				zh_task3_post(MBOX_VMC_ZH_BILL);  				
-			}
-			else if(dev==3)	
-			{				
-				zh_task3_post(MBOX_VMC_ZH_ESCROWIN);		
-			}
-			else if(dev==4)		
-			{						
-				zh_task3_post(MBOX_VMC_ZH_ESCROWOUT);
-			}		
-			break;	
+			
 		case UBOX_PC:
 			TracePC("\r\n MiddUboxPayin=%d",dev);	
 			if(dev==1)
@@ -167,7 +146,8 @@ void PayinRPTAPI(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney)
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
-			break;	
+			break;
+		default:break;	
 	}
 }
 
@@ -185,12 +165,7 @@ void PayinRPTAPI(uint8_t dev,uint16_t payInMoney,uint32_t payAllMoney)
 void PayoutRPTAPI(uint8_t payoutDev,uint8_t payoutType,uint16_t payoutMoney,uint16_t payoutRemain,uint32_t payAllMoney)
 {
 	switch(SystemPara.PcEnable)
-	{
-		case ZHIHUI_PC:
-			//add by yoc zhihui 2013.12.16		
-			vmc_zh_mbox[ZhIndex].changed = payoutMoney;	
-			zh_task3_post(MBOX_VMC_ZH_PAYOUT) ;			
-			break;	
+	{	
 		case UBOX_PC:
 			TracePC("\r\n MiddUboxPayout");	
 			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_PAYOUT;	
@@ -214,6 +189,7 @@ void PayoutRPTAPI(uint8_t payoutDev,uint8_t payoutType,uint16_t payoutMoney,uint
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
 			break;
+		default:break;
 	}
 }
 
@@ -253,7 +229,8 @@ void CostRPTAPI(uint8_t costType,uint32_t costMoney,uint32_t payAllMoney)
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
-			break;		
+			break;	
+		default:break;	
 	}
 }
 
@@ -280,7 +257,8 @@ void ResetRPTAPI()
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
-			break;		
+			break;	
+		default:break;	
 	}
 }
 
@@ -315,6 +293,7 @@ void BillStatusRPTAPI()
 				}
 			}
 			break;
+		default:break;	
 	}
 }
 
@@ -454,6 +433,7 @@ void StatusRPTAPI()
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
 			break;
+		default:break;	
 	}
 }
 
@@ -551,26 +531,7 @@ void ActionRPTAPI(uint8_t action,uint8_t value,uint8_t second,uint8_t column,uin
 {
 	switch(SystemPara.PcEnable)
 	{
-		case ZHIHUI_PC://add by yoc 2013.12.16
-			if(action == 1)//出货
-			{
-				
-			}
-			else if(action == 2)//找零
-			{
-			}
-			else if(action == 5)//维护
-			{
-				if(value == 1)//进入维护模式
-				{
-					zh_task3_post(MBOX_VMC_ZH_WEIHU);
-				}
-				else
-				{
-					zh_task3_post(MBOX_VMC_ZH_NORMAL);
-				}
-			}						
-			break;	
+			
 		case UBOX_PC:			
 			TracePC("\r\n MiddUboxAction Post");
 			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_ACTION;
@@ -593,6 +554,7 @@ void ActionRPTAPI(uint8_t action,uint8_t value,uint8_t second,uint8_t column,uin
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
 			break;	
+		default:break;
 	}
 }
 
@@ -700,13 +662,7 @@ void ButtonRPTAPI(uint8_t type,unsigned char Logicnum,unsigned char binnum)
 {	
 	switch(SystemPara.PcEnable)
 	{
-		case ZHIHUI_PC://add by yoc 2013.12.16
-			if(type == 1)
-			{
-				vmc_zh_mbox[ZhIndex].cur_logic_no =  Logicnum;
-				zh_task3_post(MBOX_VMC_ZH_BUTTON);
-			}			
-			break;	
+	
 		case UBOX_PC:
 			TracePC("\r\n MiddUboxButton");	
 			MsgUboxPack[g_Ubox_Index].PCCmd = MBOX_VMCTOPC_BUTTON;	
@@ -731,7 +687,8 @@ void ButtonRPTAPI(uint8_t type,unsigned char Logicnum,unsigned char binnum)
 			OSQPost(g_Ubox_VMCTOPCQ,&MsgUboxPack[g_Ubox_Index]);
 			UpdateIndex();
 			OSTimeDly(OS_TICKS_PER_SEC/100);
-			break;	
+			break;
+		default:break;	
 	}
 
 }
@@ -754,14 +711,7 @@ void VendoutRPTAPI( unsigned char status, unsigned char Binnum,unsigned char col
 {	
 	switch(SystemPara.PcEnable)
 	{
-		case ZHIHUI_PC://add by yoc 2013.11.13
-			vmc_zh_mbox[ZhIndex].cur_trade_state = status;
-			vmc_zh_mbox[ZhIndex].cur_logic_no = column;
-			vmc_zh_mbox[ZhIndex].pay_mode = (type == 0) ? 0x01 : type;	
-			vmc_zh_mbox[ZhIndex].cur_goods_price = cost;
-			vmc_zh_mbox[ZhIndex].trade_index =LogPara.LogDetailPage;
-			zh_task3_post(MBOX_VMC_ZH_TRADE);		
-			break;	
+		
 		case UBOX_PC:
 			TracePC("\r\n %dMiddUboxVendout",OSTimeGet());	
 			if(LogPara.offLineFlag == 1)
@@ -786,7 +736,8 @@ void VendoutRPTAPI( unsigned char status, unsigned char Binnum,unsigned char col
 				UpdateIndex();
 			}
 			OSTimeDly(OS_TICKS_PER_SEC/100);
-			break;		
+			break;
+		default:break;		
 	}
 
 }
@@ -902,10 +853,12 @@ uint8_t AdminRPTAPI(uint8_t adminType,uint8_t Column,uint8_t ColumnSum)
 						return 1; 						
 					case MBOX_VMCTOPC_NAK:
 						TracePC("\r\n MiddUbox Admin NAK"); 
-						return 0;  							
+						return 0;  
+					default:break;	
 				}
 			}
-			break;		
+			break;
+		default:break;	
 	}
 	return 0;
 }
@@ -949,7 +902,8 @@ uint8_t AdminRPTSIMPLEAPI(uint8_t adminType,uint8_t Column,uint8_t ColumnSum)
 					break;
 				case 5:
 					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].admincolumnsum=ColumnSum;
-					break;	
+					break;
+				default:break;	
 			}
 			OSQPost(g_SIMPLEUbox_VMCTOPCQ,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
 			UpdateSIMPLEIndex();
@@ -964,10 +918,12 @@ uint8_t AdminRPTSIMPLEAPI(uint8_t adminType,uint8_t Column,uint8_t ColumnSum)
 						if(AccepterSIMPLEUboxMsg->adminresult==0)
 							result=1;
 						break;
+					default:break;	
 				}		
 			}
 			
-			break;		
+			break;
+		default:break;	
 	}
 	return result;
 }
@@ -996,7 +952,8 @@ uint8_t GetAdminSIMPLEAPI(uint8_t adminType,uint8_t Column)
 			{
 				case 3:
 					MsgSIMPLEUboxPack[g_SIMPLEUbox_Index].admincolumn=Column;					
-					break;					
+					break;	
+				default:break;	
 			}
 			OSQPost(g_SIMPLEUbox_VMCTOPCQ,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
 			UpdateSIMPLEIndex();
@@ -1011,10 +968,12 @@ uint8_t GetAdminSIMPLEAPI(uint8_t adminType,uint8_t Column)
 						if(AccepterSIMPLEUboxMsg->adminresult==0)
 							result=1;
 						break;
+					default:break;	
 				}		
 			}
 			
-			break;		
+			break;	
+		default:break;	
 	}
 	return result;
 }
@@ -1039,7 +998,8 @@ void ButtonSIMPLERPTAPI(uint8_t channel_id)
 			OSQPost(g_SIMPLEUbox_VMCTOPCQ,&MsgSIMPLEUboxPack[g_SIMPLEUbox_Index]);	
 			UpdateSIMPLEIndex();
 			//OSTimeDly(OS_TICKS_PER_SEC/100);
-			break;		
+			break;
+		default:break;	
 	}
 
 }
@@ -1067,10 +1027,7 @@ void PollAPI(uint32_t payAllMoney)
 	
 	
 	switch(SystemPara.PcEnable)
-	{
-		case ZHIHUI_PC://add by yoc 2013.12.16
-			zh_task3_pend(payAllMoney); 		
-			break;	
+	{	
 		case UBOX_PC:
 			//TracePC("\r\n MiddUboxPayout");	
 			AccepterUboxMsg = OSQPend(g_Ubox_PCTOVMCQ,10,&ComStatus);
@@ -1227,6 +1184,7 @@ void PollAPI(uint32_t payAllMoney)
 								case 7:
 									ComReturn = 21;	
 									break;	
+								default:break;	
 									
 							}								
 						}
@@ -1484,6 +1442,7 @@ void PollAPI(uint32_t payAllMoney)
 										else
 											ChannelAPIProcess(0,HEFANGUI_ZHAOMINGGUAN,AccepterUboxMsg->Control_device);		
 										break;	
+									default:break;	
 								};
 								break;	
 						}
@@ -1543,7 +1502,8 @@ void PollAPI(uint32_t payAllMoney)
 							UpdateIndex();
                 	    }*/
 							
-						break;		
+						break;
+					default:break;	
 				}
 			}	
 			break;	
@@ -1582,6 +1542,7 @@ void PollAPI(uint32_t payAllMoney)
 								case 7:
 									ComReturn = 21;	
 									break;	
+								default:break;	
 									
 							}								
 						}						
@@ -1640,8 +1601,10 @@ void PollAPI(uint32_t payAllMoney)
 								TracePC("\r\n MiddUbox disptxt=%c%c%c%c%c",disp[0],disp[1],disp[2],disp[3],disp[4]);
 								TxtSIMPLEInd(disp);
 								break;
+							default:break;	
 						}
 						break;
+					default:break;	
 				}
 			}	
 			break;
@@ -1669,6 +1632,7 @@ void PollAPI(uint32_t payAllMoney)
 									BillCoinEnable(2);
 								}
 								break;
+							default:break;	
 						}
 						break;
 					case MBOX_PCTOVMC_PAYININD:
@@ -1785,9 +1749,11 @@ void PollAPI(uint32_t payAllMoney)
 					case MBOX_PCTOVMC_RESETIND:
 						TracePC("\r\n MiddUbox resetInd");
 						ResetInd();						
-						break;	
+						break;
+					default:break;	
 				}
 			}	
+		default:break;	
 	}
 }
 
@@ -1802,11 +1768,6 @@ void PCInitAPI()
 {
 	switch(SystemPara.PcEnable)
 	{
-		case ZHIHUI_PC:
-			TracePC("\r\n MiddPCCommInit");			
-			//1.启动一鸣智慧的PC通讯
-			zh_task3_post(MBOX_VMC_ZH_START);
-			break;	
 		case UBOX_PC:
 			TracePC("\r\n MiddUboxCommInit");
 			//1.启动友宝的PC通讯
@@ -1816,9 +1777,7 @@ void PCInitAPI()
 			OSTimeDly(OS_TICKS_PER_SEC);
 			globalSys.pcInitFlag = 0;
 			break;
-		case GPRS_PC:
-			zh_task3_post(MBOX_VMC_GPRS_START);
-			break;
+		default:break;
 	}
 	return;
 }
