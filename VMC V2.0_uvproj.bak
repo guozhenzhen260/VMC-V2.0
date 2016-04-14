@@ -500,11 +500,6 @@
               <FileType>1</FileType>
               <FilePath>.\API\HeFanGuiAPI.c</FilePath>
             </File>
-            <File>
-              <FileName>colApi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\API\colApi.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

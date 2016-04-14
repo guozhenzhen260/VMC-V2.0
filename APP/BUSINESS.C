@@ -3742,16 +3742,33 @@ void BusinessProcess(void *pvData)
 					CheckDeviceState();
 					//6.自检压缩机和展示灯
 					ACDCTimingHandle(1);
-					if(!IsErrorState())
-					{	
-						Timer.DispFreeTimer=0;
-						LCDClrScreen();
-						BillCoinCtr(1,1,1);
-						OSTimeDly(OS_TICKS_PER_SEC/2);
-						TracePC(">>status3");
-						StatusRPTAPI();
-						rstTime();
-						vmcStatus = VMC_FREE;
+					if(SystemPara.PcEnable==CRUBOX_PC)
+					{
+						if(LogPara.offLineFlag == 0)
+						{	
+							Timer.DispFreeTimer=0;
+							LCDClrScreen();
+							BillCoinCtr(1,1,1);
+							OSTimeDly(OS_TICKS_PER_SEC/2);
+							TracePC(">>status3");
+							StatusRPTAPI();
+							rstTime();
+							vmcStatus = VMC_FREE;
+						}	
+					}
+					else
+					{
+						if(!IsErrorState())
+						{	
+							Timer.DispFreeTimer=0;
+							LCDClrScreen();
+							BillCoinCtr(1,1,1);
+							OSTimeDly(OS_TICKS_PER_SEC/2);
+							TracePC(">>status3");
+							StatusRPTAPI();
+							rstTime();
+							vmcStatus = VMC_FREE;
+						}
 					}
 					PollAPI(GetAmountMoney());
 				}

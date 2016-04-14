@@ -273,6 +273,10 @@ void Uart2TaskDevice(void *pvData)
 					break;
 				case 6:
 					TraceBill("\r\n TaskRecPayoutSuccess=%ld",RecyPayoutMoneyBack);
+					if((SystemPara.PcEnable==CRUBOX_PC)&&(RecyPayoutMoneyBack==0))
+					{
+						PayoutRPTAPI(0,getTypeInd(),0,getchangeMoneyInd(),getpayAllMoneyInd());
+					}
 					MsgAccepterPack.BillBackCmd = MBOX_BILLRECYPAYOUTSUCC;	
 					MsgAccepterPack.RecyPayoutMoneyBack=RecyPayoutMoneyBack;
 					OSMboxPost(g_BillMoneyBackMail,&MsgAccepterPack);
@@ -280,7 +284,10 @@ void Uart2TaskDevice(void *pvData)
 					break;					
 				case 5:
 					TraceBill("\r\n TaskRecPayoutFail");
-					PayoutRPTAPI(0,getTypeInd(),0,getchangeMoneyInd(),getpayAllMoneyInd());
+					if(SystemPara.PcEnable==CRUBOX_PC)
+					{
+						PayoutRPTAPI(0,getTypeInd(),0,getchangeMoneyInd(),getpayAllMoneyInd());
+					}					
 					MsgAccepterPack.BillBackCmd = MBOX_BILLRECYPAYOUTFAIL;						
 					OSMboxPost(g_BillMoneyBackMail,&MsgAccepterPack);
 					billOptBack = 0;
